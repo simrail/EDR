@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {WindowHistoryAdapter} from "use-query-params/adapters/window";
+import {QueryParamProvider} from "use-query-params";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <QueryParamProvider adapter={WindowHistoryAdapter}>
+            <App />
+      </QueryParamProvider>
   </React.StrictMode>
 );
 

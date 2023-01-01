@@ -6,10 +6,24 @@ module.exports = {
         "xx-client": "Custom EDR",
         "xx-maintainer": "DeadlyKungFu.Ninja",
         "xx-contact": "DeadlyKungFu.Ninja#8294",
-        "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
+        "xx-executor": "outbound.gcp.infra.deadlykungfu.ninja",
+        "xx-message": "Beta access only for you, that monitor this network : https://edr.deadlykungfu.ninja/?betaToken=unjN6"
+        //"xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
     },
-    SERVERS: ['fr1', 'fr2'],
-    POSTS: ['Katowice_Zawodzie', 'Sosnowiec_Główny'],
+    SERVERS: ['fr1', 'fr2', 'cn1'],
+    POSTS: {
+        "Góra Włodowska": ["Góra Włodowska"],
+        "Psary": ["Psary"],
+        "Knapówka": ["Knapówka"],
+        "Włoszczowa Północ": ["Włoszczowa Północ"],
+        "Olszamowice": ["Olszamowice"],
+        "Pilichowice": ["Pilichowice"],
+        "Katowice_Zawodzie": ["Katowice_Zawodzie"],
+        "Sosnowiec_Główny": ["Sosnowiec_Główny", "Sosnowiec_Gł._pzs_R52"],
+        "Dąbrowa Górnicza": ["Dąbrowa Górnicza"],
+        "Będzin": ["Będzin"],
+        "Łazy Łc": ["Łazy Łc"]
+    },
     vmax_by_type: {
         EIJ: 200,
         ECE: 125,
