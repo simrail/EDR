@@ -1,16 +1,46 @@
 import TER from "../images/TER.png";
 import EP07 from "../images/EP07.png";
 import EN76 from "../images/EN76.png";
-import Vector from "../images/Vector.png";
+// import Vector from "../images/Vector.png";
+import TRAXX from "../images/TRAXX.png";
 
-export const IconByType: {[k: string]: any} = {
-    "ROJ": TER,
-    "MPE": EP07,
-    "ECE": EP07,
-    "EIJ": EN76,
-    "RPJ": TER,
-    "LTE": Vector,
-    "TME": EP07,
+export const configByType: {[k: string]: any} = {
+    "ROJ": {
+        icon: TER,
+        color: "success"
+    },
+    "MPE": {
+        icon: EP07,
+        color: "success"
+    },
+    "MOJ": {
+        icon: EP07,
+        color: "success"
+    },
+    "ECE": {
+        icon: EP07,
+        color: "success"
+    },
+    "EIJ": {
+        icon: EN76,
+        color: "success"
+    },
+    "RPJ": {
+        icon: TER,
+        color: "success"
+    },
+    "LTE": {
+        icon: TRAXX,
+        color: "gray"
+    },
+    "TME": {
+        icon: EP07,
+        color: "warning"
+    },
+    "TCE": {
+        icon: EP07,
+        color: "warning"
+    },
 }
 
 export const AllowedServers = ["fr1", "fr2"];
@@ -55,7 +85,7 @@ export const betaTokens = [
     // "tjcfK", // Bioxyde
     "N78kc", // Mr Poisson
     "z7V45", // Lactic
-    "6aXDY",
+    "6aXDY", // Steeproll
     "ynhx6",
     "JfLGj",
     "V6ECb",

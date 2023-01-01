@@ -18,7 +18,7 @@ function App() {
 
     const wrap = (children: ReactNode) => (
         <Flowbite>
-                <div className="min-h-screen dark:bg-slate-800">
+                <div className="min-h-screen dark:bg-slate-800 text-black dark:text-white">
                     {children}
                 </div>
         </Flowbite>

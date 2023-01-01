@@ -1,9 +1,10 @@
 import React from "react";
-import {IconByType} from "./config";
+import {configByType} from "./config";
 import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
 
 export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, currentTime}) => {
-    const trainIcon = IconByType[ttRow.type as string];
+    const trainConfig = configByType[ttRow.type as string];
+    const trainBadgeColor = trainConfig?.color ?? "purple";
     const currentDistance = trainDetails?.distanceToStation.slice(-1)
     const previousDistance = trainDetails?.distanceToStation.slice(-2)
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
@@ -21,7 +22,7 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
     return <Table.Row className="h-[92px]" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <Table.Cell>
             <div className="flex items-center justify-between">
-                <Badge color="failure">{ttRow.train_number}</Badge><span className="none md:inline">{trainIcon && <img src={trainIcon} height={50} width={64}/>}</span>
+                <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge><span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
             </div>
             <div className="w-full">
                 {  distanceFromStation
@@ -57,12 +58,12 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
                 }
             </div>
         </Table.Cell>
-        <Table.Cell className="flex items-center flex-col space-between">
-            <Badge className="text-center items-center">{ttRow.type}</Badge>&nbsp;{ttRow.type_speed ?? '??'}km/h
+        <Table.Cell className="flex justify-center items-center flex-col space-around">
+            <Badge className="text-center items-center" color={trainBadgeColor}>{ttRow.type}</Badge>&nbsp;{ttRow.type_speed ?? '??'}km/h
 
         </Table.Cell>
         <Table.Cell>
-            <div className="flex items-center">
+            <div className="flex items-center justify-center h-full">
             {ttRow.scheduled_arrival}&nbsp;
                 {
                     !trainHasPassedStation && timeDelay > 0 && trainDetails

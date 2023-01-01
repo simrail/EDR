@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
-import {IconByType} from "./config";
+import {configByType} from "./config";
 import _ from "lodash/fp";
 import {TableRow} from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
@@ -83,6 +83,9 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
         setTimeout(() => scrollToNearestTrain(displayingRows.length), 1000, displayingRows.length);
     }, [filter, displayMode]);
 
+    console.log("All trains : ", timetable);
+    console.log("Displayed trains : ", displayingRows);
+
     if (!trainsWithHaversine) return null;
 
 
@@ -111,7 +114,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
                 {displayingRows.length > 0
                     ? displayingRows.map((tr: any) =>
                     <TableRow
-                        key={tr.train_number}
+                        key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
                         trainDetails={trainsWithHaversine[tr.train_number]}
                         currentTime={dt}
