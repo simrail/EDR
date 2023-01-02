@@ -1,16 +1,25 @@
 import React from "react";
-import {configByType} from "./config";
+import {configByType, postConfig, postToInternalIds} from "./config";
 import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
+import {StringParam, useQueryParam} from "use-query-params";
+import {useTranslation} from "react-i18next";
 
 export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, currentTime}) => {
+    const [postQry] = useQueryParam('post', StringParam);
+    const {t} = useTranslation();
+    if (!postQry) return null;
     const trainConfig = configByType[ttRow.type as string];
+    const postCfg = postConfig[postQry];
     const trainBadgeColor = trainConfig?.color ?? "purple";
     const currentDistance = trainDetails?.distanceToStation.slice(-1)
     const previousDistance = trainDetails?.distanceToStation.slice(-2)
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
-    const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance;
+
+
+    // console.log("Post cfg", postCfg);
+    const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange;
     const dateNow = new Date(Date.now());
     const [expectedHours, expectedMinutes] = ttRow.scheduled_arrival.split(":");
     const isNextDay = Math.abs(expectedHours - dateNow.getHours()) > 12; // TODO: Clunky
@@ -26,8 +35,8 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
             </div>
             <div className="w-full">
                 {  distanceFromStation
-                    ? <>à {distanceFromStation}km</>
-                    : <>Offline</>
+                    ? <>{t("edr.train_row.position_at")} {distanceFromStation}km ({trainDetails?.closestStation})</>
+                    : <>{t('edr.train_row.train_offline')}</>
                 }
                 &nbsp;
                 {
@@ -35,32 +44,23 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
                     ? undefined
                         : distanceFromStation
                         ? previousDistance == currentDistance
-                            ? <>&nbsp;- A l'arret</>
+                            ? <>&nbsp;- {t('edr.train_row.train_stopped')}</>
                             : trainHasPassedStation ?
-                                <>&nbsp;- S'eloigne</>
+                                <>&nbsp;- {t("edr.train_row.train_away")}</>
                                 : ETA && Math.round(ETA) < 20
-                                ? <>&nbsp;- {Math.round(ETA)}mn</>
-                                : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- Arreté</> : undefined
+                                ? <>&nbsp;- {Math.round(ETA)}{t("edr.train_row.train_minutes")}</>
+                                : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('edr.train_row.train_stopped')}</> : undefined
                 : undefined
                 }
             {
                 !hasEnoughData && <span><Spinner size="sm" /></span>
             }
-                {
-                    !trainHasPassedStation && timeDelay > 5 && trainDetails
-                    ? <Badge className="animate-pulse duration-1000" color="failure"> Retard</Badge>
-                    : undefined
-                }
-                {
-                    !trainHasPassedStation && timeDelay < -5 && distanceFromStation < 4 &&  trainDetails
-                        ? <Badge className="animate-pulse" color="info">En avance</Badge>
-                        : undefined
-                }
+
             </div>
         </Table.Cell>
         <Table.Cell className="flex justify-center items-center flex-col space-around">
-            <Badge className="text-center items-center" color={trainBadgeColor}>{ttRow.type}</Badge>&nbsp;{ttRow.type_speed ?? '??'}km/h
-
+            <Badge className="text-center items-center" color={trainBadgeColor}>{ttRow.type}</Badge>&nbsp;
+            {Math.floor(trainDetails?.TrainData?.Velocity) || 0}/{ttRow.type_speed ?? '??'}km/h
         </Table.Cell>
         <Table.Cell>
             <div className="flex items-center justify-center h-full">
@@ -76,6 +76,19 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
                         ? <span className="text-green-700 font-bold">{timeDelay}</span>
                         : undefined
                 }
+
+            </div>
+            <div className="flex justify-center">
+            {
+                !trainHasPassedStation && timeDelay > 5 && trainDetails
+                    ? <Badge className="animate-pulse duration-1000" color="failure">{t('edr.train_row.train_delayed')}</Badge>
+                    : undefined
+            }
+            {
+                !trainHasPassedStation && timeDelay < -5 && distanceFromStation < 4 &&  trainDetails
+                    ? <Badge className="animate-pulse" color="info">{t('edr.train_row.train_early')}</Badge>
+                    : undefined
+            }
             </div>
         </Table.Cell>
         <Table.Cell>
@@ -89,9 +102,9 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
         </Table.Cell>
         <Table.Cell>
             {ttRow.to}
+            &nbsp;➡️️ <b>{ttRow.line}</b>
         </Table.Cell>
         <Table.Cell>
-            {ttRow.line}
         </Table.Cell>
     </Table.Row>
 }

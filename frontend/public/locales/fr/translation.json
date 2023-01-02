@@ -1,0 +1,45 @@
+{
+  "select_menu": {
+    "server_selection": "Selection du serveur",
+    "post_select": "Selection du poste"
+  },
+  "footer": {
+    "version": "version",
+    "screenshots_by": "Screenshot par ",
+    "thanks": "Merci a tous les beta testeurs"
+  },
+  "edr": {
+    "loading": {
+      "main_message": "Chargement des données de l'EDR",
+      "schedules": "Horaires",
+      "stations": "Stations",
+      "trains": "Trains"
+    },
+    "train_row": {
+      "position_at": "à",
+      "train_delayed": "Retard",
+      "train_early": "Avance",
+      "train_offline": "Hors-ligne",
+      "train_stopped": "Arreté",
+      "train_away": "S'eloigne",
+      "train_minutes": "mn",
+      "train_eta": "ETA"
+    },
+    "train_headers": {
+      "train_number": "N°",
+      "train_type": "Type",
+      "train_arrival_time": "Heure arrivée",
+      "train_from": "Provenance",
+      "train_stop": "Stop",
+      "train_departure_time": "Heure depart",
+      "train_to": "Destination"
+    },
+    "ui": {
+      "train_number": "N° de train",
+      "close": "Fermer",
+      "dark_light_mode_switch": "Sombre/Clair",
+      "filter_train_all": "Tous",
+      "filter_train_online": "En_ligne"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import TER from "../images/TER.png";
 import EP07 from "../images/EP07.png";
 import EN76 from "../images/EN76.png";
+import TERREGIO from "../images/TER_REGIO.png";
 // import Vector from "../images/Vector.png";
 import TRAXX from "../images/TRAXX.png";
 
@@ -10,7 +11,7 @@ export const configByType: {[k: string]: any} = {
         color: "success"
     },
     "MPE": {
-        icon: EP07,
+        icon: TERREGIO,
         color: "success"
     },
     "MOJ": {
@@ -43,33 +44,88 @@ export const configByType: {[k: string]: any} = {
     },
 }
 
-export const AllowedServers = ["fr1", "fr2"];
+export const AllowedServers = ['fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
 
-/*
-https://panel.simrail.eu:8091/?station=Katowice_Zawodzie&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Sosnowiec_Główny&station=Sosnowiec_Gł._pzs_R52&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Będzin&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Dąbrowa Górnicza&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Łazy Łc&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Góra Włodowska&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Psary&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Knapówka&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Włoszczowa Północ&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Olszamowice&serverCode=pl1
-https://panel.simrail.eu:8091/?station=Pilichowice&serverCode=pl1
- */
-export const PostNameToIdentifier = {
-    [encodeURIComponent("Góra Włodowska")]: "Góra Włodowska",
-    [encodeURIComponent("Psary")]: "Psary",
-    [encodeURIComponent("Knapówka")]: "Knapówka",
-    [encodeURIComponent("Włoszczowa Północ")]: "Włoszczowa Północ",
-    [encodeURIComponent("Olszamowice")]: "Olszamowice",
-    [encodeURIComponent("Pilichowice")]: "Pilichowice",
-    [encodeURIComponent("Katowice Zawodzie")]: "Katowice_Zawodzie",
-    [encodeURIComponent("Sosnowiec Główny")]: "Sosnowiec_Główny",
-    [encodeURIComponent("Dąbrowa Górnicza")]: "Dąbrowa Górnicza",
-    [encodeURIComponent("Będzin")]: "Będzin",
-    [encodeURIComponent("Łazy Łc")]: "Łazy Łc"
+// Polish characters are not allowed as map keys
+export const internalConfigPostIds = {
+    "GW": encodeURIComponent("Góra Włodowska"),
+    "PS": encodeURIComponent("Psary"),
+    "KN": encodeURIComponent("Knapówka"),
+    "WP": encodeURIComponent("Włoszczowa Północ"),
+    "OZ": encodeURIComponent("Olszamowice"),
+    "PI": encodeURIComponent("Pilichowice"),
+    "KZ": encodeURIComponent("Katowice Zawodzie"),
+    "SG": encodeURIComponent("Sosnowiec Główny"),
+    "DG": encodeURIComponent("Dąbrowa Górnicza"),
+    "T1_BZ": encodeURIComponent("Będzin"),
+    "LZ_LC": encodeURIComponent("Łazy Łc")
+};
+
+export const postToInternalIds = {
+    [encodeURIComponent("Góra Włodowska")]: "GW",
+    [encodeURIComponent("Psary")]: "PS",
+    [encodeURIComponent("Knapówka")]: "KN",
+    [encodeURIComponent("Włoszczowa Północ")]: "WP",
+    [encodeURIComponent("Olszamowice")]: "OZ",
+    [encodeURIComponent("Pilichowice")]: "PI",
+    [encodeURIComponent("Katowice Zawodzie")]: "KZ",
+    [encodeURIComponent("Sosnowiec Główny")]: "SG",
+    [encodeURIComponent("Dąbrowa Górnicza")]: "DG",
+    [encodeURIComponent("Będzin")]: "T1_BZ",
+    [encodeURIComponent("Łazy Łc")]: "LZ_LC"
+}
+
+export const postConfig: {[k: string]: any} = {
+    GB: {
+        srId: "Góra Włodowska",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.470318, 50.584134]
+    },
+    PS: {
+        srId: "Psary",
+        trainPosRange: 0.5
+    },
+    KN: {
+        srId: "Knapówka",
+        trainPosRange: 0.5
+    },
+    WP: {
+        srId: "Włoszczowa Północ",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.945774, 50.856198]
+    },
+    OZ: {
+        srId: "Olszamowice",
+        trainPosRange: 0.5
+    },
+    PI: {
+        srId: "Pilichowice",
+        trainPosRange: 0.5
+    },
+    KZ: {
+        srId: "Katowice_Zawodzie",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.057551, 50.257280]
+    },
+    SG: {
+        srId: "Sosnowiec_Główny",
+        trainPosRange: 1,
+        platformPosOverride: [19.1270833, 50.2793889]
+    },
+    DG: {
+        srId: "Dąbrowa Górnicza",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.184696, 50.330386]
+    },
+    T1_BZ: {
+        srId: "Będzin",
+        trainPosRange: 0.5
+    },
+    LZ_LC: {
+        srId:"Łazy Łc",
+        trainPosRange: 0.5
+    }
+    // Zawi override platform pos for later: Zawiercie 50.480875, 19.423094 150M
 }
 
 export const betaTokens = [
@@ -86,15 +142,19 @@ export const betaTokens = [
     "N78kc", // Mr Poisson
     "z7V45", // Lactic
     "6aXDY", // Steeproll
-    "ynhx6",
-    "JfLGj",
-    "V6ECb",
-    "bgO5Q",
-    "46Ijv",
-    "zLiYV",
-    "Q6waB",
+    "ynhx6", // Howky
+    "JfLGj", // Alexis96x2
+    "V6ECb", // CZ Friend 1
+    "bgO5Q", // CZ Friend 2
+    "46Ijv", // Aurel
+    "zLiYV", // Jason_
+    "Q6waB", // AlexKall
     "qATVA",
     "xzRkm",
     "2GN0n",
     "O3GX3"
-]
+];
+
+export const PlatformsConfig = {
+
+}

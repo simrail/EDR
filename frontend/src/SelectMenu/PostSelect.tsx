@@ -4,10 +4,12 @@ import {StringParam, useQueryParam} from "use-query-params";
 import {getStations} from "../api/getTimetable";
 import {Spinner} from "flowbite-react";
 import {PostCard} from "./PostCard";
+import {useTranslation} from "react-i18next";
 
 export const PostSelect = () => {
     const [posts, setPosts] = React.useState<any | undefined>();
     const [serverCode, _] = useQueryParam('serverCode', StringParam);
+    const {t} = useTranslation();
 
     React.useEffect(() => {
         if (!serverCode) return;
@@ -16,7 +18,7 @@ export const PostSelect = () => {
 
     // console.log("Postes : ", posts);
 
-    return <SelectMenuLayout title="Selection du poste">
+    return <SelectMenuLayout title={t("select_menu.post_select")}>
         {
             !posts
             ? <Spinner size="xl"/>

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {WindowHistoryAdapter} from "use-query-params/adapters/window";
 import {QueryParamProvider} from "use-query-params";
+import './i18n';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

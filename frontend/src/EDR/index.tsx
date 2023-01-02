@@ -4,22 +4,24 @@ import {Progress, Spinner} from "flowbite-react";
 import {EDRTable} from "./Table";
 import _ from "lodash/fp";
 import {haversineDistance} from "./haversineDistance";
+import {postConfig, postToInternalIds} from "./config";
+import {useTranslation} from "react-i18next";
 
 export const EDR: React.FC<any> = ({serverCode, post}) => {
-    const currentStation = post;//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
+    const currentStation = postConfig[post]?.srId;//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
     const [stations, setStations] = React.useState<any | undefined>();
     const [trains, setTrains] = React.useState<any | undefined>();
     const [timetable, setTimetable] = React.useState<any | undefined>();
     const [trainsWithHaversine, setTrainsWithHaversine] = React.useState<any | undefined>();
-    const [isBatching, setBatching] = React.useState<boolean>(true);
+    const {t} = useTranslation();
 
     const previousTrains = React.useRef<{[k: string]: any} | null>(null);
 
     const loading = !timetable || !stations || !trains;
 
     React.useEffect(() => {
-        if(!serverCode || !post) return;
-        getTimetable(serverCode,  post).then((data) => {
+        if(!serverCode || !currentStation) return;
+        getTimetable(serverCode,  currentStation).then((data) => {
             setTimetable(data);
             getStations(serverCode).then((data) => {
                 setStations(data);
@@ -49,17 +51,35 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         // console.log("With stations data : ", keyedStations);
         // console.log("With trains data : ", keyedTrains);
 
-        const userStation = keyedStations[currentStation.replace("_", " ")];
+        const getOverridenStationPos = (postId: string) =>
+            postConfig[postToInternalIds[encodeURIComponent(postId)]]?.platformPosOverride
+                ?? [keyedStations[postId].Longitude, keyedStations[postId].Latititude]
+
+
 
         // console.log("With user station: ", userStation);
 
+        const getClosestStation = (train: any) =>
+            _.minBy<any>(
+                'distanceToStation', stations
+                .map((s: any) => {
+                    const truePos = getOverridenStationPos(s.Name);
+                    return {
+                        ...s,
+                        distanceToStation: haversineDistance(truePos, [train.TrainData.Longitute, train.TrainData.Latititute])
+                    }
+                })
+            )?.Name
+
         const withHaversineTrains = _.map((t: any) => {
             const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
-            const currentDistance = haversineDistance([userStation.Longitude, userStation.Latititude], [t.TrainData.Longitute, t.TrainData.Latititute]);
+            const currentDistance = haversineDistance(getOverridenStationPos(currentStation.replace("_", " ")), [t.TrainData.Longitute, t.TrainData.Latititute]);
             // console.log(currentDistance, previousDistances?.[-1]);
+            // TODO: Calculate nearest station
             return {...t,
                 // TODO: Avoid O(n)
-                distanceToStation: _.uniq([...(previousDistances ?? []), currentDistance])
+                distanceToStation: _.uniq([...(previousDistances ?? []), currentDistance]),
+                closestStation: getClosestStation(t)
             }
         }, trains);
 
@@ -70,21 +90,23 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     }, [stations, trains, previousTrains.current, timetable]);
 
-
-    React.useEffect(() => {
-    }, []);
     //
     // console.log("Timetable data : ", timetable);
     // console.log("Stations data: ", stations);
 
     // console.log("Previous trains", previousTrains);
 
+    // console.log("haversine trains : ", trainsWithHaversine);
+
+    if (!currentStation)
+        return <>Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</>
+
     if (loading)
         return <div className="min-h-screen flex flex-col justify-center items-center text-center">
-            <div>Chargement des données de l'EDR</div>
-            <div>Horaires:  {!timetable ? <Spinner size="xs" /> : <>✓</> }</div>
-            <div>Stations:  {!stations ? <Spinner size="xs" /> : <>✓</> }</div>
-            <div>Trains:  {!trains ? <Spinner size="xs" /> : <>✓</> }</div>
+            <div>{t('edr.loading.main_message')}</div>
+            <div>{t("edr.loading.schedules")}:  {!timetable ? <Spinner size="xs" /> : <>✓</> }</div>
+            <div>{t("edr.loading.stations")}:  {!stations ? <Spinner size="xs" /> : <>✓</> }</div>
+            <div>{t("edr.loading.trains")}:  {!trains ? <Spinner size="xs" /> : <>✓</> }</div>
         </div>
 
     return <EDRTable timetable={timetable} trainsWithHaversine={trainsWithHaversine}/>;
