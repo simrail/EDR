@@ -1,10 +1,56 @@
 import React from "react";
-import {configByType, postConfig, postToInternalIds} from "./config";
+import {configByType, postConfig, postToInternalIds} from "../config";
 import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 
-export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, currentTime}) => {
+const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number) =>
+    new Date(new Date(new Date(Date.now()).setHours(expectedHours)).setMinutes(expectedMinutes));
+
+const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
+    ((isNextDay ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * 1444) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
+
+const platformData = (ttRow: any ) => (
+    <>
+        {ttRow.layover} {ttRow.stop_type} {ttRow.platform && <>({ttRow.platform})</>}
+    </>
+)
+
+const lineData = (ttRow: any) => (
+    <>
+        {ttRow.to}
+        &nbsp;➡️️ <b>{ttRow.line}</b>
+    </>
+)
+
+export const tableCellCommonClassnames = "p-4"
+
+const RowPostData: React.FC<any> = ({ttRow, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
+    const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
+    return <>
+        <td className={tableCellCommonClassnames} ref={headerFourthColRef}>
+            {ttRow.from}
+            { secondaryPostData.map((spd: any) => <><hr />{spd.from}</>)}
+        </td>
+        <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
+            {platformData(ttRow)}
+            { secondaryPostData.map((spd: any) => <><hr />{platformData(spd)}</>)}
+        </td>
+        <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
+            {ttRow.scheduled_departure}
+        </td>
+        <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
+            {lineData(ttRow)}
+            { secondaryPostData.map((spd: any) => <><hr />{lineData(spd)}</>)}
+        </td>
+    </>;
+}
+
+export const TableRow: React.FC<any> = (
+    {ttRow, timeOffset, trainDetails,
+        firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef
+    }
+) => {
     const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
     if (!postQry) return null;
@@ -21,15 +67,19 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
     // console.log("Post cfg", postCfg);
     const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange;
     const dateNow = new Date(Date.now());
-    const [expectedHours, expectedMinutes] = ttRow.scheduled_arrival.split(":");
-    const isNextDay = Math.abs(expectedHours - dateNow.getHours()) > 12; // TODO: Clunky
+    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
+    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
+    const isNextDay = Math.abs(arrivalExpectedHours - dateNow.getHours()) > 12; // TODO: Clunky
+    const isPreviousDay = Math.abs(dateNow.getHours() - arrivalExpectedHours) > 12; // TODO: Clunky
     // console.log("Is next day ? " + ttRow.train_number, isNextDay);
-    const expectedArrival = new Date(new Date(new Date(Date.now()).setHours(expectedHours)).setMinutes(expectedMinutes));
-    const timeDelay = ((isNextDay ? 1 : 0) * -1444) + ((dateNow.getHours() - expectedArrival.getHours()) * 60) + (dateNow.getMinutes() - expectedArrival.getMinutes());
+    const expectedArrival = iReallyNeedToAddADateLibrary(arrivalExpectedHours, arrivalExpectedMinutes);
+    const expectedDeparture = iReallyNeedToAddADateLibrary(departureExpectedHours, departureExpectedMinutes);
+    const arrivalTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedArrival);
+    const departureTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedDeparture);
 
     // ETA && console.log("ETA", ETA);
-    return <Table.Row className="h-[92px]" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
-        <Table.Cell>
+    return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
+        <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge><span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
             </div>
@@ -40,9 +90,7 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
                 }
                 &nbsp;
                 {
-                    !hasEnoughData
-                    ? undefined
-                        : distanceFromStation
+                        distanceFromStation
                         ? previousDistance == currentDistance
                             ? <>&nbsp;- {t('edr.train_row.train_stopped')}</>
                             : trainHasPassedStation ?
@@ -53,58 +101,45 @@ export const TableRow: React.FC<any> = ({ttRow, timeOffset, trainDetails, curren
                 : undefined
                 }
             {
-                !hasEnoughData && <span><Spinner size="sm" /></span>
+                !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span><Spinner size="sm" /></span>
             }
-
             </div>
-        </Table.Cell>
-        <Table.Cell className="flex justify-center items-center flex-col space-around">
-            <Badge className="text-center items-center" color={trainBadgeColor}>{ttRow.type}</Badge>&nbsp;
-            {Math.floor(trainDetails?.TrainData?.Velocity) || 0}/{ttRow.type_speed ?? '??'}km/h
-        </Table.Cell>
-        <Table.Cell>
-            <div className="flex items-center justify-center h-full">
+        </td>
+        <td className={tableCellCommonClassnames}  ref={secondColRef}>
+            <div className="flex justify-center items-center flex-col space-around">
+                <Badge className="" color={trainBadgeColor}>{ttRow.type}</Badge>&nbsp;
+                {Math.floor(trainDetails?.TrainData?.Velocity) || 0}/{ttRow.type_speed ?? '??'}km/h
+            </div>
+        </td>
+        <td className={tableCellCommonClassnames} ref={thirdColRef}>
+            <div className="flex items-center justify-start h-full">
             {ttRow.scheduled_arrival}&nbsp;
                 {
-                    !trainHasPassedStation && timeDelay > 0 && trainDetails
-                        ? <span className="text-red-700 font-bold">+{timeDelay}</span>
+                    !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails
+                        ? <span className="text-red-600 font-bold">+{arrivalTimeDelay}</span>
                         : undefined
                 }
 
                 {
-                    !trainHasPassedStation && timeDelay < 0 && trainDetails
-                        ? <span className="text-green-700 font-bold">{timeDelay}</span>
+                    !trainHasPassedStation && arrivalTimeDelay < 0 && trainDetails
+                        ? <span className="text-green-600 font-bold">{arrivalTimeDelay}</span>
                         : undefined
                 }
 
             </div>
             <div className="flex justify-center">
             {
-                !trainHasPassedStation && timeDelay > 5 && trainDetails
+                !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0
                     ? <Badge className="animate-pulse duration-1000" color="failure">{t('edr.train_row.train_delayed')}</Badge>
                     : undefined
             }
             {
-                !trainHasPassedStation && timeDelay < -5 && distanceFromStation < 4 &&  trainDetails
+                !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 &&  trainDetails
                     ? <Badge className="animate-pulse" color="info">{t('edr.train_row.train_early')}</Badge>
                     : undefined
             }
             </div>
-        </Table.Cell>
-        <Table.Cell>
-            {ttRow.from}
-        </Table.Cell>
-        <Table.Cell>
-            {ttRow.layover} {ttRow.stop_type} {ttRow.platform && <>({ttRow.platform})</>}
-        </Table.Cell>
-        <Table.Cell>
-            {ttRow.scheduled_departure}
-        </Table.Cell>
-        <Table.Cell>
-            {ttRow.to}
-            &nbsp;➡️️ <b>{ttRow.line}</b>
-        </Table.Cell>
-        <Table.Cell>
-        </Table.Cell>
+        </td>
+        <RowPostData ttRow={ttRow} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
     </Table.Row>
 }

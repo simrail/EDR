@@ -1,7 +1,7 @@
 import React from "react";
 import {Card} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
-import {postConfig, postToInternalIds} from "../EDR/config";
+import {postConfig, postToInternalIds} from "../config";
 import classNames from "classnames";
 
 export const PostCard: React.FC<any> = ({post}) => {

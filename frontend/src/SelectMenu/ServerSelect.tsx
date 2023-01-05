@@ -1,8 +1,8 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
-import {getServers} from "../api/getTimetable";
+import {getServers} from "../api/api";
 import {Spinner} from "flowbite-react";
-import {AllowedServers} from "../EDR/config";
+import {AllowedServers} from "../config";
 import {ServerCard} from "./ServerCard";
 import {useTranslation} from "react-i18next";
 
@@ -16,7 +16,7 @@ export const ServerSelect = () => {
 
     // console.log("servers: ", servers);
 
-    return <SelectMenuLayout title="Selection du serveur">
+    return <SelectMenuLayout title={t("select_menu.server_selection")}>
         {
             !servers
                 ? <Spinner />

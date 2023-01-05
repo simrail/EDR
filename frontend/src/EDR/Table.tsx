@@ -1,41 +1,47 @@
 import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
-import {configByType} from "./config";
+import {configByType, postConfig} from "../config";
 import _ from "lodash/fp";
-import {TableRow} from "./TrainRow";
+import {tableCellCommonClassnames, TableRow} from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
+import useMeasure from "react-use-measure";
+import classNames from "classnames";
 
-const TableHead = () => {
+const tableHeadCommonClassName = "p-4"
+const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
     const {t} = useTranslation();
-    return <Table.Row>
-        <Table.HeadCell>
+    if (!firstColBounds) return null;
+    console.log("Fourth bou,ds", fourthColBounds)
+    return <div className="flex font-bold items-center">
+        <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
             {t('edr.train_headers.train_number')}
-        </Table.HeadCell>
-        <Table.HeadCell>
+        </div>
+        <div className={classNames(tableHeadCommonClassName, 'text-center')}  style={{minWidth: secondColBounds.width}}>
             {t('edr.train_headers.train_type')}
-        </Table.HeadCell>
-        <Table.HeadCell>
-            {t('edr.train_headers.train_arrival_time')}
-        </Table.HeadCell>
-        <Table.HeadCell>
+        </div>
+        <div className={tableHeadCommonClassName} style={{width: thirdColBounds.width}}>
+                {t('edr.train_headers.train_arrival_time')}
+        </div>
+        <div className={tableHeadCommonClassName} style={{width: fourthColBounds.width}}>
             {t('edr.train_headers.train_from')}
-        </Table.HeadCell>
-        <Table.HeadCell>
+        </div>
+        <div className={tableHeadCommonClassName} style={{width: fifthColBounds.width}}>
             {t('edr.train_headers.train_stop')}
-        </Table.HeadCell>
-        <Table.HeadCell>
-            {t('edr.train_headers.train_departure_time')}
-        </Table.HeadCell>
-        <Table.HeadCell>
+        </div>
+        <div className={tableHeadCommonClassName} style={{width: sixthColBounds.width}}>
+                {t('edr.train_headers.train_departure_time')}
+        </div>
+        <div className={tableHeadCommonClassName} style={{width: seventhColBounds.width}}>
             {t('edr.train_headers.train_to')}
-        </Table.HeadCell>
-    </Table.Row>;
+        </div>
+    </div>;
 }
 
 const DateTimeDisplay = () => {
     // TODO: Take server TZ
     const [dt, setDt] = React.useState(new Date(Date.now()));
+    const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
 
     React.useEffect(() => {
         setInterval(() => {
@@ -43,9 +49,18 @@ const DateTimeDisplay = () => {
         }, 1000)
     }, [])
 
-    return <>
-        {dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}
-    </>
+    return <div className="text-center">
+        {dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}<br />
+        <span className="underline text-orange-700">Networking issues should be solved.</span><br />
+        { !cdnBypass
+            ? <span className="inline-flex items-center text-info-700">Refresh is still slow ? Click <Button className="mx-2" size="xs" onClick={() => {
+                setCdnBypass("bypass");
+                window.history.go();
+            }}>
+                here</Button> and contact me please !</span>
+            : <span className="text-info-700">Bypassing CDN</span>
+        }
+    </div>
 }
 
 const scrollToNearestTrain = (targetLn: number) => {
@@ -68,47 +83,45 @@ const scrollToNearestTrain = (targetLn: number) => {
 }
 
 export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
+    const [postQry] = useQueryParam('post', StringParam);
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [displayingRows, setDisplayingRows] = React.useState<any[]>([]);
     const {t} = useTranslation();
 
+    const [rowRef, rowBounds] = useMeasure();
+    const [headerFirstColRef, firstColBounds] = useMeasure();
+    const [headerSecondColRef, secondColBounds] = useMeasure();
+    const [headerThirdColRef, thirdColBounds] = useMeasure();
+    const [headerFourthColRef, fourthColBounds] = useMeasure();
+    const [headerFifthColRef, fifthColBounds] = useMeasure();
+    const [headerSixthhColRef, sixthColBounds] = useMeasure();
+    const [headerSeventhColRef, seventhColBounds] = useMeasure();
+
     const dt = new Date(Date.now());
-    const dtString = `${dt.getHours()}${dt.getMinutes()}`
     const [betaToken] = useQueryParam('betaToken', StringParam);
     // console.log(dtString);
 
     React.useEffect(() => {
-        setDisplayingRows(timetable
-            .filter((tt: any) => filter ? tt.train_number.startsWith(filter): true)
-            .filter((tt: any) => displayMode === "near" ? !!trainsWithHaversine[tt.train_number] : true))
-
         if (displayMode === "all" && !filter)
             setTimeout(() => scrollToNearestTrain(displayingRows.length), 1000, displayingRows.length);
     }, [filter, displayMode]);
 
     // TODO: This introduces a bug ! It makes the filter jump
-     React.useEffect(() => {
-        const interval = setInterval(() => {
-            if (displayMode !== "near") return;
-            setDisplayingRows(timetable
-                .filter((tt: any) => displayMode === "near" ? !!trainsWithHaversine[tt.train_number] : true))
-
-        }, 2000, displayMode);
-
-        return () => window.clearInterval(interval);
-     }, [displayMode]);
 
     // console.log("All trains : ", timetable);
     // console.log("Displayed trains : ", displayingRows);
 
-    if (!trainsWithHaversine) return null;
+    if (!trainsWithHaversine || !postQry) return null;
+    const postCfg = postConfig[postQry];
 
+    console.log("Second col bounds ", secondColBounds);
 
     return <div>
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white dark:bg-slate-800">
+        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white dark:bg-slate-800 shadow-md">
             <div className="flex justify-between items-center px-4">
-                <div>
+                <div className="flex flex-col">
+                    <span>{postCfg.srId}</span>
                     <a href={`/?betaToken=${betaToken}`} className="underline">{t('edr.ui.close') ?? ''} ❌</a>
                 </div>
                 <DateTimeDisplay />
@@ -122,16 +135,39 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
                 <Button color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(displayingRows.length); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
                 <Button color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('edr.ui.filter_train_online') ?? ''}</Button>
             </div>
+            <div>
+                <div>
+                    <TableHead
+                        firstColBounds={firstColBounds}
+                        secondColBounds={secondColBounds}
+                        thirdColBounds={thirdColBounds}
+                        fourthColBounds={fourthColBounds}
+                        fifthColBounds={fifthColBounds}
+                        sixthColBounds={sixthColBounds}
+                        seventhColBounds={seventhColBounds}
+                    />
+                </div>
+            </div>
         </div>
         <div>
             <Table striped={true}>
-            <TableHead />
             <Table.Body>
-                {displayingRows.length > 0
-                    ? displayingRows.map((tr: any) =>
+                {timetable.length > 0
+                    ? timetable
+                        .filter((tt: any) => filter ? tt.train_number.startsWith(filter): true)
+                        .filter((tt: any) => displayMode === "near" ? !!trainsWithHaversine[tt.train_number] : true)
+                        .map((tr: any, i: number) =>
                     <TableRow
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
+                        rowRef={rowRef}
+                        firstColRef={i === 0 ? headerFirstColRef : null}
+                        secondColRef={i === 0 ? headerSecondColRef : null}
+                        thirdColRef={i ===0 ? headerThirdColRef : null}
+                        headerFourthColRef={i ===0 ? headerFourthColRef : null}
+                        headerFifthColRef={i ===0 ? headerFifthColRef : null}
+                        headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
+                        headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
                         trainDetails={trainsWithHaversine[tr.train_number]}
                         currentTime={dt}
                         timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - Number.parseInt(tr.hourSort))}

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const rl = require('axios-rate-limit');
 const CONFIG = require("./config");
-const rlClient = rl(axios.create(), {maxRPS: 1});
+const rlClient = rl(axios.create(), {maxRPS: 3});
 
 module.exports = {
     get: (url, base_url = CONFIG.BASE_SIMRAIL_API) => {

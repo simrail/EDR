@@ -20,7 +20,7 @@ module.exports.getStationsList = (req, res, serverCode) => {
 module.exports.getTrainsList = (req, res, serverCode) => {
     return simrailClient.get("trains-open?serverCode=" + serverCode).then((e) => {
         return res
-            .setHeader("Cache-control", 'public, max-age=5, must-revalidate, stale-if-error=30')
+            .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send(e.data.data);
     })
 }

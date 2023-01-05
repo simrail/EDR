@@ -5,7 +5,7 @@ import {Flowbite, useThemeMode} from "flowbite-react";
 import {StringParam, useQueryParams} from "use-query-params";
 import {ServerSelect} from "./SelectMenu/ServerSelect";
 import {PostSelect} from "./SelectMenu/PostSelect";
-import {betaTokens} from "./EDR/config";
+import {betaTokens} from "./config";
 
 function App() {
     const [mode, setMode, toggleMode] = useThemeMode(true);

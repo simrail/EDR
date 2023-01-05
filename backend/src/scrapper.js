@@ -16,20 +16,26 @@ module.exports.default = async (res, server, post) => {
     }
     console.log("Posts to fetch :", CONFIG.POSTS[post])
 
+    const convertRow = (headers) => (r) => _.reduce(r, (acc, v, i) => {
+        const targetKey = CONFIG.translate_fields[headers[i]]
+        return {
+            ...acc,
+            [targetKey]: !!acc[targetKey] ? acc[targetKey] : v
+        };
+    }, {});
+
+
     try {
-        const rows = simrailResponses.flatMap((sr) => {
+        const rows = simrailResponses.map((sr) => {
             const $ = cheerio.load(sr.data);
             const headers = $('th').toArray().map((el) => el.children?.[0]?.data);
             const rows1 = $('.timetableRow').toArray()
                 .map(e => e.children)
                 .map(e => e.filter(e => e?.name === 'td').flatMap(e => e.children[0]?.data));
-            const batchedRows = rows1.map((r) => _.reduce(r, (acc, v, i) => {
-                const targetKey = CONFIG.translate_fields[headers[i]]
-                return {
-                    ...acc,
-                    [targetKey]: !!acc[targetKey] ? acc[targetKey] : v
-                };
-            }, {})).map((row) => ({
+
+            // console.log("Rows 1 ", rows1);
+            const batchedRows = rows1.map(convertRow(headers))
+            .map((row) => ({
                 ...row,
                 type_speed: CONFIG.vmax_by_type[row.type],
                 hourSort: (Number.parseInt(row.scheduled_arrival.split(':')[0]) * 60) + Number.parseInt(row.scheduled_arrival.split(':')[1])
@@ -37,7 +43,33 @@ module.exports.default = async (res, server, post) => {
             return batchedRows;
         });
 
-        return [_.sortBy(rows, 'hourSort'), undefined];
+        const primaryPostRows = rows[0];
+        const secondaryPostsRows = rows.slice(1);
+
+
+        const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'train_number'));
+
+        // console.log("KSPR", keyedSecondaryPostsRows);
+
+        const mergedPostsRows = primaryPostRows.reduce((acc, v) => [
+            ...acc,
+            {
+                ...v,
+                secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.train_number])
+            }
+        ], []);
+
+        const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'train_number');
+
+        // TODO: This has state, temporary fix
+        secondaryPostsRows.map((sptr) => {
+            sptr.forEach((trainRow) => {
+                if (!keyedFirstPostTrains[trainRow.train_number])
+                    mergedPostsRows.push(trainRow);
+            })
+        })
+
+        return [_.sortBy(mergedPostsRows, 'hourSort'), undefined];
     } catch (e) {
         console.trace(e);
         return [undefined, res.status(500).send({

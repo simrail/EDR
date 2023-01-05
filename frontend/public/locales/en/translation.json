@@ -1,5 +1,45 @@
 {
   "select_menu": {
-    "server_selection": "Select server"
+    "server_selection": "Server selection",
+    "post_select": "Selection of the dispatching post"
+  },
+  "footer": {
+    "version": "version",
+    "screenshots_by": "Screenshot by ",
+    "thanks": "Thank you to all the beta testers"
+  },
+  "edr": {
+    "loading": {
+      "main_message": "Loading EDR's datas",
+      "schedules": "Schedules",
+      "stations": "Stations",
+      "trains": "Trains"
+    },
+    "train_row": {
+      "position_at": "at",
+      "train_delayed": "Delay",
+      "train_early": "Advance",
+      "train_offline": "Off line",
+      "train_stopped": "Stopped",
+      "train_away": "Moves away",
+      "train_minutes": "min",
+      "train_eta": "ETA"
+    },
+    "train_headers": {
+      "train_number": "N°",
+      "train_type": "Type",
+      "train_arrival_time": "Arrival time",
+      "train_from": "From",
+      "train_stop": "Stop",
+      "train_departure_time": "Departure time",
+      "train_to": "To"
+    },
+    "ui": {
+      "train_number": "Train N°",
+      "close": "Close",
+      "dark_light_mode_switch": "Dark/Clear theme toggle",
+      "filter_train_all": "All trains",
+      "filter_train_online": "On line"
+    }
   }
 }

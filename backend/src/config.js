@@ -6,9 +6,9 @@ module.exports = {
         "xx-client": "Custom EDR",
         "xx-maintainer": "DeadlyKungFu.Ninja",
         "xx-contact": "DeadlyKungFu.Ninja#8294",
-        "xx-executor": "outbound.gcp.infra.deadlykungfu.ninja",
-        "xx-message": "Beta access only for you, that monitor this network : https://edr.deadlykungfu.ninja/?betaToken=unjN6"
-        //"xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
+        //"xx-executor": "outbound.gcp.infra.deadlykungfu.ninja",
+        // "xx-message": "Beta access only for you, that monitor this network : https://edr.deadlykungfu.ninja/?betaToken=unjN6"
+        "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
     },
     SERVERS: ['fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'],
     POSTS: {

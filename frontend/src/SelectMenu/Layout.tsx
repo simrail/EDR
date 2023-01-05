@@ -15,8 +15,8 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </Navbar.Brand>
             <div className="flex">
                 <Button color={i18n.language === "fr" ? "info" : "gray"} className="ml-8 mx-2" onClick={() => i18n.changeLanguage("fr")}>FR</Button>
-                <Button disabled color={i18n.language === "en" ? "info" : "gray"} onClick={() => i18n.changeLanguage("en")}>EN</Button>
-                <Button disabled color={i18n.language === "cz" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("cz")}>CZ</Button>
+                <Button color={i18n.language === "en" ? "info" : "gray"} onClick={() => i18n.changeLanguage("en")}>EN</Button>
+                <Button color={i18n.language === "cz" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("cz")}>CZ</Button>
 
             </div>
 
@@ -32,7 +32,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
-        <div style={{backgroundImage: "url('"+Background+"')"}} className="h-screen">
+        <div style={{backgroundImage: "url('"+Background+"')", backgroundSize: "cover"}} className="h-screen">
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
             <div className="flex items-center justify-center max-w-screen h-full">
                 <div className="mt-4 flex flex-wrap max-w-screen justify-center content-center">
@@ -41,7 +41,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("footer.version")} 0.4 - {t("footer.screenshots_by")} - {t("footer.thanks")} ❤️
+            {t("footer.version")} 0.5 - {t("footer.screenshots_by")} - {t("footer.thanks")} ❤️
         </div>
     </div>;
 }

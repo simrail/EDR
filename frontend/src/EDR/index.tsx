@@ -1,11 +1,12 @@
 import React, {useCallback} from "react";
-import {getStations, getTimetable, getTrains} from "../api/getTimetable";
+import {getStations, api, getTrains} from "../api/api";
 import {Progress, Spinner} from "flowbite-react";
 import {EDRTable} from "./Table";
 import _ from "lodash/fp";
 import {haversineDistance} from "./haversineDistance";
-import {postConfig, postToInternalIds} from "./config";
+import {postConfig, postToInternalIds} from "../config";
 import {useTranslation} from "react-i18next";
+import {StringParam, useQueryParam} from "use-query-params";
 
 export const EDR: React.FC<any> = ({serverCode, post}) => {
     const currentStation = postConfig[post]?.srId;//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
@@ -14,6 +15,8 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     const [timetable, setTimetable] = React.useState<any | undefined>();
     const [trainsWithHaversine, setTrainsWithHaversine] = React.useState<any | undefined>();
     const {t} = useTranslation();
+    const [cdnBypass] = useQueryParam('cdnBypass', StringParam);
+
 
     const previousTrains = React.useRef<{[k: string]: any} | null>(null);
 
@@ -21,11 +24,11 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     React.useEffect(() => {
         if(!serverCode || !currentStation) return;
-        getTimetable(serverCode,  currentStation).then((data) => {
+        api(serverCode,  currentStation, !!cdnBypass).then((data) => {
             setTimetable(data);
-            getStations(serverCode).then((data) => {
+            getStations(serverCode, !!cdnBypass).then((data) => {
                 setStations(data);
-                getTrains(serverCode).then((data) => {
+                getTrains(serverCode, !!cdnBypass).then((data) => {
                     setTrains(data);
                 });
             });
@@ -76,9 +79,10 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             const currentDistance = haversineDistance(getOverridenStationPos(currentStation.replace("_", " ")), [t.TrainData.Longitute, t.TrainData.Latititute]);
             // console.log(currentDistance, previousDistances?.[-1]);
             // TODO: Calculate nearest station
+            const distanceArray = _.uniq([...(previousDistances ?? []), currentDistance]);
             return {...t,
                 // TODO: Avoid O(n)
-                distanceToStation: _.uniq([...(previousDistances ?? []), currentDistance]),
+                distanceToStation: distanceArray.length > 5 ? distanceArray.slice(1) : distanceArray,
                 closestStation: getClosestStation(t)
             }
         }, trains);
@@ -96,7 +100,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     // console.log("Previous trains", previousTrains);
 
-    // console.log("haversine trains : ", trainsWithHaversine);
+    console.log("haversine trains : ", trainsWithHaversine);
 
     if (!currentStation)
         return <>Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</>

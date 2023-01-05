@@ -1,0 +1,45 @@
+{
+  "select_menu": {
+    "server_selection": "Výběr serveru",
+    "post_select": "Výběr stanice"
+  },
+  "footer": {
+    "version": "verze",
+    "screenshots_by": "Screenshot od ",
+    "thanks": "Děkujeme všem beta testerům"
+  },
+  "edr": {
+    "loading": {
+      "main_message": "Načtení dat pro EDR",
+      "schedules": "Grafikon",
+      "stations": "Stanice",
+      "trains": "Vlaky"
+    },
+    "train_row": {
+      "position_at": "vzd.",
+      "train_delayed": "Zpožděný",
+      "train_early": "Přijíždí",
+      "train_offline": "Off line",
+      "train_stopped": "Stojí",
+      "train_away": "Pryč",
+      "train_minutes": "min",
+      "train_eta": "ETA"
+    },
+    "train_headers": {
+      "train_number": "Číslo vlaku",
+      "train_type": "Druh vlaku",
+      "train_arrival_time": "Pravidelný příjezd",
+      "train_from": "Příjezd ze stanice",
+      "train_stop": "Pobyt ve stanici",
+      "train_departure_time": "Pravidelný odjezd",
+      "train_to": "Směr jízdy"
+    },
+    "ui": {
+      "train_number": "Vlak č.",
+      "close": "Odejít",
+      "dark_light_mode_switch": "Přepínač Noc/Den",
+      "filter_train_all": "Všechny vlaky",
+      "filter_train_online": "On line"
+    }
+  }
+}

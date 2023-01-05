@@ -1,7 +1,7 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
 import {StringParam, useQueryParam} from "use-query-params";
-import {getStations} from "../api/getTimetable";
+import {getStations} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";

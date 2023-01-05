@@ -6,11 +6,18 @@ const Logger = morgan('short');
 
 const dispatchController = require("./dispatchController").default;
 const serverController = require("./serverController");
-app.use(cors()).use(Logger);
+
+const corsConfig = {
+    allowedHeaders: "x-debug",
+    maxAge: 3600
+};
+
+app.use(cors(corsConfig)).use(Logger);
 
 app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
+    .options('*', cors(corsConfig))
     .get("/", (req, res) => res.send("Better dispatch !"))
     .get("/servers", serverController.getServerList)
     .get("/stations/:serverCode", (req, res) => serverController.getStationsList(req, res, req.params['serverCode']))
