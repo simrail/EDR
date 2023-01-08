@@ -3,9 +3,10 @@ import {configByType, postConfig, postToInternalIds} from "../config";
 import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
+import {set} from "date-fns";
 
 const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number) =>
-    new Date(new Date(new Date(Date.now()).setHours(expectedHours)).setMinutes(expectedMinutes));
+    set(new Date(), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
     ((isNextDay ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * 1444) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
