@@ -17,7 +17,7 @@ import DG from "./images/posts/dg.jpg";
 import BN from "./images/posts/bn.jpg";
 import LC from "./images/posts/lc.jpg";
 
-import { GB, FR, PL, CZ, ES, DE } from 'country-flag-icons/string/3x2'
+import { GB, FR, PL, CZ, ES, DE , UA} from 'country-flag-icons/string/3x2'
 
 export const countriesFlags: {[k: string]: any} = {
     EN: GB,
@@ -25,7 +25,8 @@ export const countriesFlags: {[k: string]: any} = {
     PL,
     CZ,
     ES,
-    DE
+    DE,
+    UA
 }
 
 export const configByType: {[k: string]: any} = {
@@ -67,7 +68,7 @@ export const configByType: {[k: string]: any} = {
     },
 }
 
-export const AllowedServers = ['en1', 'fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
+export const AllowedServers = ['en1', 'en2', 'cn1', 'ua1', 'fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
 
 // Polish characters are not allowed as map keys
 export const internalConfigPostIds = {
