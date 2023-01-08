@@ -7,6 +7,7 @@ import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import useMeasure from "react-use-measure";
 import classNames from "classnames";
+import {nowUTC} from "../utils/date";
 
 const tableHeadCommonClassName = "p-4"
 const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
@@ -40,12 +41,12 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
 
 const DateTimeDisplay = () => {
     // TODO: Take server TZ
-    const [dt, setDt] = React.useState(new Date(Date.now()));
+    const [dt, setDt] = React.useState(nowUTC());
     const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
 
     React.useEffect(() => {
         setInterval(() => {
-            setDt(new Date(Date.now()));
+            setDt(nowUTC());
         }, 1000)
     }, [])
 

@@ -4,9 +4,11 @@ import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import {set} from "date-fns";
+import {nowUTC} from "../utils/date";
 
+// TODO: Pass server tz
 const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number) =>
-    set(new Date(), {hours: expectedHours, minutes: expectedMinutes});
+    set(nowUTC(), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
     ((isNextDay ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * 1444) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
