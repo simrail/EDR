@@ -106,12 +106,16 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     // console.log("haversine trains : ", trainsWithHaversine);
 
     console.log("trains:", trains)
-    if (!trains || trains.length === 0) {
+    if (trains && trains.length === 0) {
         return <Alert className="mt-8" color="error">There is no trains! The server is probably rebooting</Alert>
     }
 
+    if (!timetable) {
+        return <Alert color="failure">Fatal error: Unable to fetch timetable. Simrail server is probably rebooting</Alert>
+    }
+
     if (!currentStation)
-        return <>Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</>
+        return <Alert color="failure">Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</Alert>
 
     if (loading)
         return <div className="min-h-screen flex flex-col justify-center items-center text-center">

@@ -21,6 +21,9 @@ export function getStationsList(req: express.Request, res: express.Response, ser
 
 export function getTrainsList(req: express.Request, res: express.Response, serverCode: string) {
     return simrailClient.get("trains-open?serverCode=" + serverCode)?.then((e) => {
+        /*if (e.data.lenght === 0) {
+            return res.sendStatus(500);
+        }*/
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send((e.data as ApiResponse<Train>).data);
