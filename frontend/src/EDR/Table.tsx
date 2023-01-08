@@ -12,7 +12,7 @@ const tableHeadCommonClassName = "p-4"
 const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
     const {t} = useTranslation();
     if (!firstColBounds) return null;
-    console.log("Fourth bou,ds", fourthColBounds)
+    // console.log("Fourth bou,ds", fourthColBounds)
     return <div className="flex font-bold items-center">
         <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
             {t('edr.train_headers.train_number')}
@@ -115,7 +115,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
     if (!trainsWithHaversine || !postQry) return null;
     const postCfg = postConfig[postQry];
 
-    console.log("Second col bounds ", secondColBounds);
+    // console.log("Second col bounds ", secondColBounds);
 
     return <div>
         <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white dark:bg-slate-800 shadow-md">

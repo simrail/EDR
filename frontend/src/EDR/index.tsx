@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import {getStations, api, getTrains} from "../api/api";
-import {Progress, Spinner} from "flowbite-react";
+import {Alert, Progress, Spinner} from "flowbite-react";
 import {EDRTable} from "./Table";
 import _ from "lodash/fp";
 import {haversineDistance} from "./haversineDistance";
@@ -27,7 +27,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         api(serverCode,  currentStation, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
-                setStations(data);
+                setStations(_.keyBy('Name', data));
                 getTrains(serverCode, !!cdnBypass).then((data) => {
                     setTrains(data);
                 });
@@ -61,18 +61,21 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
 
         // console.log("With user station: ", userStation);
-
         const getClosestStation = (train: any) =>
             _.minBy<any>(
-                'distanceToStation', stations
+                'distanceToStation', Object.values(postConfig)
                 .map((s: any) => {
-                    const truePos = getOverridenStationPos(s.Name);
+                    console.log("s", s)
+                    console.log("stations ", stations);
+                    const srStation = stations[s.srId];
+                    const truePos = s.platformPosOverride ?? [srStation.Latititute, srStation.Longitute];
+                    console.log("True pos : ", truePos);
                     return {
                         ...s,
                         distanceToStation: haversineDistance(truePos, [train.TrainData.Longitute, train.TrainData.Latititute])
                     }
                 })
-            )?.Name
+            )?.srId
 
         const withHaversineTrains = _.map((t: any) => {
             const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
@@ -100,7 +103,12 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     // console.log("Previous trains", previousTrains);
 
-    console.log("haversine trains : ", trainsWithHaversine);
+    // console.log("haversine trains : ", trainsWithHaversine);
+
+    console.log("trains:", trains)
+    if (!trains || trains.length === 0) {
+        return <Alert className="mt-8" color="error">There is no trains! The server is probably rebooting</Alert>
+    }
 
     if (!currentStation)
         return <>Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</>

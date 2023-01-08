@@ -76,14 +76,15 @@ export const postToInternalIds = {
 }
 
 export const postConfig: {[k: string]: any} = {
-    GW: {
+    GB: {
         srId: "Góra Włodowska",
         trainPosRange: 0.5,
         platformPosOverride: [19.470318, 50.584134]
     },
     PS: {
         srId: "Psary",
-        trainPosRange: 0.5
+        trainPosRange: 0.5,
+        platformPosOverride: [19.820087, 50.735068]
     },
     KN: {
         srId: "Knapówka",
@@ -112,11 +113,6 @@ export const postConfig: {[k: string]: any} = {
         trainPosRange: 1,
         platformPosOverride: [19.1270833, 50.2793889]
     },
-    DG: {
-        srId: "Dąbrowa Górnicza",
-        trainPosRange: 0.5,
-        platformPosOverride: [19.184696, 50.330386]
-    },
     T1_BZ: {
         srId: "Będzin",
         trainPosRange: 0.5
@@ -124,8 +120,87 @@ export const postConfig: {[k: string]: any} = {
     LZ_LC: {
         srId:"Łazy Łc",
         trainPosRange: 0.5
+    },
+    LZ: {
+        srId:"Łazy Łc",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.391867, 50.430084]
+    },
+    OP_PO: {
+        srId:"Opoczno Poludnie",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.232192, 51.358965]
+    },
+    MY_MR: {
+        srId:"Myszków Mrzygłód",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.377319, 50.543482]
+    },
+    ZA_BO_PO: {
+        srId:"Zawiercie Borowe Pole",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.398674, 50.511076]
+    },
+    ZA: {
+        srId:"Zawiercie",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.423131, 50.481001]
+    },
+    WI: {
+        srId:"Wiesiółka",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.349172, 50.414688]
+    },
+    CZ: {
+        srId:"Chruszczobród",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.329007, 50.400345]
+    },
+    DG: {
+        srId: "Dąbrowa Górnicza",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.184696, 50.330386]
+    },
+    DG_SI: {
+        srId:"Dąbrowa Górnicza Sikorka",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.299095, 50.388950]
+    },
+    DG_ZA: {
+        srId:"Dąbrowa Górnicza Ząbkowice",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.264612, 50.366385]
+    },
+    DG_PO: {
+        srId:"Dąbrowa Górnicza Pogoria",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.240848, 50.350499]
+    },
+    DG_GO: {
+        srId:"Dąbrowa Górnicza Gołonóg",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.225709, 50.343768]
+    },
+    BZ_KS: {
+        srId:"Będzin Ksawera",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.157925, 50.330515]
+    },
+    BZ_MI: {
+        srId:"Będzin Miasto",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.135523, 50.319178]
+    },
+    KSP: {
+        srId:"Katowice Szopienice Południowe",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.092237, 50.258875]
+    },
+    KO: {
+        srId:"Katowice",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.017109, 50.257589]
     }
-    // Zawi override platform pos for later: Zawiercie 50.480875, 19.423094 150M
 }
 
 export const betaTokens = [
@@ -165,6 +240,7 @@ export const betaTokens = [
     "kN042"  // xLars (EN1)
     // Jesit (EN1)
     // Cyclone (EN1)
+    // p33t
 
 ];
 

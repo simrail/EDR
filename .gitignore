@@ -4,6 +4,8 @@
 /backend/node_modules
 /frontend/node_modules
 /frontend/build
+/datalake/node_modules
+/datalake/reds-dump
 /.pnp
 .pnp.js
 
