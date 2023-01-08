@@ -5,7 +5,7 @@ import {Spinner} from "flowbite-react";
 import {AllowedServers} from "../config";
 import {ServerCard} from "./ServerCard";
 import {useTranslation} from "react-i18next";
-import _ from "lodash";
+import _sortBy from "lodash/sortBy";
 
 export const ServerSelect = () => {
     const [servers, setServers] = React.useState<any | undefined>();
@@ -15,7 +15,7 @@ export const ServerSelect = () => {
         getServers().then(setServers);
     }, []);
 
-    const orderedServers = _.sortBy(servers, (s: any) => {
+    const orderedServers = _sortBy(servers, (s: any) => {
         return s.ServerCode.slice(0, 2).toUpperCase() === i18n.language.toUpperCase() ? -1 : 0
     });
     console.log("servers: ", servers);

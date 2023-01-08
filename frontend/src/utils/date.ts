@@ -1,4 +1,4 @@
-import {utcToZonedTime, zonedTimeToUtc} from 'date-fns-tz'
+import utcToZonedTime from 'date-fns-tz/utcToZonedTime'
 
 export const nowUTC = (targetTimezone: string = "Europe/Paris") => {
     const now = new Date();

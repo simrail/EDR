@@ -68,8 +68,6 @@ export const configByType: {[k: string]: any} = {
     },
 }
 
-export const AllowedServers = ['en1', 'en2', 'cn1', 'ua1', 'fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
-
 // Polish characters are not allowed as map keys
 export const internalConfigPostIds = {
     "GW": encodeURIComponent("Góra Włodowska"),
@@ -261,10 +259,20 @@ export const betaTokens = [
     "vkHca", // papiscze
     "dBz72", // papiscze friend
     "qq4QS", // Thomas
-    "kN042"  // xLars (EN1)
-    // Jesit (EN1)
-    // Cyclone (EN1)
-    // p33t
+    "kN042", // xLars (EN1)
+    "XQiP", // Jesit (EN1)
+    "9hhA", // Cyclone (EN1)
+    "NymO", // p33t
+    "GrqY",
+    "eRVx",
+    "EEN5",
+    "TSfU",
+    "sKOU",
+    "9vpK",
+    "6ViX"
+
+
+
 
 ];
 
@@ -281,6 +289,31 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
     BN: BN,
     ŁC: LC
 }
+
+export const serverTzMap: {[k: string]: string} = {
+    FR1: 'Europe/Paris',
+    FR2: 'Europe/Paris',
+    CZ1: 'Europe/Prague',
+    DE1: 'Europe/Paris',
+    DE2: 'Europe/Paris',
+    UA1: 'Europe/Paris',
+    ES1: 'Europe/London',
+    ES2: 'America/Argentina/Buenos_Aires',
+    EN1: 'Europe/London',
+    EN4: 'America/Jamaica',
+    EN6: 'Asia/Sakhalin',
+    EN8: 'Australia/Melbourne',
+    EN9: 'Europe/Paris',
+    PL1: 'Europe/Warsaw',
+    PL2: 'Europe/Warsaw',
+    PL3: 'US/Hawaii',
+    PL4: 'Europe/Warsaw',
+    PL5: 'Europe/Warsaw',
+}
+
+export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
+
+// console.log("Allowed servers :", AllowedServers);
 
 export const PlatformsConfig = {
 

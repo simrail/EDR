@@ -12,7 +12,7 @@ export const ServerCard: React.FC<any> = ({server}) => {
 
     console.log("falg", flag);
     return (
-        <Card className="m-4 cursor-pointer max-w-[150px] text-center" onClick={() => {
+        <Card className="m-4 cursor-pointer w-[150px] text-center" onClick={() => {
             setServerParam(server.ServerCode);
             window.history.go();
         }} imgSrc={"data:image/svg+xml;base64, " + btoa(flag)}>

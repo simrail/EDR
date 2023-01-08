@@ -2,9 +2,12 @@ import React, {useCallback} from "react";
 import {getStations, api, getTrains} from "../api/api";
 import {Alert, Progress, Spinner} from "flowbite-react";
 import {EDRTable} from "./Table";
-import _ from "lodash/fp";
+import _keyBy from "lodash/fp/keyBy";
+import _minBy from "lodash/fp/minBy";
+import _uniq from "lodash/fp/uniq";
+import _map from "lodash/fp/map";
 import {haversineDistance} from "./haversineDistance";
-import {postConfig, postToInternalIds} from "../config";
+import {postConfig, postToInternalIds, serverTzMap} from "../config";
 import {useTranslation} from "react-i18next";
 import {StringParam, useQueryParam} from "use-query-params";
 
@@ -16,9 +19,9 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     const [trainsWithHaversine, setTrainsWithHaversine] = React.useState<any | undefined>();
     const {t} = useTranslation();
     const [cdnBypass] = useQueryParam('cdnBypass', StringParam);
-
-
     const previousTrains = React.useRef<{[k: string]: any} | null>(null);
+
+    const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
 
     const loading = !timetable || !stations || !trains;
 
@@ -27,7 +30,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         api(serverCode,  currentStation, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
-                setStations(_.keyBy('Name', data));
+                setStations(_keyBy('Name', data));
                 getTrains(serverCode, !!cdnBypass).then((data) => {
                     setTrains(data);
                 });
@@ -43,13 +46,17 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         const interval = setInterval(() => {
             getTrains(serverCode).then(setTrains);
         }, 5000);
-        return () => window.clearInterval(interval);
+        if (!interval) {
+            alert("The UI will not refresh, a fatal error occured");
+            return;
+        }
+        return () => clearInterval(interval);
     }, [serverCode]);
 
     React.useEffect(() => {
         if (loading || trains.length === 0 || !previousTrains) return;
         // console.log("With trains data : ", trains);
-        const keyedStations = _.keyBy('Name', stations);
+        const keyedStations = _keyBy('Name', stations);
         // const keyedTrains = _.keyBy('TrainNoLocal', trains);
         // console.log("With stations data : ", keyedStations);
         // console.log("With trains data : ", keyedTrains);
@@ -62,7 +69,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
         // console.log("With user station: ", userStation);
         const getClosestStation = (train: any) =>
-            _.minBy<any>(
+            _minBy<any>(
                 'distanceToStation', Object.values(postConfig)
                 .map((s: any) => {
                     console.log("s", s)
@@ -77,12 +84,12 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
                 })
             )?.srId
 
-        const withHaversineTrains = _.map((t: any) => {
+        const withHaversineTrains = _map((t: any) => {
             const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
             const currentDistance = haversineDistance(getOverridenStationPos(currentStation.replace("_", " ")), [t.TrainData.Longitute, t.TrainData.Latititute]);
             // console.log(currentDistance, previousDistances?.[-1]);
             // TODO: Calculate nearest station
-            const distanceArray = _.uniq([...(previousDistances ?? []), currentDistance]);
+            const distanceArray = _uniq([...(previousDistances ?? []), currentDistance]);
             return {...t,
                 // TODO: Avoid O(n)
                 distanceToStation: distanceArray.length > 5 ? distanceArray.slice(1) : distanceArray,
@@ -93,7 +100,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         // console.log("Previous trains : ", previousTrains);
         // console.log("With haversine trains : ", withHaversineTrains)
 
-        setTrainsWithHaversine(_.keyBy('TrainNoLocal', withHaversineTrains));
+        setTrainsWithHaversine(_keyBy('TrainNoLocal', withHaversineTrains));
 
     }, [stations, trains, previousTrains.current, timetable]);
 
@@ -125,6 +132,6 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             <div>{t("edr.loading.trains")}:  {!trains ? <Spinner size="xs" /> : <>✓</> }</div>
         </div>
 
-    return <EDRTable timetable={timetable} trainsWithHaversine={trainsWithHaversine}/>;
+    return <EDRTable timetable={timetable} serverTz={serverTz} trainsWithHaversine={trainsWithHaversine}/>;
 }
 

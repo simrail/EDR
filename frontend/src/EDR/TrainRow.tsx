@@ -3,12 +3,12 @@ import {configByType, postConfig, postToInternalIds} from "../config";
 import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
-import {set} from "date-fns";
+import set from "date-fns/set";
 import {nowUTC} from "../utils/date";
 
 // TODO: Pass server tz
-const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number) =>
-    set(nowUTC(), {hours: expectedHours, minutes: expectedMinutes});
+const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number, tz: string) =>
+    set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
     ((isNextDay ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * 1444) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
@@ -50,7 +50,7 @@ const RowPostData: React.FC<any> = ({ttRow, headerFourthColRef, headerFifthColRe
 }
 
 export const TableRow: React.FC<any> = (
-    {ttRow, timeOffset, trainDetails,
+    {ttRow, timeOffset, trainDetails, serverTz,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef
     }
 ) => {
@@ -69,14 +69,14 @@ export const TableRow: React.FC<any> = (
 
     // console.log("Post cfg", postCfg);
     const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange;
-    const dateNow = new Date(Date.now());
+    const dateNow = nowUTC(serverTz);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const isNextDay = Math.abs(arrivalExpectedHours - dateNow.getHours()) > 12; // TODO: Clunky
     const isPreviousDay = Math.abs(dateNow.getHours() - arrivalExpectedHours) > 12; // TODO: Clunky
     // console.log("Is next day ? " + ttRow.train_number, isNextDay);
-    const expectedArrival = iReallyNeedToAddADateLibrary(arrivalExpectedHours, arrivalExpectedMinutes);
-    const expectedDeparture = iReallyNeedToAddADateLibrary(departureExpectedHours, departureExpectedMinutes);
+    const expectedArrival = iReallyNeedToAddADateLibrary(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
+    const expectedDeparture = iReallyNeedToAddADateLibrary(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedDeparture);
 

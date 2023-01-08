@@ -1,7 +1,7 @@
 import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
 import {configByType, postConfig} from "../config";
-import _ from "lodash/fp";
+import _sortBy from "lodash/fp/sortBy";
 import {tableCellCommonClassnames, TableRow} from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
@@ -39,27 +39,28 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
     </div>;
 }
 
-const DateTimeDisplay = () => {
+const DateTimeDisplay: React.FC<{serverTz: string}> = ({serverTz}) => {
     // TODO: Take server TZ
-    const [dt, setDt] = React.useState(nowUTC());
+    const [dt, setDt] = React.useState(nowUTC(serverTz));
     const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
 
     React.useEffect(() => {
         setInterval(() => {
-            setDt(nowUTC());
+            setDt(nowUTC(serverTz));
         }, 1000)
     }, [])
 
     return <div className="text-center">
-        {dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}<br />
-        { !cdnBypass
+        <span className="text-xl mr-2">{dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}</span><br />
+        <span className="text-xs">({serverTz})</span>
+        {/* !cdnBypass
             ? <span className="inline-flex items-center text-info-700">Slow refresh? Click <Button className="mx-2" size="xs" onClick={() => {
                 setCdnBypass("bypass");
                 window.history.go();
             }}>
                 here</Button> and contact me please !</span>
             : <span className="text-info-700">Bypassing CDN</span>
-        }
+        */}
     </div>
 }
 
@@ -70,7 +71,7 @@ const scrollToNearestTrain = (targetLn: number) => {
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
             return;
         clearInterval(interval);
-        const el: any = _.sortBy(([idx, el]) => {
+        const el: any = _sortBy(([idx, el]) => {
             return el.getAttribute("data-timeoffset")
             }
         , allTrainRows);
@@ -82,7 +83,7 @@ const scrollToNearestTrain = (targetLn: number) => {
     }, 200);
 }
 
-export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
+export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverTz}) => {
     const [postQry] = useQueryParam('post', StringParam);
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
@@ -98,7 +99,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
     const [headerSixthhColRef, sixthColBounds] = useMeasure();
     const [headerSeventhColRef, seventhColBounds] = useMeasure();
 
-    const dt = new Date(Date.now());
+    const dt = nowUTC(serverTz);
     const [betaToken] = useQueryParam('betaToken', StringParam);
     // console.log(dtString);
 
@@ -124,7 +125,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
                     <span>{postCfg.srId}</span>
                     <a href={`/?betaToken=${betaToken}`} className="underline">{t('edr.ui.close') ?? ''} ❌</a>
                 </div>
-                <DateTimeDisplay />
+                <DateTimeDisplay serverTz={serverTz} />
                 <div className="flex items-center">
                     <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle/>
@@ -163,6 +164,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
                         rowRef={rowRef}
+                        serverTz={serverTz}
                         firstColRef={i === 0 ? headerFirstColRef : null}
                         secondColRef={i === 0 ? headerSecondColRef : null}
                         thirdColRef={i ===0 ? headerThirdColRef : null}
