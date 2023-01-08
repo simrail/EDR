@@ -132,8 +132,10 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine}) => {
             </div>
             <div className="w-full flex items-center px-4 mt-2">
                 <TextInput id="trainNumberFilter" className="mb-2 w-full" onChange={(e) => setFilter(e.target.value)} placeholder={t('edr.ui.train_number') ?? ''}/>
+                <div className="flex mb-2 mx-4">
                 <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(displayingRows.length); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
                 <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('edr.ui.filter_train_online') ?? ''}</Button>
+                </div>
             </div>
             <div>
                 <div>

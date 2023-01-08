@@ -17,6 +17,16 @@ import DG from "./images/posts/dg.jpg";
 import BN from "./images/posts/bn.jpg";
 import LC from "./images/posts/lc.jpg";
 
+import { GB, FR, PL, CZ, ES, DE } from 'country-flag-icons/string/3x2'
+
+export const countriesFlags: {[k: string]: any} = {
+    EN: GB,
+    FR,
+    PL,
+    CZ,
+    ES,
+    DE
+}
 
 export const configByType: {[k: string]: any} = {
     "ROJ": {
