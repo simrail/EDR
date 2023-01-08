@@ -1,16 +1,18 @@
-const scrapRoute = require("./scrapper").default;
-const CONFIG = require("./config");
+import { scrapRoute } from "./scrapper";
+import { POSTS, SERVERS } from "./config";
+import express from "express";
 
-module.exports.default = async (req, res) => {
+export async function dispatchController(req: express.Request, res: express.Response) {
     const {serverCode, post} = req.params;
 
-    if (!CONFIG.SERVERS.includes(serverCode) || !CONFIG.POSTS[post])
+    if (!SERVERS.includes(serverCode) || !POSTS[post])
         return res.status(400).send({
             "error": "PEBKAC",
             "message": "Server or post is not supported"
         })
 
     console.log(`${serverCode} ${post}`);
+    // TODO: Check if the post is a valid value
     const [data, error] = await scrapRoute(res, serverCode, post);
     if (!error)
         res

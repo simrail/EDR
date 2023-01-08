@@ -2,6 +2,7 @@
 
 # dependencies
 /backend/node_modules
+/backend/build
 /frontend/node_modules
 /frontend/build
 /datalake/node_modules

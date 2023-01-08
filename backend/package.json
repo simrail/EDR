@@ -2,9 +2,9 @@
   "name": "better-dispatch-api",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "tsc && node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "DKFN",
@@ -17,5 +17,13 @@
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@simrail/types": "^0.0.1",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "@types/lodash": "^4.14.191",
+    "@types/morgan": "^1.9.4",
+    "typescript": "^4.9.4"
   }
 }
