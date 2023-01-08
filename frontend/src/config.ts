@@ -278,8 +278,8 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
     KZ: KZ,
     SG: SG,
     DG: DG,
-    BZ: BN,
-    LC: LC
+    BN: BN,
+    ŁC: LC
 }
 
 export const PlatformsConfig = {

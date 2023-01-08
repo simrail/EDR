@@ -26,6 +26,7 @@
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "postbuild": "rm -rf ./build/static/**/*.map",
+    "lint": "./node_modules/.bin/eslint ./src/ --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

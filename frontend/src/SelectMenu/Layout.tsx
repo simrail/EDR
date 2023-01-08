@@ -24,6 +24,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 <Navbar.Link href="https://github.com/DKFN" target="_blank">
                     DKFN
                 </Navbar.Link>
+                <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
+                    Report bugs
+                </Navbar.Link>
                 <Navbar.Link href="https://simrail.fr/discord" target="_blank">
                     Simrail France
                 </Navbar.Link>
