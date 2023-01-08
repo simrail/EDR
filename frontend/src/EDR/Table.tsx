@@ -51,9 +51,8 @@ const DateTimeDisplay = () => {
 
     return <div className="text-center">
         {dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}<br />
-        <span className="underline text-orange-700">Networking issues should be solved.</span><br />
         { !cdnBypass
-            ? <span className="inline-flex items-center text-info-700">Refresh is still slow ? Click <Button className="mx-2" size="xs" onClick={() => {
+            ? <span className="inline-flex items-center text-info-700">Slow refresh? Click <Button className="mx-2" size="xs" onClick={() => {
                 setCdnBypass("bypass");
                 window.history.go();
             }}>

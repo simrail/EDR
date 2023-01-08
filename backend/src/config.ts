@@ -10,7 +10,7 @@ export const srHeaders = {
     "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
 };
 
-export const SERVERS = ['fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2','de2'];
+export const SERVERS = ['en1', 'fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2','de2'];
 
 export const POSTS: { [key: string]: PURE_POST[] } = {
     "Góra Włodowska": ["Góra Włodowska"],

@@ -82,7 +82,12 @@ export const TableRow: React.FC<any> = (
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
-                <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge><span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
+                <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge>
+
+                {
+                    !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ Waiting for data.</span>
+                }
+                <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
             </div>
             <div className="w-full">
                 {  distanceFromStation
@@ -101,9 +106,6 @@ export const TableRow: React.FC<any> = (
                                 : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('edr.train_row.train_stopped')}</> : undefined
                 : undefined
                 }
-            {
-                !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span><Spinner size="sm" /></span>
-            }
             </div>
         </td>
         <td className={tableCellCommonClassnames}  ref={secondColRef}>

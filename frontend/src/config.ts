@@ -67,7 +67,7 @@ export const configByType: {[k: string]: any} = {
     },
 }
 
-export const AllowedServers = ['fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
+export const AllowedServers = ['en1', 'fr1', 'fr2', 'cz1', 'pl1', 'pl2', 'es1', 'es2', 'de2'];
 
 // Polish characters are not allowed as map keys
 export const internalConfigPostIds = {
