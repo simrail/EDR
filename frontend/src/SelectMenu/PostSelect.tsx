@@ -22,7 +22,7 @@ export const PostSelect = () => {
         {
             !posts
             ? <Spinner size="xl"/>
-            : posts.map((post: any) => <PostCard post={post} />)
+            : posts.map((post: any) => <PostCard key={post.Prefix} post={post} />)
         }
     </SelectMenuLayout>;
 }

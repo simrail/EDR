@@ -41,7 +41,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("footer.version")} 0.5 - {t("footer.screenshots_by")} TheMulhoose - {t("footer.thanks")} ❤️
+            {t("footer.version")} 0.6 - {t("footer.screenshots_by")} TheMulhoose - {t("footer.thanks")} ❤️
         </div>
     </div>;
 }

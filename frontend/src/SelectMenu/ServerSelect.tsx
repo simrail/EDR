@@ -21,7 +21,7 @@ export const ServerSelect = () => {
             !servers
                 ? <Spinner />
                 : servers.filter((s: any) => AllowedServers.includes(s.ServerCode)).map((s: any) => {
-                        return <ServerCard server={s} size="xl"/>
+                        return <ServerCard key={s.ServerCode} server={s} size="xl"/>
                     })
         }
     </SelectMenuLayout>;

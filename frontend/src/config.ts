@@ -5,6 +5,19 @@ import TERREGIO from "./images/TER_REGIO.png";
 // import Vector from "../images/Vector.png";
 import TRAXX from "./images/TRAXX.png";
 
+import GW from "./images/posts/gw.jpg";
+import PS from "./images/posts/ps.jpg";
+import KN from "./images/posts/kn.jpg";
+import WP from "./images/posts/wp.jpg";
+import OL from "./images/posts/ol.jpg";
+import PI from "./images/posts/pi.jpg";
+import KZ from "./images/posts/kz.jpg";
+import SG from "./images/posts/sg.jpg";
+import DG from "./images/posts/dg.jpg";
+import BN from "./images/posts/bn.jpg";
+import LC from "./images/posts/lc.jpg";
+
+
 export const configByType: {[k: string]: any} = {
     "ROJ": {
         icon: TERREGIO,
@@ -243,6 +256,20 @@ export const betaTokens = [
     // p33t
 
 ];
+
+export const optimizedPostsImagesMap: {[k: string]: any} = {
+    GW: GW,
+    PS: PS,
+    KN: KN,
+    WP: WP,
+    OL: OL,
+    PI: PI,
+    KZ: KZ,
+    SG: SG,
+    DG: DG,
+    BZ: BN,
+    LC: LC
+}
 
 export const PlatformsConfig = {
 
