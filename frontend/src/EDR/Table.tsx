@@ -39,7 +39,7 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
     </div>;
 }
 
-const DateTimeDisplay: React.FC<{serverTz: string}> = ({serverTz}) => {
+const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serverTz, serverCode}) => {
     const {i18n} = useTranslation();
     // TODO: Take server TZ
     const [dt, setDt] = React.useState(nowUTC(serverTz));
@@ -53,7 +53,7 @@ const DateTimeDisplay: React.FC<{serverTz: string}> = ({serverTz}) => {
 
     return <div className="text-center">
         <span className="text-xl mr-2">{formatTime(dt, i18n.language)}</span><br />
-        <span className="text-xs">({serverTz})</span>
+        <span className="text-xs">{serverCode.toUpperCase()} / ({serverTz})</span>
         {/* !cdnBypass
             ? <span className="inline-flex items-center text-info-700">Slow refresh? Click <Button className="mx-2" size="xs" onClick={() => {
                 setCdnBypass("bypass");
@@ -102,6 +102,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
 
     const dt = nowUTC(serverTz);
     const [betaToken] = useQueryParam('betaToken', StringParam);
+    const [serverCode] = useQueryParam('serverCode', StringParam) as any;
     // console.log(dtString);
 
     React.useEffect(() => {
@@ -126,7 +127,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                     <span>{postCfg.srId}</span>
                     <a href={`/?betaToken=${betaToken}`} className="underline">{t('edr.ui.close') ?? ''} ❌</a>
                 </div>
-                <DateTimeDisplay serverTz={serverTz} />
+                <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
                     <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle/>
