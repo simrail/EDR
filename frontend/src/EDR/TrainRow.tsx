@@ -87,7 +87,7 @@ export const TableRow: React.FC<any> = (
                 <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge>
 
                 {
-                    !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ Waiting for data.</span>
+                    !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
                 }
                 <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
             </div>

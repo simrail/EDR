@@ -47,7 +47,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             getTrains(serverCode).then(setTrains);
         }, 5000);
         if (!interval) {
-            alert("The UI will not refresh, a fatal error occured");
+            alert(t("app.fatal_error"));
             return;
         }
         return () => clearInterval(interval);
@@ -114,15 +114,15 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     console.log("trains:", trains)
     if (trains && trains.length === 0) {
-        return <Alert className="mt-8" color="error">There is no trains! The server is probably rebooting</Alert>
+        return <Alert className="mt-8" color="error">{t("app.no_trains")}</Alert>
     }
 
     if (!timetable) {
-        return <Alert color="failure">Fatal error: Unable to fetch timetable. Simrail server is probably rebooting</Alert>
+        return <Alert color="failure">{t("app.no_timetable")}</Alert>
     }
 
     if (!currentStation)
-        return <Alert color="failure">Fatal error: Current station not found. (J'ai changé les ids internes, essaye de revenir au menu)</Alert>
+        return <Alert color="failure">{t("app.station_not_found")}</Alert>
 
     if (loading)
         return <div className="min-h-screen flex flex-col justify-center items-center text-center">

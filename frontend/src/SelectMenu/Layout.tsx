@@ -17,7 +17,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 <Button color={i18n.language === "fr" ? "info" : "gray"} className="ml-8 mx-2" onClick={() => i18n.changeLanguage("fr")}>FR</Button>
                 <Button color={i18n.language === "en" ? "info" : "gray"} onClick={() => i18n.changeLanguage("en")}>EN</Button>
                 <Button color={i18n.language === "cz" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("cz")}>CZ</Button>
-
+                <Button color={i18n.language === "hu" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("hu")}>HU</Button>
             </div>
 
         <Navbar.Collapse>
@@ -25,7 +25,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                     DKFN
                 </Navbar.Link>
                 <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
-                    Report bugs
+                    {t("navbar.bugs")}
                 </Navbar.Link>
                 <Navbar.Link href="https://simrail.fr/discord" target="_blank">
                     Simrail France
@@ -44,7 +44,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("footer.version")} 0.6 - {t("footer.screenshots_by")} TheMulhoose - {t("footer.thanks")} ❤️ - This is not an official SimRail app
+            {t("footer.version")} 0.6 - {t("footer.screenshots_by")} TheMulhoose - {t("footer.thanks")} ❤️ - {t("footer.not_official")}
         </div>
     </div>;
 }
