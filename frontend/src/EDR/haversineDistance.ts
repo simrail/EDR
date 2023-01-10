@@ -3,7 +3,7 @@ export function haversineDistance(coords1: [number, number], coords2: [number, n
         return x * Math.PI / 180;
     }
 
-    // console.log(coords1, coords2);
+    // console_log(coords1, coords2);
     const lon1 = coords1[0];
     const lat1 = coords1[1];
 

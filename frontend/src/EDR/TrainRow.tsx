@@ -60,7 +60,7 @@ const RowPostData: React.FC<any> = ({ttRow, distanceFromStation, serverTz, heade
     </>;
 }
 
-export const TableRow: React.FC<any> = (
+const TableRow: React.FC<any> = (
     {ttRow, timeOffset, trainDetails, serverTz,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef
     }
@@ -78,20 +78,20 @@ export const TableRow: React.FC<any> = (
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
 
-    // console.log("Post cfg", postCfg);
+    // console_log("Post cfg", postCfg);
     const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange;
     const dateNow = nowUTC(serverTz);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const isNextDay = Math.abs(arrivalExpectedHours - dateNow.getHours()) > 12; // TODO: Clunky
     const isPreviousDay = Math.abs(dateNow.getHours() - arrivalExpectedHours) > 12; // TODO: Clunky
-    // console.log("Is next day ? " + ttRow.train_number, isNextDay);
+    // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const expectedArrival = iReallyNeedToAddADateLibrary(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
     const expectedDeparture = iReallyNeedToAddADateLibrary(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedDeparture);
 
-    // ETA && console.log("ETA", ETA);
+    // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
@@ -159,3 +159,5 @@ export const TableRow: React.FC<any> = (
         <RowPostData ttRow={ttRow} distanceFromStation={distanceFromStation} serverTz={serverTz} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
     </Table.Row>
 }
+
+export default React.memo(TableRow)

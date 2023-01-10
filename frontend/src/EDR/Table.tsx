@@ -2,7 +2,7 @@ import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
 import {configByType, postConfig, searchSeparator} from "../config";
 import _sortBy from "lodash/fp/sortBy";
-import {tableCellCommonClassnames, TableRow} from "./TrainRow";
+import TableRow from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import useMeasure from "react-use-measure";
@@ -13,7 +13,7 @@ const tableHeadCommonClassName = "p-4"
 const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
     const {t} = useTranslation();
     if (!firstColBounds) return null;
-    // console.log("Fourth bou,ds", fourthColBounds)
+    // console_log("Fourth bou,ds", fourthColBounds)
     return <div className="flex font-bold items-center">
         <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
             {t('edr.train_headers.train_number')}
@@ -46,9 +46,10 @@ const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serv
     const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
 
     React.useEffect(() => {
-        setInterval(() => {
+        window.timeRefreshWebWorkerId = window.setInterval(() => {
             setDt(nowUTC(serverTz));
-        }, 1000)
+        }, 1000);
+        return () => window.clearInterval(window.timeRefreshWebWorkerId)
     }, [])
 
     return <div className="text-center">
@@ -68,7 +69,7 @@ const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serv
 const scrollToNearestTrain = (targetLn: number) => {
     let interval = setInterval(() => {
         const allTrainRows = [...Array.from(document.querySelectorAll('[data-timeoffset]').entries())];
-        // console.log(allTrainRows.length);
+        // console_log(allTrainRows.length);
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
             return;
         clearInterval(interval);
@@ -77,7 +78,7 @@ const scrollToNearestTrain = (targetLn: number) => {
             }
         , allTrainRows);
 
-        // console.log(el[0]);
+        // console_log(el[0]);
         el[0][1].scrollIntoView({
             block: "center"
         })
@@ -103,7 +104,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
     const dt = nowUTC(serverTz);
     const [betaToken] = useQueryParam('betaToken', StringParam);
     const [serverCode] = useQueryParam('serverCode', StringParam) as any;
-    // console.log(dtString);
+    // console_log(dtString);
 
     React.useEffect(() => {
         if (displayMode === "all" && !filter)
@@ -112,13 +113,13 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
 
     // TODO: This introduces a bug ! It makes the filter jump
 
-    // console.log("All trains : ", timetable);
-    // console.log("Displayed trains : ", displayingRows);
+    // console_log("All trains : ", timetable);
+    // console_log("Displayed trains : ", displayingRows);
 
     if (!trainsWithHaversine || !postQry) return null;
     const postCfg = postConfig[postQry];
 
-    // console.log("Second col bounds ", secondColBounds);
+    // console_log("Second col bounds ", secondColBounds);
 
     return <div>
         <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white dark:bg-slate-800 shadow-md">

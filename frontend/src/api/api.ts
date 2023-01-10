@@ -6,7 +6,7 @@ const NGINX_DIRECT = "https://dispatch-api.nginx.infra.deadlykungfu.ninja:8080/"
 const baseApiCall = (URL: string, noCDN: boolean = false) => {
     // TODO: Add error toast
     const outbound = (noCDN ? NGINX_DIRECT : BASE_API_URL) + URL;
-    // console.log("Outbound URL: ", outbound)
+    // console_log("Outbound URL: ", outbound)
     return fetch(outbound, {
         headers: new Headers({
             "x-debug": new URLSearchParams(window.location.search).get("betaToken") ?? "No token"

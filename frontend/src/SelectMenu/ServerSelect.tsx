@@ -6,6 +6,7 @@ import {AllowedServers} from "../config";
 import {ServerCard} from "./ServerCard";
 import {useTranslation} from "react-i18next";
 import _sortBy from "lodash/sortBy";
+import {console_log} from "../utils/Logger";
 
 export const ServerSelect = () => {
     const [servers, setServers] = React.useState<any | undefined>();
@@ -18,7 +19,7 @@ export const ServerSelect = () => {
     const orderedServers = _sortBy(servers, (s: any) => {
         return s.ServerCode.slice(0, 2).toUpperCase() === i18n.language.toUpperCase() ? -1 : 0
     });
-    console.log("servers: ", servers);
+    console_log("servers: ", servers);
 
     return <SelectMenuLayout title={t("select_menu.server_selection")}>
         {

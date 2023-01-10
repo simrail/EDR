@@ -16,7 +16,7 @@ export const PostSelect = () => {
         getStations(serverCode).then(setPosts);
     }, []);
 
-    // console.log("Postes : ", posts);
+    // console_log("Postes : ", posts);
 
     return <SelectMenuLayout title={t("select_menu.post_select")}>
         {

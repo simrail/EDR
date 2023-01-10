@@ -19,6 +19,8 @@ import LC from "./images/posts/lc.jpg";
 
 import { GB, FR, PL, CZ, ES, DE , UA} from 'country-flag-icons/string/3x2'
 
+export const LOGGING = false;
+
 export const countriesFlags: {[k: string]: any} = {
     EN: GB,
     FR,
@@ -315,7 +317,7 @@ export const searchSeparator = ',';
 
 export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
 
-// console.log("Allowed servers :", AllowedServers);
+// console_log("Allowed servers :", AllowedServers);
 
 export const PlatformsConfig = {
 
