@@ -28,7 +28,9 @@ const lineData = (ttRow: any) => (
 
 export const tableCellCommonClassnames = "p-4"
 
-const RowPostData: React.FC<any> = ({ttRow, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
+const RowPostData: React.FC<any> = ({ttRow, distanceFromStation, serverTz, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
+    const {t} = useTranslation();
+    const now = nowUTC(serverTz);
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
     return <>
         <td className={tableCellCommonClassnames} ref={headerFourthColRef}>
@@ -40,7 +42,16 @@ const RowPostData: React.FC<any> = ({ttRow, headerFourthColRef, headerFifthColRe
             { secondaryPostData.map((spd: any) => <><hr />{platformData(spd)}</>)}
         </td>
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
-            {ttRow.scheduled_departure}
+        <div className="inline-flex items-center justify-start h-full">
+                {ttRow.scheduled_departure}
+            </div>
+            <div className="inline-flex items-center h-full pl-4">
+                { 
+                    distanceFromStation < 1 && new Date(now.getFullYear(), now.getMonth(), now.getDate(), ttRow.scheduled_departure.split(':')[0], ttRow.scheduled_departure.split(':')[1]) <= nowUTC(serverTz)
+                        ? <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
+                        : undefined
+                }
+            </div>
         </td>
         <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
             {lineData(ttRow)}
@@ -145,6 +156,6 @@ export const TableRow: React.FC<any> = (
             }
             </div>
         </td>
-        <RowPostData ttRow={ttRow} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
+        <RowPostData ttRow={ttRow} distanceFromStation={distanceFromStation} serverTz={serverTz} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
     </Table.Row>
 }

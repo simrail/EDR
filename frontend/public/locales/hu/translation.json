@@ -34,18 +34,19 @@
       "train_away": "Elment",
       "train_minutes": "perc",
       "train_eta": "ETA",
+      "train_departing": "Indul",
       "train_early_sign": "-",
       "train_late_sign": "+",
       "waiting_for_data":"Adatra vár."
     },
     "train_headers": {
-      "train_number": "Vonat száma",
-      "train_type": "Típus",
-      "train_arrival_time": "Érkezési idő",
-      "train_from": "Indulás",
-      "train_stop": "Megálló",
-      "train_departure_time": "Indulási idő",
-      "train_to": "Cél"
+      "train_number": "Vonat száma, jelenlegi helye",
+      "train_type": "Típus / Sebesség",
+      "train_arrival_time": "Érkezés ideje",
+      "train_from": "Érkezik",
+      "train_stop": "Megálló részletek",
+      "train_departure_time": "Indulás ideje",
+      "train_to": "Továbbindul"
     },
     "ui": {
       "train_number": "Vonat szám keresés",
