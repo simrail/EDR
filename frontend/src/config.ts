@@ -98,7 +98,7 @@ export const postToInternalIds = {
 }
 
 export const postConfig: {[k: string]: any} = {
-    GB: {
+    GW: {
         srId: "Góra Włodowska",
         trainPosRange: 0.5,
         platformPosOverride: [19.470318, 50.584134]

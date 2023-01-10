@@ -28,6 +28,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     React.useEffect(() => {
         setLoading(true);
+        console.log("Current station : ", currentStation);
         if(!serverCode || !currentStation) return;
         api(serverCode,  currentStation, !!cdnBypass).then((data) => {
             setTimetable(data);
