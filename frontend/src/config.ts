@@ -311,6 +311,8 @@ export const serverTzMap: {[k: string]: string} = {
     PL5: 'Europe/Warsaw',
 }
 
+export const searchSeparator = ',';
+
 export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
 
 // console.log("Allowed servers :", AllowedServers);

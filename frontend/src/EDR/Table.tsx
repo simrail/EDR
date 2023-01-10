@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
-import {configByType, postConfig} from "../config";
+import {configByType, postConfig, searchSeparator} from "../config";
 import _sortBy from "lodash/fp/sortBy";
 import {tableCellCommonClassnames, TableRow} from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
@@ -158,7 +158,15 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
             <Table.Body>
                 {timetable.length > 0
                     ? timetable
-                        .filter((tt: any) => filter ? tt.train_number.startsWith(filter): true)
+                        .filter((tt: any) => filter ? 
+                            // Remove spaces, trim not enough since humans usually use space after a separator
+                            filter.replace(/\s+/g, '')
+                            // Separate train numbers
+                            .split(searchSeparator)
+                            // Remove empty values (if last char is separator, no filtering would occur due to empty string)
+                            .filter(n => n)
+                            // If any train numbers match up, filter for it
+                            .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
                         .filter((tt: any) => displayMode === "near" ? !!trainsWithHaversine[tt.train_number] : true)
                         .map((tr: any, i: number) =>
                     <TableRow
