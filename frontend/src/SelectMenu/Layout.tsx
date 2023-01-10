@@ -24,6 +24,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 <Navbar.Link href="https://github.com/DKFN" target="_blank">
                     DKFN
                 </Navbar.Link>
+                <Navbar.Link href="https://github.com/Tallyrald" target="_blank">
+                    Tallyrald
+                </Navbar.Link>
                 <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
                     {t("navbar.bugs")}
                 </Navbar.Link>
@@ -32,6 +35,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 </Navbar.Link>
                 <Navbar.Link href="https://discord.gg/ofpmafia" target="_blank">
                     OFPmafia
+                </Navbar.Link>
+                <Navbar.Link href="https://discord.com/invite/XgJpXpG2Eu" target="_blank">
+                    Simrail Global
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
