@@ -13,6 +13,7 @@ import {StringParam, useQueryParam} from "use-query-params";
 
 export const EDR: React.FC<any> = ({serverCode, post}) => {
     const currentStation = postConfig[post]?.srId;//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
+    const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<any | undefined>();
     const [trains, setTrains] = React.useState<any | undefined>();
     const [timetable, setTimetable] = React.useState<any | undefined>();
@@ -23,9 +24,10 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
 
-    const loading = !timetable || !stations || !trains;
+    // const loading = !timetable || !stations || !trains;
 
     React.useEffect(() => {
+        setLoading(true);
         if(!serverCode || !currentStation) return;
         api(serverCode,  currentStation, !!cdnBypass).then((data) => {
             setTimetable(data);
@@ -33,6 +35,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
                 setStations(_keyBy('Name', data));
                 getTrains(serverCode, !!cdnBypass).then((data) => {
                     setTrains(data);
+                    setLoading(false);
                 });
             });
         });
@@ -113,15 +116,16 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     // console.log("haversine trains : ", trainsWithHaversine);
 
     console.log("trains:", trains)
-    if (trains && trains.length === 0) {
+
+    if (!loading && trains && trains.length === 0) {
         return <Alert className="mt-8" color="error">{t("app.no_trains")}</Alert>
     }
 
-    if (!timetable) {
+    if (!loading && !timetable) {
         return <Alert color="failure">{t("app.no_timetable")}</Alert>
     }
 
-    if (!currentStation)
+    if (!loading && !currentStation)
         return <Alert color="failure">{t("app.station_not_found")}</Alert>
 
     if (loading)

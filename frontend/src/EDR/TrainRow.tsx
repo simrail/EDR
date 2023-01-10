@@ -11,7 +11,7 @@ const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: nu
     set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
-    ((isNextDay ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * 1444) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
+    ((isNextDay && dateNow  ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * (1444 * 2)) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
 
 const platformData = (ttRow: any ) => (
     <>

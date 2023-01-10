@@ -263,13 +263,13 @@ export const betaTokens = [
     "XQiP", // Jesit (EN1)
     "9hhA", // Cyclone (EN1)
     "NymO", // p33t
-    "GrqY",
-    "eRVx",
-    "EEN5",
-    "TSfU",
-    "sKOU",
-    "9vpK",
-    "6ViX"
+    "GrqY", // marass007
+    "eRVx", // tulik74
+    "EEN5", // NUB NicDaBoii
+    "TSfU", // Milan SSG Owner!w
+    "sKOU", // NO_U
+    "9vpK", // Mickey007
+    "6ViX"  // stacode
 
 
 
