@@ -121,13 +121,13 @@ export const TableRow: React.FC<any> = (
             {ttRow.scheduled_arrival}&nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails
-                        ? <span className="text-red-600 font-bold">-{arrivalTimeDelay}</span>
+                        ? <span className="text-red-600 font-bold">{t("edr.train_row.train_late_sign")}{arrivalTimeDelay}</span>
                         : undefined
                 }
 
                 {
                     !trainHasPassedStation && arrivalTimeDelay < 0 && trainDetails
-                        ? <span className="text-green-600 font-bold">+{Math.abs(arrivalTimeDelay)}</span>
+                        ? <span className="text-green-600 font-bold">{t("edr.train_row.train_early_sign")}{Math.abs(arrivalTimeDelay)}</span>
                         : undefined
                 }
 
