@@ -5,6 +5,7 @@ import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import set from "date-fns/set";
 import {nowUTC} from "../utils/date";
+import {getPlayer} from "../api/api";
 
 // TODO: Pass server tz
 const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number, tz: string) =>
@@ -60,13 +61,27 @@ const RowPostData: React.FC<any> = ({ttRow, distanceFromStation, serverTz, heade
     </>;
 }
 
+// TODO: This is hella big. Needs refactoring !
 const TableRow: React.FC<any> = (
     {ttRow, timeOffset, trainDetails, serverTz,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef
     }
 ) => {
+    const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
+
+    const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
+
+    React.useEffect(() => {
+        if (!controlledBy) return;
+        getPlayer(controlledBy).then((res) => {
+            if (res[0])
+                setPlayerSteamInfo(res[0]);
+        })
+    }, [controlledBy]);
+
+
     if (!postQry) return null;
     const trainConfig = configByType[ttRow.type as string];
     const postCfg = postConfig[postQry];
@@ -95,12 +110,19 @@ const TableRow: React.FC<any> = (
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
-                <Badge color={trainBadgeColor}>{ttRow.train_number}</Badge>
+                <Badge color={trainBadgeColor} size="sm"><span className="!font-bold">{ttRow.train_number}</span></Badge>
 
                 {
                     !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
                 }
-                <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
+                <div className="flex flex-col items-end">
+                    <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
+                    {
+                        playerSteamInfo?.pseudo
+                        ? <span className="flex items-center"><img className="mx-2" width={16} src={playerSteamInfo.avatar} />{playerSteamInfo?.pseudo}</span>
+                        : "BOT"
+                        }
+                </div>
             </div>
             <div className="w-full">
                 {  distanceFromStation

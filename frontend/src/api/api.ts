@@ -1,8 +1,9 @@
 // const BASE_API_URL = "http://localhost:8080/";
 import {ApiResponse, Server, Station, Train} from "@simrail/types";
 
-const BASE_API_URL = "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
+// const BASE_API_URL = "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
 const NGINX_DIRECT = "https://dispatch-api.nginx.infra.deadlykungfu.ninja:8080/"
+const BASE_API_URL = "http://localhost:8080/"
 const baseApiCall = (URL: string, noCDN: boolean = false) => {
     // TODO: Add error toast
     const outbound = (noCDN ? NGINX_DIRECT : BASE_API_URL) + URL;
@@ -26,3 +27,6 @@ export const getStations = (server: string, noCDN: boolean = false): Promise<Api
 
 export const getServers = (noCDN: boolean = false): Promise<ApiResponse<Server>> =>
     baseApiCall("servers", noCDN);
+
+export const getPlayer = (steamId: string, noCDN: boolean = false): Promise<any> =>
+    baseApiCall("steam/" + steamId, noCDN);

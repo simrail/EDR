@@ -1,7 +1,7 @@
 {
   "app": {
     "fatal_error": "The UI will not refresh, a fatal error occured",
-    "no_trains": "There is no trains! The server is probably rebooting",
+    "no_trains": "Žádné vlaky k dispozici. Server se nejspíše restartuje",
     "no_timetable": "Fatal error: Unable to fetch timetable. Simrail server is probably rebooting",
     "station_not_found": "Fatal error: Current station not found."
   },

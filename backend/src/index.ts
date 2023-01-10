@@ -5,7 +5,7 @@ const app = express();
 const Logger = morgan('short');
 
 import { dispatchController } from "./dispatchController";
-import { getServerList, getStationsList, getTrainsList } from "./serverController";
+import {getPlayer, getServerList, getStationsList, getTrainsList} from "./serverController";
 
 const corsConfig = {
     allowedHeaders: "x-debug",
@@ -19,9 +19,10 @@ app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
     .options('*', cors(corsConfig))
-    .get("/", (req, res) => res.send("Better dispatch !"))
+    .get("/", (req: express.Request, res: express.Response) => res.send("Better dispatch !"))
     .get("/servers", getServerList)
-    .get("/stations/:serverCode", (req, res) => getStationsList(req, res, req.params['serverCode']))
-    .get("/trains/:serverCode", (req, res) => getTrainsList(req, res, req.params['serverCode']))
+    .get("/stations/:serverCode", (req: express.Request, res: express.Response) => getStationsList(req, res, req.params['serverCode']))
+    .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
     .get("/dispatch/:serverCode/:post", dispatchController)
+    .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
 app.listen(8080)
