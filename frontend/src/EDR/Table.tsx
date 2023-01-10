@@ -7,7 +7,7 @@ import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import useMeasure from "react-use-measure";
 import classNames from "classnames";
-import {nowUTC} from "../utils/date";
+import {formatTime, nowUTC} from "../utils/date";
 
 const tableHeadCommonClassName = "p-4"
 const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
@@ -40,6 +40,7 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
 }
 
 const DateTimeDisplay: React.FC<{serverTz: string}> = ({serverTz}) => {
+    const {i18n} = useTranslation();
     // TODO: Take server TZ
     const [dt, setDt] = React.useState(nowUTC(serverTz));
     const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
@@ -51,7 +52,7 @@ const DateTimeDisplay: React.FC<{serverTz: string}> = ({serverTz}) => {
     }, [])
 
     return <div className="text-center">
-        <span className="text-xl mr-2">{dt.getHours()}:{dt.getMinutes()}:{dt.getSeconds()}</span><br />
+        <span className="text-xl mr-2">{formatTime(dt, i18n.language)}</span><br />
         <span className="text-xs">({serverTz})</span>
         {/* !cdnBypass
             ? <span className="inline-flex items-center text-info-700">Slow refresh? Click <Button className="mx-2" size="xs" onClick={() => {
@@ -88,7 +89,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [displayingRows, setDisplayingRows] = React.useState<any[]>([]);
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
 
     const [rowRef, rowBounds] = useMeasure();
     const [headerFirstColRef, firstColBounds] = useMeasure();
@@ -173,7 +174,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                         headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
                         headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
                         trainDetails={trainsWithHaversine[tr.train_number]}
-                        currentTime={dt}
+                        currentTime={formatTime(dt, i18n.language)}
                         timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - Number.parseInt(tr.hourSort))}
                     />) : <div className="text-center w-full"><Spinner /></div>
                 }
