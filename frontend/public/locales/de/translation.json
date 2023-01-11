@@ -1,0 +1,59 @@
+{
+  "app": {
+    "fatal_error": "Schwerwiegender Fehler aufgetreten! Benutzeroberfläche wird nicht aktualisiert!",
+    "no_trains": "Keine Züge vorhanden! Server startet wahrscheinlich neu.",
+    "no_timetable": "Schwerer Fehler: Fahrplan kann nicht geladen werden! Server startet wahrscheinlich neu.",
+    "station_not_found": "Schwerer Fehler: Station kann nicht gefunden werden!"
+  },
+  "navbar": {
+    "bugs": "Fehler melden"
+  },
+  "select_menu": {
+    "server_selection": "Server auswählen",
+    "post_select": "Stellwerk auswählen"
+  },
+  "footer": {
+    "version": "Version",
+    "screenshots_by": "Screenshot von ",
+    "thanks": "Danke an alle Beta-Tester!",
+    "not_official": "Dies ist kein offizielles Programm von SimRail!"
+  },
+  "edr": {
+    "loading": {
+      "main_message": "Lade Daten für EDR...",
+      "schedules": "Fahrpläne",
+      "stations": "Stationen",
+      "trains": "Züge"
+    },
+    "train_row": {
+      "position_at": "bei",
+      "train_delayed": "verspätet",
+      "train_early": "verfrüht",
+      "train_offline": "Nicht in Betrieb",
+      "train_stopped": "steht",
+      "train_away": "entfernt sich",
+      "train_minutes": " min",
+      "train_eta": "vsl. Ankunft",
+      "train_departing": "abgefahren",
+      "train_early_sign": "-",
+      "train_late_sign": "+",
+      "waiting_for_data": "Warte auf Daten..."
+    },
+    "train_headers": {
+      "train_number": "Zug-Nr.",
+      "train_type": "Zugart",
+      "train_arrival_time": "Ankunftszeit",
+      "train_from": "Von",
+      "train_stop": "Halt",
+      "train_departure_time": "Abfahrtszeit",
+      "train_to": "Nach"
+    },
+    "ui": {
+      "train_number": "Zug-Nr.",
+      "close": "Schließen",
+      "dark_light_mode_switch": "Hell / Dunkel",
+      "filter_train_all": "Alle Züge",
+      "filter_train_online": "Züge in Betrieb"
+    }
+  }
+}

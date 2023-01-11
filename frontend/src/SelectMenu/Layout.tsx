@@ -10,14 +10,15 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
     return <div className="text-primary">
         <Navbar fluid={true} className="bg-slate-300 sticky top-0">
             <Navbar.Brand href="/">
-                <img src={AppLogo} height={64} width={64}/>
+                <img src={AppLogo} height={64} width={64} alt="App Logo"/>
                 <span className="ml-4">EDR</span>
             </Navbar.Brand>
             <div className="flex">
-                <Button color={i18n.language === "fr" ? "info" : "gray"} className="ml-8 mx-2" onClick={() => i18n.changeLanguage("fr")}>FR</Button>
-                <Button color={i18n.language === "en" ? "info" : "gray"} onClick={() => i18n.changeLanguage("en")}>EN</Button>
-                <Button color={i18n.language === "cz" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("cz")}>CZ</Button>
-                <Button color={i18n.language === "hu" ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("hu")}>HU</Button>
+                <Button color={i18n.language.includes("fr") ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("fr")}>FR</Button>
+                <Button color={i18n.language.includes("en") ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("en")}>EN</Button>
+                <Button color={i18n.language.includes("cs") ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("cs")}>CZ</Button>
+                <Button color={i18n.language.includes("hu") ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("hu")}>HU</Button>
+                <Button color={i18n.language.includes("de") ? "info" : "gray"} className="mx-2" onClick={() => i18n.changeLanguage("de")}>DE</Button>
             </div>
 
         <Navbar.Collapse>
@@ -32,6 +33,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 </Navbar.Link>
                 <Navbar.Link href="https://simrail.fr/discord" target="_blank">
                     Simrail France
+                </Navbar.Link>
+                <Navbar.Link href="https://discord.gg/A63hJphHQ4">
+                    SimRail Germany
                 </Navbar.Link>
                 <Navbar.Link href="https://discord.gg/ofpmafia" target="_blank">
                     OFPmafia
