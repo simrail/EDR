@@ -6,13 +6,14 @@ import {useTranslation} from "react-i18next";
 import set from "date-fns/set";
 import {nowUTC} from "../utils/date";
 import {getPlayer} from "../api/api";
+import {PathFinding_HasTrainPassedStation} from "../pathfinding/api";
 
 // TODO: Pass server tz
 const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number, tz: string) =>
     set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
-    ((isNextDay && dateNow  ? 1 : 0) * -1444) + ((isPreviousDay ? 1 : 0) * (1444 * 2)) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
+    ((isNextDay && dateNow.getHours() < 22 ? 1 : 0) * -1444) + ((isPreviousDay && dateNow.getHours() < 22 ? 1 : 0) * (1444 * 2)) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
 
 const platformData = (ttRow: any ) => (
     <>
@@ -74,7 +75,10 @@ const TableRow: React.FC<any> = (
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
 
     React.useEffect(() => {
-        if (!controlledBy) return;
+        if (!controlledBy) {
+            setPlayerSteamInfo(undefined);
+            return;
+        }
         getPlayer(controlledBy).then((res) => {
             if (res[0])
                 setPlayerSteamInfo(res[0]);
@@ -85,16 +89,22 @@ const TableRow: React.FC<any> = (
     if (!postQry) return null;
     const trainConfig = configByType[ttRow.type as string];
     const postCfg = postConfig[postQry];
+    const closestStationid = trainDetails?.closestStationId;
+    const pathFindingLineTrace = trainDetails?.pfLineTrace;
+
+    // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
+    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid) : false;
     const trainBadgeColor = trainConfig?.color ?? "purple";
-    const currentDistance = trainDetails?.distanceToStation.slice(-1)
-    const previousDistance = trainDetails?.distanceToStation.slice(-2)
+    const currentDistance = trainDetails?.rawDistances.slice(-1)
+    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
 
     // console_log("Post cfg", postCfg);
-    const trainHasPassedStation = hasEnoughData && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange;
+    // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
+    const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const dateNow = nowUTC(serverTz);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
@@ -111,18 +121,17 @@ const TableRow: React.FC<any> = (
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <Badge color={trainBadgeColor} size="sm"><span className="!font-bold">{ttRow.train_number}</span></Badge>
-
+                ({currentDistance} - {previousDistance})
                 {
                     !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
                 }
-                <div className="flex flex-col items-end">
-                    <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
-                    {
-                        playerSteamInfo?.pseudo
+                {
+                    playerSteamInfo?.pseudo
                         ? <span className="flex items-center"><img className="mx-2" width={16} src={playerSteamInfo.avatar} />{playerSteamInfo?.pseudo}</span>
-                        : "BOT"
-                        }
-                </div>
+                        : <></>
+                }
+                    <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
+
             </div>
             <div className="w-full">
                 {  distanceFromStation

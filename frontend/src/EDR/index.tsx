@@ -6,14 +6,16 @@ import _keyBy from "lodash/fp/keyBy";
 import _minBy from "lodash/fp/minBy";
 import _uniq from "lodash/fp/uniq";
 import _map from "lodash/fp/map";
-import {haversineDistance} from "./haversineDistance";
-import {postConfig, postToInternalIds, serverTzMap} from "../config";
+import {Vector_DotProduct, vectors} from "./vectors";
+import {internalConfigPostIds, postConfig, postToInternalIds, serverTzMap} from "../config";
 import {useTranslation} from "react-i18next";
 import {StringParam, useQueryParam} from "use-query-params";
 import {console_log} from "../utils/Logger";
+import {PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../pathfinding/api";
+import Victor from "victor";
 
 export const EDR: React.FC<any> = ({serverCode, post}) => {
-    const currentStation = postConfig[post]?.srId;//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
+    const currentStation = postConfig[post];//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<any | undefined>();
     const [trains, setTrains] = React.useState<any | undefined>();
@@ -31,7 +33,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         setLoading(true);
         console_log("Current station : ", currentStation);
         if(!serverCode || !currentStation) return;
-        api(serverCode,  currentStation, !!cdnBypass).then((data) => {
+        api(serverCode,  currentStation?.srId, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
                 setStations(_keyBy('Name', data));
@@ -50,7 +52,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     React.useEffect(() => {
         window.trainsRefreshWebWorkerId = window.setInterval(() => {
             getTrains(serverCode).then(setTrains);
-        }, 5000);
+        }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
             alert(t("app.fatal_error"));
             return;
@@ -58,6 +60,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
     }, [serverCode]);
 
+    // TODO: Effect needs refactoring it is HUGE
     React.useEffect(() => {
         if (loading || trains.length === 0 || !previousTrains) return;
         // console_log("With trains data : ", trains);
@@ -67,43 +70,77 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         // console_log("With trains data : ", keyedTrains);
 
         const getOverridenStationPos = (postId: string) =>
-            postConfig[postToInternalIds[encodeURIComponent(postId)]]?.platformPosOverride
-                ?? [keyedStations[postId].Longitude, keyedStations[postId].Latititude]
+            postConfig[postId]?.platformPosOverride
+                ?? [keyedStations[internalConfigPostIds[encodeURIComponent(postId)]].Longitude, keyedStations[postId].Latititude]
 
 
 
         // console_log("With user station: ", userStation);
+        // TODO: Change to closest station in path (and if possible, forward of the train)
+        // TODO: In between data points, train tends to "move away" but is not really moving away.
+        // TODO: With two data points and current station it should be possible to infer next path station
         const getClosestStation = (train: any) =>
             _minBy<any>(
                 'distanceToStation', Object.values(postConfig)
                 .map((s: any) => {
                     console_log("s", s)
                     console_log("stations ", stations);
-                    const srStation = stations[s.srId];
-                    const truePos = s.platformPosOverride ?? [srStation.Latititute, srStation.Longitute];
+                    const truePos = s.platformPosOverride;
                     console_log("True pos : ", truePos);
                     return {
                         ...s,
-                        distanceToStation: haversineDistance(truePos, [train.TrainData.Longitute, train.TrainData.Latititute])
+                        distanceToStation: vectors(truePos, [train.TrainData.Longitute, train.TrainData.Latititute]),
+                        stationInternalId: s.id
                     }
                 })
-            )?.srId
+            )
+
+        const getDirectionVector = (positionsArray: [number, number][]): Victor | undefined => {
+            if (positionsArray.length < 2) return undefined;
+            const [pointA, pointB] = positionsArray.slice(-2);
+            return Victor.fromArray(pointA).subtract(Victor.fromArray(pointB)).normalize();
+        }
+
 
         const withHaversineTrains = _map((t: any) => {
+            const closestStation = getClosestStation(t);
+            const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum(closestStation.id, postConfig[post].id);
+            const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;
             const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
-            const currentDistance = haversineDistance(getOverridenStationPos(currentStation.replace("_", " ")), [t.TrainData.Longitute, t.TrainData.Latititute]);
-            // console_log(currentDistance, previousDistances?.[-1]);
-            // TODO: Calculate nearest station
-            const distanceArray = _uniq([...(previousDistances ?? []), currentDistance]);
+            const previousPositions = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.positionsArray : undefined;
+            const previousGoingAwayFromStatn = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.goingAwayFromStation : undefined;
+
+            // console.log(distanceCompletePath, previousDistances?.[-1]);
+
+            const trainPosVector: [number, number] = [t.TrainData.Longitute, t.TrainData.Latititute];
+            const currentRawDistance = vectors(getOverridenStationPos(post), trainPosVector);
+            const rawDistancesArray = _uniq([...(previousDistances ?? []), currentRawDistance]);
+            const positionsArray = _uniq([...(previousPositions ?? []), trainPosVector]);
+            const directionVector = getDirectionVector(positionsArray);
+            const pfClosestStation = directionVector && PathFinding_ClosestStationInPath(pfLineTrace, [directionVector.x, directionVector.y], trainPosVector);
+            const playerDistanceToNextStation = pfClosestStation && pfClosestStation?.platformPosOverride ? vectors(pfClosestStation.platformPosOverride,  trainPosVector)  : currentRawDistance;
+            const distanceArray = _uniq([...(previousDistances ?? []), playerDistanceToNextStation + distanceCompletePath]);
+            const dotProductForGoingAway = directionVector && currentStation.platformPosOverride ? Vector_DotProduct(currentStation.platformPosOverride, directionVector) : 0
+
+            console_log("For train " + t?.TrainNoLocal, pfLineTrace);
+
+            // console.log("Distances array : ", distanceArray);
             return {...t,
                 // TODO: Avoid O(n)
-                distanceToStation: distanceArray.length > 5 ? distanceArray.slice(1) : distanceArray,
-                closestStation: getClosestStation(t)
+                distanceToStation: distanceArray.length > 20 ? distanceArray.slice(1) : distanceArray,
+                pfLineTrace: pfLineTrace,
+                closestStation: pfClosestStation?.srId ?? closestStation?.srId,
+                closestStationId: closestStation?.id,
+                rawDistances: rawDistancesArray.length > 5 ? rawDistancesArray.slice(1) : distanceArray,
+                positionsArray: positionsArray.length > 5 ? positionsArray.slice(2) : positionsArray,
+                directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
+                dotProductForGoingAwai: dotProductForGoingAway,
+                goingAwayFromStation: dotProductForGoingAway === 0 ? previousGoingAwayFromStatn ? previousGoingAwayFromStatn  : false : dotProductForGoingAway < 0
             }
         }, trains);
 
         // console_log("Previous trains : ", previousTrains);
-        // console_log("With haversine trains : ", withHaversineTrains)
+        // console.log("With haversine trains : ", withHaversineTrains)
 
         setTrainsWithHaversine(_keyBy('TrainNoLocal', withHaversineTrains));
 
@@ -113,7 +150,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     // console_log("Timetable data : ", timetable);
     // console_log("Stations data: ", stations);
 
-    // console_log("Previous trains", previousTrains);
+    console_log("Previous trains", previousTrains);
 
     // console_log("haversine trains : ", trainsWithHaversine);
 

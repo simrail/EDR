@@ -1,4 +1,6 @@
-export function haversineDistance(coords1: [number, number], coords2: [number, number], isMiles: boolean = false) {
+import Victor from "victor";
+
+export function vectors(coords1: [number, number], coords2: [number, number], isMiles: boolean = false) {
     function toRad(x: number) {
         return x * Math.PI / 180;
     }
@@ -25,4 +27,13 @@ export function haversineDistance(coords1: [number, number], coords2: [number, n
     if(isMiles) d /= 1.60934;
 
     return d;
+}
+
+// TODO: Dot product is not enough, it should be a normal vector
+
+export const Vector_Magnitudec = (a: [number, number], b: [number, number]) => Math.sqrt(a[0])
+export const Vector_DotProduct = (a: [number, number], b: Victor) => {
+    const vecA = Victor.fromArray(a);
+    // console.log("Dot product : ", dot);
+    return vecA.dot(b);
 }

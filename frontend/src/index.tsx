@@ -9,6 +9,8 @@ import './i18n';
 // @ts-ignore
 import "hacktimer";
 
+import "./pathfinding/data";
+
 declare global {
     interface Window {
         timeRefreshWebWorkerId: number;

@@ -19,6 +19,8 @@ import LC from "./images/posts/lc.jpg";
 
 import { GB, FR, PL, CZ, ES, DE , UA} from 'country-flag-icons/string/3x2'
 
+import _keyBy from "lodash/keyBy";
+
 export const LOGGING = false;
 
 export const countriesFlags: {[k: string]: any} = {
@@ -71,161 +73,212 @@ export const configByType: {[k: string]: any} = {
 }
 
 // Polish characters are not allowed as map keys
-export const internalConfigPostIds = {
+export const internalConfigPostIds: {[k: string]: string} = {
     "GW": encodeURIComponent("Góra Włodowska"),
     "PS": encodeURIComponent("Psary"),
     "KN": encodeURIComponent("Knapówka"),
     "WP": encodeURIComponent("Włoszczowa Północ"),
     "OZ": encodeURIComponent("Olszamowice"),
     "PI": encodeURIComponent("Pilichowice"),
-    "KZ": encodeURIComponent("Katowice Zawodzie"),
+    "KZ": encodeURIComponent("Katowice_Zawodzie"),
     "SG": encodeURIComponent("Sosnowiec Główny"),
     "DG": encodeURIComponent("Dąbrowa Górnicza"),
     "T1_BZ": encodeURIComponent("Będzin"),
     "LZ_LC": encodeURIComponent("Łazy Łc")
 };
 
-export const postToInternalIds = {
-    [encodeURIComponent("Góra Włodowska")]: "GW",
-    [encodeURIComponent("Psary")]: "PS",
-    [encodeURIComponent("Knapówka")]: "KN",
-    [encodeURIComponent("Włoszczowa Północ")]: "WP",
-    [encodeURIComponent("Olszamowice")]: "OZ",
-    [encodeURIComponent("Pilichowice")]: "PI",
-    [encodeURIComponent("Katowice Zawodzie")]: "KZ",
-    [encodeURIComponent("Sosnowiec Główny")]: "SG",
-    [encodeURIComponent("Dąbrowa Górnicza")]: "DG",
-    [encodeURIComponent("Będzin")]: "T1_BZ",
-    [encodeURIComponent("Łazy Łc")]: "LZ_LC"
+
+type StationConfig = {
+    id: string,
+    srId: string;
+    trainPosRange: number;
+    platformPosOverride?: [number, number];
 }
 
-export const postConfig: {[k: string]: any} = {
+export const postConfig: {[k: string]: StationConfig} = {
     GW: {
+        id: "GW",
         srId: "Góra Włodowska",
         trainPosRange: 0.5,
         platformPosOverride: [19.470318, 50.584134]
     },
     PS: {
+        id: "PS",
         srId: "Psary",
         trainPosRange: 0.5,
         platformPosOverride: [19.820087, 50.735068]
     },
     KN: {
-        srId: "Knapówka",
-        trainPosRange: 0.5
+        id: "KN",
+        srId: "Knapówka", // TODO: Missing data
+        trainPosRange: 0.5,
+        platformPosOverride: [19.9049155, 50.8001411]
     },
     WP: {
+        id: "WP",
         srId: "Włoszczowa Północ",
         trainPosRange: 0.5,
         platformPosOverride: [19.945774, 50.856198]
     },
     OZ: {
-        srId: "Olszamowice",
-        trainPosRange: 0.5
+        id: "OZ",
+        srId: "Olszamowice", // TODO: Missing data
+        trainPosRange: 0.5,
+        platformPosOverride: [20.0645106, 51.0955558]
     },
     PI: {
-        srId: "Pilichowice",
-        trainPosRange: 0.5
+        id: "PI",
+        srId: "Pilichowice", // TODO: Missing data
+        trainPosRange: 0.5,
+        platformPosOverride: [20.1210684, 51.2546948]
     },
     KZ: {
-        srId: "Katowice_Zawodzie",
+        id: "KZ",
+        srId: "Katowice Zawodzie",
         trainPosRange: 0.5,
         platformPosOverride: [19.057551, 50.257280]
     },
     SG: {
-        srId: "Sosnowiec_Główny",
+        id: "SG",
+        srId: "Sosnowiec Główny",
         trainPosRange: 1,
         platformPosOverride: [19.1270833, 50.2793889]
     },
+    SG_R52: {
+        id: "SG_R52",
+        srId: "Sosnowiec_Główny R52",
+        trainPosRange: 1,
+        platformPosOverride: [19.114761, 50.272224]
+    },
+    SG_PO: {
+        id: "SG_PO",
+        srId: "Sosnowiec Południowy",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.1255985, 50.2695509]
+    },
+    SG_DK: {
+        id: "SG_DK",
+        srId: "Sosnowiec Dańdówka",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.1237716, 50.2709781]
+    },
     T1_BZ: {
-        srId: "Będzin",
-        trainPosRange: 0.5
+        id: "T1_BZ",
+        srId: "Będzin", // TODO: Missing data
+        trainPosRange: 0.5,
+        platformPosOverride: [19.1418582, 50.3085335]
     },
     LZ_LC: {
-        srId:"Łazy Łc",
+        id: "LZ_LC",
+        srId:"Łazy Łc", // TODO: Data error + missing data
+        platformPosOverride: [19.362862, 50.416436],
         trainPosRange: 0.5
     },
     LZ: {
-        srId:"Łazy Łc",
+        id: "LZ",
+        srId:"Łazy Łc", // TODO: Data error
         trainPosRange: 0.5,
-        platformPosOverride: [19.391867, 50.430084]
+        platformPosOverride: [19.3866133, 50.4284008]
     },
     OP_PO: {
+        id: "OP_PO",
         srId:"Opoczno Poludnie",
         trainPosRange: 0.5,
         platformPosOverride: [20.232192, 51.358965]
     },
     MY_MR: {
+        id: "MY_MR",
         srId:"Myszków Mrzygłód",
         trainPosRange: 0.5,
         platformPosOverride: [19.377319, 50.543482]
     },
     ZA_BO_PO: {
+        id: "ZA_BO_PO",
         srId:"Zawiercie Borowe Pole",
         trainPosRange: 0.5,
         platformPosOverride: [19.398674, 50.511076]
     },
     ZA: {
+        id: "ZA",
         srId:"Zawiercie",
         trainPosRange: 0.5,
         platformPosOverride: [19.423131, 50.481001]
     },
     WI: {
+        id: "WI",
         srId:"Wiesiółka",
         trainPosRange: 0.5,
         platformPosOverride: [19.349172, 50.414688]
     },
     CZ: {
+        id: "CZ",
         srId:"Chruszczobród",
         trainPosRange: 0.5,
         platformPosOverride: [19.329007, 50.400345]
     },
     DG: {
+        id: "DG",
         srId: "Dąbrowa Górnicza",
         trainPosRange: 0.5,
         platformPosOverride: [19.184696, 50.330386]
     },
     DG_SI: {
+        id: "DG_SI",
         srId:"Dąbrowa Górnicza Sikorka",
         trainPosRange: 0.5,
         platformPosOverride: [19.299095, 50.388950]
     },
     DG_ZA: {
+        id: "DG_ZA",
         srId:"Dąbrowa Górnicza Ząbkowice",
         trainPosRange: 0.5,
         platformPosOverride: [19.264612, 50.366385]
     },
     DG_PO: {
+        id: "DG_PO",
         srId:"Dąbrowa Górnicza Pogoria",
         trainPosRange: 0.5,
         platformPosOverride: [19.240848, 50.350499]
     },
     DG_GO: {
+        id: "DG_GO",
         srId:"Dąbrowa Górnicza Gołonóg",
         trainPosRange: 0.5,
         platformPosOverride: [19.225709, 50.343768]
     },
     BZ_KS: {
+        id: "BZ_KS",
         srId:"Będzin Ksawera",
         trainPosRange: 0.5,
         platformPosOverride: [19.157925, 50.330515]
     },
     BZ_MI: {
+        id: "BZ_MI",
         srId:"Będzin Miasto",
         trainPosRange: 0.5,
         platformPosOverride: [19.135523, 50.319178]
     },
     KSP: {
+        id: "KSP",
         srId:"Katowice Szopienice Południowe",
         trainPosRange: 0.5,
         platformPosOverride: [19.092237, 50.258875]
     },
     KO: {
+        id: "KO",
         srId:"Katowice",
         trainPosRange: 0.5,
         platformPosOverride: [19.017109, 50.257589]
     }
 }
+
+export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({
+    id: pc.id,
+    srId: encodeURIComponent(pc.srId)
+})), 'srId');
+
+// console_log("Internal ids map : ", postToInternalIds);
+
 
 export const betaTokens = [
     "SzdW1", // DKFN
