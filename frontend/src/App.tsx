@@ -21,9 +21,6 @@ function App() {
         </Flowbite>
     );
 
-    if (!betaToken)
-        return <div className="text-center mt-8">Désolé, l'EDR n'est pas encore ouvert a tous</div>
-
     return wrap((function() {
         if (!serverCode)
             return <ServerSelect />

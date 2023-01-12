@@ -45,9 +45,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
-        <div style={{backgroundImage: "url('"+Background+"')", backgroundSize: "cover"}} className="h-screen">
+        <div style={{backgroundImage: "url('"+Background+"')", backgroundSize: "cover"}} className="min-h-screen">
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
-            <div className="flex items-center justify-center max-w-screen h-full">
+            <div className="flex items-center justify-center max-w-screen min-h-screen">
                 <div className="mt-4 flex flex-wrap max-w-screen justify-center content-center">
             {children}
                 </div>
