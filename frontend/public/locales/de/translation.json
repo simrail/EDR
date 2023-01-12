@@ -50,7 +50,7 @@
     },
     "ui": {
       "train_number": "Zug-Nr.",
-      "close": "Schließen",
+      "close": "Zurück zur Serverauswahl",
       "dark_light_mode_switch": "Hell / Dunkel",
       "filter_train_all": "Alle Züge",
       "filter_train_online": "Züge in Betrieb"

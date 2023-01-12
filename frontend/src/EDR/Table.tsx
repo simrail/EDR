@@ -14,7 +14,7 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
     const {t} = useTranslation();
     if (!firstColBounds) return null;
     // console_log("Fourth bou,ds", fourthColBounds)
-    return <div className="flex font-bold items-center">
+    return <div className="flex items-center font-bold">
         <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
             {t('edr.train_headers.train_number')}
         </div>
@@ -53,7 +53,7 @@ const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serv
     }, [])
 
     return <div className="text-center">
-        <span className="text-xl mr-2">{formatTime(dt, i18n.language)}</span><br />
+        <span className="mr-2 text-xl">{formatTime(dt, i18n.language)}</span><br />
         <span className="text-xs">{serverCode.toUpperCase()} / ({serverTz})</span>
         {/* !cdnBypass
             ? <span className="inline-flex items-center text-info-700">Slow refresh? Click <Button className="mx-2" size="xs" onClick={() => {
@@ -122,11 +122,11 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
     // console_log("Second col bounds ", secondColBounds);
 
     return <div>
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white dark:bg-slate-800 shadow-md">
-            <div className="flex justify-between items-center px-4">
+        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
+            <div className="flex items-center justify-between px-4">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <a href={`/?betaToken=${betaToken}`} className="underline">{t('edr.ui.close') ?? ''} ❌</a>
+                    <a href={`/?betaToken=${betaToken}`} className="underline">◀️ {t('edr.ui.close') ?? ''}</a>
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
@@ -134,9 +134,9 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                     <DarkThemeToggle/>
                 </div>
             </div>
-            <div className="w-full flex items-center px-4 mt-2">
-                <TextInput id="trainNumberFilter" className="mb-2 w-full" onChange={(e) => setFilter(e.target.value)} placeholder={t('edr.ui.train_number') ?? ''}/>
-                <div className="flex mb-2 mx-4">
+            <div className="flex items-center w-full px-4 mt-2">
+                <TextInput id="trainNumberFilter" className="w-full mb-2" onChange={(e) => setFilter(e.target.value)} placeholder={t('edr.ui.train_number') ?? ''}/>
+                <div className="flex mx-4 mb-2">
                 <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(displayingRows.length); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
                 <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('edr.ui.filter_train_online') ?? ''}</Button>
                 </div>
@@ -186,7 +186,7 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                         trainDetails={trainsWithHaversine[tr.train_number]}
                         currentTime={formatTime(dt, i18n.language)}
                         timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - Number.parseInt(tr.hourSort))}
-                    />) : <div className="text-center w-full"><Spinner /></div>
+                    />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>
             </Table>

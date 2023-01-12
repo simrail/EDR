@@ -50,7 +50,7 @@
     },
     "ui": {
       "train_number": "N° de train",
-      "close": "Fermer",
+      "close": "Retour à la sélection du serveur",
       "dark_light_mode_switch": "Sombre/Clair",
       "filter_train_all": "Tous",
       "filter_train_online": "En_ligne"

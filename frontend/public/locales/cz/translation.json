@@ -50,7 +50,7 @@
     },
     "ui": {
       "train_number": "Vlak č.",
-      "close": "Odejít",
+      "close": "Zpět na výběr serverů",
       "dark_light_mode_switch": "Přepínač Noc/Den",
       "filter_train_all": "Všechny vlaky",
       "filter_train_online": "On line"

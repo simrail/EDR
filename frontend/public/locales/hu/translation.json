@@ -50,7 +50,7 @@
     },
     "ui": {
       "train_number": "Vonat szám keresés",
-      "close": "Bezárás",
+      "close": "Vissza a kiszolgáló kiválasztásához",
       "dark_light_mode_switch": "Sötét/Világos téma váltása",
       "filter_train_all": "Minden vonat",
       "filter_train_online": "Most közlekedik"
