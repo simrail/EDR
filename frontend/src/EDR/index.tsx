@@ -33,7 +33,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         setLoading(true);
         console_log("Current station : ", currentStation);
         if(!serverCode || !currentStation) return;
-        api(serverCode,  currentStation?.srId, !!cdnBypass).then((data) => {
+        api(serverCode,  post, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
                 setStations(_keyBy('Name', data));

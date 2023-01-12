@@ -101,14 +101,28 @@ const DG_PO = {
 const DG_ZA = {
     ...postConfig.DG_ZA,
     left: "DG_PO",
+    right: "DG_DZA"
+}
+
+const DG_DZA = {
+    ...postConfig.DG_DZA,
+    left: "DG_ZA",
+    right: "DG_SI",
+    branchA: "DG_DZA_R47"
+}
+
+const DG_DZA_R47 = {
+    ...postConfig.DG_DZA_R47,
+    left: "DG_ZA",
     right: "DG_SI"
 }
 
 // Dabrowa Gornica Sikorka
 const DG_SI = {
     ...postConfig.DG_SI,
-    left: "DG_ZA",
-    right: "CZ"
+    left: "DG_DZA",
+    right: "CZ",
+    branchA: "L660_L1WP"
 }
 
 // Chruszczobród
@@ -136,14 +150,27 @@ const LZ_LC = {
 const LZ = {
     ...postConfig.LZ,
     left: "LZ_LC",
+    right: "LZ_LB"
+}
+
+const LZ_LB = {
+    ...postConfig.LZ_LB,
+    left: "LZ",
+    right: "LZ_LA"
+}
+
+// Lazy LA
+const LZ_LA = {
+    ...postConfig.LZ_LA,
+    left: "LZ_LB",
     right: "ZA"
 }
 
 // Zawiercie
 const ZA = {
     ...postConfig.ZA,
-    left: "LZ",
-    right: "ZA_BO_PO"
+    left: "LZ_LA",
+    right: "ZA_BO_PO",
 }
 
 // Zawiercie Borowe Pole
@@ -165,21 +192,24 @@ const GW  = {
 const PS = {
     ...postConfig.PS,
     left: "GW",
-    right: "KN" // TODO: Branch to Starzyny
+    right: "KN",
+    branchA: "STZ"
 }
 
 // Knapówka
 const KN = {
     ...postConfig.KN,
     left: "PS",
-    right: "WP"
+    right: "WP",
+    branchA: "CZ_R19"
 }
 
 // Włoszczowa Północ
 const WP = {
     ...postConfig.WP,
     left: "KN",
-    right: "OZ"
+    right: "OZ",
+    // branchA: "CZ_R19" // TODO: ?? Should be only psary
 }
 
 // Olszamowice
@@ -199,13 +229,111 @@ const PI = {
 // Opoczno Poludnie
 const OP_PO = {
     ...postConfig.OP_PO,
-    left: "PI"
+    left: "PI",
+    right: "IDZ"
 }
+
+// Idzikowice
+const IDZ = {
+    ...postConfig.IDZ,
+    left: "OP_PO",
+    right: "STR"
+}
+
+// Strzałki
+const STR = {
+    ...postConfig.STR,
+    left: "IDZ",
+    right: "SZE"
+}
+
+// Szeligi
+const SZE = {
+    ...postConfig.SZE,
+    left: "STR",
+    right: "JKT"
+}
+
+// Jaktorów
+const JKT = {
+    ...postConfig.JKT,
+    left: "SZE",
+    right: "GRO_MAZ"
+}
+
+// Grodzisk Mazowiecki
+const GRO_MAZ = {
+    ...postConfig.GRO_MAZ,
+    left: "JKT",
+    right: "MIL"
+}
+
+// Milanówek
+const MIL = {
+    ...postConfig.MIL,
+    left: "GRO_MAZ",
+    right: "BRW"
+}
+
+// Brwinów
+const BRW = {
+    ...postConfig.BRW,
+    left: "MIL",
+    right: "PARZ"
+}
+
+// Parzniew
+const PARZ = {
+    ...postConfig.PARZ,
+    left: "BRW",
+    right: "PRSZ"
+}
+
+// Pruszków
+const PRSZ = {
+    ...postConfig.PRSZ,
+    left: "PARZ",
+    right: "PIA"
+}
+
+// Piastów
+const PIA = {
+    ...postConfig.PIA,
+    left: "PRSZ",
+    right: "WUN"
+}
+
+// Warszawa Ursus-Niedźwiadek
+const WUN = {
+    ...postConfig.WUN,
+    left: "PIA",
+    right: "WW"
+}
+
+// Warszawa Włochy
+const WW = {
+    ...postConfig.WW,
+    left: "WUN",
+    right: "WC"
+}
+
+// Warszawa Centralna
+const WC = {
+    ...postConfig.WC,
+    left: "WW"
+}
+
 
 // Line ???
 const MY_MR = {
     ...postConfig.MY_MR,
-    left: "ZA_BO_PO"
+    left: "MY",
+    right: "ZA_BO_PO"
+}
+
+const MY = {
+    ...postConfig.MY,
+    right: "MY_MR"
 }
 
 // Line 660
@@ -218,8 +346,135 @@ const SG_PO = {
 const SG_DK = {
     ...postConfig.SG_DK,
     left: "SG_PO",
-    right: "SG_DK"
+    right: "SG_POR",
+   // branchA: "SG_POR"
 };
+
+const SG_POR = {
+    ...postConfig.SG_POR,
+    left: "SG_DK",
+    right: "SG_KAZ"
+}
+
+const SG_KAZ = {
+    ...postConfig.SG_KAZ,
+    left: "SG_POR",
+    right: "L660_L1WP"
+}
+
+const DG_WZ = {
+    ...postConfig.DG_WZ,
+    left: "SG_KAZ",
+    right: "SLK",
+    branchA: "L660_L1WP",
+}
+
+const L660_L1WP = {
+    ...postConfig.L660_L1WP,
+    left: "L660_L1WP",
+    right: "DG_SI"
+}
+
+
+const L660_L2WP = {
+    ...postConfig.L660_L2WP,
+    left: "L660_L1WP",
+    right: "DG_SI"
+}
+
+const SLK = {
+    ...postConfig.SLK,
+    left: "DG_WZ",
+    right: "BP"
+}
+
+const BP = {
+    ...postConfig.BP,
+    left: "SLK",
+    right: "BK"
+}
+
+const BK = {
+    ...postConfig.BK,
+    left: "BP",
+    right: "OK"
+}
+
+const OK = {
+    ...postConfig.OK,
+    left: "BK",
+    right: "JO"
+}
+
+const JO = {
+    ...postConfig.JO,
+    left: "OK",
+    right: "CO"
+}
+
+const CO = {
+    ...postConfig.CO,
+    left: "JO",
+    right: "WB"
+}
+
+const WB = {
+    ...postConfig.WB,
+    left: "CO",
+    right: "JZ"
+}
+
+const JZ = {
+    ...postConfig.JZ,
+    left: "WB",
+    right: "GJ"
+}
+
+const GJ = {
+    ...postConfig.GJ,
+    left: "JZ",
+    right: "TN"
+}
+
+const TN = {
+    ...postConfig.TN,
+    left: "GJ",
+    right: "KOZ"
+}
+
+const KOZ = {
+    ...postConfig.KOZ,
+    left: "TN",
+    right: "KLI",
+    branchA: "R19_WP14"// TODO: Branch up to line 1
+}
+
+const KLI = {
+    ...postConfig.KLI,
+    left: "KOZ",
+    right: "SDZ"
+}
+
+const SDZ = {
+    ...postConfig.SDZ,
+    left: "KLI"
+}
+
+const CZ_R19 = {
+    ...postConfig.CZ_R19,
+    branchA: "KN",
+    right: "R19_WP14"
+};
+
+const R19_WP14 = {
+    ...postConfig.R19_WP14,
+    left: "CZ_R19",
+    right: "KOZ"
+}
+const STZ = {
+    ...postConfig.STZ,
+    right: "PS",
+}
 
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
@@ -238,11 +493,15 @@ export const pathFind_stackMap: {[k: string]: Node} = {
     DG_GO: DG_GO,
     DG_PO: DG_PO,
     DG_ZA: DG_ZA,
+    DG_DZA,
+    DG_DZA_R47,
     DG_SI: DG_SI,
     CZ: CZ,
     WI: WI,
     LZ_LC: LZ_LC,
     LZ: LZ,
+    LZ_LB,
+    LZ_LA: LZ_LA,
     ZA: ZA,
     ZA_BO_PO: ZA_BO_PO,
     GW: GW,
@@ -252,13 +511,52 @@ export const pathFind_stackMap: {[k: string]: Node} = {
     OZ: OZ,
     PI: PI,
     OP_PO: OP_PO,
+    IDZ: IDZ,
+    STR,
+    SZE,
+    JKT,
+    GRO_MAZ,
+    MIL,
+    BRW,
+    PARZ,
+    PRSZ,
+    PIA,
+    WUN,
+    WW,
+    WC,
 
     // Line ??
     MY_MR: MY_MR,
     SG_DK: SG_DK,
 
+    // R19
+    // R19_WP14: R19_WP14,
+    //L660_L1WP, // TODO: Purposefull breakpoint to avoid wierd routes without weight
+
+
+    CZ_R19: CZ_R19,
+    STZ: STZ,
+    MY: MY,
+
     // Line 660
     SG_PO: SG_PO,
+    SG_POR: SG_POR,
+    SG_KAZ,
+    DG_WZ,
+    SLK,
+    BP,
+    BK,
+    OK,
+    JO,
+    WB,
+    JZ,
+    GJ,
+    TN,
+    KOZ,
+    KLI,
+    SDZ,
+    CO
+
 }
 
 

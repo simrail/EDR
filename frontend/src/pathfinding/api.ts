@@ -42,18 +42,22 @@ export const treeTraversal = (
     const leftPath = treeTraversal(resolveSubNode(subTree.left), finish, nxtAcc);
     const rightPath = treeTraversal(resolveSubNode(subTree.right), finish, nxtAcc);
     const branchPath = treeTraversal(resolveSubNode(subTree.branchA), finish, nxtAcc);
-    return leftPath ?? rightPath ?? branchPath;
+    // TODO: pathfinding lacks weight, wich is alright for now. (Rather good enough)
+    // TODO: But it needs to take distance in count instead of number of stations
+    // Else pendolino would take interesting routes lmao
+    return _.minBy([leftPath, rightPath, branchPath], 'length');
 }
 
 export const findPath = (start: Node, finish: string): PathFindingLineTrace => {
     return treeTraversal(start, finish, []);
 }
 
-export const dbgTree = (start: Node, finish: string) => {
-    console_log("From " + start.id + " To : " + finish);
-    const pathFound = findPath(start, finish);
-    console_log(pathFound?.map?.((n?: Node) => n?.id).join(" -> "));
+export const dbgTree = (start: string, finish: string) => {
+    console.log("From " + start + " To : " + finish);
+    const [pathFound, distance] = PathFinding_FindPathAndHaversineSum(start, finish);
+    console.log(pathFound?.map?.((n?: Node) => n?.id).join(" -> "));
     console.assert(pathFound !== undefined && pathFound.filter((p) => p === undefined).length === 0);
+    console.log("Distance : " + Math.round(distance) + "km" )
 }
 
 
@@ -94,6 +98,7 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
         return false;
     }
 
+    console_log({formStation, toStation});
     const foundPost = postToInternalIds[encodeURIComponent(formStation)]?.id;
     const foundToPost = postToInternalIds[encodeURIComponent(toStation)]?.id;
     const ltIndex = pfLineTrace.findIndex((e) => e?.id && e?.id === foundPost);
@@ -113,10 +118,10 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
 
 if (RUN_DATA_HEALTHCHECKS) {
 
-    console_log("[Pathfinding] Healthchecks starting");
-    console_log("Stack map : ", pathFind_stackMap);
+    console.log("[Pathfinding] Healthchecks starting");
+    console.log("Stack map : ", pathFind_stackMap);
 
-        dbgTree(pathFind_stackMap.KO, "WP");
+        //dbgTree(pathFind_stackMap.KO, "WP");
     // dbgTree(pathFind_stackMap.KO, "SG_PO");
     // dbgTree(pathFind_stackMap.SG_PO, "KO");
     // dbgTree(pathFind_stackMap.SG_DK, "KO");
@@ -127,10 +132,18 @@ if (RUN_DATA_HEALTHCHECKS) {
     const healthChecksValues = Object.values(pathFind_stackMap).filter((sm) => !sm.id);
     console.assert(healthChecksKeys.length === 0);
     console.assert(healthChecksValues.length === 0);
-    Object.values(pathFind_stackMap).forEach((tgt) => {
+    /*Object.values(pathFind_stackMap).forEach((tgt) => {
         dbgTree(pathFind_stackMap.KO, tgt.id);
-        dbgTree(pathFind_stackMap.OP_PO, tgt.id);
-    });
+        //dbgTree(pathFind_stackMap.OP_PO, tgt.id);
+    });*/
 
+    dbgTree("KO", "WC");
+    dbgTree("BK", "LZ");
+
+    dbgTree("BK", "DG_SI");
+    dbgTree("KO", "T1_BZ");
+    dbgTree("KO", "LZ");
+    dbgTree("KO", "IDZ");
+    dbgTree("KOZ", "WC");
     console_log("[Pathfinding] Healthchecks finished");
 }

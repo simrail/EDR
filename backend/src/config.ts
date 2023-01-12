@@ -31,6 +31,22 @@ export const SERVERS = [
     "pl5"
 ];
 
+export const internalIdToSrId: {[k: string]: string} = {
+    "GW": "Góra Włodowska",
+    "PS": "Psary",
+    "KN": "Knapówka",
+    "WP" : "Włoszczowa Północ",
+    "OZ": "Olszamowice",
+    "PI": "Pilichowice",
+    "KZ": "Katowice_Zawodzie",
+    "SG": "Sosnowiec_Główny",
+    "DG": "Dąbrowa Górnicza",
+    "T1_BZ": "Będzin",
+    "LZ": "Łazy Łc",
+    "ZA": "Zawiercie",
+    "OP_PO": "Opoczno Południe"
+}
+
 export const POSTS: { [key: string]: PURE_POST[] } = {
     "Góra Włodowska": ["Góra Włodowska"],
     "Psary": ["Psary"],
@@ -42,7 +58,10 @@ export const POSTS: { [key: string]: PURE_POST[] } = {
     "Sosnowiec_Główny": ["Sosnowiec_Główny", "Sosnowiec_Gł._pzs_R52"],
     "Dąbrowa Górnicza": ["Dąbrowa Górnicza"],
     "Będzin": ["Będzin"],
-    "Łazy Łc": ["Łazy Łc"]
+    "Łazy Łc": ["Łazy Łc"],
+    "Zawiercie": ["Zawiercie"],
+    "Opoczno Południe": ["Opoczno Południe"]
+
 };
 
 export type PURE_POST = 
@@ -57,7 +76,9 @@ export type PURE_POST =
     "Sosnowiec_Gł._pzs_R52" |
     "Dąbrowa Górnicza" |
     "Będzin" |
-    "Łazy Łc";
+    "Łazy Łc" |
+    "Zawiercie" |
+    "Opoczno Południe";
 
 export enum VMAX_BY_TYPE {
     EIJ = 200,
