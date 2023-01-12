@@ -5,11 +5,8 @@ import {Flowbite, useThemeMode} from "flowbite-react";
 import {StringParam, useQueryParams} from "use-query-params";
 import {ServerSelect} from "./SelectMenu/ServerSelect";
 import {PostSelect} from "./SelectMenu/PostSelect";
-import {betaTokens} from "./config";
 
 function App() {
-    const [mode, setMode, toggleMode] = useThemeMode(true);
-
     const [{serverCode, post, betaToken}] = useQueryParams({
         betaToken: StringParam,
         serverCode: StringParam,
@@ -28,8 +25,6 @@ function App() {
         return <div className="text-center mt-8">Désolé, l'EDR n'est pas encore ouvert a tous</div>
 
     return wrap((function() {
-        if (!betaTokens.includes(betaToken))
-            return <div className="text-center mt-8">Bien tenté ! Envoie moi un MP sur discord j'ai peut etre encore une clef pour toi!</div>
         if (!serverCode)
             return <ServerSelect />
         if (serverCode && !post)
