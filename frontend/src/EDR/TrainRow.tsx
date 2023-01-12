@@ -121,7 +121,6 @@ const TableRow: React.FC<any> = (
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <Badge color={trainBadgeColor} size="sm"><span className="!font-bold">{ttRow.train_number}</span></Badge>
-                ({currentDistance} - {previousDistance})
                 {
                     !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
                 }
