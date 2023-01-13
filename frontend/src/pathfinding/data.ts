@@ -42,7 +42,8 @@ const KSP = {
 const SG_R52 = {
     ...postConfig.SG_R52,
     left: "KSP",
-    right: "SG"
+    right: "SG",
+    branchA: "SG_PO"
 }
 
 // Sosnowiec glowny
@@ -50,7 +51,6 @@ const SG = {
     ...postConfig.SG,
     left: "SG_R52",
     right: "T1_BZ",
-    branchA: "SG_PO"
 };
 
 // Bedzin
@@ -209,7 +209,7 @@ const WP = {
     ...postConfig.WP,
     left: "KN",
     right: "OZ",
-    // branchA: "CZ_R19" // TODO: ?? Should be only psary
+    branchA: "CZ_R19" // TODO: ?? Should be only psary
 }
 
 // Olszamowice
@@ -314,13 +314,19 @@ const WUN = {
 const WW = {
     ...postConfig.WW,
     left: "WUN",
+    right: "WZ"
+}
+
+const WZ = {
+    ...postConfig.WZ,
+    left: "WW",
     right: "WC"
 }
 
 // Warszawa Centralna
 const WC = {
     ...postConfig.WC,
-    left: "WW"
+    left: "WZ"
 }
 
 
@@ -339,7 +345,7 @@ const MY = {
 // Line 660
 const SG_PO = {
     ...postConfig.SG_PO,
-    left: "SG",
+    left: "SG_R52",
     right: "SG_DK"
 };
 
@@ -371,7 +377,7 @@ const DG_WZ = {
 
 const L660_L1WP = {
     ...postConfig.L660_L1WP,
-    left: "L660_L1WP",
+    left: "DG_SI",
     right: "DG_SI"
 }
 
@@ -439,14 +445,20 @@ const GJ = {
 const TN = {
     ...postConfig.TN,
     left: "GJ",
+    right: "CH"
+}
+
+const CH = {
+    ...postConfig.CH,
+    left: "TN",
     right: "KOZ"
 }
 
 const KOZ = {
     ...postConfig.KOZ,
-    left: "TN",
+    left: "CH",
     right: "KLI",
-    branchA: "R19_WP14"// TODO: Branch up to line 1
+    branchA: "STZ"// TODO: Branch up to line 1
 }
 
 const KLI = {
@@ -474,6 +486,7 @@ const R19_WP14 = {
 const STZ = {
     ...postConfig.STZ,
     right: "PS",
+    left: "KOZ"
 }
 
 
@@ -523,6 +536,7 @@ export const pathFind_stackMap: {[k: string]: Node} = {
     PIA,
     WUN,
     WW,
+    WZ,
     WC,
 
     // Line ??
@@ -530,8 +544,8 @@ export const pathFind_stackMap: {[k: string]: Node} = {
     SG_DK: SG_DK,
 
     // R19
-    // R19_WP14: R19_WP14,
-    //L660_L1WP, // TODO: Purposefull breakpoint to avoid wierd routes without weight
+    R19_WP14: R19_WP14,
+    L660_L1WP, // TODO: Purposefull breakpoint to avoid wierd routes without weight
 
 
     CZ_R19: CZ_R19,
@@ -555,7 +569,8 @@ export const pathFind_stackMap: {[k: string]: Node} = {
     KOZ,
     KLI,
     SDZ,
-    CO
+    CO,
+    CH
 
 }
 

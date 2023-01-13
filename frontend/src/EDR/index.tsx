@@ -104,7 +104,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
         const withHaversineTrains = _map((t: any) => {
             const closestStation = getClosestStation(t);
-            const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum(closestStation.id, postConfig[post].id);
+            const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum(closestStation.id, postConfig[post].id, post);
             const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;
             const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
             const previousPositions = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.positionsArray : undefined;

@@ -92,10 +92,10 @@ const TableRow: React.FC<any> = (
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
 
-    // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid) : false;
-    const trainBadgeColor = trainConfig?.color ?? "purple";
     const currentDistance = trainDetails?.rawDistances.slice(-1)
+    // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
+    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
+    const trainBadgeColor = trainConfig?.color ?? "purple";
     const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;

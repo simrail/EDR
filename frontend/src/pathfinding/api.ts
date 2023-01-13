@@ -52,21 +52,25 @@ export const findPath = (start: Node, finish: string): PathFindingLineTrace => {
     return treeTraversal(start, finish, []);
 }
 
-export const dbgTree = (start: string, finish: string) => {
+export const dbgTree = (start: string, finish: string, playerPost?: string) => {
     console.log("From " + start + " To : " + finish);
-    const [pathFound, distance] = PathFinding_FindPathAndHaversineSum(start, finish);
+    const [pathFound, distance] = PathFinding_FindPathAndHaversineSum(start, finish, playerPost);
     console.log(pathFound?.map?.((n?: Node) => n?.id).join(" -> "));
     console.assert(pathFound !== undefined && pathFound.filter((p) => p === undefined).length === 0);
     console.log("Distance : " + Math.round(distance) + "km" )
 }
 
 
-export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string): [PathFindingLineTrace, number] => {
-    const lineTrace = findPath(pathFind_stackMap[start], finish);
-    if (!lineTrace) {
+export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined): [PathFindingLineTrace, number] => {
+    const pathA = findPath(pathFind_stackMap[start], playerPost ?? finish);
+    const pathB = playerPost ? findPath(pathFind_stackMap[playerPost], finish) : [];
+    if (!pathA || !pathB) {
         console.error("Pathfinding error ! ", {start, finish});
-        return [lineTrace, 0];
+        return [undefined, 0];
     }
+    // console.log("Pah a ", pathA)
+    // console.log("Pah b ", pathB)
+    const lineTrace = _.uniq([...pathA, ...pathB])
     const filteredAllPosPoints: ([number, number])[] =  lineTrace?.map?.((node) =>  node?.platformPosOverride)
         ?.filter((v) => v && !!v[0] && !!v[1]) as [number, number][];
 
@@ -92,28 +96,33 @@ export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTra
 /**
  * If the "to" station is found in path, it means the train is going away
  */
-export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTrace, playerPost: string, formStation: string, toStation: string, closestStationId: string) => {
+export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTrace, playerPost: string, formStation: string, toStation: string, closestStationId: string, distanceToPost: number, debug: boolean = false) => {
     if (!pfLineTrace) {
         console.error("[Pathfinding] No PF station found");
         return false;
     }
 
-    console_log({formStation, toStation});
+    // TODO: Add via method so it would always find the path VIA the post
+    debug && console.log({formStation, toStation, closestStationId});
     const foundPost = postToInternalIds[encodeURIComponent(formStation)]?.id;
     const foundToPost = postToInternalIds[encodeURIComponent(toStation)]?.id;
+    const closestPost = postConfig[closestStationId];
     const ltIndex = pfLineTrace.findIndex((e) => e?.id && e?.id === foundPost);
-    console_log("From index : ", {ltIndex, formStation, pfLineTrace});
+    debug && console.log("From index : ", {ltIndex, formStation, pfLineTrace});
 
     const [intermediateLineTraceBetweenPostAndDestination] = PathFinding_FindPathAndHaversineSum(foundPost, playerPost)
     const [intermediateLineTrace] = PathFinding_FindPathAndHaversineSum(foundToPost, closestStationId)
 
     const intersect = _.intersection(intermediateLineTrace, intermediateLineTraceBetweenPostAndDestination);
-    console_log("Closest station id : ", closestStationId);
-    console_log("Intersect : ", intersect);
+    debug && console.log("Closest station id : ", closestStationId);
+    debug && console.log("Intersect : ", intersect);
 
-    return ltIndex === -1 // From post not found
+    return (intersect.length === 2 && intersect // Sosnowiec quickfix
+        .map((i) => i?.id).includes("SG_R52") // Sosnowiec quickfix
+        && distanceToPost > 7) // Sosnowiec quickfix
+        || (ltIndex === -1 // From post not found
         && pfLineTrace[0]?.id !== playerPost // Train is not going into station
-        && intersect.length === 0; // Train is not in between from dispatch post and small stations in between
+        && intersect.length === 0) // Train is not in between from dispatch post and small stations in between
 }
 
 if (RUN_DATA_HEALTHCHECKS) {
@@ -145,5 +154,9 @@ if (RUN_DATA_HEALTHCHECKS) {
     dbgTree("KO", "LZ");
     dbgTree("KO", "IDZ");
     dbgTree("KOZ", "WC");
+    dbgTree("TN", "STZ");
+    dbgTree("STZ", "TN");
+    dbgTree("TN", "STZ");
+    dbgTree("KZ","SG_PO")
     console_log("[Pathfinding] Healthchecks finished");
 }

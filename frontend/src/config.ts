@@ -160,7 +160,7 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "SG_DK",
         srId: "Sosnowiec Dańdówka",
         trainPosRange: 0.5,
-        platformPosOverride: [19.1237716, 50.2709781]
+        platformPosOverride: [19.1771544, 50.2668305]
     },
     SG_POR: {
         id: "SG_POR",
