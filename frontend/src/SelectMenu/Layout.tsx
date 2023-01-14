@@ -3,7 +3,7 @@ import {Navbar, Dropdown } from "flowbite-react";
 import AppLogo from "../logo.png";
 import Background from "./background.jpg";
 import {useTranslation} from "react-i18next";
-import {FR, GB, CZ, HU, DE} from "country-flag-icons/react/1x1";
+import {FR, GB, CZ, HU, DE, SK} from "country-flag-icons/react/1x1";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -28,6 +28,9 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><CZ /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cz")}>
                         Czech
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><SK /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("sk")}>
+                        Slovakian
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><HU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("hu")}>
                         Hungarian

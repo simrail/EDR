@@ -1,0 +1,59 @@
+{
+    "app": {
+      "fatal_error": "Uživateľské rozhranie sa neobnoví, došlo k fatálnej chybe.",
+      "no_trains": "Žiadne vlaky niesú k dispozícii. Server sa pravdepodobne reštartuje",
+      "no_timetable": "Nepodarilo sa načítať cestovný poriadok. Server sa pravdepodobne reštartuje ",
+      "station_not_found": "Fatálna chyba: Aktuálna stanica nebola nájdená."
+    },
+    "navbar": {
+      "bugs": "Hlásenie chýb"
+    },
+    "select_menu": {
+      "server_selection": "Výber serveru",
+      "post_select": "Výber stanice"
+    },
+    "footer": {
+      "version": "verzia",
+      "screenshots_by": "Screenshot od ",
+      "thanks": "Ďakujeme všetkým beta testerom",
+      "not_official": "Toto nieje oficiálna aplikácia SimRail"
+    },
+    "edr": {
+      "loading": {
+        "main_message": "Načítanie dát pre EDR",
+        "schedules": "Grafikon",
+        "stations": "Stanice",
+        "trains": "Vlaky"
+      },
+      "train_row": {
+        "position_at": "vzd.",
+        "train_delayed": "Zmeškaný",
+        "train_early": "Prichádza",
+        "train_offline": "Offline",
+        "train_stopped": "Stojí",
+        "train_away": "Preč",
+        "train_minutes": "min",
+        "train_eta": "ETA",
+        "train_departing": "Odchod",
+        "train_early_sign": "-",
+        "train_late_sign": "+",
+        "waiting_for_data": "Čakanie na informácie"
+      },
+      "train_headers": {
+        "train_number": "Číslo vlaku",
+        "train_type": "Druh vlaku",
+        "train_arrival_time": "Pravidelný príchod",
+        "train_from": "Príchod zo stanice",
+        "train_stop": "Pobyt v stanici",
+        "train_departure_time": "Pravidelný odchod",
+        "train_to": "Smer jazdy"
+      },
+      "ui": {
+        "train_number": "Vlak č.",
+        "close": "Späť na výber serverov",
+        "dark_light_mode_switch": "Prepínač Noc/Deň",
+        "filter_train_all": "Všetky vlaky",
+        "filter_train_online": "Online"
+      }
+    }
+  }
