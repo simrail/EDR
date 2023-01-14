@@ -87,7 +87,7 @@ const scrollToNearestTrain = (targetLn: number) => {
 
 export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverTz}) => {
     const [postQry] = useQueryParam('post', StringParam);
-    const [displayMode, setDisplayMode] = React.useState<string>("near");
+    const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [displayingRows, setDisplayingRows] = React.useState<any[]>([]);
     const {t, i18n} = useTranslation();

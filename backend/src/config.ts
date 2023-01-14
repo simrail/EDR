@@ -24,12 +24,17 @@ export const SERVERS = [
     "en6",
     "en8",
     "en9",
+    "it1",
     "pl1",
     "pl2",
     "pl3",
     "pl4",
-    "pl5"
-];
+    "pl5",
+    "pl6",
+    "pl7",
+    "pt1",
+    "cn1"
+]
 
 export const internalIdToSrId: {[k: string]: string} = {
     "GW": "Góra Włodowska",

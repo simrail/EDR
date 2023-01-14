@@ -28,7 +28,9 @@ export function getTrainsList(req: express.Request, res: express.Response, serve
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send((e.data as ApiResponse<Train>).data);
-    });
+    }).catch(() => {
+        return res.sendStatus(500);
+    })
 }
 
 export function getPlayer(req: express.Request, res: express.Response, steamId: string) {

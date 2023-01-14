@@ -7,6 +7,7 @@ import classNames from "classnames";
 export const PostCard: React.FC<any> = ({post}) => {
     const [postParam, setPostParam] = useQueryParam('post', StringParam);
     const realId = postToInternalIds[encodeURIComponent(post.Name)]?.id;
+    console.log("Real id : ", post.Prefix);
 
     if (!realId) return null;
     return (

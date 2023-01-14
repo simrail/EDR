@@ -16,8 +16,10 @@ import SG from "./images/posts/sg.jpg";
 import DG from "./images/posts/dg.jpg";
 import BN from "./images/posts/bn.jpg";
 import LC from "./images/posts/lc.jpg";
+import ZA from "./images/posts/zw.png";
+import OP_PO from "./images/posts/op_po.png";
 
-import { GB, FR, PL, CZ, ES, DE , UA} from 'country-flag-icons/string/3x2'
+import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT} from 'country-flag-icons/string/3x2'
 
 import _keyBy from "lodash/keyBy";
 
@@ -30,7 +32,10 @@ export const countriesFlags: {[k: string]: any} = {
     CZ,
     ES,
     DE,
-    UA
+    UA,
+    IT,
+    CN,
+    PT
 }
 
 export const configByType: {[k: string]: any} = {
@@ -592,7 +597,11 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
     SG: SG,
     DG: DG,
     BN: BN,
-    ŁC: LC
+    ŁC: LC,
+    ZW: ZA,
+    OP: OP_PO
+
+
 }
 
 export const serverTzMap: {[k: string]: string} = {
@@ -609,18 +618,23 @@ export const serverTzMap: {[k: string]: string} = {
     EN6: 'Asia/Sakhalin',
     EN8: 'Australia/Melbourne',
     EN9: 'Europe/Paris',
+    IT1: 'Europe/Paris',
     PL1: 'Europe/Warsaw',
     PL2: 'Europe/Warsaw',
     PL3: 'US/Hawaii',
     PL4: 'Europe/Warsaw',
     PL5: 'Europe/Warsaw',
+    PL6: 'Europe/Warsaw',
+    PL7: 'Europe/Warsaw',
+    PT1: 'America/Argentina/Buenos_Aires',
+    CN1: 'America/Argentina/Buenos_Aires',
 }
 
 export const searchSeparator = ',';
 
 export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
 
-// console_log("Allowed servers :", AllowedServers);
+console.log("Allowed servers :", AllowedServers);
 
 export const PlatformsConfig = {
 
