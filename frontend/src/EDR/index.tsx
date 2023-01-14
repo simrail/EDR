@@ -29,10 +29,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
     // const loading = !timetable || !stations || !trains;
 
-    React.useEffect(() => {
-        setLoading(true);
-        console_log("Current station : ", currentStation);
-        if(!serverCode || !currentStation) return;
+    const fetchAllDatas = () => {
         api(serverCode,  post, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
@@ -41,8 +38,15 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
                     setTrains(data);
                     setLoading(false);
                 });
-            });
-        });
+            }).catch(() => setTimeout(fetchAllDatas, 5000));
+        }).catch(() => setTimeout(fetchAllDatas, 5000));
+    }
+
+    React.useEffect(() => {
+        setLoading(true);
+        console_log("Current station : ", currentStation);
+        if(!serverCode || !currentStation) return;
+        fetchAllDatas();
     }, [serverCode, post]);
 
     React.useEffect(() => {

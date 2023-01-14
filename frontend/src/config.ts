@@ -614,7 +614,10 @@ export const serverTzMap: {[k: string]: string} = {
     ES1: 'Europe/London',
     ES2: 'America/Argentina/Buenos_Aires',
     EN1: 'Europe/London',
+    EN2: 'America/New_York',
+    EN3: 'America/Jamaica',
     EN4: 'America/Jamaica',
+    EN5: 'America/New_York',
     EN6: 'Asia/Sakhalin',
     EN8: 'Australia/Melbourne',
     EN9: 'Europe/Paris',
@@ -634,7 +637,7 @@ export const searchSeparator = ',';
 
 export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
 
-console.log("Allowed servers :", AllowedServers);
+// console.log("Allowed servers :", AllowedServers);
 
 export const PlatformsConfig = {
 
