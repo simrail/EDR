@@ -7,7 +7,7 @@ import _ from "lodash";
 import {console_log} from "../utils/Logger";
 
 
-const RUN_DATA_HEALTHCHECKS = false;
+const RUN_DATA_HEALTHCHECKS = true;
 
 const resolveSubNode = (nodeId: string | undefined) => {
     if (!nodeId) return undefined;

@@ -188,13 +188,13 @@ export const postConfig: {[k: string]: StationConfig} = {
     },
     LZ_LC: {
         id: "LZ_LC",
-        srId:"Łazy Łc", // TODO: Data error + missing data
+        srId:"Łazy Łc",
         platformPosOverride: [19.362862, 50.416436],
         trainPosRange: 0.5
     },
     LZ: {
         id: "LZ",
-        srId:"Łazy Łc", // TODO: Data error
+        srId:"Łazy",
         trainPosRange: 0.5,
         platformPosOverride: [19.3866133, 50.4284008]
     },
@@ -610,6 +610,8 @@ export const serverTzMap: {[k: string]: string} = {
     CZ1: 'Europe/Prague',
     DE1: 'Europe/Paris',
     DE2: 'Europe/Paris',
+    DE3: 'Europe/Paris',
+    DE4: 'Europe/Paris',
     UA1: 'Europe/Paris',
     ES1: 'Europe/London',
     ES2: 'America/Argentina/Buenos_Aires',
@@ -637,7 +639,7 @@ export const searchSeparator = ',';
 
 export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
 
-// console.log("Allowed servers :", AllowedServers);
+console.log("Allowed servers :", AllowedServers);
 
 export const PlatformsConfig = {
 

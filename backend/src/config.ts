@@ -16,6 +16,8 @@ export const SERVERS = [
     "cz1",
     "de1",
     "de2",
+    "de3",
+    "de4",
     "ua1",
     "es1",
     "es2",
@@ -50,7 +52,7 @@ export const internalIdToSrId: {[k: string]: string} = {
     "SG": "Sosnowiec_Główny",
     "DG": "Dąbrowa Górnicza",
     "T1_BZ": "Będzin",
-    "LZ": "Łazy Łc",
+    "LZ_LC": "Łazy Łc",
     "ZA": "Zawiercie",
     "OP_PO": "Opoczno Południe"
 }
