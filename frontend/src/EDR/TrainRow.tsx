@@ -1,15 +1,17 @@
 import React from "react";
-import {configByType, postConfig, postToInternalIds} from "../config";
-import {Badge, Checkbox, Progress, Spinner, Table} from "flowbite-react";
+import {configByType, postConfig} from "../config";
+import {Badge, Button, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import set from "date-fns/set";
 import {nowUTC} from "../utils/date";
 import {getPlayer} from "../api/api";
 import {PathFinding_HasTrainPassedStation} from "../pathfinding/api";
+import BellIcon from "../sounds/bellIcon.svg";
+import CheckIcon from "../sounds/check.svg";
+import Bell from "../sounds/train_departure";
 
-// TODO: Pass server tz
-const iReallyNeedToAddADateLibrary = (expectedHours: number, expectedMinutes: number, tz: string) =>
+const getDateWithHourAndMinutes = (expectedHours: number, expectedMinutes: number, tz: string) =>
     set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
 
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
@@ -30,10 +32,23 @@ const lineData = (ttRow: any) => (
 
 export const tableCellCommonClassnames = "p-4"
 
-const RowPostData: React.FC<any> = ({ttRow, distanceFromStation, serverTz, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
+const RowPostData: React.FC<any> = ({ttRow, trainMustDepart, trainHasPassedStation, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
     const {t} = useTranslation();
-    const now = nowUTC(serverTz);
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
+
+    const [notificationEnabled, setNotificationEnabled] = React.useState(false);
+    const notificationPlayer = React.useRef<HTMLAudioElement>(null);
+
+    const playTrainDepartureNotification = () => {
+        if (!notificationPlayer.current) return;
+        notificationPlayer.current.play().then(() => setNotificationEnabled(false));
+    }
+
+    React.useEffect(() => {
+        if (trainMustDepart && notificationEnabled)
+            playTrainDepartureNotification();
+    }, [notificationEnabled, trainMustDepart]);
+
     return <>
         <td className={tableCellCommonClassnames} ref={headerFourthColRef}>
             {ttRow.from}
@@ -47,11 +62,16 @@ const RowPostData: React.FC<any> = ({ttRow, distanceFromStation, serverTz, heade
         <div className="inline-flex items-center justify-start h-full">
                 {ttRow.scheduled_departure}
             </div>
+            <audio ref={notificationPlayer} src={Bell}/>
             <div className="inline-flex items-center h-full pl-4">
-                { 
-                    distanceFromStation < 1 && new Date(now.getFullYear(), now.getMonth(), now.getDate(), ttRow.scheduled_departure.split(':')[0], ttRow.scheduled_departure.split(':')[1]) <= nowUTC(serverTz)
-                        ? <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
-                        : undefined
+                {
+                    !trainHasPassedStation && (trainMustDepart ?
+                        <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
+                        :
+                        <Button outline color="light" pill size="xs">
+                            <img height={16} width={16} src={notificationEnabled ? CheckIcon : BellIcon} alt="Notify me when the train must depart" onClick={() => setNotificationEnabled(!notificationEnabled)}/>
+                        </Button>
+                    )
                 }
             </div>
         </td>
@@ -71,6 +91,7 @@ const TableRow: React.FC<any> = (
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
+    const dateNow = nowUTC(serverTz);
 
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
 
@@ -105,22 +126,26 @@ const TableRow: React.FC<any> = (
     // console_log("Post cfg", postCfg);
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
-    const dateNow = nowUTC(serverTz);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const isNextDay = Math.abs(arrivalExpectedHours - dateNow.getHours()) > 12; // TODO: Clunky
     const isPreviousDay = Math.abs(dateNow.getHours() - arrivalExpectedHours) > 12; // TODO: Clunky
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
-    const expectedArrival = iReallyNeedToAddADateLibrary(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
-    const expectedDeparture = iReallyNeedToAddADateLibrary(departureExpectedHours, departureExpectedMinutes, serverTz);
+    const expectedArrival = getDateWithHourAndMinutes(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
+    const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedDeparture);
+    const trainMustDepart = distanceFromStation < 1 && expectedDeparture <= nowUTC(serverTz);
+
+
 
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
-                <Badge color={trainBadgeColor} size="sm"><span className="!font-bold">{ttRow.train_number}</span></Badge>
+                <div className="flex">
+                    <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
+                </div>
                 {
                     !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
                 }
@@ -186,7 +211,7 @@ const TableRow: React.FC<any> = (
             }
             </div>
         </td>
-        <RowPostData ttRow={ttRow} distanceFromStation={distanceFromStation} serverTz={serverTz} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
+        <RowPostData ttRow={ttRow} trainHasPassedStation={trainHasPassedStation} trainMustDepart={trainMustDepart} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
     </Table.Row>
 }
 

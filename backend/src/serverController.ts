@@ -9,7 +9,9 @@ export function getServerList(req: express.Request, res: express.Response) {
         return res
             .setHeader("Cache-control", 'public, max-age=3600')
             .send((e.data as ApiResponse<Server>).data);
-    });
+    }).catch(() => {
+        return res.sendStatus(500);
+    })
 };
 
 export function getStationsList(req: express.Request, res: express.Response, serverCode: string) {
@@ -17,7 +19,9 @@ export function getStationsList(req: express.Request, res: express.Response, ser
         return res
             .setHeader("Cache-control", 'public, max-age=3600')
             .send((e.data as ApiResponse<Station>).data);
-    });
+    }).catch(() => {
+        return res.sendStatus(500);
+    })
 }
 
 export function getTrainsList(req: express.Request, res: express.Response, serverCode: string) {
@@ -44,6 +48,8 @@ export function getPlayer(req: express.Request, res: express.Response, steamId: 
             }
             else
                 return res.sendStatus(500)
-        });
+        }).catch(() => {
+            return res.sendStatus(500);
+        })
 
 }

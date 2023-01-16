@@ -18,6 +18,7 @@ export const SERVERS = [
     "de2",
     "de3",
     "de4",
+    "de5",
     "ua1",
     "es1",
     "es2",
