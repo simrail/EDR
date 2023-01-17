@@ -8,15 +8,14 @@ import {useTranslation} from "react-i18next";
 
 export const PostSelect = () => {
     const [posts, setPosts] = React.useState<any | undefined>();
-    const [serverCode, _] = useQueryParam('serverCode', StringParam);
+    const [serverCode] = useQueryParam('serverCode', StringParam);
     const {t} = useTranslation();
 
     React.useEffect(() => {
         if (!serverCode) return;
         getStations(serverCode).then(setPosts);
+        // eslint-disable-next-line
     }, []);
-
-    // console_log("Postes : ", posts);
 
     return <SelectMenuLayout title={t("select_menu.post_select")}>
         {

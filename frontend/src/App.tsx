@@ -1,14 +1,13 @@
 import React, {ReactNode} from 'react';
 import {EDR} from "./EDR";
 import "./index.css"
-import {Flowbite, useThemeMode} from "flowbite-react";
+import {Flowbite} from "flowbite-react";
 import {StringParam, useQueryParams} from "use-query-params";
 import {ServerSelect} from "./SelectMenu/ServerSelect";
 import {PostSelect} from "./SelectMenu/PostSelect";
 
 function App() {
-    const [{serverCode, post, betaToken}] = useQueryParams({
-        betaToken: StringParam,
+    const [{serverCode, post}] = useQueryParams({
         serverCode: StringParam,
         post: StringParam
     });

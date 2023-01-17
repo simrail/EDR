@@ -50,6 +50,7 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
     React.useEffect(() => {
         if (trainMustDepart && notificationEnabled)
             playSoundNotification(() => setNotificationEnabled(false));
+        // eslint-disable-next-line
     }, [notificationEnabled, trainMustDepart]);
 
     return <>
@@ -175,7 +176,7 @@ const TableRow: React.FC<any> = (
                 &nbsp;
                 {
                         distanceFromStation
-                        ? previousDistance == currentDistance
+                        ? previousDistance === currentDistance
                             ? <>&nbsp;- {t('edr.train_row.train_stopped')}</>
                             : trainHasPassedStation ?
                                 <>&nbsp;- {t("edr.train_row.train_away")}</>

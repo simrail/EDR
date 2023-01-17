@@ -1,12 +1,12 @@
-import React, {useCallback} from "react";
-import {getStations, api, getTrains} from "../api/api";
-import {Alert, Progress, Spinner} from "flowbite-react";
+import React from "react";
+import {getStations, getTimetable, getTrains} from "../api/api";
+import {Alert, Spinner} from "flowbite-react";
 import {EDRTable} from "./Table";
 import _keyBy from "lodash/fp/keyBy";
 import _minBy from "lodash/fp/minBy";
 import _uniq from "lodash/fp/uniq";
 import _map from "lodash/fp/map";
-import {Vector_DotProduct, vectors} from "./vectors";
+import {Vector_DotProduct, haversine} from "./vectors";
 import {internalConfigPostIds, postConfig, serverTzMap} from "../config";
 import {useTranslation} from "react-i18next";
 import {StringParam, useQueryParam} from "use-query-params";
@@ -28,7 +28,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
 
     const fetchAllDatas = () => {
-        api(serverCode,  post, !!cdnBypass).then((data) => {
+        getTimetable(serverCode,  post, !!cdnBypass).then((data) => {
             setTimetable(data);
             getStations(serverCode, !!cdnBypass).then((data) => {
                 setStations(_keyBy('Name', data));
@@ -45,6 +45,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
         console_log("Current station : ", currentStation);
         if(!serverCode || !currentStation) return;
         fetchAllDatas();
+        // eslint-disable-next-line
     }, [serverCode, post]);
 
     React.useEffect(() => {
@@ -60,6 +61,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             return;
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
+        // eslint-disable-next-line
     }, [serverCode]);
 
     // TODO: Effect needs refactoring it is HUGE
@@ -85,7 +87,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
                     console_log("True pos : ", truePos);
                     return {
                         ...s,
-                        distanceToStation: vectors(truePos, [train.TrainData.Longitute, train.TrainData.Latititute]),
+                        distanceToStation: haversine(truePos, [train.TrainData.Longitute, train.TrainData.Latititute]),
                         stationInternalId: s.id
                     }
                 })
@@ -109,12 +111,12 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             // console.log(distanceCompletePath, previousDistances?.[-1]);
 
             const trainPosVector: [number, number] = [t.TrainData.Longitute, t.TrainData.Latititute];
-            const currentRawDistance = vectors(getOverridenStationPos(post), trainPosVector);
+            const currentRawDistance = haversine(getOverridenStationPos(post), trainPosVector);
             const rawDistancesArray = _uniq([...(previousDistances ?? []), currentRawDistance]);
             const positionsArray = _uniq([...(previousPositions ?? []), trainPosVector]);
             const directionVector = getDirectionVector(positionsArray);
             const pfClosestStation = directionVector && PathFinding_ClosestStationInPath(pfLineTrace, [directionVector.x, directionVector.y], trainPosVector);
-            const playerDistanceToNextStation = pfClosestStation && pfClosestStation?.platformPosOverride ? vectors(pfClosestStation.platformPosOverride,  trainPosVector)  : currentRawDistance;
+            const playerDistanceToNextStation = pfClosestStation && pfClosestStation?.platformPosOverride ? haversine(pfClosestStation.platformPosOverride,  trainPosVector)  : currentRawDistance;
             const distanceArray = _uniq([...(previousDistances ?? []), playerDistanceToNextStation + distanceCompletePath]);
             const dotProductForGoingAway = directionVector && currentStation.platformPosOverride ? Vector_DotProduct(currentStation.platformPosOverride, directionVector) : 0
 
@@ -140,6 +142,7 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
 
         setTrainsWithHaversine(_keyBy('TrainNoLocal', withHaversineTrains));
 
+        // eslint-disable-next-line
     }, [stations, trains, previousTrains.current, timetable]);
 
     //

@@ -16,7 +16,7 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
         .then(res => res.json())
 }
 
-export const api = (server: string, post: string, noCDN: boolean = false): Promise<any> =>
+export const getTimetable = (server: string, post: string, noCDN: boolean = false): Promise<any> =>
     baseApiCall("dispatch/" + server + "/" + post, noCDN);
 
 export const getTrains = (server: string, noCDN: boolean = false): Promise<ApiResponse<Train>> =>

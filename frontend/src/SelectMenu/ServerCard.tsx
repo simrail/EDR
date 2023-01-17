@@ -6,7 +6,7 @@ import {countriesFlags} from "../config";
 import {console_log} from "../utils/Logger";
 
 export const ServerCard: React.FC<any> = ({server}) => {
-    const [_, setServerParam] = useQueryParam('serverCode', StringParam);
+    const [, setServerParam] = useQueryParam('serverCode', StringParam);
     const serverCountryCode = server.ServerCode.slice(0, 2);
     console_log("c ", countries);
     const flag = countriesFlags[serverCountryCode.toUpperCase()];

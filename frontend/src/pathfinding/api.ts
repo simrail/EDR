@@ -1,8 +1,6 @@
 import {Node, pathFind_stackMap} from "./data";
-import {Vector_DotProduct, vectors} from "../EDR/vectors";
-import _reduce from "lodash/reduce";
+import {haversine} from "../EDR/vectors";
 import {postConfig, postToInternalIds} from "../config";
-import Victor from "victor";
 import _ from "lodash";
 import {console_log} from "../utils/Logger";
 
@@ -75,7 +73,7 @@ export const PathFinding_FindPathAndHaversineSum = (start: string, finish: strin
         ?.filter((v) => v && !!v[0] && !!v[1]) as [number, number][];
 
     return [lineTrace, filteredAllPosPoints.reduce((acc, coords, index, array) => {
-        return acc + (array[index - 1] ? vectors(array[index - 1], coords) : 0);
+        return acc + (array[index - 1] ? haversine(array[index - 1], coords) : 0);
     }, 0)];
 }
 
@@ -85,7 +83,7 @@ export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTra
         //.map((point) => point?.platformPosOverride ? {...point, dot: Vector_DotProduct(point.platformPosOverride, Victor.fromArray(directionVector))} : undefined)
         //.filter((dotCalc) => dotCalc && dotCalc.dot && dotCalc.dot > 0 && dotCalc.platformPosOverride)
         .filter((dotCalc) => dotCalc && dotCalc.platformPosOverride)
-        .map((point) => ({...point, distance: vectors(point!.platformPosOverride!, trainPosVector)}))
+        .map((point) => ({...point, distance: haversine(point!.platformPosOverride!, trainPosVector)}))
         .sort((a, b) => a.distance < b.distance? -1 : 1)
 
     console_log("Dot resukts : ", indexOfClosestStationInPathInTrainDirection);
@@ -106,7 +104,6 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
     debug && console.log({formStation, toStation, closestStationId});
     const foundPost = postToInternalIds[encodeURIComponent(formStation)]?.id;
     const foundToPost = postToInternalIds[encodeURIComponent(toStation)]?.id;
-    const closestPost = postConfig[closestStationId];
     const ltIndex = pfLineTrace.findIndex((e) => e?.id && e?.id === foundPost);
     debug && console.log("From index : ", {ltIndex, formStation, pfLineTrace});
 

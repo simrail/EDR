@@ -1,4 +1,4 @@
-import React, {Ref} from "react";
+import React from "react";
 import Bell from "../../sounds/train_departure";
 
 export const useSoundNotification = (): [React.FC, (callback: () => void) => void] => {

@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
+import {Table, TextInput, Button, Spinner, DarkThemeToggle} from "flowbite-react";
 import {postConfig, searchSeparator} from "../config";
 import _sortBy from "lodash/fp/sortBy";
 import TableRow from "./TrainRow";
@@ -50,7 +50,7 @@ const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serv
             setDt(nowUTC(serverTz));
         }, 1000);
         return () => window.clearInterval(window.timeRefreshWebWorkerId)
-    }, [])
+    }, [serverTz])
 
     return <div className="text-center">
         <span className="mr-2 text-xl">{formatTime(dt, i18n.language)}</span><br />

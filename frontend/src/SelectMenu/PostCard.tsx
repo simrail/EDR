@@ -1,11 +1,11 @@
 import React from "react";
 import {Card} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
-import {optimizedPostsImagesMap, postConfig, postToInternalIds} from "../config";
+import {optimizedPostsImagesMap, postToInternalIds} from "../config";
 import classNames from "classnames";
 
 export const PostCard: React.FC<any> = ({post}) => {
-    const [postParam, setPostParam] = useQueryParam('post', StringParam);
+    const [, setPostParam] = useQueryParam('post', StringParam);
     const realId = postToInternalIds[encodeURIComponent(post.Name)]?.id;
     console.log("Real id : ", post.Prefix);
 
