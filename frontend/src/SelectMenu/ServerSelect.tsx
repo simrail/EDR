@@ -16,8 +16,9 @@ export const ServerSelect = () => {
         getServers().then(setServers);
     }, []);
 
-    const orderedServers = _sortBy(servers, (s: any) => {
-        return s.ServerCode.slice(0, 2).toUpperCase() === i18n.language.toUpperCase() ? -1 : 0
+    const language = i18n.language.toUpperCase();
+    const orderedServers = _sortBy(servers, s => {
+        return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
     });
     console_log("servers: ", servers);
 
