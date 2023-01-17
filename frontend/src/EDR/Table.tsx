@@ -8,6 +8,8 @@ import {useTranslation} from "react-i18next";
 import useMeasure from "react-use-measure";
 import classNames from "classnames";
 import {formatTime, nowUTC} from "../utils/date";
+import {useSoundNotification} from "./hooks/useSoundNotification";
+import {SimRailMapModal} from "./SimRailMapModal";
 
 const tableHeadCommonClassName = "p-4"
 const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
@@ -41,9 +43,7 @@ const TableHead: React.FC<any> = ({firstColBounds, secondColBounds, thirdColBoun
 
 const DateTimeDisplay: React.FC<{serverTz: string, serverCode: string}> = ({serverTz, serverCode}) => {
     const {i18n} = useTranslation();
-    // TODO: Take server TZ
     const [dt, setDt] = React.useState(nowUTC(serverTz));
-    const [cdnBypass, setCdnBypass] = useQueryParam('cdnBypass', StringParam);
 
     React.useEffect(() => {
         window.timeRefreshWebWorkerId = window.setInterval(() => {
@@ -89,10 +89,10 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
     const [postQry] = useQueryParam('post', StringParam);
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
-    const [displayingRows, setDisplayingRows] = React.useState<any[]>([]);
+    const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
     const {t, i18n} = useTranslation();
+    const [SoundNotification, playSoundNotification] = useSoundNotification();
 
-    const [rowRef, rowBounds] = useMeasure();
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
     const [headerThirdColRef, thirdColBounds] = useMeasure();
@@ -104,24 +104,15 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
     const dt = nowUTC(serverTz);
     const [betaToken] = useQueryParam('betaToken', StringParam);
     const [serverCode] = useQueryParam('serverCode', StringParam) as any;
-    // console_log(dtString);
 
-    React.useEffect(() => {
-        if (displayMode === "all" && !filter)
-            setTimeout(() => scrollToNearestTrain(displayingRows.length), 1000, displayingRows.length);
-    }, [filter, displayMode]);
-
-    // TODO: This introduces a bug ! It makes the filter jump
-
-    // console_log("All trains : ", timetable);
-    // console_log("Displayed trains : ", displayingRows);
 
     if (!trainsWithHaversine || !postQry) return null;
     const postCfg = postConfig[postQry];
 
-    // console_log("Second col bounds ", secondColBounds);
 
     return <div>
+        <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
+        <SoundNotification />
         <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
             <div className="flex items-center justify-between px-4">
                 <div className="flex flex-col">
@@ -131,13 +122,13 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
                     <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
-                    <DarkThemeToggle/>
+                    <DarkThemeToggle />
                 </div>
             </div>
             <div className="flex items-center w-full px-4 mt-2">
                 <TextInput id="trainNumberFilter" className="w-full mb-2" onChange={(e) => setFilter(e.target.value)} placeholder={t('edr.ui.train_number') ?? ''}/>
                 <div className="flex mx-4 mb-2">
-                <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(displayingRows.length); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
+                <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetable.length); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
                 <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('edr.ui.filter_train_online') ?? ''}</Button>
                 </div>
             </div>
@@ -174,7 +165,6 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                     <TableRow
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
-                        rowRef={rowRef}
                         serverTz={serverTz}
                         firstColRef={i === 0 ? headerFirstColRef : null}
                         secondColRef={i === 0 ? headerSecondColRef : null}
@@ -186,6 +176,8 @@ export const EDRTable: React.FC<any> = ({timetable, trainsWithHaversine, serverT
                         trainDetails={trainsWithHaversine[tr.train_number]}
                         currentTime={formatTime(dt, i18n.language)}
                         timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - Number.parseInt(tr.hourSort))}
+                        playSoundNotification={playSoundNotification}
+                        setModalTrainId={setModalTrainId}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>

@@ -7,7 +7,7 @@ import _minBy from "lodash/fp/minBy";
 import _uniq from "lodash/fp/uniq";
 import _map from "lodash/fp/map";
 import {Vector_DotProduct, vectors} from "./vectors";
-import {internalConfigPostIds, postConfig, postToInternalIds, serverTzMap} from "../config";
+import {internalConfigPostIds, postConfig, serverTzMap} from "../config";
 import {useTranslation} from "react-i18next";
 import {StringParam, useQueryParam} from "use-query-params";
 import {console_log} from "../utils/Logger";
@@ -15,7 +15,7 @@ import {PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} f
 import Victor from "victor";
 
 export const EDR: React.FC<any> = ({serverCode, post}) => {
-    const currentStation = postConfig[post];//"Katowice_Zawodzie"; /*"Sosnowiec_Główny"*/
+    const currentStation = postConfig[post];
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<any | undefined>();
     const [trains, setTrains] = React.useState<any | undefined>();
@@ -26,8 +26,6 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
     const previousTrains = React.useRef<{[k: string]: any} | null>(null);
 
     const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
-
-    // const loading = !timetable || !stations || !trains;
 
     const fetchAllDatas = () => {
         api(serverCode,  post, !!cdnBypass).then((data) => {
@@ -77,12 +75,6 @@ export const EDR: React.FC<any> = ({serverCode, post}) => {
             postConfig[postId]?.platformPosOverride
                 ?? [keyedStations[internalConfigPostIds[encodeURIComponent(postId)]].Longitude, keyedStations[postId].Latititude]
 
-
-
-        // console_log("With user station: ", userStation);
-        // TODO: Change to closest station in path (and if possible, forward of the train)
-        // TODO: In between data points, train tends to "move away" but is not really moving away.
-        // TODO: With two data points and current station it should be possible to infer next path station
         const getClosestStation = (train: any) =>
             _minBy<any>(
                 'distanceToStation', Object.values(postConfig)

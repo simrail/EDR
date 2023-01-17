@@ -7,9 +7,11 @@ import set from "date-fns/set";
 import {nowUTC} from "../utils/date";
 import {getPlayer} from "../api/api";
 import {PathFinding_HasTrainPassedStation} from "../pathfinding/api";
-import BellIcon from "../sounds/bellIcon.svg";
-import CheckIcon from "../sounds/check.svg";
-import Bell from "../sounds/train_departure";
+import BellIcon_Dark from "../sounds/bellIcon_white.svg";
+import BellIcon_Light from "../sounds/bellIcon.svg";
+import CheckIcon_Light from "../sounds/check.svg";
+import CheckIcon_Dark from "../sounds/check_white.svg";
+import {useLocalStorage} from "usehooks-ts";
 
 const getDateWithHourAndMinutes = (expectedHours: number, expectedMinutes: number, tz: string) =>
     set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
@@ -32,21 +34,21 @@ const lineData = (ttRow: any) => (
 
 export const tableCellCommonClassnames = "p-4"
 
-const RowPostData: React.FC<any> = ({ttRow, trainMustDepart, trainHasPassedStation, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
+const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepart, trainHasPassedStation, headerFourthColRef, headerFifthColRef,headerSixthhColRef,headerSeventhColRef}) => {
     const {t} = useTranslation();
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
     const [notificationEnabled, setNotificationEnabled] = React.useState(false);
-    const notificationPlayer = React.useRef<HTMLAudioElement>(null);
 
-    const playTrainDepartureNotification = () => {
-        if (!notificationPlayer.current) return;
-        notificationPlayer.current.play().then(() => setNotificationEnabled(false));
-    }
+    const [currentMode] = useLocalStorage<string>("theme", "dark");
+    const isDarkMode = currentMode === "dark";
+    const CheckIcon = isDarkMode ? CheckIcon_Dark : CheckIcon_Light;
+    const BellIcon = isDarkMode ? BellIcon_Dark : BellIcon_Light;
+
 
     React.useEffect(() => {
         if (trainMustDepart && notificationEnabled)
-            playTrainDepartureNotification();
+            playSoundNotification(() => setNotificationEnabled(false));
     }, [notificationEnabled, trainMustDepart]);
 
     return <>
@@ -62,13 +64,12 @@ const RowPostData: React.FC<any> = ({ttRow, trainMustDepart, trainHasPassedStati
         <div className="inline-flex items-center justify-start h-full">
                 {ttRow.scheduled_departure}
             </div>
-            <audio ref={notificationPlayer} src={Bell}/>
             <div className="inline-flex items-center h-full pl-4">
                 {
                     !trainHasPassedStation && (trainMustDepart ?
                         <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
                         :
-                        <Button outline color="light" pill size="xs">
+                        <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
                             <img height={16} width={16} src={notificationEnabled ? CheckIcon : BellIcon} alt="Notify me when the train must depart" onClick={() => setNotificationEnabled(!notificationEnabled)}/>
                         </Button>
                     )
@@ -84,14 +85,16 @@ const RowPostData: React.FC<any> = ({ttRow, trainMustDepart, trainHasPassedStati
 
 // TODO: This is hella big. Needs refactoring !
 const TableRow: React.FC<any> = (
-    {ttRow, timeOffset, trainDetails, serverTz,
-        firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef
+    {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz,
+        firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
+        playSoundNotification
     }
 ) => {
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
     const dateNow = nowUTC(serverTz);
+    const [simrailFrMapFeatureFlag] = useQueryParam('srFrMap', StringParam);
 
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
 
@@ -145,6 +148,7 @@ const TableRow: React.FC<any> = (
             <div className="flex items-center justify-between">
                 <div className="flex">
                     <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
+                    { (simrailFrMapFeatureFlag === "owi") && <Button  onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}>MAP</Button> }
                 </div>
                 {
                     !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
@@ -211,7 +215,7 @@ const TableRow: React.FC<any> = (
             }
             </div>
         </td>
-        <RowPostData ttRow={ttRow} trainHasPassedStation={trainHasPassedStation} trainMustDepart={trainMustDepart} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
+        <RowPostData playSoundNotification={playSoundNotification} ttRow={ttRow} trainHasPassedStation={trainHasPassedStation} trainMustDepart={trainMustDepart} headerFourthColRef={headerFourthColRef} headerFifthColRef={headerFifthColRef} headerSixthhColRef={headerSixthhColRef} headerSeventhColRef={headerSeventhColRef} />
     </Table.Row>
 }
 
