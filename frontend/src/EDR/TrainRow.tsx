@@ -151,16 +151,21 @@ const TableRow: React.FC<any> = (
                     <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
                     { (simrailFrMapFeatureFlag === "owi") && <Button  onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}>MAP</Button> }
                 </div>
-                {
-                    !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
-                }
-                {
-                    playerSteamInfo?.pseudo
-                        ? <span className="flex items-center"><img className="mx-2" width={16} src={playerSteamInfo.avatar} />{playerSteamInfo?.pseudo}</span>
-                        : <></>
-                }
-                    <span className="none md:inline">{trainConfig && <img src={trainConfig.icon} height={50} width={64}/>}</span>
-
+                <div className="flex md:inline">
+                    <div className="flex justify-end">
+                        {trainConfig && <img src={trainConfig.icon} height={50} width={64} alt="train-icon"/>}
+                    </div>
+                    <div className="flex justify-center">
+                        {
+                            !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
+                        }
+                        {
+                            playerSteamInfo?.pseudo
+                                ? <span className="flex items-center"><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" />{playerSteamInfo?.pseudo}</span>
+                                : <></>
+                        }
+                    </div>
+                </div>
             </div>
             <div className="w-full">
                 {  distanceFromStation
