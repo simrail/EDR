@@ -16,17 +16,17 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
         .then(res => res.json())
 }
 
-export const getTimetable = (server: string, post: string, noCDN: boolean = false): Promise<any> =>
-    baseApiCall("dispatch/" + server + "/" + post, noCDN);
+export const getTimetable = (server: string, post: string): Promise<any> =>
+    baseApiCall("dispatch/" + server + "/" + post);
 
-export const getTrains = (server: string, noCDN: boolean = false): Promise<ApiResponse<Train>> =>
-    baseApiCall( "trains/" + server, noCDN);
+export const getTrains = (server: string): Promise<ApiResponse<Train>> =>
+    baseApiCall( "trains/" + server);
 
-export const getStations = (server: string, noCDN: boolean = false): Promise<ApiResponse<Station>> =>
-    baseApiCall("stations/" + server, noCDN);
+export const getStations = (server: string): Promise<ApiResponse<Station>> =>
+    baseApiCall("stations/" + server);
 
-export const getServers = (noCDN: boolean = false): Promise<ApiResponse<Server>> =>
-    baseApiCall("servers", noCDN);
+export const getServers = (): Promise<ApiResponse<Server>> =>
+    baseApiCall("servers");
 
-export const getPlayer = (steamId: string, noCDN: boolean = false): Promise<any> =>
-    baseApiCall("steam/" + steamId, noCDN);
+export const getPlayer = (steamId: string): Promise<any> =>
+    baseApiCall("steam/" + steamId);
