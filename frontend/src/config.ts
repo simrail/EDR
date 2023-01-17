@@ -6,6 +6,10 @@ import ET25 from "./images/ET25.png";
 import TRAXX from "./images/TRAXX.png";
 import PENDOLINO from './images/Pendolino.png';
 
+import LAYOVER from "./images/layover.png";
+import TRACK from './images/track.png';
+import RIGHT_ARROW from './images/right-chevron.png';
+
 import GW from "./images/posts/gw.jpg";
 import PS from "./images/posts/ps.jpg";
 import KN from "./images/posts/kn.jpg";
@@ -636,6 +640,12 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
     OP: OP_PO
 
 
+}
+
+export const edrImagesMap : {[k: string]: any} = {
+    LAYOVER,
+    TRACK,
+    RIGHT_ARROW
 }
 
 export const serverTzMap: {[k: string]: string} = {

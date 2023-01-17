@@ -26,6 +26,11 @@
       "trains": "Vonatok"
     },
     "train_row": {
+      "layover": "Várakozás",
+      "layover_minutes": "perc",
+      "line": "Vonal",
+      "peron": "Peron",
+      "platform": "Vágány",
       "position_at": "Helenlegi hely:",
       "train_delayed": "Késés",
       "train_early": "Korai",

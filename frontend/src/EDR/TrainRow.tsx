@@ -1,5 +1,5 @@
 import React from "react";
-import {configByType, postConfig, configByLoco} from "../config";
+import {configByType, postConfig, configByLoco, edrImagesMap} from "../config";
 import {Badge, Button, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
@@ -19,16 +19,17 @@ const getDateWithHourAndMinutes = (expectedHours: number, expectedMinutes: numbe
 const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
     ((isNextDay && dateNow.getHours() < 22 ? 1 : 0) * -1444) + ((isPreviousDay && dateNow.getHours() < 22 ? 1 : 0) * (1444 * 2)) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
 
-const platformData = (ttRow: any ) => (
+const platformData = (ttRow: any, t: any) => Math.ceil(parseInt(ttRow.layover)) !== 0 && (
     <>
-        {ttRow.layover} {ttRow.stop_type} {ttRow.platform && <>({ttRow.platform})</>}
+        <img className="inline-block pr-1" src={edrImagesMap.LAYOVER} height={26} width={26} alt="layover"/> {Math.floor(parseInt(ttRow.layover))} {t("edr.train_row.layover_minutes")}
+        {ttRow.platform && <><img className="ml-2 inline-block pl-1" src={edrImagesMap.TRACK} height={26} width={26} alt="track"/> {ttRow.platform.split(' ')[0]} / {ttRow.platform.split(' ')[1]}</>}
     </>
 )
 
-const lineData = (ttRow: any) => (
+const lineData = (ttRow: any, t: any) => (
     <>
         {ttRow.to}
-        &nbsp;➡️️ <b>{ttRow.line}</b>
+        <img className="inline-block pl-1 pb-1" src={edrImagesMap.RIGHT_ARROW} height={18} width={18} alt="r_arrow"/>️ <b>{t("edr.train_row.line")}: {ttRow.line}</b>
     </>
 )
 
@@ -57,8 +58,8 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
             { secondaryPostData.map((spd: any) => <><hr />{spd.from}</>)}
         </td>
         <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
-            {platformData(ttRow)}
-            { secondaryPostData.map((spd: any) => <><hr />{platformData(spd)}</>)}
+            {platformData(ttRow, t)}
+            { secondaryPostData.map((spd: any) => <><hr />{platformData(spd, t)}</>)}
         </td>
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
         <div className="inline-flex items-center justify-start h-full">
@@ -77,8 +78,8 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
             </div>
         </td>
         <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
-            {lineData(ttRow)}
-            { secondaryPostData.map((spd: any) => <><hr />{lineData(spd)}</>)}
+            {lineData(ttRow, t)}
+            { secondaryPostData.map((spd: any) => <><hr />{lineData(spd, t)}</>)}
         </td>
     </>;
 }

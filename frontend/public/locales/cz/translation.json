@@ -26,6 +26,11 @@
       "trains": "Vlaky"
     },
     "train_row": {
+      "layover": "Layover",
+      "layover_minutes": "min",
+      "line": "Line",
+      "peron": "Peron",
+      "platform": "Platform",
       "position_at": "vzd.",
       "train_delayed": "Zpožděný",
       "train_early": "Přijíždí",

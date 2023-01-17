@@ -26,6 +26,11 @@
       "trains": "Trains"
     },
     "train_row": {
+      "layover": "Layover",
+      "layover_minutes": "min",
+      "line": "Line",
+      "peron": "Peron",
+      "platform": "Platform",
       "position_at": "à",
       "train_delayed": "Retard",
       "train_early": "Avance",
