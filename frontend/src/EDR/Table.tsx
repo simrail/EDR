@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TextInput, Label, Button, Checkbox, Spinner, DarkThemeToggle, Badge} from "flowbite-react";
-import {configByType, postConfig, searchSeparator} from "../config";
+import {postConfig, searchSeparator} from "../config";
 import _sortBy from "lodash/fp/sortBy";
 import TableRow from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";

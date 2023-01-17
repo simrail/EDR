@@ -1,5 +1,5 @@
 import React from "react";
-import {configByType, postConfig} from "../config";
+import {configByType, postConfig, configByLoco} from "../config";
 import {Badge, Button, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
@@ -111,7 +111,7 @@ const TableRow: React.FC<any> = (
 
 
     if (!postQry) return null;
-    const trainConfig = configByType[ttRow.type as string];
+    const trainConfig = configByLoco[trainDetails?.Vehicles[0]] ?? configByType[ttRow.type];
     const postCfg = postConfig[postQry];
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
