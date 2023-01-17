@@ -62,19 +62,19 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
             { secondaryPostData.map((spd: any) => <><hr />{platformData(spd, t)}</>)}
         </td>
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
-        <div className="inline-flex items-center justify-start h-full">
+            <div className="flex items-center justify-start h-full">
                 {ttRow.scheduled_departure}
-            </div>
-            <div className="inline-flex items-center h-full pl-4">
-                {
-                    !trainHasPassedStation && (trainMustDepart ?
-                        <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
-                        :
-                        <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
-                            <img height={16} width={16} src={notificationEnabled ? CheckIcon : BellIcon} alt="Notify me when the train must depart" onClick={() => setNotificationEnabled(!notificationEnabled)}/>
-                        </Button>
-                    )
-                }
+                <div className="inline-flex items-center h-full pl-4">
+                    {
+                        !trainHasPassedStation && (trainMustDepart ?
+                            <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
+                            :
+                            <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
+                                <img height={16} width={16} src={notificationEnabled ? CheckIcon : BellIcon} alt="Notify me when the train must depart" onClick={() => setNotificationEnabled(!notificationEnabled)}/>
+                            </Button>
+                        )
+                    }
+                </div>
             </div>
         </td>
         <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
@@ -188,7 +188,7 @@ const TableRow: React.FC<any> = (
             </div>
         </td>
         <td className={tableCellCommonClassnames} ref={thirdColRef}>
-            <div className="flex items-center justify-start h-full">
+            <div className="flex items-center justify-center h-full">
             {ttRow.scheduled_arrival}&nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails
