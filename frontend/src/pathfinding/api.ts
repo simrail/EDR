@@ -1,8 +1,8 @@
 import {Node, pathFind_stackMap} from "./data";
 import {haversine} from "../EDR/functions/vectors";
-import {postConfig, postToInternalIds} from "../config";
 import _ from "lodash";
 import {console_log} from "../utils/Logger";
+import {postConfig, postToInternalIds} from "../config/stations";
 
 
 const RUN_DATA_HEALTHCHECKS = true;

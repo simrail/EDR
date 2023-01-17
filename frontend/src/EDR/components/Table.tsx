@@ -1,14 +1,15 @@
 import React from "react";
 import {Table, Spinner} from "flowbite-react";
-import {postConfig, searchSeparator} from "../config";
+import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import useMeasure, {RectReadOnly} from "react-use-measure";
-import {formatTime, nowUTC} from "../utils/date";
-import {useSoundNotification} from "./hooks/useSoundNotification";
-import {SimRailMapModal} from "./components/SimRailMapModal";
-import {Header} from "./components/Header";
+import {formatTime, nowUTC} from "../../utils/date";
+import {useSoundNotification} from "../hooks/useSoundNotification";
+import {SimRailMapModal} from "./SimRailMapModal";
+import {Header} from "./Header";
+import {postConfig} from "../../config/stations";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;

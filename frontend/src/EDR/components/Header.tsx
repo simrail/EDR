@@ -2,7 +2,7 @@ import React from "react";
 import {Button, DarkThemeToggle, TextInput} from "flowbite-react";
 import {useTranslation} from "react-i18next";
 import {DateTimeDisplay} from "./DateTimeDisplay";
-import {Bounds} from "../Table";
+import {Bounds} from "./Table";
 import _sortBy from "lodash/fp/sortBy";
 import {TableHead} from "./TableHead";
 

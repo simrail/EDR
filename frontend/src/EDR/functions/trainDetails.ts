@@ -1,10 +1,11 @@
 import _minBy from "lodash/fp/minBy";
-import {internalConfigPostIds, postConfig} from "../../config";
+import {internalConfigPostIds} from "../../config";
 import {console_log} from "../../utils/Logger";
 import {haversine, Vector_DotProduct} from "./vectors";
 import Victor from "victor";
 import {PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../../pathfinding/api";
 import _uniq from "lodash/fp/uniq";
+import {postConfig} from "../../config/stations";
 
 
 export const getClosestStation = (train: any) =>

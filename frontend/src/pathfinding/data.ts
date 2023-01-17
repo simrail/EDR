@@ -1,5 +1,4 @@
-import {postConfig} from "../config";
-import {dbgTree} from "./api";
+import {postConfig} from "../config/stations";
 
 export interface Node {
     id: string;
@@ -378,13 +377,6 @@ const DG_WZ = {
 const L660_L1WP = {
     ...postConfig.L660_L1WP,
     left: "DG_SI",
-    right: "DG_SI"
-}
-
-
-const L660_L2WP = {
-    ...postConfig.L660_L2WP,
-    left: "L660_L1WP",
     right: "DG_SI"
 }
 

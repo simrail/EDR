@@ -1,37 +1,27 @@
 import React from "react";
-import {configByType, postConfig, configByLoco, edrImagesMap} from "../config";
+import {edrImagesMap} from "../../config";
 import {Badge, Button, Table} from "flowbite-react";
 import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
-import set from "date-fns/set";
-import {nowUTC} from "../utils/date";
-import {getPlayer} from "../api/api";
-import {PathFinding_HasTrainPassedStation} from "../pathfinding/api";
-import BellIcon_Dark from "../sounds/bellIcon_white.svg";
-import BellIcon_Light from "../sounds/bellIcon.svg";
-import CheckIcon_Light from "../sounds/check.svg";
-import CheckIcon_Dark from "../sounds/check_white.svg";
-import {useLocalStorage} from "usehooks-ts";
+import {nowUTC} from "../../utils/date";
+import {getPlayer} from "../../api/api";
+import {PathFinding_HasTrainPassedStation} from "../../pathfinding/api";
+import BellIcon_Dark from "../../sounds/bellIcon_white.svg";
+import CheckIcon_Dark from "../../sounds/check_white.svg";
+import {CellLineData} from "./CellLineData";
+import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
+import {configByLoco, configByType} from "../../config/trains";
+import {postConfig} from "../../config/stations";
 
-const getDateWithHourAndMinutes = (expectedHours: number, expectedMinutes: number, tz: string) =>
-    set(nowUTC(tz), {hours: expectedHours, minutes: expectedMinutes});
-
-const getTimeDelay = (isNextDay: boolean, isPreviousDay: boolean, dateNow: Date, expected: Date) =>
-    ((isNextDay && dateNow.getHours() < 22 ? 1 : 0) * -1444) + ((isPreviousDay && dateNow.getHours() < 22 ? 1 : 0) * (1444 * 2)) + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
-
-const platformData = (ttRow: any, t: any) => Math.ceil(parseInt(ttRow.layover)) !== 0 && (
-    <>
-        <img className="inline-block pr-1" src={edrImagesMap.LAYOVER} height={26} width={26} alt="layover"/> {Math.floor(parseInt(ttRow.layover))} {t("edr.train_row.layover_minutes")}
-        {ttRow.platform && <><img className="ml-2 inline-block pl-1" src={edrImagesMap.TRACK} height={26} width={26} alt="track"/> {ttRow.platform.split(' ')[0]} / {ttRow.platform.split(' ')[1]}</>}
-    </>
-)
-
-const lineData = (ttRow: any, t: any) => (
-    <>
-        {ttRow.to}
-        <img className="inline-block pl-1 pb-1" src={edrImagesMap.RIGHT_ARROW} height={18} width={18} alt="r_arrow"/>️ <b>{t("edr.train_row.line")}: {ttRow.line}</b>
-    </>
-)
+const PlatformData: React.FC<{ttRow: any}> = ({ttRow}) => {
+    const {t} = useTranslation();
+    return Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
+        <>
+            <img className="inline-block pr-1" src={edrImagesMap.LAYOVER} height={26} width={26} alt="layover"/> {Math.floor(parseInt(ttRow.layover))} {t("edr.train_row.layover_minutes")}
+            {ttRow.platform && <><img className="ml-2 inline-block pl-1" src={edrImagesMap.TRACK} height={26} width={26} alt="track"/> {ttRow.platform.split(' ')[0]} / {ttRow.platform.split(' ')[1]}</>}
+        </>
+    ) : null
+}
 
 export const tableCellCommonClassnames = "p-4"
 
@@ -41,10 +31,10 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
 
     const [notificationEnabled, setNotificationEnabled] = React.useState(false);
 
-    const [currentMode] = useLocalStorage<string>("theme", "dark");
-    const isDarkMode = currentMode === "dark";
-    const CheckIcon = isDarkMode ? CheckIcon_Dark : CheckIcon_Light;
-    const BellIcon = isDarkMode ? BellIcon_Dark : BellIcon_Light;
+    /*const currentMode = useReadLocalStorage("theme");
+    const isDarkMode = currentMode === "dark";*/
+    const CheckIcon = /*isDarkMode ?*/ CheckIcon_Dark //: CheckIcon_Light;
+    const BellIcon = /*isDarkMode ?*/ BellIcon_Dark //: BellIcon_Light;
 
 
     React.useEffect(() => {
@@ -59,8 +49,8 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
             { secondaryPostData.map((spd: any) => <><hr />{spd.from}</>)}
         </td>
         <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
-            {platformData(ttRow, t)}
-            { secondaryPostData.map((spd: any) => <><hr />{platformData(spd, t)}</>)}
+            <PlatformData ttRow={ttRow} />
+            { secondaryPostData.map((spd: any) => <><hr /><PlatformData ttRow={spd} /></>)}
         </td>
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
             <div className="flex items-center justify-start h-full">
@@ -79,8 +69,8 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
             </div>
         </td>
         <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
-            {lineData(ttRow, t)}
-            { secondaryPostData.map((spd: any) => <><hr />{lineData(spd, t)}</>)}
+            <CellLineData ttRow={ttRow} />
+            { secondaryPostData.map((spd: any, i: number) => <><hr /><CellLineData ttRow={spd} key={spd.train_number + i} /></>)}
         </td>
     </>;
 }
@@ -121,7 +111,7 @@ const TableRow: React.FC<any> = (
     const currentDistance = trainDetails?.rawDistances.slice(-1)
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
     const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
-    const trainBadgeColor = trainConfig?.color ?? "purple";
+    const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
     const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;

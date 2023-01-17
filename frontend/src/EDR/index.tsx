@@ -1,15 +1,16 @@
 import React from "react";
 import {getStations, getTimetable, getTrains} from "../api/api";
 import {Alert} from "flowbite-react";
-import {EDRTable} from "./Table";
+import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
 import _map from "lodash/fp/map";
-import {postConfig, serverTzMap} from "../config";
+import {serverTzMap} from "../config";
 import {useTranslation} from "react-i18next";
 import {console_log} from "../utils/Logger";
 
 import {LoadingScreen} from "./components/LoadingScreen";
 import {getTrainDetails} from "./functions/trainDetails";
+import {postConfig} from "../config/stations";
 
 type Props = {
     serverCode: string;
