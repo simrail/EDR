@@ -15,7 +15,7 @@ import {postConfig} from "../../config/stations";
 
 const PlatformData: React.FC<{ttRow: any}> = ({ttRow}) => {
     const {t} = useTranslation();
-    return Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
+    return ttRow.platform || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
         <>
             <img className="inline-block pr-1" src={edrImagesMap.LAYOVER} height={26} width={26} alt="layover"/> {Math.floor(parseInt(ttRow.layover))} {t("edr.train_row.layover_minutes")}
             {ttRow.platform && <><img className="ml-2 inline-block pl-1" src={edrImagesMap.TRACK} height={26} width={26} alt="track"/> {ttRow.platform.split(' ')[0]} / {ttRow.platform.split(' ')[1]}</>}
@@ -123,15 +123,14 @@ const TableRow: React.FC<any> = (
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
-    const isNextDay = Math.abs(arrivalExpectedHours - dateNow.getHours()) > 12; // TODO: Clunky
-    const isPreviousDay = Math.abs(dateNow.getHours() - arrivalExpectedHours) > 12; // TODO: Clunky
+    const isArrivalNextDay = dateNow.getHours() > 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
+    const isArrivalPreviousDay = arrivalExpectedHours > 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const expectedArrival = getDateWithHourAndMinutes(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
     const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
-    const arrivalTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedArrival);
-    const departureTimeDelay = getTimeDelay(isNextDay, isPreviousDay, dateNow, expectedDeparture);
+    const arrivalTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedArrival);
+    const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
     const trainMustDepart = distanceFromStation < 1 && expectedDeparture <= nowUTC(serverTz);
-
 
 
     // ETA && console_log("ETA", ETA);

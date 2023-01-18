@@ -59,8 +59,7 @@ export const EDRTable: React.FC<Props> = ({timetable, trainsWithDetails, serverT
 
     if (!trainsWithDetails || !postQry) return null;
     const postCfg = postConfig[postQry];
-
-
+    
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
         <SoundNotification />

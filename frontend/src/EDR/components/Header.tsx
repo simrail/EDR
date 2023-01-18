@@ -44,6 +44,13 @@ export const Header: React.FC<Props> = ({
     setFilter, setDisplayMode
     }) => {
     const {t} = useTranslation();
+
+
+    React.useEffect(() =>
+         scrollToNearestTrain(timetableLength)
+    , [])
+
+
     return (
         <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
             <div className="flex items-center justify-between px-4">

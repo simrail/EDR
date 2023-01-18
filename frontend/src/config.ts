@@ -79,6 +79,7 @@ export const serverTzMap: {[k: string]: string} = {
     FR1: 'Europe/Paris',
     FR2: 'Europe/Paris',
     CZ1: 'Europe/Prague',
+    CZ2: 'Europe/Prague',
     DE1: 'Europe/Paris',
     DE2: 'Europe/Paris',
     DE3: 'Europe/Paris',
