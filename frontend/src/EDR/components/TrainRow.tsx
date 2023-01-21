@@ -131,7 +131,7 @@ const TableRow: React.FC<any> = (
     const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
-    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1 && subMinutes(expectedDeparture, 1) <= dateNow;
+    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1 && (subMinutes(expectedDeparture, 1).getTime() <= dateNow.getTime());
 
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
