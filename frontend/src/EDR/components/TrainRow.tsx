@@ -13,6 +13,7 @@ import {CellLineData} from "./CellLineData";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByLoco, configByType} from "../../config/trains";
 import {postConfig} from "../../config/stations";
+import { subMinutes } from "date-fns";
 
 const PlatformData: React.FC<{ttRow: any}> = ({ttRow}) => {
     const {t} = useTranslation();
@@ -130,7 +131,7 @@ const TableRow: React.FC<any> = (
     const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
-    const trainMustDepart = distanceFromStation < 1 && expectedDeparture <= nowUTC(serverTz);
+    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1 && subMinutes(expectedDeparture, 1) <= dateNow;
 
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
