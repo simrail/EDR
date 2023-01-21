@@ -123,7 +123,7 @@ const TableRow: React.FC<any> = (
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
-    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_arrival.split(":");
+    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":");
     const isArrivalNextDay = dateNow.getHours() > 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours > 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
@@ -131,7 +131,7 @@ const TableRow: React.FC<any> = (
     const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
     const arrivalTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedArrival);
     const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
-    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1 && (subMinutes(expectedDeparture, 1).getTime() <= dateNow.getTime());
+    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
 
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
