@@ -4,7 +4,7 @@
 
 The project aims to provide a better, more functional and more modern timetable experience for dispatchers. Created by [@DKFN](https://github.com/DKFN).
 
-### ➡️➡️➡️[The app is available right here.](https://edr.deadlykungfu.ninja/)⬅️⬅️⬅️
+### ➡️➡️➡️[The app is available right here.](https://edr.simrail.fr/)⬅️⬅️⬅️
 
 Main features include but are not limited to:
 
