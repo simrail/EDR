@@ -6,8 +6,6 @@ import {useTranslation} from "react-i18next";
 import {nowUTC} from "../../utils/date";
 import {getPlayer} from "../../api/api";
 import {PathFinding_HasTrainPassedStation} from "../../pathfinding/api";
-import BellIcon_Dark from "../../sounds/bellIcon_white.svg";
-import CheckIcon_Dark from "../../sounds/check_white.svg";
 import World from "../../sounds/world.svg";
 import {CellLineData} from "./CellLineData";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
@@ -33,12 +31,6 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
 
     const [notificationEnabled, setNotificationEnabled] = React.useState(false);
 
-    /*const currentMode = useReadLocalStorage("theme");
-    const isDarkMode = currentMode === "dark";*/
-    const CheckIcon = /*isDarkMode ?*/ CheckIcon_Dark //: CheckIcon_Light;
-    const BellIcon = /*isDarkMode ?*/ BellIcon_Dark //: BellIcon_Light;
-
-
     React.useEffect(() => {
         if (trainMustDepart && notificationEnabled)
             playSoundNotification(() => setNotificationEnabled(false));
@@ -63,7 +55,7 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
                             <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
                             :
                             <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
-                                <img height={16} width={16} src={notificationEnabled ? CheckIcon : BellIcon} alt="Notify me when the train must depart" onClick={() => setNotificationEnabled(!notificationEnabled)}/>
+                                <img height={16} width={16} src={notificationEnabled ? edrImagesMap.CHECK : edrImagesMap.BELL} alt={t("edr.train_row.notify") ?? 'notify'} onClick={() => setNotificationEnabled(!notificationEnabled)}/>
                             </Button>
                         )
                     }

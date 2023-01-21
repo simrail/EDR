@@ -2,6 +2,8 @@
 import LAYOVER from "./images/layover.png";
 import TRACK from './images/track.png';
 import RIGHT_ARROW from './images/right-chevron.png';
+import BELL from './images/bell.png';
+import CHECK from './images/check.png';
 
 import GW from "./images/posts/gw.jpg";
 import PS from "./images/posts/ps.jpg";
@@ -72,7 +74,9 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
 export const edrImagesMap : {[k: string]: any} = {
     LAYOVER,
     TRACK,
-    RIGHT_ARROW
+    RIGHT_ARROW,
+    BELL,
+    CHECK,
 }
 
 export const serverTzMap: {[k: string]: string} = {
