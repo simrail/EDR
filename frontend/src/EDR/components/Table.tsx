@@ -19,6 +19,7 @@ export type Bounds = {
     fifthColBounds: RectReadOnly;
     sixthColBounds: RectReadOnly;
     seventhColBounds: RectReadOnly;
+    showStopColumn: boolean;
 }
 
 type Props = {
@@ -59,6 +60,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
 
     if (!trainsWithDetails || !postQry) return null;
     const postCfg = postConfig[postQry];
+    const showStopColumn = timetable.lenght > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
@@ -67,7 +69,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
             serverCode={serverCode}
             postCfg={postCfg}
             displayMode={displayMode}
-            bounds={bounds}
+            bounds={{...bounds, showStopColumn}}
             timetableLength={timetable.length}
             setFilter={setFilter}
             setDisplayMode={setDisplayMode}

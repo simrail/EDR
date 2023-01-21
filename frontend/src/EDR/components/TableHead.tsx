@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {Bounds} from "./Table";
 
 const tableHeadCommonClassName = "p-4"
-export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds}) => {
+export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds, showStopColumn}) => {
     const {t} = useTranslation();
     if (!firstColBounds) return null;
     // console_log("Fourth bou,ds", fourthColBounds)
@@ -22,7 +22,7 @@ export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, th
             {t('edr.train_headers.train_from')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: fifthColBounds.width}}>
-            {t('edr.train_headers.train_stop')}
+        {showStopColumn && t('edr.train_headers.train_stop')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: sixthColBounds.width}}>
             {t('edr.train_headers.train_departure_time')}
