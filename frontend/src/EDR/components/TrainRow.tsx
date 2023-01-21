@@ -8,6 +8,7 @@ import {getPlayer} from "../../api/api";
 import {PathFinding_HasTrainPassedStation} from "../../pathfinding/api";
 import BellIcon_Dark from "../../sounds/bellIcon_white.svg";
 import CheckIcon_Dark from "../../sounds/check_white.svg";
+import World from "../../sounds/world.svg";
 import {CellLineData} from "./CellLineData";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByLoco, configByType} from "../../config/trains";
@@ -86,7 +87,6 @@ const TableRow: React.FC<any> = (
     const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
     const dateNow = nowUTC(serverTz);
-    const [simrailFrMapFeatureFlag] = useQueryParam('srFrMap', StringParam);
 
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
 
@@ -132,14 +132,15 @@ const TableRow: React.FC<any> = (
     const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
     const trainMustDepart = distanceFromStation < 1 && expectedDeparture <= nowUTC(serverTz);
 
-
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
-                <div className="flex">
+                <div className="flex items-center">
                     <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
-                    { (simrailFrMapFeatureFlag === "owi") && <Button  onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}>MAP</Button> }
+                    { trainDetails && <span className="ml-2">
+                        <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>
+                    </span> }
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">

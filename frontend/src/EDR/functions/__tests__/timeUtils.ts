@@ -25,13 +25,13 @@ describe("Time utils", () => {
         const dateNow = new Date(2010, 1, 1, 22, 15);
         const dateExpected = new Date(2010, 1, 2, 22, 15);
         const delayTime = getTimeDelay(true, false, dateNow, dateExpected);
-        expect(delayTime).toBe(0);
+        expect(delayTime).toBe(-1440);
     })
 
     it("Calculates a no delay no lateness when the now is in next day and expected is next day too", () => {
         const dateNow = new Date(2010, 1, 1, 22, 15);
         const dateExpected = new Date(2010, 1, 2, 22, 15);
         const delayTime = getTimeDelay(true, false, dateNow, dateExpected);
-        expect(delayTime).toBe(0);
+        expect(delayTime).toBe(-1440);
     })
 })

@@ -24,16 +24,16 @@ export type Bounds = {
 type Props = {
     timetable: any;
     trainsWithDetails: any;
-    serverTz: any
+    serverTz: any;
+    playSoundNotification: (callback: () => void) => void;
 }
 
-export const EDRTable: React.FC<Props> = ({timetable, trainsWithDetails, serverTz}) => {
+export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, trainsWithDetails, serverTz}) => {
     const [postQry] = useQueryParam('post', StringParam);
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
     const {i18n} = useTranslation();
-    const [SoundNotification, playSoundNotification] = useSoundNotification();
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
@@ -59,10 +59,9 @@ export const EDRTable: React.FC<Props> = ({timetable, trainsWithDetails, serverT
 
     if (!trainsWithDetails || !postQry) return null;
     const postCfg = postConfig[postQry];
-    
+
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
-        <SoundNotification />
         <Header
             serverTz={serverTz}
             serverCode={serverCode}

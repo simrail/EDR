@@ -31,6 +31,7 @@
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "postbuild": "rm -rf ./build/static/**/*.map",
     "lint": "./node_modules/.bin/eslint ./src/ --fix",
+    "ci-test": "react-scripts test CI=true",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

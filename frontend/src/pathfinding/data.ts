@@ -369,15 +369,23 @@ const SG_KAZ = {
 
 const DG_WZ = {
     ...postConfig.DG_WZ,
-    left: "SG_KAZ",
+    left: "DOR",
     right: "SLK",
-    branchA: "L660_L1WP",
+    branchA: "DG_ST",
 }
 
-const L660_L1WP = {
-    ...postConfig.L660_L1WP,
-    left: "DG_SI",
-    right: "DG_SI"
+const DG_ST = {
+    ...postConfig.DG_ST,
+    left: "DG_WZ",
+    right: "DG_ZA",
+    branchA: "DOR"
+}
+
+const DOR = {
+    ...postConfig.DOR,
+    right: "DG_ST",
+    left: "SG_DK",
+    branchA: "DG_WZ"
 }
 
 const SLK = {
@@ -537,7 +545,8 @@ export const pathFind_stackMap: {[k: string]: Node} = {
 
     // R19
     R19_WP14: R19_WP14,
-    L660_L1WP, // TODO: Purposefull breakpoint to avoid wierd routes without weight
+    DG_ST: DG_ST, // TODO: Purposefull breakpoint to avoid wierd routes without weight
+    DOR: DOR,
 
 
     CZ_R19: CZ_R19,

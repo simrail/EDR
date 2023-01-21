@@ -5,10 +5,11 @@ import express from "express";
 import { BASE_SIMRAIL_DISPATCH_API, POSTS, translate_fields, VMAX_BY_TYPE } from "./config";
 
 // TODO: Merge posts with two target posts
-export async function scrapRoute(res: express.Response, server: string, post: string) {
+export async function scrapRoute(res: express.Response, server: string, post: string): Promise<[any[] | undefined, any]> {
     const allPosts = POSTS[post];
     const simrailResponses: any[] = await Promise.all(allPosts.map((p) => simrailClient.get(`?station=${p}&serverCode=${server}`, BASE_SIMRAIL_DISPATCH_API)));
 
+    try {
     // TODO: There could be undefined values among the responses - see todo comment in simrailClient.get
     if (simrailResponses.filter((sr: any) => sr.status >= 400).length > 0) {
         return [undefined, res.status(500).send({
@@ -26,7 +27,6 @@ export async function scrapRoute(res: express.Response, server: string, post: st
         };
     }, {} as any);
 
-    try {
         const rows = simrailResponses.map((sr) => {
             // TODO: Sanity check - the simrail response list may contain undefined values
             const $ = load(sr.data);

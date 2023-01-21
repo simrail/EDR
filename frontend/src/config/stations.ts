@@ -207,6 +207,18 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [19.31384974905758, 50.306421359840016]
     },
+    DOR: {
+        id: "DOR",
+        srId: "Dorota",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.282166, 50.285434]
+    },
+    DG_ST: {
+        id: "DG_ST",
+        srId: "Dąbrowa Górnicza Strzemieszyce",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.268989, 50.3116203]
+    },
     BZ_KS: {
         id: "BZ_KS",
         srId:"Będzin Ksawera",
@@ -410,21 +422,6 @@ export const postConfig: {[k: string]: StationConfig} = {
         srId: "Sędziszów",
         trainPosRange: 0.5,
         platformPosOverride: [20.058531801023246, 50.56829809388203]
-    },
-
-    // Temporary routins to avoid "bad" routes to the south for long routes
-    // Of course a better approach would be to weight the nodes
-    L660_L1WP: {
-        id: "L660_L1WP",
-        srId: "Line 660 <-> Line 1",
-        trainPosRange: 0.1,
-        platformPosOverride: [19.274703107423253, 50.311682534342204]
-    },
-    L660_L2WP: {
-        id: "L660_L2WP",
-        srId: "Line 660 <-> Line 1",
-        trainPosRange: 0.1,
-        platformPosOverride: [19.274703107423253, 50.311682534342204]
     },
     R19_WP14: {
         id: "R19_WP14",

@@ -9,7 +9,7 @@ export const useSoundNotification = (): [React.FC, (callback: () => void) => voi
     }, [notificationPlayer]);
 
     return [
-        () => <audio ref={notificationPlayer} src={Bell}/>,
+       React.memo(() => <audio ref={notificationPlayer} src={Bell}/>),
         playTrainDepartureNotification
     ]
 }

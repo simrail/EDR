@@ -10,39 +10,6 @@ export const srHeaders = {
     // "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
 };
 
-export const SERVERS = [
-    "fr1",
-    "fr2",
-    "cz1",
-    "cz2",
-    "de1",
-    "de2",
-    "de3",
-    "de4",
-    "de5",
-    "ua1",
-    "es1",
-    "es2",
-    "en1",
-    "en2",
-    "en3",
-    "en4",
-    "en5",
-    "en6",
-    "en8",
-    "en9",
-    "it1",
-    "pl1",
-    "pl2",
-    "pl3",
-    "pl4",
-    "pl5",
-    "pl6",
-    "pl7",
-    "pt1",
-    "cn1"
-]
-
 export const internalIdToSrId: {[k: string]: string} = {
     "GW": "Góra Włodowska",
     "PS": "Psary",
@@ -56,7 +23,9 @@ export const internalIdToSrId: {[k: string]: string} = {
     "T1_BZ": "Będzin",
     "LZ_LC": "Łazy Łc",
     "ZA": "Zawiercie",
-    "OP_PO": "Opoczno Południe"
+    "OP_PO": "Opoczno Południe",
+    "DG_WZ": "Dąbrowa Górnicza Wschodnia",
+    "DG_ZA": ""
 }
 
 export const POSTS: { [key: string]: PURE_POST[] } = {
@@ -72,7 +41,9 @@ export const POSTS: { [key: string]: PURE_POST[] } = {
     "Będzin": ["Będzin"],
     "Łazy Łc": ["Łazy Łc"],
     "Zawiercie": ["Zawiercie"],
-    "Opoczno Południe": ["Opoczno Południe"]
+    "Opoczno Południe": ["Opoczno Południe"],
+    "Dąbrowa Górnicza Wschodnia": ["Dąbrowa Górnicza Wschodnia"],
+    "Dąbrowa Górnicza Ząbkowice": ["Dąbrowa Górnicza Ząbkowice"]
 
 };
 
@@ -90,7 +61,9 @@ export type PURE_POST =
     "Będzin" |
     "Łazy Łc" |
     "Zawiercie" |
-    "Opoczno Południe";
+    "Opoczno Południe" |
+    "Dąbrowa Górnicza Wschodnia" |
+    "Dąbrowa Górnicza Ząbkowice"
 
 export enum VMAX_BY_TYPE {
     EIJ = 200,

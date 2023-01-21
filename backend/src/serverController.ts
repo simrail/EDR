@@ -48,7 +48,7 @@ export function getPlayer(req: express.Request, res: express.Response, steamId: 
         .then((response) => {
             if (response.status === 200) {
                 return res
-                    .setHeader("Cache-control", 'public, max-age=3600')
+                    .setHeader("Cache-control", 'public, max-age=86400')
                     .send(response.data.response.players.map((sr: any) => ({avatar: sr.avatar, pseudo: sr.personaname})))
             }
             else

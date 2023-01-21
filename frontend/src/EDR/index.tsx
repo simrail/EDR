@@ -11,15 +11,17 @@ import {console_log} from "../utils/Logger";
 import {LoadingScreen} from "./components/LoadingScreen";
 import {getTrainDetails} from "./functions/trainDetails";
 import {postConfig} from "../config/stations";
+import {useSoundNotification} from "./hooks/useSoundNotification";
 
 type Props = {
     serverCode: string;
     post: string;
+    playSoundNotification: (cb: () => void) => void
 }
 /**
  * This compnent is responsible to get and batch all the data before it goes downstream to the table
  */
-export const EDR: React.FC<Props> = ({serverCode, post}) => {
+export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) => {
     const currentStation = postConfig[post];
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<any | undefined>();
@@ -28,6 +30,7 @@ export const EDR: React.FC<Props> = ({serverCode, post}) => {
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<any | undefined>();
     const {t} = useTranslation();
     const previousTrains = React.useRef<{[k: string]: any} | null>(null);
+
     const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
 
     // Gets raw simrail data
@@ -97,6 +100,8 @@ export const EDR: React.FC<Props> = ({serverCode, post}) => {
     if (loading)
         return <LoadingScreen timetable={timetable} trains={trains} stations={stations} />
 
-    return <EDRTable timetable={timetable} serverTz={serverTz} trainsWithDetails={trainsWithDetails}/>;
+    return <>
+        <EDRTable playSoundNotification={playSoundNotification} timetable={timetable} serverTz={serverTz} trainsWithDetails={trainsWithDetails}/>
+    </>;
 }
 

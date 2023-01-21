@@ -104,7 +104,8 @@ export const serverTzMap: {[k: string]: string} = {
     PL5: 'Europe/Warsaw',
     PL6: 'Europe/Warsaw',
     PL7: 'Europe/Warsaw',
-    PT1: 'America/Argentina/Buenos_Aires',
+    PL8: 'America/Mexico_City',
+    PT1: 'Europe/London',
     CN1: 'America/Argentina/Buenos_Aires',
 }
 

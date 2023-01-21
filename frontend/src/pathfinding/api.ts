@@ -109,6 +109,8 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
 
     const [intermediateLineTraceBetweenPostAndDestination] = PathFinding_FindPathAndHaversineSum(foundPost, playerPost)
     const [intermediateLineTrace] = PathFinding_FindPathAndHaversineSum(foundToPost, closestStationId)
+    const toIndex = intermediateLineTrace?.findIndex((e) => e?.id && e?.id === foundToPost);
+    debug && console.log("TO in linetrace : ", {toIndex, formStation, intermediateLineTrace});
 
     const intersect = _.intersection(intermediateLineTrace, intermediateLineTraceBetweenPostAndDestination);
     debug && console.log("Closest station id : ", closestStationId);
@@ -117,7 +119,8 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
     return (intersect.length === 2 && intersect // Sosnowiec quickfix
         .map((i) => i?.id).includes("SG_R52") // Sosnowiec quickfix
         && distanceToPost > 7) // Sosnowiec quickfix
-        || (ltIndex === -1 // From post not found
+        || (/*ltIndex === -1*/ // From post not found
+             toIndex !== -1 // To post is not found in intermediate line trace
         && pfLineTrace[0]?.id !== playerPost // Train is not going into station
         && intersect.length === 0) // Train is not in between from dispatch post and small stations in between
 }
