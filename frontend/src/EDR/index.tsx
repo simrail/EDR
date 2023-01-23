@@ -16,6 +16,29 @@ import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 
+export type TimeTableRow = {
+    k: string;
+    scheduled_arrival: string;
+    real_arrival: string,
+    type: TimeTableServiceType,
+    train_number: string,
+    from: string,
+    to: string,
+    line: string,
+    layover: string,
+    stop_type: string,
+    platform: string,
+    scheduled_departure: string,
+    real_departure: string,
+    start_station: string,
+    terminus_station: string,
+    carrier: string,
+    type_speed: number,
+    hourSort: number,
+    secondaryPostsRows: TimeTableRow[]
+};
+
+
 type Props = {
     playSoundNotification: (cb: () => void) => void
 }
@@ -26,8 +49,8 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     const {serverCode, post} = useParams<{
         serverCode: string,
         post: string
-    }>()
-    console.log("From router : ", {serverCode, post});
+    }>();
+
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<Dictionary<Station> | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
@@ -41,7 +64,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     // Gets raw simrail data
     const fetchAllDatas = () => {
         if (!serverCode || !post) return;
-        getTimetable(serverCode, post).then((data: TimeTableRow[]) => {
+        getTimetable(post).then((data: TimeTableRow[]) => {
             setTimetable(data);
             getStations(serverCode).then((data) => {
                 setStations(_keyBy('Name', data));
@@ -114,8 +137,6 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}
                               stations={stations as Dictionary<Station>}/>
 
-    console.log("About to load");
-
     return <EDRTable playSoundNotification={playSoundNotification}
                      timetable={timetable!}
                      serverTz={serverTz}
@@ -124,25 +145,3 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
                      serverCode={serverCode!}
     />;
 }
-
-export type TimeTableRow = {
-    k: string;
-    scheduled_arrival: string;
-    real_arrival: string,
-    type: TimeTableServiceType,
-    train_number: string,
-    from: string,
-    to: string,
-    line: string,
-    layover: string,
-    stop_type: string,
-    platform: string,
-    scheduled_departure: string,
-    real_departure: string,
-    start_station: string,
-    terminus_station: string,
-    carrier: string,
-    type_speed: number,
-    hourSort: number,
-    secondaryPostsRows: TimeTableRow[]
-};
