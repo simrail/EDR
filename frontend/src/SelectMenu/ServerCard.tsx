@@ -1,12 +1,12 @@
 import React from "react";
 import {Card} from "flowbite-react";
-import {StringParam, useQueryParam} from "use-query-params";
 import {countries} from "country-flag-icons";
 import {countriesFlags} from "../config";
 import {console_log} from "../utils/Logger";
+import {useNavigate} from "react-router-dom";
 
 export const ServerCard: React.FC<any> = ({server}) => {
-    const [, setServerParam] = useQueryParam('serverCode', StringParam);
+    const navigate = useNavigate();
     const serverCountryCode = server.ServerCode.slice(0, 2);
     console_log("c ", countries);
     const flag = countriesFlags[serverCountryCode.toUpperCase()];
@@ -14,8 +14,7 @@ export const ServerCard: React.FC<any> = ({server}) => {
     console_log("falg", flag);
     return (
         <Card className="m-4 cursor-pointer w-[150px] text-center" onClick={() => {
-            setServerParam(server.ServerCode);
-            window.history.go();
+            navigate("/" + server.ServerCode);
         }} imgSrc={"data:image/svg+xml;base64, " + btoa(flag)}>
             {server.ServerName}
         </Card>

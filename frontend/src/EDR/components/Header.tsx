@@ -6,6 +6,7 @@ import {Bounds} from "./Table";
 import _sortBy from "lodash/fp/sortBy";
 import {TableHead} from "./TableHead";
 import { StationConfig } from "../../config/stations";
+import {Link} from "react-router-dom";
 
 type Props = {
     serverTz: string;
@@ -57,7 +58,7 @@ export const Header: React.FC<Props> = ({
             <div className="flex items-center justify-between px-4">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <a href={`/`} className="underline">◀️ {t('edr.ui.close') ?? ''}</a>
+                    <Link to={`/`} className="underline">◀️ {t('edr.ui.close') ?? ''}</Link>
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">

@@ -14,17 +14,20 @@ import {postConfig} from "../config/stations";
 import { TimeTableServiceType } from "../config/trains";
 import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
+import {redirect, useParams} from "react-router-dom";
 
 type Props = {
-    serverCode: string;
-    post: string;
     playSoundNotification: (cb: () => void) => void
 }
 /**
  * This component is responsible to get and batch all the data before it goes downstream to the table
  */
-export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) => {
-    const currentStation = postConfig[post];
+export const EDR: React.FC<Props> = ({playSoundNotification}) => {
+    const {serverCode, post} = useParams<{
+        serverCode: string,
+        post: string
+    }>()
+    console.log("From router : ", {serverCode, post});
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<Dictionary<Station> | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
@@ -34,10 +37,10 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
 
     const previousTrains = React.useRef<{ [k: string]: DetailedTrain } | null>(null);
 
-    const serverTz = serverTzMap[serverCode.toUpperCase()] ?? 'Europe/Paris';
 
     // Gets raw simrail data
     const fetchAllDatas = () => {
+        if (!serverCode || !post) return;
         getTimetable(serverCode, post).then((data: TimeTableRow[]) => {
             setTimetable(data);
             getStations(serverCode).then((data) => {
@@ -49,6 +52,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
             }).catch(() => setTimeout(fetchAllDatas, 5000));
         }).catch(() => setTimeout(fetchAllDatas, 5000));
     }
+
+    const currentStation = post ? postConfig[post] : undefined;
+    const serverTz = serverCode ? serverTzMap[serverCode?.toUpperCase()] : 'Europe/Paris';
 
     // Launches the get from simrail
     React.useEffect(() => {
@@ -67,6 +73,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
     // Refreshes the train positions every 10 seconds
     React.useEffect(() => {
         window.trainsRefreshWebWorkerId = window.setInterval(() => {
+            if (!serverCode) return;
             getTrains(serverCode).then(setTrains);
         }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
@@ -79,7 +86,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as Train[]).length === 0 || !previousTrains) return;
+        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation) return;
         const keyedStations = _keyBy('Name', stations);
         const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations);
         const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
@@ -88,6 +95,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
 
         // eslint-disable-next-line
     }, [stations, trains, previousTrains.current, timetable]);
+
+    if (!serverCode || !post)
+        redirect("/");
 
     if (!loading && trains && trains.length === 0) {
         return <Alert className="mt-8" color="error">{t("app.no_trains")}</Alert>
@@ -104,8 +114,15 @@ export const EDR: React.FC<Props> = ({playSoundNotification, serverCode, post}) 
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}
                               stations={stations as Dictionary<Station>}/>
 
-    return <EDRTable playSoundNotification={playSoundNotification} timetable={timetable!}
-                     serverTz={serverTz} trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}/>;
+    console.log("About to load");
+
+    return <EDRTable playSoundNotification={playSoundNotification}
+                     timetable={timetable!}
+                     serverTz={serverTz}
+                     trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
+                     post={post!}
+                     serverCode={serverCode!}
+    />;
 }
 
 export type TimeTableRow = {

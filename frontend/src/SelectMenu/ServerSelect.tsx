@@ -26,10 +26,10 @@ export const ServerSelect = () => {
     return <SelectMenuLayout title={t("select_menu.server_selection")}>
         {
             !orderedServers
-                ? <Spinner />
+                ? <Spinner/>
                 : orderedServers.filter((s) => AllowedServers.includes(s.ServerCode)).map((s) => {
-                        return <ServerCard key={s.ServerCode} server={s} size="xl"/>
-                    })
+                    return <ServerCard key={s.ServerCode} server={s} size="xl"/>
+                })
         }
-    </SelectMenuLayout>;
-}
+    </SelectMenuLayout>
+};

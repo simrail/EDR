@@ -37,7 +37,8 @@
         "train_departing": "Odchod",
         "train_early_sign": "-",
         "train_late_sign": "+",
-        "waiting_for_data": "Čakanie na informácie"
+        "waiting_for_data": "Čakanie na informácie",
+        "notify": "Notify departure"
       },
       "train_headers": {
         "train_number": "Číslo vlaku",

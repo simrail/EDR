@@ -1,7 +1,6 @@
 import React from "react";
 import {edrImagesMap} from "../../config";
 import {Badge, Button, Table} from "flowbite-react";
-import {StringParam, useQueryParam} from "use-query-params";
 import {useTranslation} from "react-i18next";
 import {nowUTC} from "../../utils/date";
 import {getPlayer} from "../../api/api";
@@ -77,6 +76,7 @@ type Props = {
     timeOffset: number,
     trainDetails: DetailedTrain,
     serverTz: string,
+    post: string;
     firstColRef: any,
     secondColRef: any,
     thirdColRef: any,
@@ -89,13 +89,12 @@ type Props = {
 
 // TODO: This is hella big. Needs refactoring !
 const TableRow: React.FC<Props> = (
-    {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz,
+    {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification
     }: Props
 ) => {
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
-    const [postQry] = useQueryParam('post', StringParam);
     const {t} = useTranslation();
     const dateNow = nowUTC(serverTz);
 
@@ -113,15 +112,15 @@ const TableRow: React.FC<Props> = (
     }, [controlledBy]);
 
 
-    if (!postQry) return null;
+    if (!post) return null;
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]] ?? configByType[ttRow.type];
-    const postCfg = postConfig[postQry];
+    const postCfg = postConfig[post];
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
 
     const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
+    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, post, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
     const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
     const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
@@ -130,7 +129,7 @@ const TableRow: React.FC<Props> = (
 
     // console_log("Post cfg", postCfg);
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
-    const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
+    const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === post && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":").map(value => parseInt(value));
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":").map(value => parseInt(value));
     const isArrivalNextDay = dateNow.getHours() > 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky

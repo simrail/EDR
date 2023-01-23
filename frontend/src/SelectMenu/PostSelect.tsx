@@ -1,15 +1,15 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
-import {StringParam, useQueryParam} from "use-query-params";
 import {getStations} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
 import { Station } from "@simrail/types";
+import {useParams} from "react-router-dom";
 
 export const PostSelect = () => {
     const [posts, setPosts] = React.useState<Station[] | undefined>();
-    const [serverCode] = useQueryParam('serverCode', StringParam);
+    const {serverCode} = useParams()
     const {t} = useTranslation();
 
     React.useEffect(() => {

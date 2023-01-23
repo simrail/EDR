@@ -2,7 +2,6 @@ import React from "react";
 import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
-import {StringParam, useQueryParam} from "use-query-params";
 import useMeasure, {RectReadOnly} from "react-use-measure";
 import {nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
@@ -27,10 +26,11 @@ type Props = {
     trainsWithDetails: {[k: string]: DetailedTrain};
     serverTz: string
     playSoundNotification: (callback: () => void) => void;
+    post: string;
+    serverCode: string;
 }
 
-export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, trainsWithDetails, serverTz}) => {
-    const [postQry] = useQueryParam('post', StringParam);
+export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, trainsWithDetails, serverTz, post, serverCode}) => {
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
@@ -54,11 +54,10 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
     }
 
     const dt = nowUTC(serverTz);
-    const [serverCode] = useQueryParam('serverCode', StringParam) as any;
 
 
-    if (!trainsWithDetails || !postQry) return null;
-    const postCfg = postConfig[postQry];
+    if (!trainsWithDetails || !post) return null;
+    const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
 
     return <div>
@@ -93,6 +92,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
                         serverTz={serverTz}
+                        post={post}
                         firstColRef={i === 0 ? headerFirstColRef : null}
                         secondColRef={i === 0 ? headerSecondColRef : null}
                         thirdColRef={i ===0 ? headerThirdColRef : null}
