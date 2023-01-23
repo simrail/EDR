@@ -3,19 +3,31 @@ import {internalConfigPostIds} from "../../config";
 import {console_log} from "../../utils/Logger";
 import {haversine, Vector_DotProduct} from "./vectors";
 import Victor from "victor";
-import {PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../../pathfinding/api";
+import {PathFindingLineTrace, PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../../pathfinding/api";
 import _uniq from "lodash/fp/uniq";
-import {postConfig} from "../../config/stations";
+import {postConfig, StationConfig} from "../../config/stations";
+import { Station, Train } from "@simrail/types";
+import { Dictionary } from "lodash";
 
+type ExtraStationConfig = {
+    distanceToStation?: number,
+    stationInternalId?: string,
+    left?: string,
+    right?: string,
+    branchA?: string
+}
 
-export const getClosestStation = (train: any) =>
-    _minBy<any>(
+export type ExtendedStationConfig = StationConfig & ExtraStationConfig;
+
+export const getClosestStation = (train: Train) =>
+    _minBy<ExtendedStationConfig>(
         'distanceToStation', Object.values(postConfig)
-            .map((s: any) => {
+            .map((s) => {
                 const truePos = s.platformPosOverride;
                 return {
                     ...s,
-                    distanceToStation: haversine(truePos, [train.TrainData.Longitute, train.TrainData.Latititute]),
+                    // TODO: Handle truePos might be undefined
+                    distanceToStation: haversine(truePos as [number, number], [train.TrainData.Longitute, train.TrainData.Latititute]),
                     stationInternalId: s.id
                 }
             })
@@ -26,14 +38,15 @@ const getDirectionVector = (positionsArray: [number, number][]): Victor | undefi
     const [pointA, pointB] = positionsArray.slice(-2);
     return Victor.fromArray(pointA).subtract(Victor.fromArray(pointB)).normalize();
 }
-const _getOverridenStationPos = (keyedStations: any) => (postId: string) =>
+const _getOverridenStationPos = (keyedStations: Dictionary<Station>) => (postId: string) =>
     postConfig[postId]?.platformPosOverride
     ?? [keyedStations[internalConfigPostIds[encodeURIComponent(postId)]].Longitude, keyedStations[postId].Latititude]
 
-export const getTrainDetails = (previousTrains: any, post: string, currentStation: any, keyedStations: any) =>(t: any) => {
+export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, currentStation: StationConfig, keyedStations: Dictionary<Station>) =>(t: Train) => {
     const getOverridenStationPos = _getOverridenStationPos(keyedStations);
     const closestStation = getClosestStation(t);
-    const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum(closestStation.id, postConfig[post].id, post);
+    // TODO: Handle closestStation might be undefined
+    const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum((closestStation as ExtendedStationConfig).id, postConfig[post].id, post);
     const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;
     const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
     const previousPositions = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.positionsArray : undefined;
@@ -43,12 +56,12 @@ export const getTrainDetails = (previousTrains: any, post: string, currentStatio
 
     const trainPosVector: [number, number] = [t.TrainData.Longitute, t.TrainData.Latititute];
     const currentRawDistance = haversine(getOverridenStationPos(post), trainPosVector);
-    const rawDistancesArray = _uniq([...(previousDistances ?? []), currentRawDistance]);
-    const positionsArray = _uniq([...(previousPositions ?? []), trainPosVector]);
+    const rawDistancesArray = _uniq<number>([...(previousDistances ?? []), currentRawDistance]);
+    const positionsArray = _uniq<[number, number]>([...(previousPositions ?? []), trainPosVector]);
     const directionVector = getDirectionVector(positionsArray);
     const pfClosestStation = directionVector && PathFinding_ClosestStationInPath(pfLineTrace, [directionVector.x, directionVector.y], trainPosVector);
     const playerDistanceToNextStation = pfClosestStation && pfClosestStation?.platformPosOverride ? haversine(pfClosestStation.platformPosOverride,  trainPosVector)  : currentRawDistance;
-    const distanceArray = _uniq([...(previousDistances ?? []), playerDistanceToNextStation + distanceCompletePath]);
+    const distanceArray = _uniq<number>([...(previousDistances ?? []), playerDistanceToNextStation + distanceCompletePath]);
     const dotProductForGoingAway = directionVector && currentStation.platformPosOverride ? Vector_DotProduct(currentStation.platformPosOverride, directionVector) : 0
 
     console_log("For train " + t?.TrainNoLocal, pfLineTrace);
@@ -63,7 +76,21 @@ export const getTrainDetails = (previousTrains: any, post: string, currentStatio
         rawDistances: rawDistancesArray.length > 5 ? rawDistancesArray.slice(1) : distanceArray,
         positionsArray: positionsArray.length > 5 ? positionsArray.slice(2) : positionsArray,
         directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
-        dotProductForGoingAwai: dotProductForGoingAway,
+        dotProductForGoingAway: dotProductForGoingAway,
         goingAwayFromStation: dotProductForGoingAway === 0 ? previousGoingAwayFromStatn ? previousGoingAwayFromStatn  : false : dotProductForGoingAway < 0
-    }
+    } as DetailedTrain
 }
+
+type TrainDetails = {
+    distanceToStation: number[],
+    pfLineTrace: PathFindingLineTrace,
+    closestStation: string,
+    closestStationId: string,
+    rawDistances: number[],
+    positionsArray: [number, number][],
+    directionVector: Victor,
+    dotProductForGoingAway: number,
+    goingAwayFromStation: boolean
+}
+
+export type DetailedTrain = Train & TrainDetails;

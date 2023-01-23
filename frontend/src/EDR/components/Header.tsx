@@ -5,11 +5,12 @@ import {DateTimeDisplay} from "./DateTimeDisplay";
 import {Bounds} from "./Table";
 import _sortBy from "lodash/fp/sortBy";
 import {TableHead} from "./TableHead";
+import { StationConfig } from "../../config/stations";
 
 type Props = {
     serverTz: string;
     serverCode: string;
-    postCfg: any;
+    postCfg: StationConfig;
     displayMode: string;
 
     bounds: Bounds;
@@ -27,7 +28,7 @@ const scrollToNearestTrain = (targetLn: number) => {
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
             return;
         clearInterval(interval);
-        const el: any = _sortBy(([idx, el]) => {
+        const el = _sortBy(([idx, el]) => {
                 return el.getAttribute("data-timeoffset")
             }
             , allTrainRows);
@@ -47,8 +48,8 @@ export const Header: React.FC<Props> = ({
 
 
     React.useEffect(() =>
-         scrollToNearestTrain(timetableLength)
-    , [])
+        scrollToNearestTrain(timetableLength)
+    , [timetableLength])
 
 
     return (

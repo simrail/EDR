@@ -1,4 +1,5 @@
 import {postConfig} from "../config/stations";
+import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 
 export interface Node {
     id: string;
@@ -492,7 +493,7 @@ const STZ = {
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
-export const pathFind_stackMap: {[k: string]: Node} = {
+export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     // Line 1 Kato -> Warso
     KZ: KZ,
     KO: KO,

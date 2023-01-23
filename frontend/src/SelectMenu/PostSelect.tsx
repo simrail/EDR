@@ -5,9 +5,10 @@ import {getStations} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
+import { Station } from "@simrail/types";
 
 export const PostSelect = () => {
-    const [posts, setPosts] = React.useState<any | undefined>();
+    const [posts, setPosts] = React.useState<Station[] | undefined>();
     const [serverCode] = useQueryParam('serverCode', StringParam);
     const {t} = useTranslation();
 
@@ -21,7 +22,7 @@ export const PostSelect = () => {
         {
             !posts
             ? <Spinner size="xl"/>
-            : posts.map((post: any) => <PostCard key={post.Prefix} post={post} />)
+            : posts.map((post) => <PostCard key={post.Prefix} post={post} />)
         }
     </SelectMenuLayout>;
 }

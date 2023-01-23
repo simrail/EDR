@@ -11,9 +11,11 @@ import {CellLineData} from "./CellLineData";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByLoco, configByType} from "../../config/trains";
 import {postConfig} from "../../config/stations";
+import { TimeTableRow } from "..";
+import { DetailedTrain } from "../functions/trainDetails";
 import { subMinutes } from "date-fns";
 
-const PlatformData: React.FC<{ttRow: any}> = ({ttRow}) => {
+const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();
     return ttRow.platform || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
         <>
@@ -40,11 +42,11 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
     return <>
         <td className={tableCellCommonClassnames} ref={headerFourthColRef}>
             {ttRow.from}
-            { secondaryPostData.map((spd: any) => <><hr />{spd.from}</>)}
+            { secondaryPostData.map((spd: TimeTableRow) => <><hr />{spd.from}</>)}
         </td>
         <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
             <PlatformData ttRow={ttRow} />
-            { secondaryPostData.map((spd: any) => <><hr /><PlatformData ttRow={spd} /></>)}
+            { secondaryPostData.map((spd: TimeTableRow) => <><hr /><PlatformData ttRow={spd} /></>)}
         </td>
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
             <div className="flex items-center justify-start h-full">
@@ -64,17 +66,33 @@ const RowPostData: React.FC<any> = ({playSoundNotification, ttRow, trainMustDepa
         </td>
         <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
             <CellLineData ttRow={ttRow} />
-            { secondaryPostData.map((spd: any, i: number) => <><hr /><CellLineData ttRow={spd} key={spd.train_number + i} /></>)}
+            { secondaryPostData.map((spd: TimeTableRow, i: number) => <><hr /><CellLineData ttRow={spd} key={spd.train_number + i} /></>)}
         </td>
     </>;
 }
 
+type Props = {
+    setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
+    ttRow: TimeTableRow,
+    timeOffset: number,
+    trainDetails: DetailedTrain,
+    serverTz: string,
+    firstColRef: any,
+    secondColRef: any,
+    thirdColRef: any,
+    headerFourthColRef: any,
+    headerFifthColRef: any,
+    headerSixthhColRef: any,
+    headerSeventhColRef: any,
+    playSoundNotification: any,
+}
+
 // TODO: This is hella big. Needs refactoring !
-const TableRow: React.FC<any> = (
+const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification
-    }
+    }: Props
 ) => {
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const [postQry] = useQueryParam('post', StringParam);
@@ -101,7 +119,7 @@ const TableRow: React.FC<any> = (
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
 
-    const currentDistance = trainDetails?.rawDistances.slice(-1)
+    const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
     const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, postQry, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
     const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
@@ -110,12 +128,11 @@ const TableRow: React.FC<any> = (
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
-
     // console_log("Post cfg", postCfg);
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === postQry && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
-    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":");
-    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":");
+    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":").map(value => parseInt(value));
+    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":").map(value => parseInt(value));
     const isArrivalNextDay = dateNow.getHours() > 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours > 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
@@ -137,7 +154,7 @@ const TableRow: React.FC<any> = (
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig && <img src={trainConfig.icon} height={50} width={64} alt="train-icon"/>}
+                        {trainConfig?.icon && <img src={trainConfig.icon} height={50} width={64} alt="train-icon"/>}
                     </div>
                     <div className="flex justify-center">
                         {

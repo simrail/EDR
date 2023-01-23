@@ -3,6 +3,7 @@ import {haversine} from "../EDR/functions/vectors";
 import _ from "lodash";
 import {console_log} from "../utils/Logger";
 import {postConfig, postToInternalIds} from "../config/stations";
+import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 
 
 const RUN_DATA_HEALTHCHECKS = true;
@@ -13,7 +14,7 @@ const resolveSubNode = (nodeId: string | undefined) => {
 
 }
 
-export type PathFindingLineTrace = (Node | undefined)[] | undefined;
+export type PathFindingLineTrace = (ExtendedStationConfig | undefined)[] | undefined;
 
 /**
  * N-ary traversal algorithm.
@@ -27,9 +28,9 @@ export type PathFindingLineTrace = (Node | undefined)[] | undefined;
  * Too much datapoints will crash JavaScript VM
  */
 export const treeTraversal = (
-    subTree: Node | undefined,
+    subTree: ExtendedStationConfig | undefined,
     finish: string,
-    acc: (Node | undefined)[]
+    acc: (ExtendedStationConfig | undefined)[]
 ):PathFindingLineTrace  => {
     if (!subTree) return undefined;
     const allAccids = acc.map((n) => n?.id);
@@ -46,7 +47,7 @@ export const treeTraversal = (
     return _.minBy([leftPath, rightPath, branchPath], 'length');
 }
 
-export const findPath = (start: Node, finish: string): PathFindingLineTrace => {
+export const findPath = (start: ExtendedStationConfig, finish: string): PathFindingLineTrace => {
     return treeTraversal(start, finish, []);
 }
 
@@ -77,13 +78,13 @@ export const PathFinding_FindPathAndHaversineSum = (start: string, finish: strin
     }, 0)];
 }
 
-export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, directionVector: [number, number], trainPosVector: [number, number]): any => {
+export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, directionVector: [number, number], trainPosVector: [number, number]): ExtendedStationConfig | undefined => {
     if (!pfLineTrace) return undefined;
     const indexOfClosestStationInPathInTrainDirection = pfLineTrace
         //.map((point) => point?.platformPosOverride ? {...point, dot: Vector_DotProduct(point.platformPosOverride, Victor.fromArray(directionVector))} : undefined)
         //.filter((dotCalc) => dotCalc && dotCalc.dot && dotCalc.dot > 0 && dotCalc.platformPosOverride)
         .filter((dotCalc) => dotCalc && dotCalc.platformPosOverride)
-        .map((point) => ({...point, distance: haversine(point!.platformPosOverride!, trainPosVector)}))
+        .map((point) => ({...(point as ExtendedStationConfig), distance: haversine(point!.platformPosOverride!, trainPosVector)}))
         .sort((a, b) => a.distance < b.distance? -1 : 1)
 
     console_log("Dot resukts : ", indexOfClosestStationInPathInTrainDirection);

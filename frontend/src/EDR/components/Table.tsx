@@ -3,13 +3,13 @@ import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
 import {StringParam, useQueryParam} from "use-query-params";
-import {useTranslation} from "react-i18next";
 import useMeasure, {RectReadOnly} from "react-use-measure";
-import {formatTime, nowUTC} from "../../utils/date";
-import {useSoundNotification} from "../hooks/useSoundNotification";
+import {nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
+import { TimeTableRow } from "..";
+import { DetailedTrain } from "../functions/trainDetails";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -23,9 +23,9 @@ export type Bounds = {
 }
 
 type Props = {
-    timetable: any;
-    trainsWithDetails: any;
-    serverTz: any;
+    timetable: TimeTableRow[];
+    trainsWithDetails: {[k: string]: DetailedTrain};
+    serverTz: string
     playSoundNotification: (callback: () => void) => void;
 }
 
@@ -34,7 +34,6 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
-    const {i18n} = useTranslation();
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
@@ -60,7 +59,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
 
     if (!trainsWithDetails || !postQry) return null;
     const postCfg = postConfig[postQry];
-    const showStopColumn = timetable.lenght > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
+    const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
@@ -79,7 +78,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
             <Table.Body>
                 {timetable.length > 0
                     ? timetable
-                        .filter((tt: any) => filter ? 
+                        .filter((tt) => filter ? 
                             // Remove spaces, trim not enough since humans usually use space after a separator
                             filter.replace(/\s+/g, '')
                             // Separate train numbers
@@ -88,8 +87,8 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
                             .filter(n => n)
                             // If any train numbers match up, filter for it
                             .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
-                        .filter((tt: any) => displayMode === "near" ? !!trainsWithDetails[tt.train_number] : true)
-                        .map((tr: any, i: number) =>
+                        .filter((tt) => displayMode === "near" ? !!trainsWithDetails[tt.train_number] : true)
+                        .map((tr, i: number) =>
                     <TableRow
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
@@ -102,8 +101,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
                         headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
                         headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
                         trainDetails={trainsWithDetails[tr.train_number]}
-                        currentTime={formatTime(dt, i18n.language)}
-                        timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - Number.parseInt(tr.hourSort))}
+                        timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setModalTrainId}
                     />) : <div className="w-full text-center"><Spinner /></div>

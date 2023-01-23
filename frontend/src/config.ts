@@ -23,7 +23,7 @@ import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT} from 'country-flag-icons/string
 
 export const LOGGING = false;
 
-export const countriesFlags: {[k: string]: any} = {
+export const countriesFlags: {[k: string]: string} = {
     EN: GB,
     FR,
     PL,
@@ -53,17 +53,17 @@ export const internalConfigPostIds: {[k: string]: string} = {
     "LZ_LC": encodeURIComponent("Łazy Łc")
 };
 
-export const optimizedPostsImagesMap: {[k: string]: any} = {
-    GW: GW,
-    PS: PS,
-    KN: KN,
-    WP: WP,
-    OL: OL,
-    PI: PI,
-    KZ: KZ,
-    SG: SG,
-    DG: DG,
-    BN: BN,
+export const optimizedPostsImagesMap: {[k: string]: string} = {
+    GW,
+    PS,
+    KN,
+    WP,
+    OL,
+    PI,
+    KZ,
+    SG,
+    DG,
+    BN,
     ŁC: LC,
     ZW: ZA,
     OP: OP_PO
@@ -71,7 +71,7 @@ export const optimizedPostsImagesMap: {[k: string]: any} = {
 
 }
 
-export const edrImagesMap : {[k: string]: any} = {
+export const edrImagesMap : {[k: string]: string} = {
     LAYOVER,
     TRACK,
     RIGHT_ARROW,
@@ -115,4 +115,4 @@ export const serverTzMap: {[k: string]: string} = {
 
 export const searchSeparator = ',';
 
-export const AllowedServers = Object.keys(serverTzMap).map((s: any) => s.toLowerCase());
+export const AllowedServers = Object.keys(serverTzMap).map((s) => s.toLowerCase());

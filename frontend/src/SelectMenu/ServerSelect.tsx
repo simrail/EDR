@@ -7,9 +7,10 @@ import {ServerCard} from "./ServerCard";
 import {useTranslation} from "react-i18next";
 import _sortBy from "lodash/sortBy";
 import {console_log} from "../utils/Logger";
+import { Server } from "@simrail/types";
 
 export const ServerSelect = () => {
-    const [servers, setServers] = React.useState<any | undefined>();
+    const [servers, setServers] = React.useState<Server[] | undefined>();
     const {t, i18n} = useTranslation();
 
     React.useEffect(() => {
@@ -26,7 +27,7 @@ export const ServerSelect = () => {
         {
             !orderedServers
                 ? <Spinner />
-                : orderedServers.filter((s: any) => AllowedServers.includes(s.ServerCode)).map((s: any) => {
+                : orderedServers.filter((s) => AllowedServers.includes(s.ServerCode)).map((s) => {
                         return <ServerCard key={s.ServerCode} server={s} size="xl"/>
                     })
         }

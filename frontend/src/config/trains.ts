@@ -6,7 +6,7 @@ import EN96 from "../images/EN96.png";
 import EU07_CARGO from "../images/EU07_CARGO.png";
 import ET25 from "../images/ET25.png";
 
-export const configByLoco: {[k: string]: any} = {
+export const configByLoco: {[k: string]: {icon: string}} = {
     "Pendolino/ED250-018 Variant": {
         icon: PENDOLINO,
     },
@@ -39,10 +39,10 @@ export const configByLoco: {[k: string]: any} = {
     }
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF
-export const configByType: {[k: string]: any} = {
+export const configByType: {[k: string ]: {color: string, icon: string}} = {
     "ROJ": {
         color: "success",
-        icon: EN96
+        icon: EN76
     },
     "MPE": {
         icon: EU07_IC,
@@ -58,7 +58,7 @@ export const configByType: {[k: string]: any} = {
     },
     "EIJ": {
         color: "success",
-        icon: EN76,
+        icon: PENDOLINO,
     },
     "RPJ": {
         color: "success",
@@ -66,7 +66,7 @@ export const configByType: {[k: string]: any} = {
     },
     "LTE": {
         color: "gray",
-        icon: TRAXX
+        icon: ET25
     },
     "TME": {
         color: "warning",
@@ -74,6 +74,21 @@ export const configByType: {[k: string]: any} = {
     },
     "TCE": {
         color: "warning",
+        icon: ET25
+    },
+    "TLE": {
+        color: "warning",
         icon: EU07_CARGO
     },
 }
+
+export type TimeTableServiceType =
+    "ECE" |
+    "EIJ" |
+    "LTE" |
+    "MOJ" |
+    "MPE" |
+    "ROJ" |
+    "RPJ" |
+    "TCE" |
+    "TME";

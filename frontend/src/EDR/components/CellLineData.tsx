@@ -1,9 +1,10 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
+import { TimeTableRow } from "..";
 import {edrImagesMap} from "../../config";
 
 type Props = {
-    ttRow: any;
+    ttRow: TimeTableRow;
 }
 export const CellLineData: React.FC<Props> = ({ttRow}) => {
     const {t} = useTranslation();

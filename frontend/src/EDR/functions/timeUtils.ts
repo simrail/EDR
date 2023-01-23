@@ -13,3 +13,4 @@ export const getTimeDelay = (isArrivalNextDay: boolean, isArrivalPreviousDay: bo
     + ((isArrivalPreviousDay && dateNow.getHours() < 20 ? 1 : 0) * -minutesInADay)
     + ((dateNow.getHours() - expected.getHours()) * 60) + (dateNow.getMinutes() - expected.getMinutes());
 
+

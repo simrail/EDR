@@ -1,5 +1,5 @@
 // const BASE_API_URL = "http://localhost:8080/";
-import {ApiResponse, Server, Station, Train} from "@simrail/types";
+import {Server, Station, Train} from "@simrail/types";
 
 export const BASE_API_URL = "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
 export const NGINX_DIRECT = "https://dispatch-api.nginx.infra.deadlykungfu.ninja:8080/"
@@ -19,13 +19,13 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
 export const getTimetable = (server: string, post: string): Promise<any> =>
     baseApiCall("dispatch/" + server + "/" + post);
 
-export const getTrains = (server: string): Promise<ApiResponse<Train>> =>
+export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);
 
-export const getStations = (server: string): Promise<ApiResponse<Station>> =>
+export const getStations = (server: string): Promise<Station[]> =>
     baseApiCall("stations/" + server);
 
-export const getServers = (): Promise<ApiResponse<Server>> =>
+export const getServers = (): Promise<Server[]> =>
     baseApiCall("servers");
 
 export const getPlayer = (steamId: string): Promise<any> =>
