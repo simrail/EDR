@@ -7,10 +7,10 @@ import {edrImagesMap} from "../../../config";
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();
     return ttRow.platform || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
-        <>
-            <img className="inline-block pr-1" src={edrImagesMap.LAYOVER} height={26} width={26} alt="layover"/> {Math.floor(parseInt(ttRow.layover))} {t("edr.train_row.layover_minutes")}
-            {ttRow.platform && <><img className="ml-2 inline-block pl-1" src={edrImagesMap.TRACK} height={26} width={26} alt="track"/> {ttRow.platform.split(' ')[0]} / {ttRow.platform.split(' ')[1]}</>}
-        </>
+        <div className="flex items-center flex-col lg:flex-row align-center">
+            <span className="flex"><img className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover"/> {Math.floor(parseInt(ttRow.layover))}&nbsp;{t("edr.train_row.layover_minutes")}</span>
+            <span className="flex">{ttRow.platform && <><img className="mx-2 pl-1 h-[13px] lg:h-[26px]" src={edrImagesMap.TRACK} alt="track"/>{ttRow.platform.split(' ')[0]}&nbsp;/&nbsp;{ttRow.platform.split(' ')[1]}</>}</span>
+        </div>
     ) : null
 }
 

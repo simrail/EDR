@@ -6,7 +6,7 @@ import {getPlayer} from "../../../api/api";
 import {useTranslation} from "react-i18next";
 import {TimeTableRow} from "../../index";
 import { DetailedTrain } from "../../functions/trainDetails";
-import {configByLoco, configByType} from "../../../config/trains";
+import {configByLoco} from "../../../config/trains";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
     if (!controlledBy) {
@@ -43,7 +43,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
-    const trainConfig = configByLoco[trainDetails?.Vehicles[0]] ?? configByType[ttRow.type];
+    const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
 
 
     React.useEffect(() => getPlayerDetails(controlledBy, setPlayerSteamInfo), [controlledBy]);
