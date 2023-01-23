@@ -23,6 +23,7 @@ app
     .get("/servers", getServerList)
     .get("/stations/:serverCode", (req: express.Request, res: express.Response) => getStationsList(req, res, req.params['serverCode']))
     .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
-    .get("/dispatch/:serverCode/:post", dispatchController)
+    .get("/dispatch/:post", dispatchController)
+    .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
 app.listen(8080)

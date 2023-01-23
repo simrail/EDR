@@ -3,6 +3,6 @@ version: '3'
 services:
   frontend:
     build: frontend
-    
+
   backend:
     build: backend

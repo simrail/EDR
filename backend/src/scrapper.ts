@@ -5,9 +5,9 @@ import express from "express";
 import { BASE_SIMRAIL_DISPATCH_API, POSTS, translate_fields, VMAX_BY_TYPE } from "./config";
 
 // TODO: Merge posts with two target posts
-export async function scrapRoute(res: express.Response, server: string, post: string): Promise<[any[] | undefined, any]> {
+export async function scrapRoute(res: express.Response, post: string): Promise<[any[] | undefined, any]> {
     const allPosts = POSTS[post];
-    const simrailResponses: any[] = await Promise.all(allPosts.map((p) => simrailClient.get(`?station=${p}&serverCode=${server}`, BASE_SIMRAIL_DISPATCH_API)));
+    const simrailResponses: any[] = await Promise.all(allPosts.map((p) => simrailClient.get(`?station=${p}&serverCode=fr1`, BASE_SIMRAIL_DISPATCH_API)));
 
     try {
     // TODO: There could be undefined values among the responses - see todo comment in simrailClient.get
