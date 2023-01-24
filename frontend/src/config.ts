@@ -18,6 +18,7 @@ import BN from "./images/posts/bn.jpg";
 import LC from "./images/posts/lc.jpg";
 import ZA from "./images/posts/zw.png";
 import OP_PO from "./images/posts/op_po.png";
+import DGW from "./images/posts/dgw.png";
 
 import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT} from 'country-flag-icons/string/3x2'
 
@@ -66,9 +67,8 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     BN,
     ŁC: LC,
     ZW: ZA,
-    OP: OP_PO
-
-
+    OP: OP_PO,
+    DW: DGW
 }
 
 export const edrImagesMap : {[k: string]: string} = {

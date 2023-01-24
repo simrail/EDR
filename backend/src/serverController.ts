@@ -42,7 +42,14 @@ export function getTrainsList(req: express.Request, res: express.Response, serve
     })
 }
 
+const STEAM_API_KEY = process.env["STEAM_KEY"];
+
 export function getPlayer(req: express.Request, res: express.Response, steamId: string) {
+    if (!STEAM_API_KEY) {
+        console.error("No steam API key, unable to fetch steam profile!");
+        return res.sendStatus(500);
+    }
+
     return axios
         .get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80B65382D84C9D2A9BB94FC9741083B9&format=json&steamids=${steamId}`)
         .then((response) => {

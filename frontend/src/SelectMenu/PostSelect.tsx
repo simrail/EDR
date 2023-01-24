@@ -1,7 +1,7 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
 import {getStations} from "../api/api";
-import {Spinner} from "flowbite-react";
+import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
 import { Station } from "@simrail/types";
@@ -26,3 +26,5 @@ export const PostSelect = () => {
         }
     </SelectMenuLayout>;
 }
+
+export default PostSelect;

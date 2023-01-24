@@ -145,3 +145,5 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
                      serverCode={serverCode!}
     />;
 }
+
+export default EDR;

@@ -1,5 +1,5 @@
 import React from "react";
-import {Card} from "flowbite-react";
+import {Card} from "flowbite-react/lib/esm/components/Card";
 import {optimizedPostsImagesMap} from "../config";
 import classNames from "classnames";
 import {postToInternalIds} from "../config/stations";

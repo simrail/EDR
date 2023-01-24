@@ -27,3 +27,8 @@ app
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
 app.listen(8080)
+
+console.log("🚆 Simrail Community EDR backend v1.0");
+console.log("💻 https://github.com/simrail/EDR");
+console.log("🐛 https://github.com/DKFN/edr-issues")
+console.log("Steam API key ? ", !!process.env["STEAM_KEY"]);

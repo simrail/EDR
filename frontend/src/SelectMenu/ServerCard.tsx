@@ -1,5 +1,5 @@
 import React from "react";
-import {Card} from "flowbite-react";
+import {Card} from "flowbite-react/lib/esm/components/Card";
 import {countries} from "country-flag-icons";
 import {countriesFlags} from "../config";
 import {console_log} from "../utils/Logger";

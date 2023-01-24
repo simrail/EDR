@@ -29,6 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "analyze": "react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "postbuild": "rm -rf ./build/static/**/*.map",
     "lint": "./node_modules/.bin/eslint ./src/ --fix",
@@ -67,6 +68,7 @@
     "@types/victor": "^1.1.0",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
+    "source-map-explorer": "^2.5.3",
     "tailwindcss": "^3.2.4"
   }
 }

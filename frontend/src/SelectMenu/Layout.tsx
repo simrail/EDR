@@ -1,5 +1,6 @@
 import React from "react";
-import {Navbar, Dropdown } from "flowbite-react";
+import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
+import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
 import AppLogo from "../logo.png";
 import Background from "./background.jpg";
 import {useTranslation} from "react-i18next";
