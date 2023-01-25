@@ -52,7 +52,8 @@
       "train_from": "Érkezik",
       "train_stop": "Megálló részletek",
       "train_departure_time": "Indulás ideje",
-      "train_to": "Továbbindul"
+      "train_to": "Továbbindul",
+      "show_on_map": "Show on map"
     },
     "ui": {
       "train_number": "Vonat szám keresés",
