@@ -353,7 +353,7 @@ const SG_DK = {
     ...postConfig.SG_DK,
     left: "SG_PO",
     right: "SG_POR",
-   // branchA: "SG_POR"
+    branchA: "DOR"
 };
 
 const SG_POR = {
@@ -365,7 +365,7 @@ const SG_POR = {
 const SG_KAZ = {
     ...postConfig.SG_KAZ,
     left: "SG_POR",
-    right: "L660_L1WP"
+    right: "DG_ST"
 }
 
 const DG_WZ = {
