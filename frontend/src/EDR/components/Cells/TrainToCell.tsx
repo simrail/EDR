@@ -11,6 +11,6 @@ type Props = {
 export const TrainToCell: React.FC<Props> = ({headerSeventhColRef, ttRow, secondaryPostData}) => (
     <td className={tableCellCommonClassnames} ref={headerSeventhColRef}>
         <CellLineData ttRow={ttRow} />
-        { secondaryPostData.map((spd: TimeTableRow, i: number) => <><hr /><CellLineData ttRow={spd} key={spd.train_number + i} /></>)}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr /><CellLineData ttRow={spd} /></span>)}
     </td>
 )

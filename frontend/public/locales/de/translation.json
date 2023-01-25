@@ -26,11 +26,11 @@
       "trains": "Züge"
     },
     "train_row": {
-      "layover": "Layover",
-      "layover_minutes": "min",
-      "line": "Line",
-      "peron": "Peron",
-      "platform": "Platform",
+      "layover": "Standzeit",
+      "layover_minutes": " min",
+      "line": "Linie",
+      "peron": "Bahnsteig",
+      "platform": "Plattform",
       "position_at": "bei",
       "train_delayed": "verspätet",
       "train_early": "verfrüht",
@@ -43,7 +43,8 @@
       "train_early_sign": "-",
       "train_late_sign": "+",
       "waiting_for_data": "Warte auf Daten...",
-      "notify": "Notify departure"
+      "notify": "Bei Abfahrt benachrichtigen",
+      "show_on_map": "Auf Karte anzeigen"
     },
     "train_headers": {
       "train_number": "Zug-Nr.",

@@ -7,6 +7,7 @@ import {useTranslation} from "react-i18next";
 import {TimeTableRow} from "../../index";
 import { DetailedTrain } from "../../functions/trainDetails";
 import {configByLoco} from "../../../config/trains";
+import Tooltip from "rc-tooltip";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
     if (!controlledBy) {
@@ -54,7 +55,9 @@ export const TrainInfoCell: React.FC<Props> = ({
                 <div className="flex items-center">
                     <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
                     { trainDetails && <span className="ml-2">
-                        <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>
+                        <Tooltip placement="right" overlay={<span>{t("edr.train_row.show_on_map")}</span>}>
+                            <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>
+                        </Tooltip>
                     </span> }
                 </div>
                 <div className="flex md:inline">
