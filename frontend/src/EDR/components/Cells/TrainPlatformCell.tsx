@@ -3,8 +3,6 @@ import {TimeTableRow} from "../../index";
 import {tableCellCommonClassnames} from "../TrainRow";
 import {useTranslation} from "react-i18next";
 import {edrImagesMap} from "../../../config";
-import {platform} from "os";
-import {floor} from "lodash";
 import Tooltip from "rc-tooltip";
 
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
@@ -37,6 +35,6 @@ type Props = {
 export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData}) => {
     return <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
         <PlatformData ttRow={ttRow} />
-        { secondaryPostData.map((spd: TimeTableRow) => <><hr /><PlatformData ttRow={spd} /></>)}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr /><PlatformData ttRow={spd} /></span>)}
     </td>
 }
