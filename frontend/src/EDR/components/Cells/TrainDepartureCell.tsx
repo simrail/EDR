@@ -33,7 +33,7 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
                         !trainHasPassedStation && (trainMustDepart ?
                                 <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
                                 :
-                            <Tooltip placement="right" overlay={<span>{t("edr.train_row.notify")}</span>}>
+                            <Tooltip placement="top" overlay={<span>{t("edr.train_row.notify")}</span>}>
                                     <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
                                         <img height={16} width={16} src={notificationEnabled ? edrImagesMap.CHECK : edrImagesMap.BELL} alt={t("edr.train_row.notify") ?? 'notify'} onClick={() => setNotificationEnabled(!notificationEnabled)}/>
                                     </Button>
