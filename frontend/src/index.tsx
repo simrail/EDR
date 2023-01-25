@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {WindowHistoryAdapter} from "use-query-params/adapters/window";
 import {QueryParamProvider} from "use-query-params";
 import './i18n';
+import 'rc-tooltip/assets/bootstrap_white.css';
 // @ts-ignore
 import "hacktimer";
 
