@@ -43,7 +43,7 @@
       "train_early_sign": "-",
       "train_late_sign": "+",
       "waiting_for_data":"Adatra vár.",
-      "notify": "Notify departure"
+      "notify": "Hangjelzés induláskor"
     },
     "train_headers": {
       "train_number": "Vonat száma, jelenlegi helye",
@@ -53,7 +53,7 @@
       "train_stop": "Megálló részletek",
       "train_departure_time": "Indulás ideje",
       "train_to": "Továbbindul",
-      "show_on_map": "Show on map"
+      "show_on_map": "Térkép"
     },
     "ui": {
       "train_number": "Vonat szám keresés",
