@@ -55,7 +55,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                 <Navbar.Link href="https://discord.gg/A63hJphHQ4">
                     SimRail Germany
                 </Navbar.Link>
-                <Navbar.Link href="https://discord.gg/ofpmafia" target="_blank">
+                <Navbar.Link href="https://discord.gg/DztnvgePXw" target="_blank">
                     OFPmafia
                 </Navbar.Link>
                 <Navbar.Link href="https://discord.com/invite/XgJpXpG2Eu" target="_blank">

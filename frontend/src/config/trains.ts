@@ -10,6 +10,9 @@ export const configByLoco: {[k: string]: {icon: string}} = {
     "Pendolino/ED250-018 Variant": {
         icon: PENDOLINO,
     },
+    "4E/EU07-085": {
+        icon: EU07_IC
+    },
     "4E/EP07-135": {
         icon: EU07_IC,
     },
