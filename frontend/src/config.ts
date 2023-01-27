@@ -110,7 +110,7 @@ export const serverTzMap: {[k: string]: string} = {
     PL7: 'Europe/Warsaw',
     PL8: 'America/Mexico_City',
     PT1: 'Europe/London',
-    CN1: 'America/Argentina/Buenos_Aires',
+    CN1: 'Asia/Seoul',
 }
 
 export const searchSeparator = ',';
