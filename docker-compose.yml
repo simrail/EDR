@@ -12,6 +12,8 @@ services:
     build: backend
     ports:
       - "1337:8080"
+  environment:
+    - STEAM_KEY
   cache:
     build: varnish
     depends_on:

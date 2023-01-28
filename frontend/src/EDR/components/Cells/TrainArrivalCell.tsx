@@ -36,7 +36,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
             <div className="flex items-center justify-center h-full">
                 {ttRow.scheduled_arrival}&nbsp;
                 {
-                    !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails
+                    !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
                         ? <span
                             className="text-red-600 font-bold">{t("edr.train_row.train_late_sign")}{arrivalTimeDelay}</span>
                         : undefined
