@@ -24,11 +24,11 @@ export const TrainArrivalCell: React.FC<Props> = ({
 }) => {
     const {t} = useTranslation();
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":").map(value => parseInt(value));
-    const isArrivalNextDay = dateNow.getHours() > 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
-    const isArrivalPreviousDay = arrivalExpectedHours > 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
-    const expectedArrival = getDateWithHourAndMinutes(arrivalExpectedHours, arrivalExpectedMinutes, serverTz);
-    const arrivalTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedArrival);
-    const departureTimeDelay = getTimeDelay(isArrivalNextDay, isArrivalPreviousDay, dateNow, expectedDeparture);
+    const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
+    const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
+    const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
+    const arrivalTimeDelay = getTimeDelay(dateNow, expectedArrival);
+    const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
 
 
     return (
