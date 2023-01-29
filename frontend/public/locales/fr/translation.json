@@ -1,9 +1,9 @@
 {
   "app": {
-    "fatal_error": "The UI will not refresh, a fatal error occured",
-    "no_trains": "There is no trains! The server is probably rebooting",
-    "no_timetable": "Fatal error: Unable to fetch timetable. Simrail server is probably rebooting",
-    "station_not_found": "Fatal error: Current station not found."
+    "fatal_error": "L'interface utilisateur ne s'actualise pas, une erreur fatale s'est produite",
+    "no_trains": "Il n'y a pas de train ! Le serveur est probablement en train de redémarrer",
+    "no_timetable": "Erreur fatale : impossible de récupérer l'horaire. Le serveur Simrail est probablement en train de redémarrer",
+    "station_not_found": "Erreur fatale : station actuelle introuvable."
   },
   "navbar": {
     "bugs": "Report bugs"
@@ -16,7 +16,7 @@
     "version": "version",
     "screenshots_by": "Screenshot par ",
     "thanks": "Merci a tous les beta testeurs",
-    "not_official": "This is not an official SimRail app"
+    "not_official": "Ceci n'est pas une application SimRail officielle"
   },
   "edr": {
     "loading": {
@@ -26,7 +26,7 @@
       "trains": "Trains"
     },
     "train_row": {
-      "layover": "Layover",
+      "layover": "Halte",
       "layover_minutes": "min",
       "line": "Line",
       "peron": "Peron",
@@ -42,9 +42,9 @@
       "train_departing": "Depart",
       "train_early_sign": "-",
       "train_late_sign": "+",
-      "waiting_for_data":"Waiting for data.",
-      "notify": "Notify departure",
-      "show_on_map": "Show on map"
+      "waiting_for_data":"En attente de données.",
+      "notify": "Avertir du départ",
+      "show_on_map": "Afficher sur la carte"
     },
     "train_headers": {
       "train_number": "N°",
