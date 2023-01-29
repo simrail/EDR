@@ -60,7 +60,9 @@ const TableRow: React.FC<Props> = (
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === post && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":").map(value => parseInt(value));
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
-    const expectedDeparture = getDateWithHourAndMinutes(departureExpectedHours, departureExpectedMinutes, serverTz);
+    const isDepartureNextDay = dateNow.getHours() >= 20 && departureExpectedHours < 12;  // TODO: less but still clunky
+    const isDeparturePreviousDay = departureExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
+    const expectedDeparture = getDateWithHourAndMinutes(dateNow, departureExpectedHours, departureExpectedMinutes, isDepartureNextDay, isDeparturePreviousDay);
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
