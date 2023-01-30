@@ -31,9 +31,6 @@ export function getStationsList(req: express.Request, res: express.Response, ser
 
 export function getTrainsList(req: express.Request, res: express.Response, serverCode: string) {
     return simrailClient.get("trains-open?serverCode=" + serverCode)?.then((e) => {
-        /*if (e.data.lenght === 0) {
-            return res.sendStatus(500);
-        }*/
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send((e.data as ApiResponse<Train>).data);
@@ -51,7 +48,7 @@ export function getPlayer(req: express.Request, res: express.Response, steamId: 
     }
 
     return axios
-        .get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80B65382D84C9D2A9BB94FC9741083B9&format=json&steamids=${steamId}`)
+        .get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${STEAM_API_KEY}&format=json&steamids=${steamId}`)
         .then((response) => {
             if (response.status === 200) {
                 return res

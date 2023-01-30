@@ -20,7 +20,7 @@ import ZA from "./images/posts/zw.png";
 import OP_PO from "./images/posts/op_po.png";
 import DGW from "./images/posts/dgw.png";
 
-import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT} from 'country-flag-icons/string/3x2'
+import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL} from 'country-flag-icons/string/3x2'
 
 export const LOGGING = false;
 
@@ -34,7 +34,9 @@ export const countriesFlags: {[k: string]: string} = {
     UA,
     IT,
     CN,
-    PT
+    PT,
+    HU,
+    NL
 }
 
 
@@ -89,6 +91,7 @@ export const serverTzMap: {[k: string]: string} = {
     DE3: 'Europe/Paris',
     DE4: 'Pacific/Honolulu',
     DE5: 'Europe/Paris',
+    HU1: 'Europe/Paris',
     UA1: 'Europe/Paris',
     ES1: 'Europe/London',
     ES2: 'America/Argentina/Buenos_Aires',
