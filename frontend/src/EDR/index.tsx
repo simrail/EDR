@@ -15,6 +15,7 @@ import { TimeTableServiceType } from "../config/trains";
 import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 export type TimeTableRow = {
     k: string;
@@ -57,6 +58,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
     const {t} = useTranslation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const previousTrains = React.useRef<{ [k: string]: DetailedTrain } | null>(null);
 
@@ -100,7 +102,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
             getTrains(serverCode).then(setTrains);
         }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
-            alert(t("app.fatal_error"));
+            enqueueSnackbar(t('app.fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
             return;
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);

@@ -26,6 +26,8 @@
       "trains": "Vlaky"
     },
     "train_row": {
+      "click_to_copy": "Click to copy",
+      "copied": "Copied to clipboard!",
       "layover": "Layover",
       "layover_minutes": "min",
       "line": "Line",
