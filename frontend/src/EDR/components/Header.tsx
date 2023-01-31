@@ -3,10 +3,10 @@ import {Button, DarkThemeToggle, TextInput} from "flowbite-react";
 import {useTranslation} from "react-i18next";
 import {DateTimeDisplay} from "./DateTimeDisplay";
 import {Bounds} from "./Table";
-import _sortBy from "lodash/fp/sortBy";
 import {TableHead} from "./TableHead";
 import { StationConfig } from "../../config/stations";
 import {Link} from "react-router-dom";
+import _minBy from "lodash/fp/minBy";
 
 type Props = {
     serverTz: string;
@@ -24,21 +24,21 @@ type Props = {
 
 const scrollToNearestTrain = (targetLn: number) => {
     let interval = setInterval(() => {
-        const allTrainRows = [...Array.from(document.querySelectorAll('[data-timeoffset]').entries())];
+        const allTrainRows = [...Array.from(document.querySelectorAll('[data-timeoffset]').values())];
         // console_log(allTrainRows.length);
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
             return;
         clearInterval(interval);
-        const el = _sortBy(([idx, el]) => {
+        const el = _minBy((el) => {
                 return el.getAttribute("data-timeoffset")
             }
             , allTrainRows);
-
-        // console_log(el[0]);
-        el[0][1].scrollIntoView({
-            block: "center"
-        })
-    }, 200);
+        if (el) {
+            el.scrollIntoView({
+                block: "center"
+            })
+        }
+    }, 1000);
 }
 
 export const Header: React.FC<Props> = ({

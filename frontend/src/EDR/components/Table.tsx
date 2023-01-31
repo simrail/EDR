@@ -101,7 +101,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
                         headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
                         headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
                         trainDetails={trainsWithDetails[tr.train_number]}
-                        timeOffset={Math.abs((dt.getHours() * 60) + dt.getMinutes() - tr.hourSort)}
+                        timeOffset={Math.abs((dt.getHours() * 100) + dt.getMinutes() - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setModalTrainId}
                     />) : <div className="w-full text-center"><Spinner /></div>
