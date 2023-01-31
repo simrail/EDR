@@ -41,7 +41,7 @@ export async function scrapRoute(res: express.Response, post: string): Promise<[
             .map((row) => ({
                 ...row,
                 type_speed: VMAX_BY_TYPE[row.type],
-                hourSort: (Number.parseInt(row.scheduled_arrival.split(':')[0]) * 60) + Number.parseInt(row.scheduled_arrival.split(':')[1])
+                hourSort: Number.parseInt(`${row.scheduled_arrival.split(':')[0]}${row.scheduled_arrival.split(':')[1]}`)
             }))
             return batchedRows;
         });
