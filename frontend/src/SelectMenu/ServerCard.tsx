@@ -15,7 +15,7 @@ export const ServerCard: React.FC<any> = ({server}) => {
     return (
         <Card className="m-4 cursor-pointer w-[150px] text-center" onClick={() => {
             navigate("/" + server.ServerCode);
-        }} imgSrc={"data:image/svg+xml;base64, " + btoa(flag)}>
+        }} imgSrc={flag ? "data:image/svg+xml;base64, " + btoa(flag) : undefined}>
             {server.ServerName}
         </Card>
     )

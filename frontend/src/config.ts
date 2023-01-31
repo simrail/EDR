@@ -112,10 +112,9 @@ export const serverTzMap: {[k: string]: string} = {
     PL6: 'Europe/Warsaw',
     PL7: 'Europe/Warsaw',
     PL8: 'America/Mexico_City',
-    PT1: 'Europe/London',
     CN1: 'Asia/Seoul',
+    NL1: 'Europe/London',
 }
 
-export const searchSeparator = ',';
+export const searchSeparator = ','
 
-export const AllowedServers = Object.keys(serverTzMap).map((s) => s.toLowerCase());

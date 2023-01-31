@@ -8,6 +8,9 @@ const ServerSelect = React.lazy(() => import("./SelectMenu/ServerSelect"));
 const PostSelect = React.lazy(() => import("./SelectMenu/PostSelect"));
 const EDR = React.lazy(() => import("./EDR"));
 
+// TODO: Add a graph view of the regulator table https://images-ext-1.discordapp.net/external/7o6s9Hg5wVE41mRwSFfsX5D7erzJCfIx9I4CnhAZM-4/https/maligne-e-t4.transilien.com/wp-content/uploads/2017/01/20170110_153237.jpg?width=717&height=403
+// TODO: With the three previous and three next posts. Try to adjust with the instantaneous delay if possible
+// TODO: And after beta add expected delay
 function App() {
     const [SoundNotification, playSoundNotification] = useSoundNotification();
 
