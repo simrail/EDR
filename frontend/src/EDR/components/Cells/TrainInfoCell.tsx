@@ -1,5 +1,6 @@
 import React from "react";
 import {Badge, Button} from "flowbite-react";
+import { useSnackbar } from "notistack";
 import World from "../../../sounds/world.svg";
 import {tableCellCommonClassnames} from "../TrainRow";
 import {getPlayer} from "../../../api/api";
@@ -41,6 +42,7 @@ export const TrainInfoCell: React.FC<Props> = ({
        setModalTrainId, firstColRef
 }) => {
     const {t} = useTranslation();
+    const { enqueueSnackbar } = useSnackbar();
     const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
@@ -49,11 +51,18 @@ export const TrainInfoCell: React.FC<Props> = ({
 
     React.useEffect(() => getPlayerDetails(controlledBy, setPlayerSteamInfo), [controlledBy]);
 
+    const CopyToClipboard = (stringToCopy: string) => {
+        navigator.clipboard.writeText(stringToCopy);
+        enqueueSnackbar(t('edr.train_row.copied'), { preventDuplicate: true, variant: 'success' });
+    }
+
     return (
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                    <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg">{ttRow.train_number}</span></Badge>
+                    <Tooltip placement="top" overlay={<span>{t("edr.train_row.click_to_copy")}</span>}>
+                        <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg" onClick={() => CopyToClipboard(ttRow.train_number)}>{ttRow.train_number}</span></Badge>
+                    </Tooltip>
                     { trainDetails && <span className="ml-2">
                         <Tooltip placement="right" overlay={<span>{t("edr.train_row.show_on_map")}</span>}>
                             <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>

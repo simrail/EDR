@@ -26,6 +26,8 @@
       "trains": "Vonatok"
     },
     "train_row": {
+      "click_to_copy": "Kattints a másoláshoz",
+      "copied": "Vágólapra másolva!",
       "layover": "Várakozás",
       "layover_minutes": "perc",
       "line": "Vonal",
@@ -43,7 +45,8 @@
       "train_early_sign": "-",
       "train_late_sign": "+",
       "waiting_for_data":"Adatra vár.",
-      "notify": "Hangjelzés induláskor"
+      "notify": "Hangjelzés induláskor",
+      "show_on_map": "Mutasd a térképen"
     },
     "train_headers": {
       "train_number": "Vonat száma, jelenlegi helye",
