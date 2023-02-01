@@ -76,7 +76,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("FOOTER_version")} 0.9 - {t("FOOTER_screenshots_by")} TheMulhoose - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
+            {t("FOOTER_version")} 1.0 - {t("FOOTER_screenshots_by")} TheMulhoose - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
         </div>
     </div>;
 }

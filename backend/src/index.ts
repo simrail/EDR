@@ -19,7 +19,7 @@ app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
     .options('*', cors(corsConfig))
-    .get("/", (req: express.Request, res: express.Response) => res.send("Better dispatch !"))
+    .get("/", (req: express.Request, res: express.Response) => res.send("SR Community EDR !"))
     .get("/servers", getServerList)
     .get("/stations/:serverCode", (req: express.Request, res: express.Response) => getStationsList(req, res, req.params['serverCode']))
     .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
