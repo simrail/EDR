@@ -64,7 +64,7 @@ export const Header: React.FC<Props> = ({
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
-                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 Traffic graph</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 RCS</Button>
                     <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>
