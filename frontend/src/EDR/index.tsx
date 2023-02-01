@@ -16,6 +16,7 @@ import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
+import {Graph} from "./components/Graph";
 
 export type TimeTableRow = {
     k: string;
@@ -139,13 +140,14 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}
                               stations={stations as Dictionary<Station>}/>
 
-    return <EDRTable playSoundNotification={playSoundNotification}
+    return timetable && post ? <Graph timetable={timetable} post={post} /> : null;
+    /*return <EDRTable playSoundNotification={playSoundNotification}
                      timetable={timetable!}
                      serverTz={serverTz}
                      trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
                      post={post!}
                      serverCode={serverCode!}
-    />;
+    />;*/
 }
 
 export default EDR;

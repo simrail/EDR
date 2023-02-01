@@ -5,6 +5,10 @@ export type StationConfig = {
     srId: string;
     trainPosRange: number;
     platformPosOverride?: [number, number];
+    graphConfig?: {
+        pre: string[],
+        post: string[]
+    }
 }
 
 export const postConfig: {[k: string]: StationConfig} = {
@@ -12,49 +16,82 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "GW",
         srId: "Góra Włodowska",
         trainPosRange: 0.5,
-        platformPosOverride: [19.470318, 50.584134]
+        platformPosOverride: [19.470318, 50.584134],
+        graphConfig: {
+            pre: ["LZ_LC", "ZA"],
+            post: ["PS", "KN"]
+        }
     },
     PS: {
         id: "PS",
         srId: "Psary",
         trainPosRange: 0.5,
-        platformPosOverride: [19.820087, 50.735068]
+        platformPosOverride: [19.820087, 50.735068],
+        graphConfig: {
+            pre: ["ZA", "GW"],
+            post: ["KN", "WP"]
+        }
     },
     KN: {
         id: "KN",
         srId: "Knapówka", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [19.9049155, 50.8001411]
+        platformPosOverride: [19.9049155, 50.8001411],
+        graphConfig: {
+            pre: ["GW", "PS"],
+            post: ["WP", "OZ"]
+        }
     },
     WP: {
         id: "WP",
         srId: "Włoszczowa Północ",
         trainPosRange: 0.5,
-        platformPosOverride: [19.945774, 50.856198]
+        platformPosOverride: [19.945774, 50.856198],
+        graphConfig: {
+            pre: ["PS", "KN"],
+            post: ["OZ", "PI"]
+        }
     },
     OZ: {
         id: "OZ",
         srId: "Olszamowice", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [20.0645106, 51.0955558]
+        platformPosOverride: [20.0645106, 51.0955558],
+        graphConfig: {
+            pre: ["KN", "WP"],
+            post: ["PI", "OP_PO"]
+        }
+
     },
     PI: {
         id: "PI",
         srId: "Pilichowice", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [20.1210684, 51.2546948]
+        platformPosOverride: [20.1210684, 51.2546948],
+        graphConfig: {
+            pre: ["KN", "WP", "OZ"],
+            post: ["OP_PO"]
+        }
     },
     KZ: {
         id: "KZ",
         srId: "Katowice Zawodzie",
         trainPosRange: 0.5,
-        platformPosOverride: [19.057551, 50.257280]
+        platformPosOverride: [19.057551, 50.257280],
+        graphConfig: {
+            pre: ["DG", "T1_BZ", "SG"],
+            post: []
+        }
     },
     SG: {
         id: "SG",
         srId: "Sosnowiec Główny",
         trainPosRange: 1,
-        platformPosOverride: [19.1270833, 50.2793889]
+        platformPosOverride: [19.1270833, 50.2793889],
+        graphConfig: {
+            pre: ["LZ_LC", "DG", "T1_BZ"],
+            post: ["KZ"]
+        }
     },
     SG_R52: {
         id: "SG_R52",
@@ -91,13 +128,21 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "T1_BZ",
         srId: "Będzin", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [19.1418582, 50.3085335]
+        platformPosOverride: [19.1418582, 50.3085335],
+        graphConfig: {
+            pre: ["LZ_LC", "DG"],
+            post: ["SG", "KZ"]
+        }
     },
     LZ_LC: {
         id: "LZ_LC",
         srId:"Łazy Łc",
         platformPosOverride: [19.362862, 50.416436],
-        trainPosRange: 0.5
+        trainPosRange: 0.5,
+        graphConfig: {
+            post: ["ZA", "GW"],
+            pre: ["T1_BZ", "DG"]
+        }
     },
     LZ: {
         id: "LZ",
@@ -121,7 +166,11 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "OP_PO",
         srId:"Opoczno Południe",
         trainPosRange: 0.5,
-        platformPosOverride: [20.232192, 51.358965]
+        platformPosOverride: [20.232192, 51.358965],
+        graphConfig: {
+            pre: ["KN", "WP", "OZ", "PI"],
+            post: []
+        }
     },
     MY: {
         id: "MY",
@@ -145,7 +194,11 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "ZA",
         srId:"Zawiercie",
         trainPosRange: 0.5,
-        platformPosOverride: [19.423131, 50.481001]
+        platformPosOverride: [19.423131, 50.481001],
+        graphConfig: {
+            post: ["GW", "PS"],
+            pre: ["DG","LZ_LC" ]
+        }
     },
     WI: {
         id: "WI",

@@ -42,45 +42,55 @@ export const configByLoco: {[k: string]: {icon: string}} = {
     }
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF
-export const configByType: {[k: string ]: {color: string, icon: string}} = {
+export const configByType: {[k: string ]: {color: string, icon: string, graphColor: string}} = {
     "ROJ": {
         color: "success",
+        graphColor: "green",
         icon: EN76
     },
     "MPE": {
         icon: EU07_IC,
+        graphColor: "green",
         color: "success"
     },
     "MOJ": {
         color: "success",
+        graphColor: "green",
         icon: EN96
     },
     "ECE": {
         icon: EU07_IC,
+        graphColor: "chartreuse",
         color: "success"
     },
     "EIJ": {
         color: "success",
+        graphColor: "red",
         icon: PENDOLINO,
     },
     "RPJ": {
         color: "success",
+        graphColor: "green",
         icon: EN76
     },
     "LTE": {
         color: "gray",
+        graphColor: "gray",
         icon: ET25
     },
     "TME": {
         color: "warning",
+        graphColor: "orange",
         icon: EU07_CARGO
     },
     "TCE": {
         color: "warning",
+        graphColor: "orange",
         icon: ET25
     },
     "TLE": {
         color: "warning",
+        graphColor: "orange",
         icon: EU07_CARGO
     },
 }
