@@ -60,7 +60,7 @@ export const configByType: {[k: string ]: {color: string, icon: string, graphCol
     },
     "ECE": {
         icon: EU07_IC,
-        graphColor: "chartreuse",
+        graphColor: "blue",
         color: "success"
     },
     "EIJ": {

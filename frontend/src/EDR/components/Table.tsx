@@ -9,6 +9,7 @@ import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
 import { TimeTableRow } from "..";
 import { DetailedTrain } from "../functions/trainDetails";
+import {format} from "date-fns";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -28,9 +29,13 @@ type Props = {
     playSoundNotification: (callback: () => void) => void;
     post: string;
     serverCode: string;
+    setGraphModalOpen: (isOpen: boolean) =>  void;
 }
 
-export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, trainsWithDetails, serverTz, post, serverCode}) => {
+export const EDRTable: React.FC<Props> = ({
+      playSoundNotification, timetable, trainsWithDetails, serverTz,
+      post, serverCode, setGraphModalOpen
+    }) => {
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
@@ -71,6 +76,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
             timetableLength={timetable.length}
             setFilter={setFilter}
             setDisplayMode={setDisplayMode}
+            setGraphModalOpen={setGraphModalOpen}
         />
         <div>
             <Table striped={true}>
@@ -101,7 +107,7 @@ export const EDRTable: React.FC<Props> = ({playSoundNotification, timetable, tra
                         headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
                         headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
                         trainDetails={trainsWithDetails[tr.train_number]}
-                        timeOffset={Math.abs((dt.getHours() * 100) + dt.getMinutes() - tr.hourSort)}
+                        timeOffset={Math.abs(Number.parseInt(format(dt, "HHmm")) - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setModalTrainId}
                     />) : <div className="w-full text-center"><Spinner /></div>

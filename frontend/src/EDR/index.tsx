@@ -16,7 +16,7 @@ import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
-import {Graph} from "./components/Graph";
+import Graph from "./components/Graph";
 
 export type TimeTableRow = {
     k: string;
@@ -58,6 +58,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     const [trains, setTrains] = React.useState<Train[] | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
+    const [isGraphModalOpen, setGraphModalOpen] = React.useState<boolean>(false);
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -140,14 +141,19 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}
                               stations={stations as Dictionary<Station>}/>
 
-    return timetable && post ? <Graph timetable={timetable} post={post} /> : null;
-    /*return <EDRTable playSoundNotification={playSoundNotification}
+    return <>
+        {timetable && post && timetable.length && isGraphModalOpen
+            ? <Graph isOpen={isGraphModalOpen} timetable={timetable} post={post} onClose={() => setGraphModalOpen(false)} serverTz={serverTz}/>
+            : null
+        }
+        <EDRTable playSoundNotification={playSoundNotification}
                      timetable={timetable!}
                      serverTz={serverTz}
                      trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
                      post={post!}
                      serverCode={serverCode!}
-    />;*/
+                    setGraphModalOpen={setGraphModalOpen}
+    /></>;
 }
 
 export default EDR;

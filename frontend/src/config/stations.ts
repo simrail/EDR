@@ -79,8 +79,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [19.057551, 50.257280],
         graphConfig: {
-            pre: ["DG", "T1_BZ", "SG"],
-            post: []
+            post: ["SG", "T1_BZ", "DG"],
+            pre: []
         }
     },
     SG: {
@@ -103,7 +103,11 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "SG_PO",
         srId: "Sosnowiec Południowy",
         trainPosRange: 0.5,
-        platformPosOverride: [19.1255985, 50.2695509]
+        platformPosOverride: [19.1255985, 50.2695509],
+        graphConfig: {
+            pre: ["KZ", "SG"],
+            post: ["DG_WZ"]
+        }
     },
     SG_DK: {
         id: "SG_DK",
@@ -140,8 +144,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.362862, 50.416436],
         trainPosRange: 0.5,
         graphConfig: {
-            post: ["ZA", "GW"],
-            pre: ["T1_BZ", "DG"]
+            pre: ["GW", "ZA"],
+            post: ["DG", "T1_BZ"]
         }
     },
     LZ: {
@@ -196,8 +200,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [19.423131, 50.481001],
         graphConfig: {
-            post: ["GW", "PS"],
-            pre: ["DG","LZ_LC" ]
+            pre: ["PS", "GW"],
+            post: ["LZ_LC","DG" ]
         }
     },
     WI: {
@@ -216,7 +220,11 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "DG",
         srId: "Dąbrowa Górnicza",
         trainPosRange: 0.5,
-        platformPosOverride: [19.184696, 50.330386]
+        platformPosOverride: [19.184696, 50.330386],
+        graphConfig: {
+            pre: ["ZA", "LZ_LC"],
+            post: ["T1_BZ", "SG"]
+        }
     },
     DG_SI: {
         id: "DG_SI",
@@ -258,7 +266,11 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "DG_WZ",
         srId: "Dąbrowa Górnicza Wschodnia",
         trainPosRange: 0.5,
-        platformPosOverride: [19.31384974905758, 50.306421359840016]
+        platformPosOverride: [19.31384974905758, 50.306421359840016],
+        graphConfig: {
+            pre: ["KZ", "SG"],
+            post: [/*"LZ_LC"*/]
+        }
     },
     DOR: {
         id: "DOR",

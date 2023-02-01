@@ -19,6 +19,7 @@ type Props = {
 
     setFilter: (value: string | undefined) => void;
     setDisplayMode: (value: "near" | "all") => void;
+    setGraphModalOpen: (isOpen: boolean) =>  void;
 }
 
 
@@ -30,9 +31,10 @@ const scrollToNearestTrain = (targetLn: number) => {
             return;
         clearInterval(interval);
         const el = _minBy((el) => {
-                return el.getAttribute("data-timeoffset")
+                return el.getAttribute("data-timeoffset") ? Number.parseInt(el.getAttribute("data-timeoffset")!) : 999999;
             }
             , allTrainRows);
+
         if (el) {
             el.scrollIntoView({
                 block: "center"
@@ -43,7 +45,7 @@ const scrollToNearestTrain = (targetLn: number) => {
 
 export const Header: React.FC<Props> = ({
     serverTz, serverCode, postCfg, displayMode, bounds, timetableLength,
-    setFilter, setDisplayMode
+    setFilter, setDisplayMode, setGraphModalOpen
     }) => {
     const {t} = useTranslation();
 
@@ -62,6 +64,7 @@ export const Header: React.FC<Props> = ({
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
+                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 Traffic graph</Button>
                     <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>

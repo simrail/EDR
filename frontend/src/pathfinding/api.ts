@@ -6,7 +6,7 @@ import {postConfig, postToInternalIds} from "../config/stations";
 import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 
 
-const RUN_DATA_HEALTHCHECKS = true;
+const RUN_DATA_HEALTHCHECKS = false;
 
 const resolveSubNode = (nodeId: string | undefined) => {
     if (!nodeId) return undefined;
