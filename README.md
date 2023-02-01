@@ -26,7 +26,7 @@ If you feel like contributing, please take a look at [current issues](https://gi
 
 ## Localization
 
-Translations are happening via Transifex (link coming soon). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
+Translations are happening via [Transifex](https://www.transifex.com/simrail-community/edr). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
 
 ## Thank you
 
