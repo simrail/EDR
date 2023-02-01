@@ -122,14 +122,14 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
 
     // console.log("Rendered graph", onlyAnHourAround);
     return (
-        <Modal show={isOpen}  size="9xl" onClose={onClose}>
+        <Modal className="z-50" position="bottom-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
             <Modal.Header>
                 <div className="flex justify-around">
                     <span>Dispatcher Graph (Beta)</span>
                 </div>
             </Modal.Header>
             <Modal.Body className="h-[600px]">
-                <div className="text-center">This graph shows expected departure and arrival</div>
+                <div className="text-center">This graph shows scheduled departure and arrival</div>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         layout="vertical"
