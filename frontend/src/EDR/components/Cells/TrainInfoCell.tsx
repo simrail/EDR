@@ -61,7 +61,7 @@ export const TrainInfoCell: React.FC<Props> = ({
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <Tooltip placement="top" overlay={<span>{t("edr.train_row.click_to_copy")}</span>}>
-                        <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg" onClick={() => CopyToClipboard(ttRow.train_number)}>{ttRow.train_number}</span></Badge>
+                        <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg cursor-pointer" onClick={() => CopyToClipboard(ttRow.train_number)}>{ttRow.train_number}</span></Badge>
                     </Tooltip>
                     { trainDetails && <span className="ml-2">
                         <Tooltip placement="right" overlay={<span>{t("edr.train_row.show_on_map")}</span>}>
