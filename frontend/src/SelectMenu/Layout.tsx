@@ -48,7 +48,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
                     Tallyrald
                 </Navbar.Link>
                 <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
-                    {t("navbar.bugs")}
+                    {t("NAVBAR_bugs")}
                 </Navbar.Link>
                 <Navbar.Link href="https://simrail.fr/discord" target="_blank">
                     Simrail France
@@ -76,7 +76,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("footer.version")} 0.9 - {t("footer.screenshots_by")} TheMulhoose - {t("footer.thanks")} ❤️ - {t("footer.not_official")}
+            {t("FOOTER_version")} 0.9 - {t("FOOTER_screenshots_by")} TheMulhoose - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
         </div>
     </div>;
 }

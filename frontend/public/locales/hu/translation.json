@@ -1,69 +1,58 @@
 {
-  "app": {
-    "fatal_error": "Az adatok nem frissülnek tovább, végzetes hiba történt",
-    "no_trains": "Nincsenek vonatok! A szerver valószínűleg éppen újraindul",
-    "no_timetable": "Végzetes hiba: A menetrend nem elérhető. A szerver valószínűleg éppen újraindul",
-    "station_not_found": "Végzetes hiba: A kiválasztott állomás nem elérhető."
-  },
-  "navbar": {
-    "bugs": "Hibajelentés"
-  },
-  "select_menu": {
-    "server_selection": "Szerver választás",
-    "post_select": "Diszpécser helyszín választás"
-  },
-  "footer": {
-    "version": "Verziószám:",
-    "screenshots_by": "A képet készítette ",
-    "thanks": "Köszönet a béta verzió tesztelőinek",
-    "not_official": "Ez nem egy hivatalos Simrail applikáció"
-  },
-  "edr": {
-    "loading": {
-      "main_message": "Menetrend betöltése",
-      "schedules": "Menetrendek",
-      "stations": "Állomások",
-      "trains": "Vonatok"
-    },
-    "train_row": {
-      "click_to_copy": "Kattints a másoláshoz",
-      "copied": "Vágólapra másolva!",
-      "layover": "Várakozás",
-      "layover_minutes": "perc",
-      "line": "Vonal",
-      "peron": "Peron",
-      "platform": "Vágány",
-      "position_at": "Jelenlegi hely:",
-      "train_delayed": "Késés",
-      "train_early": "Korai",
-      "train_offline": "Nem közlekedik",
-      "train_stopped": "Megállt",
-      "train_away": "Elment",
-      "train_minutes": "perc",
-      "train_eta": "ETA",
-      "train_departing": "Indul",
-      "train_early_sign": "-",
-      "train_late_sign": "+",
-      "waiting_for_data":"Adatra vár.",
-      "notify": "Hangjelzés induláskor",
-      "show_on_map": "Mutasd a térképen"
-    },
-    "train_headers": {
-      "train_number": "Vonat száma, jelenlegi helye",
-      "train_type": "Típus / Sebesség",
-      "train_arrival_time": "Érkezés ideje",
-      "train_from": "Érkezik",
-      "train_stop": "Megálló részletek",
-      "train_departure_time": "Indulás ideje",
-      "train_to": "Továbbindul",
-      "show_on_map": "Térkép"
-    },
-    "ui": {
-      "train_number": "Vonat szám keresés",
-      "close": "Vissza a kiszolgáló kiválasztásához",
-      "dark_light_mode_switch": "Sötét/Világos téma váltása",
-      "filter_train_all": "Minden vonat",
-      "filter_train_online": "Most közlekedik"
-    }
-  }
+  "APP_fatal_error": "Az adatok nem frissülnek tovább, végzetes hiba történt",
+  "APP_no_trains": "Nincsenek vonatok! A szerver valószínűleg éppen újraindul",
+  "APP_no_timetable": "Végzetes hiba: A menetrend nem elérhető. A szerver valószínűleg éppen újraindul",
+  "APP_station_not_found": "Végzetes hiba: A kiválasztott állomás nem elérhető.",
+
+  "NAVBAR_bugs": "Hibajelentés",
+
+  "SELECTMENU_server_selection": "Szerver választás",
+  "SELECTMENU_post_select": "Diszpécser helyszín választás",
+
+  "FOOTER_version": "Verziószám:",
+  "FOOTER_screenshots_by": "A képet készítette",
+  "FOOTER_thanks": "Köszönet a béta verzió tesztelőinek",
+  "FOOTER_not_official": "Ez nem egy hivatalos Simrail applikáció",
+
+  "EDR_LOADING_main_message": "Menetrend betöltése",
+  "EDR_LOADING_schedules": "Menetrendek",
+  "EDR_LOADING_stations": "Állomások",
+  "EDR_LOADING_trains": "Vonatok",
+
+  "EDR_TRAINROW_click_to_copy": "Kattints a másoláshoz",
+  "EDR_TRAINROW_copied": "Vágólapra másolva!",
+  "EDR_TRAINROW_layover": "Várakozás",
+  "EDR_TRAINROW_layover_minutes": "perc",
+  "EDR_TRAINROW_line": "Vonal",
+  "EDR_TRAINROW_peron": "Peron",
+  "EDR_TRAINROW_platform": "Vágány",
+  "EDR_TRAINROW_position_at": "Jelenlegi hely:",
+  "EDR_TRAINROW_train_delayed": "Késés",
+  "EDR_TRAINROW_train_early": "Korai",
+  "EDR_TRAINROW_train_offline": "Nem közlekedik",
+  "EDR_TRAINROW_train_stopped": "Megállt",
+  "EDR_TRAINROW_train_away": "Elment",
+  "EDR_TRAINROW_train_minutes": "perc",
+  "EDR_TRAINROW_train_eta": "ETA",
+  "EDR_TRAINROW_train_departing": "Indul",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data":"Adatra vár.",
+  "EDR_TRAINROW_notify": "Hangjelzés induláskor",
+  "EDR_TRAINROW_show_on_map": "Mutasd a térképen",
+
+  "EDR_TRAINHEADER_train_number": "Vonat száma, jelenlegi helye",
+  "EDR_TRAINHEADER_train_type": "Típus / Sebesség",
+  "EDR_TRAINHEADER_train_arrival_time": "Érkezés ideje",
+  "EDR_TRAINHEADER_train_from": "Érkezik",
+  "EDR_TRAINHEADER_train_stop": "Megálló részletek",
+  "EDR_TRAINHEADER_train_departure_time": "Indulás ideje",
+  "EDR_TRAINHEADER_train_to": "Továbbindul",
+  "EDR_TRAINHEADER_show_on_map": "Térkép",
+
+  "EDR_UI_train_number": "Vonat szám keresés",
+  "EDR_UI_close": "Vissza a kiszolgáló kiválasztásához",
+  "EDR_UI_dark_light_mode_switch": "Sötét/Világos téma váltása",
+  "EDR_UI_filter_train_all": "Minden vonat",
+  "EDR_UI_filter_train_online": "Most közlekedik"
 }

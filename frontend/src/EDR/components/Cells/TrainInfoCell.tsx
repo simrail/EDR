@@ -53,18 +53,18 @@ export const TrainInfoCell: React.FC<Props> = ({
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
-        enqueueSnackbar(t('edr.train_row.copied'), { preventDuplicate: true, variant: 'success' });
+        enqueueSnackbar(t('EDR_TRAINROW_copied'), { preventDuplicate: true, variant: 'success' });
     }
 
     return (
         <td className={tableCellCommonClassnames} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                    <Tooltip placement="top" overlay={<span>{t("edr.train_row.click_to_copy")}</span>}>
+                    <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
                         <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg cursor-pointer" onClick={() => CopyToClipboard(ttRow.train_number)}>{ttRow.train_number}</span></Badge>
                     </Tooltip>
                     { trainDetails && <span className="ml-2">
-                        <Tooltip placement="right" overlay={<span>{t("edr.train_row.show_on_map")}</span>}>
+                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
                             <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>
                         </Tooltip>
                     </span> }
@@ -75,7 +75,7 @@ export const TrainInfoCell: React.FC<Props> = ({
                     </div>
                     <div className="flex justify-center">
                         {
-                            !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("edr.train_row.waiting_for_data")}</span>
+                            !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("EDR_TRAINROW_waiting_for_data")}</span>
                         }
                         {
                             playerSteamInfo?.pseudo
@@ -87,19 +87,19 @@ export const TrainInfoCell: React.FC<Props> = ({
             </div>
             <div className="w-full">
                 {  distanceFromStation
-                    ? <>{t("edr.train_row.position_at")} {distanceFromStation}km ({trainDetails?.closestStation})</>
-                    : <>{t('edr.train_row.train_offline')}</>
+                    ? <>{t("EDR_TRAINROW_position_at")} {distanceFromStation}km ({trainDetails?.closestStation})</>
+                    : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
                     distanceFromStation
                         ? previousDistance === currentDistance
-                            ? <>&nbsp;- {t('edr.train_row.train_stopped')}</>
+                            ? <>&nbsp;- {t('EDR_TRAINROW_train_stopped')}</>
                             : trainHasPassedStation ?
-                                <>&nbsp;- {t("edr.train_row.train_away")}</>
+                                <>&nbsp;- {t("EDR_TRAINROW_train_away")}</>
                                 : ETA && Math.round(ETA) < 20
-                                    ? <>&nbsp;- {Math.round(ETA)}{t("edr.train_row.train_minutes")}</>
-                                    : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('edr.train_row.train_stopped')}</> : undefined
+                                    ? <>&nbsp;- {Math.round(ETA)}{t("EDR_TRAINROW_train_minutes")}</>
+                                    : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('EDR_TRAINROW_train_stopped')}</> : undefined
                         : undefined
                 }
             </div>

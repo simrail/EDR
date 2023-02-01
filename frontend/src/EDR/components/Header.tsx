@@ -60,20 +60,20 @@ export const Header: React.FC<Props> = ({
             <div className="flex items-center justify-between px-4">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <Link to={`/`} className="underline">◀️ {t('edr.ui.close') ?? ''}</Link>
+                    <Link to={`/`} className="underline">◀️ {t('EDR_UI_close') ?? ''}</Link>
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
                     <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 RCS</Button>
-                    <>{t('edr.ui.dark_light_mode_switch') ?? ''} :&nbsp;</>
+                    <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>
             </div>
             <div className="flex items-center w-full px-4 mt-2">
-                <TextInput id="trainNumberFilter" className="w-full mb-2" onChange={(e) => setFilter(e.target.value)} placeholder={t('edr.ui.train_number') ?? ''}/>
+                <TextInput id="trainNumberFilter" className="w-full mb-2" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
                 <div className="flex mx-4 mb-2">
-                    <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetableLength); }}>{t('edr.ui.filter_train_all') ?? ''}</Button>
-                    <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('edr.ui.filter_train_online') ?? ''}</Button>
+                    <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetableLength); }}>{t('EDR_UI_filter_train_all') ?? ''}</Button>
+                    <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('EDR_UI_filter_train_online') ?? ''}</Button>
                 </div>
             </div>
             <div>

@@ -18,7 +18,7 @@ export const PostSelect = () => {
         // eslint-disable-next-line
     }, []);
 
-    return <SelectMenuLayout title={t("select_menu.post_select")}>
+    return <SelectMenuLayout title={t("SELECTMENU_post_select")}>
         {
             !posts
             ? <Spinner size="xl"/>
