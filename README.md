@@ -43,6 +43,9 @@ Of course, we will not send lawyers to your house if you don't follow these rule
 
 Translations are happening via [Transifex](https://www.transifex.com/simrail-community/edr). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
 
+## Self Hosting
+Self hosting documentation is planned. The software needs a few adjustements to make it work easilly, but if you know your way around the code you can already do so ! :)
+
 ## Thank you
 
 A big thank you to the game developers for making [Simrail](https://store.steampowered.com/app/1422130/SimRail__The_Railway_Simulator/) and providing the necessary data for this app to work.
