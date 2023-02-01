@@ -18,11 +18,11 @@ Main features include but are not limited to:
 
 ## Issues, bugs, feature requests
 
-Found any bugs or have new ideas? [Open a new issue](https://github.com/DKFN/better-dispatch/issues/new)!
+Found any bugs or have new ideas? [Open a new issue](https://github.com/simrail/EDR/issues/new)!
 
 ## Contributing
 
-If you feel like contributing, please take a look at [current issues](https://github.com/DKFN/better-dispatch/issues). Feel free to submit a PR!
+If you feel like contributing, please take a look at [current issues](https://github.com/simrail/EDR/issues). Feel free to submit a PR!
 
 ## Localization
 
