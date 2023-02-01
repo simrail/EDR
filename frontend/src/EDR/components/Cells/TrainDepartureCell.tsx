@@ -31,11 +31,11 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
                 <div className="inline-flex items-center h-full pl-4">
                     {
                         !trainHasPassedStation && (trainMustDepart ?
-                                <Badge className="animate-pulse duration-1000" color="warning">{t('edr.train_row.train_departing')}</Badge>
+                                <Badge className="animate-pulse duration-1000" color="warning">{t('EDR_TRAINROW_train_departing')}</Badge>
                                 :
-                            <Tooltip placement="top" overlay={<span>{t("edr.train_row.notify")}</span>}>
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_notify")}</span>}>
                                     <Button outline color="light" className="dark:bg-slate-200" pill size="xs">
-                                        <img height={16} width={16} src={notificationEnabled ? edrImagesMap.CHECK : edrImagesMap.BELL} alt={t("edr.train_row.notify") ?? 'notify'} onClick={() => setNotificationEnabled(!notificationEnabled)}/>
+                                        <img height={16} width={16} src={notificationEnabled ? edrImagesMap.CHECK : edrImagesMap.BELL} alt={t("EDR_TRAINROW_notify") ?? 'notify'} onClick={() => setNotificationEnabled(!notificationEnabled)}/>
                                     </Button>
                             </Tooltip>
                         )

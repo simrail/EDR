@@ -104,7 +104,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
             getTrains(serverCode).then(setTrains);
         }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
-            enqueueSnackbar(t('app.fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
             return;
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
@@ -127,15 +127,15 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
         redirect("/");
 
     if (!loading && trains && trains.length === 0) {
-        return <Alert className="mt-8" color="error">{t("app.no_trains")}</Alert>
+        return <Alert className="mt-8" color="error">{t("APP_no_trains")}</Alert>
     }
 
     if (!loading && !timetable) {
-        return <Alert color="failure">{t("app.no_timetable")}</Alert>
+        return <Alert color="failure">{t("APP_no_timetable")}</Alert>
     }
 
     if (!loading && !currentStation)
-        return <Alert color="failure">{t("app.station_not_found")}</Alert>
+        return <Alert color="failure">{t("APP_station_not_found")}</Alert>
 
     if (loading)
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}

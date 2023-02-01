@@ -22,7 +22,7 @@ export const ServerSelect = () => {
     });
     console_log("servers: ", servers);
 
-    return <SelectMenuLayout title={t("select_menu.server_selection")}>
+    return <SelectMenuLayout title={t("SELECTMENU_server_selection")}>
         {
             !orderedServers
                 ? <Spinner/>

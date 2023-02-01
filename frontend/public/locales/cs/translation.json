@@ -1,0 +1,45 @@
+{
+  "APP_fatal_error": "Uživatelské rozhraní se neobnoví, došlo k fatální chybě.",
+  "APP_no_trains": "Žádné vlaky k dispozici. Server se nejspíše restartuje",
+  "APP_no_timetable": "Fatální chyba: Nelze načíst jízdní řád. Server Simrail se pravděpodobně restartuje",
+  "APP_station_not_found": "Fatální chyba: Aktuální stanice nebyla nalezena.",
+
+  "NAVBAR_bugs": "Hlášení chyb",
+
+  "SELECTMENU_server_selection": "Výběr serveru",
+  "SELECTMENU_post_select": "Výběr stanice",
+
+  "FOOTER_version": "verze",
+  "FOOTER_screenshots_by": "Screenshot od",
+  "FOOTER_thanks": "Děkujeme všem beta testerům",
+  "FOOTER_not_official": "Toto není oficiální aplikace SimRail",
+
+  "EDR_LOADING_main_message": "Načtení dat pro EDR",
+  "EDR_LOADING_schedules": "Grafikon",
+  "EDR_LOADING_stations": "Stanice",
+  "EDR_LOADING_trains": "Vlaky",
+
+  "EDR_TRAINROW_position_at": "vzd.",
+  "EDR_TRAINROW_train_delayed": "Zpožděný",
+  "EDR_TRAINROW_train_early": "Přijíždí",
+  "EDR_TRAINROW_train_stopped": "Stojí",
+  "EDR_TRAINROW_train_away": "Pryč",
+  "EDR_TRAINROW_train_eta": "ETA",
+  "EDR_TRAINROW_train_departing": "Odjezd",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data": "Čekání na informace",
+
+  "EDR_TRAINHEADER_train_number": "Číslo vlaku",
+  "EDR_TRAINHEADER_train_type": "Druh vlaku",
+  "EDR_TRAINHEADER_train_arrival_time": "Pravidelný příjezd",
+  "EDR_TRAINHEADER_train_from": "Příjezd ze stanice",
+  "EDR_TRAINHEADER_train_stop": "Pobyt ve stanici",
+  "EDR_TRAINHEADER_train_departure_time": "Pravidelný odjezd",
+  "EDR_TRAINHEADER_train_to": "Směr jízdy",
+
+  "EDR_UI_train_number": "Vlak č.",
+  "EDR_UI_close": "Zpět na výběr serverů",
+  "EDR_UI_dark_light_mode_switch": "Přepínač Noc/Den",
+  "EDR_UI_filter_train_all": "Všechny vlaky"
+}
