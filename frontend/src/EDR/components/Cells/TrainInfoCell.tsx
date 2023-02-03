@@ -71,7 +71,7 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig?.icon && <img src={trainConfig.icon} height={50} width={64} alt="train-icon"/>}
+                        {trainConfig?.icon && <img src={trainConfig.icon} height={40} width={94} alt="train-icon"/>}
                     </div>
                     <div className="flex justify-center">
                         {
