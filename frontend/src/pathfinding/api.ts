@@ -30,7 +30,8 @@ export type PathFindingLineTrace = (ExtendedStationConfig | undefined)[] | undef
 export const treeTraversal = (
     subTree: ExtendedStationConfig | undefined,
     finish: string,
-    acc: (ExtendedStationConfig | undefined)[]
+    acc: (ExtendedStationConfig | undefined)[],
+    via?: string
 ):PathFindingLineTrace  => {
     if (!subTree) return undefined;
     const allAccids = acc.map((n) => n?.id);
@@ -44,10 +45,11 @@ export const treeTraversal = (
     // TODO: pathfinding lacks weight, wich is alright for now. (Rather good enough)
     // TODO: But it needs to take distance in count instead of number of stations
     // Else pendolino would take interesting routes lmao
-    return _.minBy([leftPath, rightPath, branchPath], 'length');
+    const foundViaPath = [leftPath, rightPath, branchPath].filter((p) => p?.find((e) => via && e?.id === via))
+    return foundViaPath?.[0] ?? _.minBy([leftPath, rightPath, branchPath], 'length');
 }
 
-export const findPath = (start: ExtendedStationConfig, finish: string): PathFindingLineTrace => {
+export const findPath = (start: ExtendedStationConfig, finish: string, via?: string): PathFindingLineTrace => {
     return treeTraversal(start, finish, []);
 }
 
@@ -60,7 +62,7 @@ export const dbgTree = (start: string, finish: string, playerPost?: string) => {
 }
 
 
-export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined): [PathFindingLineTrace, number] => {
+export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined, via?: string | undefined): [PathFindingLineTrace, number] => {
     const pathA = findPath(pathFind_stackMap[start], playerPost ?? finish);
     const pathB = playerPost ? findPath(pathFind_stackMap[playerPost], finish) : [];
     if (!pathA || !pathB) {
@@ -107,9 +109,10 @@ export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTr
     const foundToPost = postToInternalIds[encodeURIComponent(toStation)]?.id;
     const ltIndex = pfLineTrace.findIndex((e) => e?.id && e?.id === foundPost);
     debug && console.log("From index : ", {ltIndex, formStation, pfLineTrace});
+    debug && console.log("FTP", foundToPost);
 
     const [intermediateLineTraceBetweenPostAndDestination] = PathFinding_FindPathAndHaversineSum(foundPost, playerPost)
-    const [intermediateLineTrace] = PathFinding_FindPathAndHaversineSum(foundToPost, closestStationId)
+    const [intermediateLineTrace] = PathFinding_FindPathAndHaversineSum(foundToPost, closestStationId, playerPost)
     const toIndex = intermediateLineTrace?.findIndex((e) => e?.id && e?.id === foundToPost);
     debug && console.log("TO in linetrace : ", {toIndex, formStation, intermediateLineTrace});
 
