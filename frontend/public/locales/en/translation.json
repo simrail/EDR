@@ -49,6 +49,11 @@
   "EDR_TRAINHEADER_train_departure_time": "Departure time",
   "EDR_TRAINHEADER_train_to": "To",
 
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "This graph shows scheduled departure and arrival",
+  "EDR_GRAPH_open_new_window": "Open in new window",
+  "EDR_GRAPH_title": "Dispatcher Graph (Beta)",
+
   "EDR_UI_close": "Back to Server Selection",
   "EDR_UI_dark_light_mode_switch": "Bright / Dark",
   "EDR_UI_filter_train_all": "All trains",

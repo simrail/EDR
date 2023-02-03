@@ -16,7 +16,8 @@ import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
-import Graph from "./components/Graph";
+import {StringParam, useQueryParam} from "use-query-params";
+import {Graph} from "./components/Graph";
 
 export type TimeTableRow = {
     k: string;
@@ -63,6 +64,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const previousTrains = React.useRef<{ [k: string]: DetailedTrain } | null>(null);
+    const graphFullScreenMode = !!useQueryParam("graphFullScreenMode", StringParam)[0];
 
 
     // Gets raw simrail data
@@ -142,18 +144,27 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
                               stations={stations as Dictionary<Station>}/>
 
     return <>
-        {timetable && post && timetable.length && isGraphModalOpen
-            ? <Graph isOpen={isGraphModalOpen} timetable={timetable} post={post} onClose={() => setGraphModalOpen(false)} serverTz={serverTz}/>
+        {timetable && post && timetable.length && (isGraphModalOpen || graphFullScreenMode)
+            ? <Graph
+                fullScreenMode={graphFullScreenMode}
+                isOpen={isGraphModalOpen}
+                timetable={timetable}
+                post={post} onClose={() =>
+                setGraphModalOpen(false)}
+                serverTz={serverTz}
+            />
             : null
         }
-        <EDRTable playSoundNotification={playSoundNotification}
+        {!graphFullScreenMode && <EDRTable playSoundNotification={playSoundNotification}
                      timetable={timetable!}
                      serverTz={serverTz}
                      trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
                      post={post!}
                      serverCode={serverCode!}
                     setGraphModalOpen={setGraphModalOpen}
-    /></>;
+                />
+        }
+            </>;
 }
 
 export default EDR;

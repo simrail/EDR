@@ -1,21 +1,18 @@
 import React from "react";
-import {TimeTableRow} from "../index";
-import {nowUTC} from "../../utils/date";
-import {getTimetable} from "../../api/api";
+import {TimeTableRow} from "../../index";
+import {nowUTC} from "../../../utils/date";
+import {getTimetable} from "../../../api/api";
 import _keyBy from "lodash/keyBy";
-import {postConfig, postToInternalIds} from "../../config/stations";
+import {postConfig, postToInternalIds} from "../../../config/stations";
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
-import {configByType} from "../../config/trains";
+import {configByType} from "../../../config/trains";
 import {format} from "date-fns";
-import {getDateWithHourAndMinutes} from "../functions/timeUtils";
-import {Button, Modal} from "flowbite-react";
-import {PathFinding_FindPathAndHaversineSum, PathFindingLineTrace} from "../../pathfinding/api";
+import {getDateWithHourAndMinutes} from "../../functions/timeUtils";
+import {PathFinding_FindPathAndHaversineSum, PathFindingLineTrace} from "../../../pathfinding/api";
 
-type Props = {
+export type GraphProps = {
     post: string;
     timetable: TimeTableRow[];
-    isOpen: boolean;
-    onClose: () => void;
     serverTz: string;
 }
 
@@ -56,7 +53,7 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
 }
 
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
-const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) => {
+const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
     const dtNow = nowUTC(serverTz);
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
@@ -72,13 +69,7 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
         const gottenPostConfig = postConfig[post];
         if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
         const onScreenPosts = [...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post];
-
-        console.log("Post : ", post);
-
         const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post];
-
-        console.log("To call paths : ", toCalculatePathPosts);
-
         // Get all pathfinding possible paths between two stations (with intermediate stations not dispatched by players)
         const allPaths = toCalculatePathPosts.reduce((acc, val, index) => {
             const maybeLineTraceAndDistancePrevious = index > 0
@@ -87,8 +78,6 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
             const maybeLineTraceAndDistanceNext = index < toCalculatePathPosts.length
                 ? PathFinding_FindPathAndHaversineSum(toCalculatePathPosts[index], toCalculatePathPosts[index + 1])
                 : undefined;
-
-            console.log([maybeLineTraceAndDistanceNext, maybeLineTraceAndDistancePrevious]);
 
             return {
                 ...acc,
@@ -99,7 +88,6 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
             }
         }, {});
 
-        console.log("All paths ", allPaths);
         setAllPathsOfPosts(allPaths);
 
         // Get timetable data
@@ -156,14 +144,7 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
 
     // console.log("Rendered graph", onlyAnHourAround);
     return (
-        <Modal className="z-50" position="bottom-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
-            <Modal.Header>
-                <div className="flex justify-between w-full">
-                    <span>Dispatcher Graph (Beta)</span>
-                    <Button size="xs" className="ml-8">Open in new window</Button>
-                </div>
-            </Modal.Header>
-            <Modal.Body className="h-[600px]">
+            <>
                 <div className="text-center">This graph shows scheduled departure and arrival</div>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
@@ -189,8 +170,8 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
                         )}
                     </LineChart>
                 </ResponsiveContainer>
-            </Modal.Body>
-</Modal>);
+            </>
+    );
 }
 
-export default React.memo(Graph)
+export default React.memo(GraphContent)
