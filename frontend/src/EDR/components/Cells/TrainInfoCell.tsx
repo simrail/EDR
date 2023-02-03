@@ -34,12 +34,12 @@ type Props = {
     currentDistance: number;
     previousDistance: number | undefined;
     trainHasPassedStation: boolean;
-
+    isWebpSupported: boolean;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, hasEnoughData, trainBadgeColor,
        distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef
+       setModalTrainId, firstColRef, isWebpSupported
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -47,7 +47,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
     const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
-
+    const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
 
     React.useEffect(() => getPlayerDetails(controlledBy, setPlayerSteamInfo), [controlledBy]);
 
@@ -71,7 +71,7 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig?.icon && <img src={trainConfig.icon} height={40} width={94} alt="train-icon"/>}
+                        {trainConfig?.icon && <img src={trainIcon} height={40} width={94} alt="train-icon"/>}
                     </div>
                     <div className="flex justify-center">
                         {
