@@ -8,7 +8,8 @@ import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsiv
 import {configByType} from "../../config/trains";
 import {format} from "date-fns";
 import {getDateWithHourAndMinutes} from "../functions/timeUtils";
-import {Modal} from "flowbite-react";
+import {Button, Modal} from "flowbite-react";
+import {PathFinding_FindPathAndHaversineSum, PathFindingLineTrace} from "../../pathfinding/api";
 
 type Props = {
     post: string;
@@ -59,20 +60,56 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
     const dtNow = nowUTC(serverTz);
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
+    const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
     const [data, setData] = React.useState<any[]>();
-    const onlyAnHourAround = React.useMemo(() => _keyBy(timetable.filter((ttRow) => Math.abs(ttRow.hourSort - currentHourSort) <= 130), "train_number"), [currentHourSort, timetable]);
+    const onlyAnHourAround = React.useMemo(
+        () => _keyBy(timetable.filter((ttRow) =>
+            Math.abs(ttRow.hourSort - currentHourSort) <= 130), "train_number"),
+        [currentHourSort, timetable]);
     // console.log("Current hour sort : ", currentHourSort);
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
-        if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
-        Promise.all([...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post].map(getStationTimetable))
+        if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
+        const onScreenPosts = [...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post];
+
+        console.log("Post : ", post);
+
+        const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post];
+
+        console.log("To call paths : ", toCalculatePathPosts);
+
+        // Get all pathfinding possible paths between two stations (with intermediate stations not dispatched by players)
+        const allPaths = toCalculatePathPosts.reduce((acc, val, index) => {
+            const maybeLineTraceAndDistancePrevious = index > 0
+                ? PathFinding_FindPathAndHaversineSum(toCalculatePathPosts[index - 1], toCalculatePathPosts[index])
+                : undefined;
+            const maybeLineTraceAndDistanceNext = index < toCalculatePathPosts.length
+                ? PathFinding_FindPathAndHaversineSum(toCalculatePathPosts[index], toCalculatePathPosts[index + 1])
+                : undefined;
+
+            console.log([maybeLineTraceAndDistanceNext, maybeLineTraceAndDistancePrevious]);
+
+            return {
+                ...acc,
+                [val]: {
+                    prev: maybeLineTraceAndDistancePrevious?.[0],
+                    next: maybeLineTraceAndDistanceNext?.[0]
+                }
+            }
+        }, {});
+
+        console.log("All paths ", allPaths);
+        setAllPathsOfPosts(allPaths);
+
+        // Get timetable data
+        Promise.all(onScreenPosts.map(getStationTimetable))
             .then(Object.fromEntries)
             .then(setNeighboursTimetables)
     }, [post]);
 
     React.useEffect(() => {
-        if (!neighboursTimetables || !onlyAnHourAround) return;
+        if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;
         // console.log("Around DT", onlyAnHourAround);
         const gottenPostConfig = postConfig[post];
         if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
@@ -87,9 +124,7 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
                 const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to)]?.id;
                 // console.log("Next post: ", nextPost);
                 if (!nextPost) return []
-                const foundNextPostIdx = postsToScan.findIndex((v) => v === nextPost);
-                const isTrainGoingToKatowice = foundNextPostIdx > postIdx || (foundNextPostIdx === -1 && postIdx === postsToScan.length - 1);
-                // console.log("ITGTK ", isTrainGoingToKatowice);
+                const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_departure : targetTrain?.scheduled_arrival;
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTz)]
             }))
@@ -100,8 +135,7 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
                 const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to)]?.id;
                 // console.log("Next post: ", nextPost);
                 if (!targetTrain || !nextPost) return [];
-                const foundNextPostIdx = postsToScan.findIndex((v) => v === nextPost);
-                const isTrainGoingToKatowice = foundNextPostIdx > postIdx || (foundNextPostIdx === -1 && postIdx === postsToScan.length - 1);
+                const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 // console.log("ITGTK ", isTrainGoingToKatowice);
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_arrival : targetTrain?.scheduled_departure;
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTz)]
@@ -118,14 +152,15 @@ const Graph: React.FC<Props> = ({timetable, post, onClose, isOpen, serverTz}) =>
 
         // console.log("Final data : ", data);
         setData(data);
-    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTz])
+    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTz, allPathsOfPosts])
 
     // console.log("Rendered graph", onlyAnHourAround);
     return (
         <Modal className="z-50" position="bottom-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
             <Modal.Header>
-                <div className="flex justify-around">
+                <div className="flex justify-between w-full">
                     <span>Dispatcher Graph (Beta)</span>
+                    <Button size="xs" className="ml-8">Open in new window</Button>
                 </div>
             </Modal.Header>
             <Modal.Body className="h-[600px]">

@@ -9,6 +9,7 @@ export type StationConfig = {
         pre: string[],
         post: string[]
     }
+    secondaryPosts?: string[]
 }
 
 export const postConfig: {[k: string]: StationConfig} = {
@@ -107,7 +108,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         graphConfig: {
             pre: ["KZ", "SG"],
             post: ["DG_WZ"]
-        }
+        },
+        secondaryPosts: ["SG_RS2"]
     },
     SG_DK: {
         id: "SG_DK",
