@@ -4,11 +4,24 @@ import {nowUTC} from "../../../utils/date";
 import {getTimetable} from "../../../api/api";
 import _keyBy from "lodash/keyBy";
 import {postConfig, postToInternalIds} from "../../../config/stations";
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    ReferenceLine
+} from 'recharts';
 import {configByType} from "../../../config/trains";
 import {format} from "date-fns";
 import {getDateWithHourAndMinutes} from "../../functions/timeUtils";
 import {PathFinding_FindPathAndHaversineSum, PathFindingLineTrace} from "../../../pathfinding/api";
+import _sortBy from "lodash/sortBy";
+import {LayoutType} from "recharts/types/util/types";
+import {Button} from "flowbite-react";
 
 export type GraphProps = {
     post: string;
@@ -38,9 +51,9 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
         return (
             <div className="custom-tooltip p-2 flex flex-col bg-white">
                 <span>{label}</span>
-                {payload.map((p: any) => {
+                {_sortBy(payload, 'value').map((p: any) => {
                     return (
-                        <div className="flex justify-between w-full">
+                        <div className="flex justify-between w-full" key={p.dataKey}>
                             <span style={{color: p.stroke}}>{p.dataKey}&nbsp;&nbsp;</span><span>{format(new Date(p.value), "HH:mm")}</span>
                         </div>
                     )
@@ -54,28 +67,38 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
 
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
 const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
-    const dtNow = nowUTC(serverTz);
+    const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
+    const [zoom, setZoom] = React.useState<number>(1);
+    const [dtNow, setDtNow] = React.useState(nowUTC(serverTz));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
     const [data, setData] = React.useState<any[]>();
     const onlyAnHourAround = React.useMemo(
         () => _keyBy(timetable.filter((ttRow) =>
-            Math.abs(ttRow.hourSort - currentHourSort) <= 130), "train_number"),
-        [currentHourSort, timetable]);
+            Math.abs(ttRow.hourSort - currentHourSort) <= 130 / zoom), "train_number"),
+        [currentHourSort, timetable, zoom]);
     // console.log("Current hour sort : ", currentHourSort);
+
+    React.useEffect(() => {
+        const intervalId = window.setInterval(() => {
+            setDtNow(nowUTC(serverTz));
+        }, 10000);
+
+        return () => window.clearInterval(intervalId);
+    }, [])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
         if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
         const onScreenPosts = [...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post];
-        const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post];
+        const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post, ...gottenPostConfig.graphConfig.final];
         // Get all pathfinding possible paths between two stations (with intermediate stations not dispatched by players)
         const allPaths = toCalculatePathPosts.reduce((acc, val, index) => {
             const maybeLineTraceAndDistancePrevious = index > 0
                 ? PathFinding_FindPathAndHaversineSum(toCalculatePathPosts[index - 1], toCalculatePathPosts[index])
                 : undefined;
-            const maybeLineTraceAndDistanceNext = index < toCalculatePathPosts.length
+            const maybeLineTraceAndDistanceNext = index < toCalculatePathPosts.length - 1
                 ? PathFinding_FindPathAndHaversineSum(toCalculatePathPosts[index], toCalculatePathPosts[index + 1])
                 : undefined;
 
@@ -142,13 +165,24 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
         setData(data);
     }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTz, allPathsOfPosts])
 
-    // console.log("Rendered graph", onlyAnHourAround);
+    const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
+    const PostComponent = displayMode === "vertical" ? YAxis : XAxis;
+
     return (
             <>
-                <div className="text-center">This graph shows scheduled departure and arrival</div>
+                <div className="text-center inline-flex items-center justify-center w-full">
+                    This graph shows scheduled departure and arrival
+                    <Button className="ml-4" size={'xs'} onClick={() => setDisplayMode(displayMode === "vertical" ? "horizontal" : "vertical")}>Switch axis</Button>
+                    <div className="inline-flex ml-8 items-center">
+                        <span>Zoom:</span>
+                        <Button size="xs" className="ml-1" onClick={() => setZoom(1)}>1x</Button>
+                        <Button size="xs" className="ml-1" onClick={() => setZoom(2)}>2x</Button>
+                        <Button size="xs" className="ml-1"  onClick={() => setZoom(3)}>3x</Button>
+                    </div>
+                </div>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
-                        layout="vertical"
+                        layout={displayMode}
                         width={500}
                         height={300}
                         data={data}
@@ -160,12 +194,13 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis type="number" scale="time" domain={["dataMin", "dataMax"]} tickCount={15} interval={0} tickFormatter={dateFormatter}/>
-                        <YAxis dataKey="name" type="category" allowDuplicatedCategory={false} />
+                        <TimeComponent data-key="time" type="number" scale="time" domain={["dataMin", "dataMax"]} tickCount={20} interval={0} tickFormatter={dateFormatter} reversed={displayMode === "horizontal"}/>
+                        <ReferenceLine {...displayMode === "vertical" ? {x: dtNow.getTime()} : {y: dtNow.getTime()}}  stroke="black" strokeWidth={2} strokeOpacity={0.5} type={"dotted"} />
+                        <PostComponent dataKey="name" type="category" allowDuplicatedCategory={false} />
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) =>
-                            <Line dataKey={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"} label="test">
+                            <Line dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
                             </Line>
                         )}
                     </LineChart>

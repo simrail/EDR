@@ -7,7 +7,8 @@ export type StationConfig = {
     platformPosOverride?: [number, number];
     graphConfig?: {
         pre: string[],
-        post: string[]
+        post: string[],
+        final: string[] // N+1 post from what is displayed at the bottom to know if the train is going to KZ
     }
     secondaryPosts?: string[]
 }
@@ -20,7 +21,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.470318, 50.584134],
         graphConfig: {
             pre: ["LZ_LC", "ZA"],
-            post: ["PS", "KN"]
+            post: ["PS", "KN"],
+            final: ["WP"]
         }
     },
     PS: {
@@ -30,7 +32,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.820087, 50.735068],
         graphConfig: {
             pre: ["ZA", "GW"],
-            post: ["KN", "WP"]
+            post: ["KN", "WP"],
+            final: ["OZ"]
         }
     },
     KN: {
@@ -40,7 +43,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.9049155, 50.8001411],
         graphConfig: {
             pre: ["GW", "PS"],
-            post: ["WP", "OZ"]
+            post: ["WP", "OZ"],
+            final: ["PI"]
         }
     },
     WP: {
@@ -50,7 +54,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.945774, 50.856198],
         graphConfig: {
             pre: ["PS", "KN"],
-            post: ["OZ", "PI"]
+            post: ["OZ", "PI"],
+            final: ["OP_PO"]
         }
     },
     OZ: {
@@ -60,7 +65,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [20.0645106, 51.0955558],
         graphConfig: {
             pre: ["KN", "WP"],
-            post: ["PI", "OP_PO"]
+            post: ["PI", "OP_PO"],
+            final: ["IDZ"]
         }
 
     },
@@ -71,7 +77,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [20.1210684, 51.2546948],
         graphConfig: {
             pre: ["KN", "WP", "OZ"],
-            post: ["OP_PO"]
+            post: ["OP_PO"],
+            final: ["IDZ"]
         }
     },
     KZ: {
@@ -81,7 +88,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.057551, 50.257280],
         graphConfig: {
             post: [],
-            pre: ["DG", "T1_BZ", "SG"]
+            pre: ["DG", "T1_BZ", "SG"],
+            final: ["KO"]
         }
     },
     SG: {
@@ -91,7 +99,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.1270833, 50.2793889],
         graphConfig: {
             pre: ["LZ_LC", "DG", "T1_BZ"],
-            post: ["KZ"]
+            post: ["KZ"],
+            final: []
         }
     },
     SG_R52: {
@@ -107,7 +116,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.1255985, 50.2695509],
         graphConfig: {
             pre: ["KZ", "SG"],
-            post: ["DG_WZ"]
+            post: ["DG_WZ"],
+            final: []
         },
         secondaryPosts: ["SG_RS2"]
     },
@@ -137,7 +147,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.1418582, 50.3085335],
         graphConfig: {
             pre: ["LZ_LC", "DG"],
-            post: ["SG", "KZ"]
+            post: ["SG", "KZ"],
+            final: []
         }
     },
     LZ_LC: {
@@ -147,7 +158,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         graphConfig: {
             pre: ["GW", "ZA"],
-            post: ["DG", "T1_BZ"]
+            post: ["DG", "T1_BZ"],
+            final: []
         }
     },
     LZ: {
@@ -175,7 +187,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [20.232192, 51.358965],
         graphConfig: {
             pre: ["KN", "WP", "OZ", "PI"],
-            post: []
+            post: [],
+            final: ["IDZ"]
         }
     },
     MY: {
@@ -203,7 +216,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.423131, 50.481001],
         graphConfig: {
             pre: ["PS", "GW"],
-            post: ["LZ_LC","DG" ]
+            post: ["LZ_LC","DG" ],
+            final: ["T1_BZ"]
         }
     },
     WI: {
@@ -225,7 +239,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.184696, 50.330386],
         graphConfig: {
             pre: ["ZA", "LZ_LC"],
-            post: ["T1_BZ", "SG"]
+            post: ["T1_BZ", "SG"],
+            final: ["KZ"]
         }
     },
     DG_SI: {
@@ -271,7 +286,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.31384974905758, 50.306421359840016],
         graphConfig: {
             pre: ["KZ", "SG"],
-            post: [/*"LZ_LC"*/]
+            post: [/*"LZ_LC"*/],
+            final: []
         }
     },
     DOR: {
