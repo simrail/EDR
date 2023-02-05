@@ -43,12 +43,13 @@ export type TimeTableRow = {
 
 
 type Props = {
+    isWebpSupported: boolean,
     playSoundNotification: (cb: () => void) => void
 }
 /**
  * This component is responsible to get and batch all the data before it goes downstream to the table
  */
-export const EDR: React.FC<Props> = ({playSoundNotification}) => {
+export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) => {
     const {serverCode, post} = useParams<{
         serverCode: string,
         post: string
@@ -156,13 +157,14 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
             : null
         }
         {!graphFullScreenMode && <EDRTable playSoundNotification={playSoundNotification}
-                     timetable={timetable!}
-                     serverTz={serverTz}
-                     trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
-                     post={post!}
-                     serverCode={serverCode!}
-                    setGraphModalOpen={setGraphModalOpen}
-                />
+                timetable={timetable!}
+                serverTz={serverTz}
+                trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
+                post={post!}
+                serverCode={serverCode!}
+                setGraphModalOpen={setGraphModalOpen}
+                isWebpSupported={isWebpSupported}
+            />
         }
             </>;
 }

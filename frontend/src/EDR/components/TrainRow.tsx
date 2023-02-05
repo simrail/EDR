@@ -33,12 +33,13 @@ type Props = {
     headerSixthhColRef: any,
     headerSeventhColRef: any,
     playSoundNotification: any,
+    isWebpSupported: boolean,
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification
+        playSoundNotification, isWebpSupported
     }: Props
 ) => {
     const dateNow = nowUTC(serverTz);
@@ -83,6 +84,7 @@ const TableRow: React.FC<Props> = (
             currentDistance={currentDistance}
             previousDistance={previousDistance}
             trainHasPassedStation={trainHasPassedStation}
+            isWebpSupported={isWebpSupported}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

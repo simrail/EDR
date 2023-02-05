@@ -30,11 +30,12 @@ type Props = {
     post: string;
     serverCode: string;
     setGraphModalOpen: (isOpen: boolean) =>  void;
+    isWebpSupported: boolean;
 }
 
 export const EDRTable: React.FC<Props> = ({
       playSoundNotification, timetable, trainsWithDetails, serverTz,
-      post, serverCode, setGraphModalOpen
+      post, serverCode, setGraphModalOpen, isWebpSupported
     }) => {
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
@@ -59,7 +60,6 @@ export const EDRTable: React.FC<Props> = ({
     }
 
     const dt = nowUTC(serverTz);
-
 
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
@@ -110,6 +110,7 @@ export const EDRTable: React.FC<Props> = ({
                         timeOffset={Math.abs(Number.parseInt(format(dt, "HHmm")) - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setModalTrainId}
+                        isWebpSupported={isWebpSupported}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>

@@ -1,8 +1,10 @@
 import React from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
-import AppLogo from "../logo.png";
-import Background from "./background.jpg";
+import AppLogo from "../images/logo.png";
+import AppLogoWebp from "../images/logo.webp";
+import Background from "../images/background.jpg";
+import BackgroundWebp from "../images/background.webp";
 import {useTranslation} from "react-i18next";
 import {FR, GB, CZ, HU, DE, SK} from "country-flag-icons/react/1x1";
 
@@ -11,12 +13,20 @@ const DropdownFlagIcon: React.FC<any> = ({children}) =>
         {children}
     </span>
 
-export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
+type Props = {
+    children?: any,
+    title: string,
+    isWebpSupported: boolean
+}
+
+export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSupported}) => {
     const {t, i18n} = useTranslation();
+    const background = isWebpSupported ? BackgroundWebp : Background;
+    const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
     return <div className="text-primary">
         <Navbar fluid={true} className="sticky top-0 bg-slate-300">
             <Navbar.Brand href="/">
-                <img src={AppLogo} height={64} width={64} alt="App Logo"/>
+                <img src={appLogo} height={64} width={64} alt="App Logo"/>
                 <span className="ml-4">EDR</span>
             </Navbar.Brand>
         <Navbar.Collapse>
@@ -67,7 +77,7 @@ export const SelectMenuLayout: React.FC<any> = ({children, title}) => {
             </Navbar.Collapse>
         </Navbar>
 
-        <div style={{backgroundImage: "url('"+Background+"')", backgroundSize: "cover"}} className="min-h-screen">
+        <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
             <div className="flex items-center justify-center max-w-screen min-h-screen">
                 <div className="mt-4 flex flex-wrap max-w-screen justify-center content-center">
