@@ -68,6 +68,8 @@ const TableRow: React.FC<Props> = (
     const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
+    // console.log("EDR", trainDetails);
+
 
     // ETA && console_log("ETA", ETA);
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
