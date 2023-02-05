@@ -78,9 +78,18 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 getTrains(serverCode).then((data) => {
                     setTrains(data);
                     setLoading(false);
+                }).catch(() => {
+                    enqueueSnackbar(t('EDR_train_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+                    setTimeout(fetchAllDatas, 5000);
                 });
-            }).catch(() => setTimeout(fetchAllDatas, 5000));
-        }).catch(() => setTimeout(fetchAllDatas, 5000));
+            }).catch(() => {
+                enqueueSnackbar(t('EDR_station_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+                setTimeout(fetchAllDatas, 5000);
+            });
+        }).catch(() => {
+            enqueueSnackbar(t('EDR_timetable_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+            setTimeout(fetchAllDatas, 5000);
+        });
     }
 
     const currentStation = post ? postConfig[post] : undefined;

@@ -14,6 +14,10 @@
   "FOOTER_thanks": "Thank you to all beta testers!",
   "FOOTER_not_official": "This is not an official SimRail app!",
 
+  "EDR_train_refresh_failed": "Cannot refresh train data, retrying...",
+  "EDR_station_refresh_failed": "Cannot refresh dispatch posts, retrying...",
+  "EDR_timetable_refresh_failed": "Cannot refresh the timetable, retrying...",
+
   "EDR_LOADING_main_message": "Loading EDR's data...",
   "EDR_LOADING_schedules": "Schedules",
   "EDR_LOADING_stations": "Stations",
