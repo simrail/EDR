@@ -66,7 +66,7 @@ export const Header: React.FC<Props> = ({
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
                     <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>Stream mode</Button>
-                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 RCS</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 {t("EDR_GRAPH_rcs")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>

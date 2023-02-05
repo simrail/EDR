@@ -53,6 +53,7 @@
   "EDR_GRAPH_warning": "This graph shows scheduled departure and arrival",
   "EDR_GRAPH_open_new_window": "Open in new window",
   "EDR_GRAPH_title": "Dispatcher Graph (Beta)",
+  "EDR_GRAPH_switch_axis": "Switch axis",
 
   "EDR_UI_close": "Back to Server Selection",
   "EDR_UI_dark_light_mode_switch": "Bright / Dark",

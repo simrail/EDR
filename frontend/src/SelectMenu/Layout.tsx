@@ -6,7 +6,7 @@ import AppLogoWebp from "../images/logo.webp";
 import Background from "../images/background.jpg";
 import BackgroundWebp from "../images/background.webp";
 import {useTranslation} from "react-i18next";
-import {FR, GB, CZ, HU, DE, SK} from "country-flag-icons/react/1x1";
+import {FR, GB, CZ, HU, DE, SK, IT} from "country-flag-icons/react/1x1";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -48,6 +48,9 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><DE /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("de")}>
                         Deutsch
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><IT /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("it")}>
+                        Italian
                     </Dropdown.Item>
                 </Dropdown>
 
