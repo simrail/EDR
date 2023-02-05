@@ -86,7 +86,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
         }, 10000);
 
         return () => window.clearInterval(intervalId);
-    }, [])
+    }, [serverTz])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];

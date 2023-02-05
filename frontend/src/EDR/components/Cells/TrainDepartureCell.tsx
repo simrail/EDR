@@ -28,7 +28,7 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
         <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
             <div className="flex items-center justify-start h-full">
                 {ttRow.scheduled_departure}
-                <div className="inline-flex items-center h-full pl-4">
+                <div className="inline-flex items-center h-full pl-4 hidden lg:block">
                     {
                         !trainHasPassedStation && (trainMustDepart ?
                                 <Badge className="animate-pulse duration-1000" color="warning">{t('EDR_TRAINROW_train_departing')}</Badge>

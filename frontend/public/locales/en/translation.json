@@ -58,5 +58,6 @@
   "EDR_UI_dark_light_mode_switch": "Bright / Dark",
   "EDR_UI_filter_train_all": "All trains",
   "EDR_UI_filter_train_online": "Trains on track",
+  "EDR_UI_filter_train_approaching": "Approaching",
   "EDR_UI_train_number": "Train N°"
 }

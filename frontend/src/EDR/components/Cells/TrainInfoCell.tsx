@@ -71,9 +71,9 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig?.icon && <span className="hidden md:block"><img src={trainIcon} height={40} width={94} alt="train-icon"/></span>}
+                        {trainConfig?.icon && <span className="hidden lg:block"><img src={trainIcon} height={40} width={94} alt="train-icon"/></span>}
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-end">
                         {
                             playerSteamInfo?.pseudo
                                 ? <span className="flex items-center"><span className="hidden md:inline">{playerSteamInfo?.pseudo}</span><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" /></span>
@@ -84,19 +84,19 @@ export const TrainInfoCell: React.FC<Props> = ({
             </div>
             <div className="w-full flex flex-col md:flex-row">
                 {  distanceFromStation
-                    ? <div className="inline-flex"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}</span>{distanceFromStation}km&nbsp;<div className="max-w-[50px] md:max-w-full max-h-[1rem]">({trainDetails?.closestStation}</div>)</div>
+                    ? <div className="inline-flex"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}&nbsp;</span>{distanceFromStation}km&nbsp;<div className="max-w-[70px] md:max-w-full max-h-[1rem] overflow-hidden">{trainDetails?.closestStation}</div></div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
                     distanceFromStation
                         ? previousDistance === currentDistance
-                            ? <>&nbsp;{t('EDR_TRAINROW_train_stopped')}</>
+                            ? <>{t('EDR_TRAINROW_train_stopped')}</>
                             : trainHasPassedStation ?
-                                <>&nbsp;{t("EDR_TRAINROW_train_away")}</>
+                                <>{t("EDR_TRAINROW_train_away")}</>
                                 : ETA && Math.round(ETA) < 20
-                                    ? <>&nbsp;- {Math.round(ETA)}{t("EDR_TRAINROW_train_minutes")}</>
-                                    : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('EDR_TRAINROW_train_stopped')}</> : undefined
+                                    ? <>{Math.round(ETA)}{t("EDR_TRAINROW_train_minutes")}</>
+                                    : trainDetails?.TrainData?.Velocity === 0 ? <>{t('EDR_TRAINROW_train_stopped')}</> : undefined
                         : undefined
                 }
             </div>

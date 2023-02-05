@@ -18,7 +18,7 @@ type Props = {
     timetableLength: number;
 
     setFilter: (value: string | undefined) => void;
-    setDisplayMode: (value: "near" | "all") => void;
+    setDisplayMode: (value: "near" | "all" | "approaching") => void;
     setGraphModalOpen: (isOpen: boolean) =>  void;
 }
 
@@ -76,6 +76,7 @@ export const Header: React.FC<Props> = ({
                 <div className="flex mx-4 mb-2">
                     <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetableLength); }}>{t('EDR_UI_filter_train_all') ?? ''}</Button>
                     <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('EDR_UI_filter_train_online') ?? ''}</Button>
+                    <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "approaching" ? "default" : undefined} onClick={() => setDisplayMode("approaching")}>{t('EDR_UI_filter_train_approaching') ?? ''}</Button>
                 </div>
             </div>
             <div>

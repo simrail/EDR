@@ -99,18 +99,19 @@ export const EDRTable: React.FC<Props> = ({
                         ttRow={tr}
                         serverTz={serverTz}
                         post={post}
-                        firstColRef={i === 0 ? headerFirstColRef : null}
-                        secondColRef={i === 0 ? headerSecondColRef : null}
-                        thirdColRef={i ===0 ? headerThirdColRef : null}
-                        headerFourthColRef={i ===0 ? headerFourthColRef : null}
-                        headerFifthColRef={i ===0 ? headerFifthColRef : null}
-                        headerSixthhColRef={i === 0 ? headerSixthhColRef : null}
-                        headerSeventhColRef={i === 0 ? headerSeventhColRef : null}
+                        firstColRef={ headerFirstColRef}
+                        secondColRef={headerSecondColRef}
+                        thirdColRef={headerThirdColRef}
+                        headerFourthColRef={headerFourthColRef}
+                        headerFifthColRef={headerFifthColRef}
+                        headerSixthhColRef={headerSixthhColRef}
+                        headerSeventhColRef={headerSeventhColRef}
                         trainDetails={trainsWithDetails[tr.train_number]}
                         timeOffset={Math.abs(Number.parseInt(format(dt, "HHmm")) - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setModalTrainId}
                         isWebpSupported={isWebpSupported}
+                        showOnlyApproachingTrains={displayMode === "approaching"}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>

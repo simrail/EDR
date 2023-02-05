@@ -7,6 +7,7 @@ export type GraphModalProps = {
     onClose: () => void;
 }
 
+const frameHeight = "h-[300px] md:h-[400px] lg:h-[600px] w-full"
 export const GraphModal: React.FC<GraphModalProps> = ({children, isOpen, onClose}) => (
     <Modal className="z-50" position="bottom-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
         <Modal.Header>
@@ -17,7 +18,7 @@ export const GraphModal: React.FC<GraphModalProps> = ({children, isOpen, onClose
                 }}>Open in new window</Button>
             </div>
         </Modal.Header>
-        <Modal.Body className="h-[600px]">
+        <Modal.Body className={frameHeight}>
             {children}
         </Modal.Body>
     </Modal>
