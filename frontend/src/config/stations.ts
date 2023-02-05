@@ -286,8 +286,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [19.31384974905758, 50.306421359840016],
         graphConfig: {
             pre: ["KZ", "SG"],
-            post: [/*"LZ_LC"*/],
-            final: []
+            post: ["LZ_LC"],
+            final: ["ZA"]
         }
     },
     DOR: {
