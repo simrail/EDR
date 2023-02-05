@@ -70,17 +70,17 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
         </Navbar>
 
         <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
-            <div className="pl-4 pt-4 flex justify-around">
-                <Button size="xs" color="gray" href="https://discord.com/invite/XgJpXpG2Eu">
+            <div className="pl-4 pt-4 flex justify-end mr-16">
+                <Button size="xs" color="gray" className="mx-2" href="https://discord.com/invite/XgJpXpG2Eu">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16}/>&nbsp;Simrail Global</span>
                 </Button>
-                <Button size="xs" color="gray" href="https://simrail.fr/discord">
+                <Button size="xs" color="gray" className="mx-2" href="https://simrail.fr/discord">
                     <span className="inline-flex items-center "><img src={SRFR} height={16} width={16}/>&nbsp;Simrail France</span>
                 </Button>
-                <Button size="xs" color="gray" href="https://discord.gg/DztnvgePXw">
+                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/DztnvgePXw">
                     <span className="inline-flex items-center "><img src={OFPMafia} height={16} width={16}/>&nbsp;OFPMafia</span>
                 </Button>
-                <Button size="xs" color="gray" href="https://discord.gg/A63hJphHQ4">
+                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/A63hJphHQ4">
                     <span className="inline-flex items-center "><img src={SRDE} height={16} width={16}/>&nbsp;Simrail Germany</span>
                 </Button>
             </div>
