@@ -8,7 +8,7 @@ export type GraphModalProps = {
     onClose: () => void;
 }
 
-const frameHeight = "h-[300px] md:h-[400px] lg:h-[600px] w-full"
+const frameHeight = "h-[300px] md:h-[400px] lg:h-[600px] min-w-full"
 export const GraphModal: React.FC<GraphModalProps> = ({children, isOpen, onClose}) => {
     const {t} = useTranslation();
     return (

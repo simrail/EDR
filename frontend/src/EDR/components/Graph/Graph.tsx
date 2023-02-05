@@ -204,7 +204,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) =>
-                            <Line dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
+                            <Line key={t.train_number} dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
                             </Line>
                         )}
                     </LineChart>
