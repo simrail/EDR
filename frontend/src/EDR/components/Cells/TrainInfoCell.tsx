@@ -71,32 +71,29 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig?.icon && <img src={trainConfig.icon} height={50} width={64} alt="train-icon"/>}
+                        {trainConfig?.icon && <span className="hidden md:block"><img src={trainConfig.icon} height={50} width={64} alt="train-icon"/></span>}
                     </div>
                     <div className="flex justify-center">
                         {
-                            !hasEnoughData && trainDetails?.TrainData?.Velocity > 0 && <span>⚠️ {t("EDR_TRAINROW_waiting_for_data")}</span>
-                        }
-                        {
                             playerSteamInfo?.pseudo
-                                ? <span className="flex items-center"><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" />{playerSteamInfo?.pseudo}</span>
+                                ? <span className="flex items-center"><span className="hidden md:inline">{playerSteamInfo?.pseudo}</span><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" /></span>
                                 : <></>
                         }
                     </div>
                 </div>
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-col md:flex-row">
                 {  distanceFromStation
-                    ? <>{t("EDR_TRAINROW_position_at")} {distanceFromStation}km ({trainDetails?.closestStation})</>
+                    ? <div className="inline-flex"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}</span>{distanceFromStation}km&nbsp;<div className="max-w-[50px] md:max-w-full max-h-[1rem]">({trainDetails?.closestStation}</div>)</div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
                     distanceFromStation
                         ? previousDistance === currentDistance
-                            ? <>&nbsp;- {t('EDR_TRAINROW_train_stopped')}</>
+                            ? <>&nbsp;{t('EDR_TRAINROW_train_stopped')}</>
                             : trainHasPassedStation ?
-                                <>&nbsp;- {t("EDR_TRAINROW_train_away")}</>
+                                <>&nbsp;{t("EDR_TRAINROW_train_away")}</>
                                 : ETA && Math.round(ETA) < 20
                                     ? <>&nbsp;- {Math.round(ETA)}{t("EDR_TRAINROW_train_minutes")}</>
                                     : trainDetails?.TrainData?.Velocity === 0 ? <>&nbsp;- {t('EDR_TRAINROW_train_stopped')}</> : undefined
