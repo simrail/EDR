@@ -287,7 +287,7 @@ export const postConfig: {[k: string]: StationConfig} = {
         graphConfig: {
             pre: ["KZ", "SG"],
             post: ["LZ_LC"],
-            final: ["ZA"]
+            final: []
         }
     },
     DOR: {
