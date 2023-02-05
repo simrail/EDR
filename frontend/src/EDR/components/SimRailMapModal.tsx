@@ -16,8 +16,8 @@ export const SimRailMapModal: React.FC<Props> = ({trainId, setModalTrainId, serv
             </div>
         </Modal.Header>
         <Modal.Body>
-            <div className={frameHeight}>
-            <iframe src={`https://www.simrail.fr/server/${serverCode}?trainId=${trainId}`}  title="Simrail FR map embedded" className={frameHeight}/>
+            <div className="min-h-[700px]">
+            <iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainId}`} title="Simrail FR map embedded" className={frameHeight}/>
             </div>
         </Modal.Body>
     </Modal>
