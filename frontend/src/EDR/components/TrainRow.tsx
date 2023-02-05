@@ -33,12 +33,14 @@ type Props = {
     headerSixthhColRef: any,
     headerSeventhColRef: any,
     playSoundNotification: any,
+    isWebpSupported: boolean,
+    showOnlyApproachingTrains: boolean;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification
+        playSoundNotification, isWebpSupported, showOnlyApproachingTrains
     }: Props
 ) => {
     const dateNow = nowUTC(serverTz);
@@ -67,8 +69,13 @@ const TableRow: React.FC<Props> = (
     const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
+    // console.log("EDR", trainDetails);
+
 
     // ETA && console_log("ETA", ETA);
+
+    if (showOnlyApproachingTrains && (trainHasPassedStation || !trainDetails)) return null;
+
     return <Table.Row className="dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
         <TrainInfoCell
             ttRow={ttRow}
@@ -81,6 +88,7 @@ const TableRow: React.FC<Props> = (
             currentDistance={currentDistance}
             previousDistance={previousDistance}
             trainHasPassedStation={trainHasPassedStation}
+            isWebpSupported={isWebpSupported}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

@@ -38,14 +38,14 @@ export const TrainArrivalCell: React.FC<Props> = ({
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
                         ? <span
-                            className="text-red-600 font-bold">{t("edr.train_row.train_late_sign")}{arrivalTimeDelay}</span>
+                            className="text-red-600 font-bold">{t("EDR_TRAINROW_train_late_sign")}{arrivalTimeDelay}</span>
                         : undefined
                 }
 
                 {
                     !trainHasPassedStation && arrivalTimeDelay < 0 && trainDetails
                         ? <span
-                            className="text-green-600 font-bold">{t("edr.train_row.train_early_sign")}{Math.abs(arrivalTimeDelay)}</span>
+                            className="text-green-600 font-bold">{t("EDR_TRAINROW_train_early_sign")}{Math.abs(arrivalTimeDelay)}</span>
                         : undefined
                 }
 
@@ -54,12 +54,12 @@ export const TrainArrivalCell: React.FC<Props> = ({
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0
                         ? <Badge className="animate-pulse duration-1000"
-                                 color="failure">{t('edr.train_row.train_delayed')}</Badge>
+                                 color="failure">{t('EDR_TRAINROW_train_delayed')}</Badge>
                         : undefined
                 }
                 {
                     !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 && trainDetails
-                        ? <Badge className="animate-pulse" color="info">{t('edr.train_row.train_early')}</Badge>
+                        ? <Badge className="animate-pulse" color="info">{t('EDR_TRAINROW_train_early')}</Badge>
                         : undefined
                 }
             </div>

@@ -16,6 +16,8 @@ import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
+import {StringParam, useQueryParam} from "use-query-params";
+import {Graph} from "./components/Graph";
 
 export type TimeTableRow = {
     k: string;
@@ -41,12 +43,13 @@ export type TimeTableRow = {
 
 
 type Props = {
+    isWebpSupported: boolean,
     playSoundNotification: (cb: () => void) => void
 }
 /**
  * This component is responsible to get and batch all the data before it goes downstream to the table
  */
-export const EDR: React.FC<Props> = ({playSoundNotification}) => {
+export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) => {
     const {serverCode, post} = useParams<{
         serverCode: string,
         post: string
@@ -57,10 +60,12 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
     const [trains, setTrains] = React.useState<Train[] | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
+    const [isGraphModalOpen, setGraphModalOpen] = React.useState<boolean>(false);
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
 
     const previousTrains = React.useRef<{ [k: string]: DetailedTrain } | null>(null);
+    const graphFullScreenMode = !!useQueryParam("graphFullScreenMode", StringParam)[0];
 
 
     // Gets raw simrail data
@@ -102,7 +107,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
             getTrains(serverCode).then(setTrains);
         }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
-            enqueueSnackbar(t('app.fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
             return;
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
@@ -125,27 +130,43 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
         redirect("/");
 
     if (!loading && trains && trains.length === 0) {
-        return <Alert className="mt-8" color="error">{t("app.no_trains")}</Alert>
+        return <Alert className="mt-8" color="error">{t("APP_no_trains")}</Alert>
     }
 
     if (!loading && !timetable) {
-        return <Alert color="failure">{t("app.no_timetable")}</Alert>
+        return <Alert color="failure">{t("APP_no_timetable")}</Alert>
     }
 
     if (!loading && !currentStation)
-        return <Alert color="failure">{t("app.station_not_found")}</Alert>
+        return <Alert color="failure">{t("APP_station_not_found")}</Alert>
 
     if (loading)
         return <LoadingScreen timetable={timetable as TimeTableRow[]} trains={trains}
                               stations={stations as Dictionary<Station>}/>
 
-    return <EDRTable playSoundNotification={playSoundNotification}
-                     timetable={timetable!}
-                     serverTz={serverTz}
-                     trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
-                     post={post!}
-                     serverCode={serverCode!}
-    />;
+    return <>
+        {timetable && post && timetable.length && (isGraphModalOpen || graphFullScreenMode)
+            ? <Graph
+                fullScreenMode={graphFullScreenMode}
+                isOpen={isGraphModalOpen}
+                timetable={timetable}
+                post={post} onClose={() =>
+                setGraphModalOpen(false)}
+                serverTz={serverTz}
+            />
+            : null
+        }
+        {!graphFullScreenMode && <EDRTable playSoundNotification={playSoundNotification}
+                timetable={timetable!}
+                serverTz={serverTz}
+                trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
+                post={post!}
+                serverCode={serverCode!}
+                setGraphModalOpen={setGraphModalOpen}
+                isWebpSupported={isWebpSupported}
+            />
+        }
+            </>;
 }
 
 export default EDR;

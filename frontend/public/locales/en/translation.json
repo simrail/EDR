@@ -1,68 +1,64 @@
 {
-  "app": {
-    "fatal_error": "A fatal error occurred, UI will not refresh!",
-    "no_trains": "No trains available! Server is probably restarting.",
-    "no_timetable": "Fatal error: Unable to fetch timetable. server is probably restarting.",
-    "station_not_found": "Fatal error: Station couldn't be found!"
-  },
-  "navbar": {
-    "bugs": "Report bugs"
-  },
-  "select_menu": {
-    "server_selection": "Select Server",
-    "post_select": "Select Dispatching Post"
-  },
-  "footer": {
-    "version": "version",
-    "screenshots_by": "Screenshot by ",
-    "thanks": "Thank you to all beta testers!",
-    "not_official": "This is not an official SimRail app!"
-  },
-  "edr": {
-    "loading": {
-      "main_message": "Loading EDR's data...",
-      "schedules": "Schedules",
-      "stations": "Stations",
-      "trains": "Trains"
-    },
-    "train_row": {
-      "click_to_copy": "Click to copy",
-      "copied": "Copied to clipboard!",
-      "layover": "Layover",
-      "layover_minutes": "min",
-      "line": "Line",
-      "peron": "Peron",
-      "platform": "Platform",
-      "position_at": "at",
-      "train_delayed": "delayed",
-      "train_early": "early",
-      "train_offline": "Not on track",
-      "train_stopped": "stopped",
-      "train_away": "moving away",
-      "train_minutes": " min",
-      "train_eta": "ETA",
-      "train_departing": "departing",
-      "train_early_sign": "-",
-      "train_late_sign": "+",
-      "waiting_for_data":"Waiting for data...",
-      "notify": "Notify departure",
-      "show_on_map": "Show on map"
-    },
-    "train_headers": {
-      "train_number": "Train N°",
-      "train_type": "Train type",
-      "train_arrival_time": "Arrival time",
-      "train_from": "From",
-      "train_stop": "Stop",
-      "train_departure_time": "Departure time",
-      "train_to": "To"
-    },
-    "ui": {
-      "train_number": "Train N°",
-      "close": "Back to Server Selection",
-      "dark_light_mode_switch": "Bright / Dark",
-      "filter_train_all": "All trains",
-      "filter_train_online": "Trains on track"
-    }
-  }
+  "APP_fatal_error": "A fatal error occurred, UI will not refresh!",
+  "APP_no_trains": "No trains available! Server is probably restarting.",
+  "APP_no_timetable": "Fatal error: Unable to fetch timetable. server is probably restarting.",
+  "APP_station_not_found": "Fatal error: Station couldn't be found!",
+
+  "NAVBAR_bugs": "Report bugs",
+
+  "SELECTMENU_server_selection": "Select Server",
+  "SELECTMENU_post_select": "Select Dispatching Post",
+
+  "FOOTER_version": "version",
+  "FOOTER_screenshots_by": "Screenshot by",
+  "FOOTER_thanks": "Thank you to all beta testers!",
+  "FOOTER_not_official": "This is not an official SimRail app!",
+
+  "EDR_LOADING_main_message": "Loading EDR's data...",
+  "EDR_LOADING_schedules": "Schedules",
+  "EDR_LOADING_stations": "Stations",
+  "EDR_LOADING_trains": "Trains",
+
+  "EDR_TRAINROW_click_to_copy": "Click to copy",
+  "EDR_TRAINROW_copied": "Copied to clipboard!",
+  "EDR_TRAINROW_layover": "Layover",
+  "EDR_TRAINROW_layover_minutes": "min",
+  "EDR_TRAINROW_line": "Line",
+  "EDR_TRAINROW_peron": "Peron",
+  "EDR_TRAINROW_platform": "Platform",
+  "EDR_TRAINROW_position_at": "at",
+  "EDR_TRAINROW_train_delayed": "delayed",
+  "EDR_TRAINROW_train_early": "early",
+  "EDR_TRAINROW_train_offline": "Not on track",
+  "EDR_TRAINROW_train_stopped": "stopped",
+  "EDR_TRAINROW_train_away": "moving away",
+  "EDR_TRAINROW_train_minutes": " min",
+  "EDR_TRAINROW_train_eta": "ETA",
+  "EDR_TRAINROW_train_departing": "departing",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data":"Waiting for data...",
+  "EDR_TRAINROW_notify": "Notify departure",
+  "EDR_TRAINROW_show_on_map": "Show on map",
+
+  "EDR_TRAINHEADER_train_number": "Train N°",
+  "EDR_TRAINHEADER_train_type": "Train type",
+  "EDR_TRAINHEADER_train_arrival_time": "Arrival time",
+  "EDR_TRAINHEADER_train_from": "From",
+  "EDR_TRAINHEADER_train_stop": "Stop",
+  "EDR_TRAINHEADER_train_departure_time": "Departure time",
+  "EDR_TRAINHEADER_train_to": "To",
+
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "This graph shows scheduled departure and arrival",
+  "EDR_GRAPH_open_new_window": "Open in new window",
+  "EDR_GRAPH_title": "Dispatcher Graph (Beta)",
+  "EDR_GRAPH_switch_axis": "Switch axis",
+
+  "EDR_UI_close": "Back to Server Selection",
+  "EDR_UI_dark_light_mode_switch": "Bright / Dark",
+  "EDR_UI_filter_train_all": "All trains",
+  "EDR_UI_filter_train_online": "Trains on track",
+  "EDR_UI_filter_train_approaching": "Approaching",
+  "EDR_UI_train_number": "Train N°"
 }

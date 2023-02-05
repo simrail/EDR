@@ -8,7 +8,11 @@ import _sortBy from "lodash/sortBy";
 import {console_log} from "../utils/Logger";
 import { Server } from "@simrail/types";
 
-export const ServerSelect = () => {
+type Props = {
+    isWebpSupported: boolean
+}
+
+export const ServerSelect: React.FC<Props> = ({isWebpSupported}) => {
     const [servers, setServers] = React.useState<Server[] | undefined>();
     const {t, i18n} = useTranslation();
 
@@ -22,7 +26,7 @@ export const ServerSelect = () => {
     });
     console_log("servers: ", servers);
 
-    return <SelectMenuLayout title={t("select_menu.server_selection")}>
+    return <SelectMenuLayout title={t("SELECTMENU_server_selection")} isWebpSupported={isWebpSupported}>
         {
             !orderedServers
                 ? <Spinner/>

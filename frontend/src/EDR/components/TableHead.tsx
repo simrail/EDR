@@ -10,25 +10,25 @@ export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, th
     // console_log("Fourth bou,ds", fourthColBounds)
     return <div className="flex items-center font-bold">
         <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
-            {t('edr.train_headers.train_number')}
+            {t('EDR_TRAINHEADER_train_number')}
         </div>
         <div className={classNames(tableHeadCommonClassName, 'text-center')}  style={{minWidth: secondColBounds.width}}>
-            {t('edr.train_headers.train_type')}
+            {t('EDR_TRAINHEADER_train_type')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: thirdColBounds.width}}>
-            {t('edr.train_headers.train_arrival_time')}
+            {t('EDR_TRAINHEADER_train_arrival_time')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: fourthColBounds.width}}>
-            {t('edr.train_headers.train_from')}
+            {t('EDR_TRAINHEADER_train_from')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: fifthColBounds.width}}>
-        {showStopColumn && t('edr.train_headers.train_stop')}
+        {showStopColumn && t('EDR_TRAINHEADER_train_stop')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: sixthColBounds.width}}>
-            {t('edr.train_headers.train_departure_time')}
+            {t('EDR_TRAINHEADER_train_departure_time')}
         </div>
         <div className={tableHeadCommonClassName} style={{width: seventhColBounds.width}}>
-            {t('edr.train_headers.train_to')}
+            {t('EDR_TRAINHEADER_train_to')}
         </div>
     </div>;
 }

@@ -1,87 +1,113 @@
-import PENDOLINO from "../images/Pendolino.png";
-import EU07_IC from "../images/EU07_IC.png";
-import TRAXX from "../images/TRAXX.png";
-import EN76 from "../images/EN76.png";
-import EN96 from "../images/EN96.png";
-import EU07_CARGO from "../images/EU07_CARGO.png";
-import ET25 from "../images/ET25.png";
+import ED250_PENDOLINO from "../images/trains/png/ED250-Pendolino.png";
+import EU07_IC from "../images/trains/png/EU07_IC.png";
+import E186_TRAXX from "../images/trains/png/E186-TRAXX.png";
+import EN76_006 from "../images/trains/png/EN76-006.png";
+import EN76_022 from "../images/trains/png/EN76-022.png";
+import EN96_001 from "../images/trains/png/EN96-001.png";
+import EP07_135 from '../images/trains/png/EP07-135.png';
+import EU07_CARGO from "../images/trains/png/EU07_CARGO.png";
+import ET25_DRAGON from "../images/trains/png/ET25-Dragon.png";
+import ED250_PENDOLINO_WEBP from "../images/trains/webp/ED250-Pendolino.webp";
+import EU07_IC_WEBP from "../images/trains/webp/EU07_IC.webp";
+import E186_TRAXX_WEBP from "../images/trains/webp/E186-TRAXX.webp";
+import EN76_006_WEBP from "../images/trains/webp/EN76-006.webp";
+import EN76_022_WEBP from "../images/trains/webp/EN76-022.webp";
+import EN96_001_WEBP from "../images/trains/webp/EN96-001.webp";
+import EP07_135_WEBP from '../images/trains/webp/EP07-135.webp';
+import EU07_CARGO_WEBP from "../images/trains/webp/EU07_CARGO.webp";
+import ET25_DRAGON_WEBP from "../images/trains/webp/ET25-Dragon.webp";
 
-export const configByLoco: {[k: string]: {icon: string}} = {
+export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "Pendolino/ED250-018 Variant": {
-        icon: PENDOLINO,
+        icon: ED250_PENDOLINO,
+        iconWebp: ED250_PENDOLINO_WEBP
     },
     "4E/EU07-085": {
-        icon: EU07_IC
+        icon: EU07_IC,
+        iconWebp: EU07_IC_WEBP
     },
     "4E/EP07-135": {
-        icon: EU07_IC,
+        icon: EP07_135,
+        iconWebp: EP07_135_WEBP
     },
     "Traxx/Traxx": {
-        icon: TRAXX,
+        icon: E186_TRAXX,
+        iconWebp: E186_TRAXX_WEBP
     },
     "Traxx/E186-134": {
-        icon: TRAXX,
+        icon: E186_TRAXX,
+        iconWebp: E186_TRAXX_WEBP
     },
     "Elf/EN76-022": {
-        icon: EN76,
+        icon: EN76_022,
+        iconWebp: EN76_022_WEBP
     },
     "Elf/EN76-006": {
-        icon: EN76,
+        icon: EN76_006,
+        iconWebp: EN76_006_WEBP
     },
     "Elf/EN96-001": {
-        icon: EN96,
+        icon: EN96_001,
+        iconWebp: EN96_001_WEBP
     },
     "4E/EU07-096": {
         icon: EU07_CARGO,
+        iconWebp: EU07_CARGO_WEBP
     },
     "4E/4E": {
         icon: EU07_CARGO,
+        iconWebp: EU07_CARGO_WEBP
     },
     "Dragon2/ET25-002": {
-        icon: ET25,
+        icon: ET25_DRAGON,
+        iconWebp: ET25_DRAGON_WEBP
+    },
+    "Dragon2/E6ACTad": {
+        icon: ET25_DRAGON,
+        iconWebp: ET25_DRAGON_WEBP
     }
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF
-export const configByType: {[k: string ]: {color: string, icon: string}} = {
+export const configByType: {[k: string ]: {color: string, graphColor: string}} = {
     "ROJ": {
         color: "success",
-        icon: EN76
+        graphColor: "green",
     },
     "MPE": {
-        icon: EU07_IC,
+        graphColor: "green",
         color: "success"
     },
     "MOJ": {
         color: "success",
-        icon: EN96
+        graphColor: "green",
     },
     "ECE": {
-        icon: EU07_IC,
+        graphColor: "blue",
         color: "success"
     },
     "EIJ": {
         color: "success",
-        icon: PENDOLINO,
+        graphColor: "red",
     },
     "RPJ": {
         color: "success",
-        icon: EN76
+        graphColor: "green",
     },
     "LTE": {
         color: "gray",
-        icon: ET25
+        graphColor: "gray",
     },
     "TME": {
         color: "warning",
-        icon: EU07_CARGO
+        graphColor: "orange",
     },
     "TCE": {
         color: "warning",
-        icon: ET25
+        graphColor: "orange",
     },
     "TLE": {
         color: "warning",
-        icon: EU07_CARGO
+        graphColor: "orange",
     },
 }
 

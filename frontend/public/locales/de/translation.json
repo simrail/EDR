@@ -1,68 +1,55 @@
 {
-  "app": {
-    "fatal_error": "Schwerwiegender Fehler aufgetreten! Benutzeroberfläche wird nicht aktualisiert!",
-    "no_trains": "Keine Züge vorhanden! Server startet wahrscheinlich neu.",
-    "no_timetable": "Schwerer Fehler: Fahrplan kann nicht geladen werden! Server startet wahrscheinlich neu.",
-    "station_not_found": "Schwerer Fehler: Station kann nicht gefunden werden!"
-  },
-  "navbar": {
-    "bugs": "Fehler melden"
-  },
-  "select_menu": {
-    "server_selection": "Server auswählen",
-    "post_select": "Stellwerk auswählen"
-  },
-  "footer": {
-    "version": "Version",
-    "screenshots_by": "Screenshot von ",
-    "thanks": "Danke an alle Beta-Tester!",
-    "not_official": "Dies ist kein offizielles Programm von SimRail!"
-  },
-  "edr": {
-    "loading": {
-      "main_message": "Lade Daten für EDR...",
-      "schedules": "Fahrpläne",
-      "stations": "Stationen",
-      "trains": "Züge"
-    },
-    "train_row": {
-      "click_to_copy": "Click to copy",
-      "copied": "Copied to clipboard!",
-      "layover": "Standzeit",
-      "layover_minutes": " min",
-      "line": "Linie",
-      "peron": "Bahnsteig",
-      "platform": "Plattform",
-      "position_at": "bei",
-      "train_delayed": "verspätet",
-      "train_early": "verfrüht",
-      "train_offline": "Nicht in Betrieb",
-      "train_stopped": "steht",
-      "train_away": "entfernt sich",
-      "train_minutes": " min",
-      "train_eta": "vsl. Ankunft",
-      "train_departing": "abgefahren",
-      "train_early_sign": "-",
-      "train_late_sign": "+",
-      "waiting_for_data": "Warte auf Daten...",
-      "notify": "Bei Abfahrt benachrichtigen",
-      "show_on_map": "Auf Karte anzeigen"
-    },
-    "train_headers": {
-      "train_number": "Zug-Nr.",
-      "train_type": "Zugart",
-      "train_arrival_time": "Ankunftszeit",
-      "train_from": "Von",
-      "train_stop": "Halt",
-      "train_departure_time": "Abfahrtszeit",
-      "train_to": "Nach"
-    },
-    "ui": {
-      "train_number": "Zug-Nr.",
-      "close": "Zurück zur Serverauswahl",
-      "dark_light_mode_switch": "Hell / Dunkel",
-      "filter_train_all": "Alle Züge",
-      "filter_train_online": "Züge in Betrieb"
-    }
-  }
+  "APP_fatal_error": "Schwerwiegender Fehler aufgetreten! Benutzeroberfläche wird nicht aktualisiert!",
+  "APP_no_trains": "Keine Züge vorhanden! Server startet wahrscheinlich neu.",
+  "APP_no_timetable": "Schwerer Fehler: Fahrplan kann nicht geladen werden! Server startet wahrscheinlich neu.",
+  "APP_station_not_found": "Schwerer Fehler: Station kann nicht gefunden werden!",
+
+  "NAVBAR_bugs": "Fehler melden",
+
+  "SELECTMENU_server_selection": "Server auswählen",
+  "SELECTMENU_post_select": "Stellwerk auswählen",
+
+  "FOOTER_version": "Version",
+  "FOOTER_screenshots_by": "Screenshot von",
+  "FOOTER_thanks": "Danke an alle Beta-Tester!",
+  "FOOTER_not_official": "Dies ist kein offizielles Programm von SimRail!",
+
+  "EDR_LOADING_main_message": "Lade Daten für EDR...",
+  "EDR_LOADING_schedules": "Fahrpläne",
+  "EDR_LOADING_stations": "Stationen",
+  "EDR_LOADING_trains": "Züge",
+
+  "EDR_TRAINROW_layover": "Standzeit",
+  "EDR_TRAINROW_layover_minutes": " min",
+  "EDR_TRAINROW_line": "Linie",
+  "EDR_TRAINROW_peron": "Bahnsteig",
+  "EDR_TRAINROW_platform": "Plattform",
+  "EDR_TRAINROW_position_at": "bei",
+  "EDR_TRAINROW_train_delayed": "verspätet",
+  "EDR_TRAINROW_train_early": "verfrüht",
+  "EDR_TRAINROW_train_offline": "Nicht in Betrieb",
+  "EDR_TRAINROW_train_stopped": "steht",
+  "EDR_TRAINROW_train_away": "entfernt sich",
+  "EDR_TRAINROW_train_minutes": " min",
+  "EDR_TRAINROW_train_eta": "vsl. Ankunft",
+  "EDR_TRAINROW_train_departing": "abgefahren",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data": "Warte auf Daten...",
+  "EDR_TRAINROW_notify": "Bei Abfahrt benachrichtigen",
+  "EDR_TRAINROW_show_on_map": "Auf Karte anzeigen",
+
+  "EDR_TRAINHEADER_train_number": "Zug-Nr.",
+  "EDR_TRAINHEADER_train_type": "Zugart",
+  "EDR_TRAINHEADER_train_arrival_time": "Ankunftszeit",
+  "EDR_TRAINHEADER_train_from": "Von",
+  "EDR_TRAINHEADER_train_stop": "Halt",
+  "EDR_TRAINHEADER_train_departure_time": "Abfahrtszeit",
+  "EDR_TRAINHEADER_train_to": "Nach",
+
+  "EDR_UI_train_number": "Zug-Nr.",
+  "EDR_UI_close": "Zurück zur Serverauswahl",
+  "EDR_UI_dark_light_mode_switch": "Hell / Dunkel",
+  "EDR_UI_filter_train_all": "Alle Züge",
+  "EDR_UI_filter_train_online": "Züge in Betrieb"
 }

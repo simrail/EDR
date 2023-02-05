@@ -5,6 +5,7 @@ import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import {useSoundNotification} from "./EDR/hooks/useSoundNotification";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import { SupportsWebp } from './EDR/functions/webp';
 const ServerSelect = React.lazy(() => import("./SelectMenu/ServerSelect"));
 const PostSelect = React.lazy(() => import("./SelectMenu/PostSelect"));
 const EDR = React.lazy(() => import("./EDR"));
@@ -14,6 +15,10 @@ const EDR = React.lazy(() => import("./EDR"));
 // TODO: And after beta add expected delay
 function App() {
     const [SoundNotification, playSoundNotification] = useSoundNotification();
+    let [isWebpSupported, setIsWebpSupported] = React.useState(false);
+    React.useEffect(() => {
+        SupportsWebp().then(result => setIsWebpSupported(result));
+    }, [isWebpSupported]);
 
     return <SnackbarProvider autoHideDuration={3000} maxSnack={3}>
         <Flowbite>
@@ -23,9 +28,9 @@ function App() {
                     <Fragment>
                         <Suspense fallback={<Spinner />}>
                         <Routes>
-                            <Route path="/" element={<ServerSelect />} />
-                            <Route path="/:serverCode" element={<PostSelect />} />
-                            <Route path="/:serverCode/station/:post" element={<EDR playSoundNotification={playSoundNotification} />} />
+                            <Route path="/" element={<ServerSelect isWebpSupported={isWebpSupported} />} />
+                            <Route path="/:serverCode" element={<PostSelect isWebpSupported={isWebpSupported}/>} />
+                            <Route path="/:serverCode/station/:post" element={<EDR playSoundNotification={playSoundNotification} isWebpSupported={isWebpSupported}/>} />
                         </Routes>
                         </Suspense>
                     </Fragment>

@@ -5,6 +5,12 @@ export type StationConfig = {
     srId: string;
     trainPosRange: number;
     platformPosOverride?: [number, number];
+    graphConfig?: {
+        pre: string[],
+        post: string[],
+        final: string[] // N+1 post from what is displayed at the bottom to know if the train is going to KZ
+    }
+    secondaryPosts?: string[]
 }
 
 export const postConfig: {[k: string]: StationConfig} = {
@@ -12,49 +18,90 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "GW",
         srId: "Góra Włodowska",
         trainPosRange: 0.5,
-        platformPosOverride: [19.470318, 50.584134]
+        platformPosOverride: [19.470318, 50.584134],
+        graphConfig: {
+            pre: ["LZ_LC", "ZA"],
+            post: ["PS", "KN"],
+            final: ["WP"]
+        }
     },
     PS: {
         id: "PS",
         srId: "Psary",
         trainPosRange: 0.5,
-        platformPosOverride: [19.820087, 50.735068]
+        platformPosOverride: [19.820087, 50.735068],
+        graphConfig: {
+            pre: ["ZA", "GW"],
+            post: ["KN", "WP"],
+            final: ["OZ"]
+        }
     },
     KN: {
         id: "KN",
         srId: "Knapówka", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [19.9049155, 50.8001411]
+        platformPosOverride: [19.9049155, 50.8001411],
+        graphConfig: {
+            pre: ["GW", "PS"],
+            post: ["WP", "OZ"],
+            final: ["PI"]
+        }
     },
     WP: {
         id: "WP",
         srId: "Włoszczowa Północ",
         trainPosRange: 0.5,
-        platformPosOverride: [19.945774, 50.856198]
+        platformPosOverride: [19.945774, 50.856198],
+        graphConfig: {
+            pre: ["PS", "KN"],
+            post: ["OZ", "PI"],
+            final: ["OP_PO"]
+        }
     },
     OZ: {
         id: "OZ",
         srId: "Olszamowice", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [20.0645106, 51.0955558]
+        platformPosOverride: [20.0645106, 51.0955558],
+        graphConfig: {
+            pre: ["KN", "WP"],
+            post: ["PI", "OP_PO"],
+            final: ["IDZ"]
+        }
+
     },
     PI: {
         id: "PI",
         srId: "Pilichowice", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [20.1210684, 51.2546948]
+        platformPosOverride: [20.1210684, 51.2546948],
+        graphConfig: {
+            pre: ["KN", "WP", "OZ"],
+            post: ["OP_PO"],
+            final: ["IDZ"]
+        }
     },
     KZ: {
         id: "KZ",
         srId: "Katowice Zawodzie",
         trainPosRange: 0.5,
-        platformPosOverride: [19.057551, 50.257280]
+        platformPosOverride: [19.057551, 50.257280],
+        graphConfig: {
+            post: [],
+            pre: ["DG", "T1_BZ", "SG"],
+            final: ["KO"]
+        }
     },
     SG: {
         id: "SG",
         srId: "Sosnowiec Główny",
         trainPosRange: 1,
-        platformPosOverride: [19.1270833, 50.2793889]
+        platformPosOverride: [19.1270833, 50.2793889],
+        graphConfig: {
+            pre: ["LZ_LC", "DG", "T1_BZ"],
+            post: ["KZ"],
+            final: []
+        }
     },
     SG_R52: {
         id: "SG_R52",
@@ -66,7 +113,13 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "SG_PO",
         srId: "Sosnowiec Południowy",
         trainPosRange: 0.5,
-        platformPosOverride: [19.1255985, 50.2695509]
+        platformPosOverride: [19.1255985, 50.2695509],
+        graphConfig: {
+            pre: ["KZ", "SG"],
+            post: ["DG_WZ"],
+            final: []
+        },
+        secondaryPosts: ["SG_RS2"]
     },
     SG_DK: {
         id: "SG_DK",
@@ -91,13 +144,23 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "T1_BZ",
         srId: "Będzin", // TODO: Missing data
         trainPosRange: 0.5,
-        platformPosOverride: [19.1418582, 50.3085335]
+        platformPosOverride: [19.1418582, 50.3085335],
+        graphConfig: {
+            pre: ["LZ_LC", "DG"],
+            post: ["SG", "KZ"],
+            final: []
+        }
     },
     LZ_LC: {
         id: "LZ_LC",
         srId:"Łazy Łc",
         platformPosOverride: [19.362862, 50.416436],
-        trainPosRange: 0.5
+        trainPosRange: 0.5,
+        graphConfig: {
+            pre: ["GW", "ZA"],
+            post: ["DG", "T1_BZ"],
+            final: []
+        }
     },
     LZ: {
         id: "LZ",
@@ -121,7 +184,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "OP_PO",
         srId:"Opoczno Południe",
         trainPosRange: 0.5,
-        platformPosOverride: [20.232192, 51.358965]
+        platformPosOverride: [20.232192, 51.358965],
+        graphConfig: {
+            pre: ["KN", "WP", "OZ", "PI"],
+            post: [],
+            final: ["IDZ"]
+        }
     },
     MY: {
         id: "MY",
@@ -145,7 +213,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "ZA",
         srId:"Zawiercie",
         trainPosRange: 0.5,
-        platformPosOverride: [19.423131, 50.481001]
+        platformPosOverride: [19.423131, 50.481001],
+        graphConfig: {
+            pre: ["PS", "GW"],
+            post: ["LZ_LC","DG" ],
+            final: ["T1_BZ"]
+        }
     },
     WI: {
         id: "WI",
@@ -163,7 +236,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "DG",
         srId: "Dąbrowa Górnicza",
         trainPosRange: 0.5,
-        platformPosOverride: [19.184696, 50.330386]
+        platformPosOverride: [19.184696, 50.330386],
+        graphConfig: {
+            pre: ["ZA", "LZ_LC"],
+            post: ["T1_BZ", "SG"],
+            final: ["KZ"]
+        }
     },
     DG_SI: {
         id: "DG_SI",
@@ -205,7 +283,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "DG_WZ",
         srId: "Dąbrowa Górnicza Wschodnia",
         trainPosRange: 0.5,
-        platformPosOverride: [19.31384974905758, 50.306421359840016]
+        platformPosOverride: [19.31384974905758, 50.306421359840016],
+        graphConfig: {
+            pre: ["KZ", "SG"],
+            post: ["LZ_LC"],
+            final: []
+        }
     },
     DOR: {
         id: "DOR",
