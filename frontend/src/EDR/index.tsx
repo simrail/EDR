@@ -43,12 +43,13 @@ export type TimeTableRow = {
 
 
 type Props = {
+    isWebpSupported: boolean,
     playSoundNotification: (cb: () => void) => void
 }
 /**
  * This component is responsible to get and batch all the data before it goes downstream to the table
  */
-export const EDR: React.FC<Props> = ({playSoundNotification}) => {
+export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) => {
     const {serverCode, post} = useParams<{
         serverCode: string,
         post: string
@@ -77,9 +78,18 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
                 getTrains(serverCode).then((data) => {
                     setTrains(data);
                     setLoading(false);
+                }).catch(() => {
+                    enqueueSnackbar(t('EDR_train_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+                    setTimeout(fetchAllDatas, 5000);
                 });
-            }).catch(() => setTimeout(fetchAllDatas, 5000));
-        }).catch(() => setTimeout(fetchAllDatas, 5000));
+            }).catch(() => {
+                enqueueSnackbar(t('EDR_station_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+                setTimeout(fetchAllDatas, 5000);
+            });
+        }).catch(() => {
+            enqueueSnackbar(t('EDR_timetable_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+            setTimeout(fetchAllDatas, 5000);
+        });
     }
 
     const currentStation = post ? postConfig[post] : undefined;
@@ -156,13 +166,14 @@ export const EDR: React.FC<Props> = ({playSoundNotification}) => {
             : null
         }
         {!graphFullScreenMode && <EDRTable playSoundNotification={playSoundNotification}
-                     timetable={timetable!}
-                     serverTz={serverTz}
-                     trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
-                     post={post!}
-                     serverCode={serverCode!}
-                    setGraphModalOpen={setGraphModalOpen}
-                />
+                timetable={timetable!}
+                serverTz={serverTz}
+                trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
+                post={post!}
+                serverCode={serverCode!}
+                setGraphModalOpen={setGraphModalOpen}
+                isWebpSupported={isWebpSupported}
+            />
         }
             </>;
 }

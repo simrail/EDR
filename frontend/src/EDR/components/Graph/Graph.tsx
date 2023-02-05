@@ -22,6 +22,7 @@ import {PathFinding_FindPathAndHaversineSum, PathFindingLineTrace} from "../../.
 import _sortBy from "lodash/sortBy";
 import {LayoutType} from "recharts/types/util/types";
 import {Button} from "flowbite-react";
+import {useTranslation} from "react-i18next";
 
 export type GraphProps = {
     post: string;
@@ -74,6 +75,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
     const [data, setData] = React.useState<any[]>();
+    const {t} = useTranslation();
     const onlyAnHourAround = React.useMemo(
         () => _keyBy(timetable.filter((ttRow) =>
             Math.abs(ttRow.hourSort - currentHourSort) <= 130 / zoom), "train_number"),
@@ -86,7 +88,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
         }, 10000);
 
         return () => window.clearInterval(intervalId);
-    }, [])
+    }, [serverTz])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
@@ -171,8 +173,10 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
     return (
             <>
                 <div className="text-center inline-flex items-center justify-center w-full">
-                    This graph shows scheduled departure and arrival
-                    <Button className="ml-4" size={'xs'} onClick={() => setDisplayMode(displayMode === "vertical" ? "horizontal" : "vertical")}>Switch axis</Button>
+                    {t("EDR_GRAPH_warning")}
+                    <Button className="ml-4" size={'xs'} onClick={() => setDisplayMode(displayMode === "vertical" ? "horizontal" : "vertical")}>
+                        {t("EDR_GRAPH_switch_axis")}
+                    </Button>
                     <div className="inline-flex ml-8 items-center">
                         <span>Zoom:</span>
                         <Button size="xs" className="ml-1" onClick={() => setZoom(1)}>1x</Button>
@@ -200,7 +204,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) =>
-                            <Line dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
+                            <Line key={t.train_number} dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
                             </Line>
                         )}
                     </LineChart>

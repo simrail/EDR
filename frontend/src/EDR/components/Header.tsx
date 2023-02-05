@@ -18,7 +18,7 @@ type Props = {
     timetableLength: number;
 
     setFilter: (value: string | undefined) => void;
-    setDisplayMode: (value: "near" | "all") => void;
+    setDisplayMode: (value: "near" | "all" | "approaching") => void;
     setGraphModalOpen: (isOpen: boolean) =>  void;
 }
 
@@ -49,6 +49,7 @@ export const Header: React.FC<Props> = ({
     }) => {
     const {t} = useTranslation();
 
+    const [streamMode, setStreamMode] = React.useState(false);
 
     React.useEffect(() =>
         scrollToNearestTrain(timetableLength)
@@ -64,21 +65,25 @@ export const Header: React.FC<Props> = ({
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
-                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 RCS</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>Stream mode</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 {t("EDR_GRAPH_rcs")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>
             </div>
-            <div className="flex items-center w-full px-4 mt-2">
-                <TextInput id="trainNumberFilter" className="w-full mb-2" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
-                <div className="flex mx-4 mb-2">
-                    <Button className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetableLength); }}>{t('EDR_UI_filter_train_all') ?? ''}</Button>
-                    <Button className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('EDR_UI_filter_train_online') ?? ''}</Button>
+            <div className="flex items-center justify-between w-full px-4 mt-2">
+                <TextInput sizing={streamMode ? "sm" : "md"} id="trainNumberFilter" className="mb-2 grow" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
+                <div className="flex ml-4 mb-2">
+                    <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "all" ? "default" : undefined} onClick={() => { setDisplayMode("all"); scrollToNearestTrain(timetableLength); }}>{t('EDR_UI_filter_train_all') ?? ''}</Button>
+                    <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "near" ? "default" : undefined} onClick={() => setDisplayMode("near")}>{t('EDR_UI_filter_train_online') ?? ''}</Button>
+                    <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "approaching" ? "default" : undefined} onClick={() => setDisplayMode("approaching")}>{t('EDR_UI_filter_train_approaching') ?? ''}</Button>
                 </div>
             </div>
             <div>
                 <div>
-                    <TableHead {...bounds} />
+                    {!streamMode &&
+                        <TableHead {...bounds} />
+                    }
                 </div>
             </div>
         </div>
