@@ -14,11 +14,22 @@
   "FOOTER_thanks": "Ďakujeme všetkým beta testerom",
   "FOOTER_not_official": "Toto nieje oficiálna aplikácia SimRail",
 
+  "EDR_train_refresh_failed": "Cannot refresh train data, retrying...",
+  "EDR_station_refresh_failed": "Cannot refresh dispatch posts, retrying...",
+  "EDR_timetable_refresh_failed": "Cannot refresh the timetable, retrying...",
+
   "EDR_LOADING_main_message": "Načítanie dát pre EDR",
   "EDR_LOADING_schedules": "Grafikon",
   "EDR_LOADING_stations": "Stanice",
   "EDR_LOADING_trains": "Vlaky",
 
+  "EDR_TRAINROW_click_to_copy": "Click to copy",
+  "EDR_TRAINROW_copied": "Copied to clipboard!",
+  "EDR_TRAINROW_layover": "Layover",
+  "EDR_TRAINROW_layover_minutes": "min",
+  "EDR_TRAINROW_line": "Line",
+  "EDR_TRAINROW_peron": "Peron",
+  "EDR_TRAINROW_platform": "Platform",
   "EDR_TRAINROW_position_at": "vzd.",
   "EDR_TRAINROW_train_delayed": "Zmeškaný",
   "EDR_TRAINROW_train_early": "Prichádza",
@@ -30,7 +41,9 @@
   "EDR_TRAINROW_train_departing": "Odchod",
   "EDR_TRAINROW_train_early_sign": "-",
   "EDR_TRAINROW_train_late_sign": "+",
-  "EDR_TRAINROW_waiting_for_data": "Čakanie na informácie",
+  "EDR_TRAINROW_waiting_for_data":"Čakanie na informácie",
+  "EDR_TRAINROW_notify": "Notify departure",
+  "EDR_TRAINROW_show_on_map": "Show on map",
 
   "EDR_TRAINHEADER_train_number": "Číslo vlaku",
   "EDR_TRAINHEADER_train_type": "Druh vlaku",
@@ -40,8 +53,16 @@
   "EDR_TRAINHEADER_train_departure_time": "Pravidelný odchod",
   "EDR_TRAINHEADER_train_to": "Smer jazdy",
 
-  "EDR_UI_train_number": "Vlak č.",
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "This graph shows scheduled departure and arrival",
+  "EDR_GRAPH_open_new_window": "Open in new window",
+  "EDR_GRAPH_title": "Dispatcher Graph (Beta)",
+  "EDR_GRAPH_switch_axis": "Switch axis",
+
   "EDR_UI_close": "Späť na výber serverov",
   "EDR_UI_dark_light_mode_switch": "Prepínač Noc/Deň",
-  "EDR_UI_filter_train_all": "Všetky vlaky"
+  "EDR_UI_filter_train_all": "Všetky vlaky",
+  "EDR_UI_filter_train_online": "Online",
+  "EDR_UI_filter_train_approaching": "Approaching",
+  "EDR_UI_train_number": "Vlak č."
 }

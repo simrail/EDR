@@ -14,6 +14,10 @@
   "FOOTER_thanks": "Köszönet a béta verzió tesztelőinek",
   "FOOTER_not_official": "Ez nem egy hivatalos Simrail applikáció",
 
+  "EDR_train_refresh_failed": "Vonatok lekérdezése sikertelen, újrapróbálás...",
+  "EDR_station_refresh_failed": "Állomások lekérdezése sikertelen, újrapróbálás...",
+  "EDR_timetable_refresh_failed": "Menetrendek lekérdezése sikertelen, újrapróbálás...",
+
   "EDR_LOADING_main_message": "Menetrend betöltése",
   "EDR_LOADING_schedules": "Menetrendek",
   "EDR_LOADING_stations": "Állomások",
@@ -48,11 +52,17 @@
   "EDR_TRAINHEADER_train_stop": "Megálló részletek",
   "EDR_TRAINHEADER_train_departure_time": "Indulás ideje",
   "EDR_TRAINHEADER_train_to": "Továbbindul",
-  "EDR_TRAINHEADER_show_on_map": "Térkép",
 
-  "EDR_UI_train_number": "Vonat szám keresés",
+  "EDR_GRAPH_rcs": "Menetdiagram",
+  "EDR_GRAPH_warning": "A menetdiagram a menetrendi érkezéseket és indulásokat mutatja",
+  "EDR_GRAPH_open_new_window": "Megnyitás új ablakban",
+  "EDR_GRAPH_title": "Menetdiagram (béta)",
+  "EDR_GRAPH_switch_axis": "Tengelyek felcserélése",
+
   "EDR_UI_close": "Vissza a kiszolgáló kiválasztásához",
   "EDR_UI_dark_light_mode_switch": "Sötét/Világos téma váltása",
   "EDR_UI_filter_train_all": "Minden vonat",
-  "EDR_UI_filter_train_online": "Most közlekedik"
+  "EDR_UI_filter_train_online": "Most közlekedik",
+  "EDR_UI_filter_train_approaching": "Érkezik",
+  "EDR_UI_train_number": "Vonat szám keresés"
 }
