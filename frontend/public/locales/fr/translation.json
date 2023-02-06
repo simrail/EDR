@@ -14,16 +14,22 @@
   "FOOTER_thanks": "Merci a tous les beta testeurs",
   "FOOTER_not_official": "Ceci n'est pas une application SimRail officielle",
 
+  "EDR_train_refresh_failed": "Impossible de rafraîchir les données des trains. Nouvelle tentative...",
+  "EDR_station_refresh_failed": "Impossible de rafraîchir les données des postes. Nouvelle tentative...",
+  "EDR_timetable_refresh_failed": "Impossible de rafraîchir les horaires. Nouvelle tentative...",
+
   "EDR_LOADING_main_message": "Chargement des données de l'EDR",
   "EDR_LOADING_schedules": "Horaires",
   "EDR_LOADING_stations": "Stations",
   "EDR_LOADING_trains": "Trains",
 
+  "EDR_TRAINROW_click_to_copy": "Copier le numero",
+  "EDR_TRAINROW_copied": "Numero copié!",
   "EDR_TRAINROW_layover": "Halte",
   "EDR_TRAINROW_layover_minutes": "min",
   "EDR_TRAINROW_line": "Line",
-  "EDR_TRAINROW_peron": "Peron",
-  "EDR_TRAINROW_platform": "Platform",
+  "EDR_TRAINROW_peron": "Quai",
+  "EDR_TRAINROW_platform": "Platforme",
   "EDR_TRAINROW_position_at": "à",
   "EDR_TRAINROW_train_delayed": "Retard",
   "EDR_TRAINROW_train_early": "Avance",
@@ -47,9 +53,16 @@
   "EDR_TRAINHEADER_train_departure_time": "Heure depart",
   "EDR_TRAINHEADER_train_to": "Destination",
 
-  "EDR_UI_train_number": "N° de train",
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "Le graphique montre les heures d'arrivées et de depart planifiées",
+  "EDR_GRAPH_open_new_window": "Ouvrir dans une nouvelle fenetre",
+  "EDR_GRAPH_title": "Graphique de régulation (Beta)",
+  "EDR_GRAPH_switch_axis": "Inverser les axes",
+
   "EDR_UI_close": "Retour à la sélection du serveur",
   "EDR_UI_dark_light_mode_switch": "Sombre/Clair",
   "EDR_UI_filter_train_all": "Tous",
-  "EDR_UI_filter_train_online": "En_ligne"
+  "EDR_UI_filter_train_online": "En ligne",
+  "EDR_UI_filter_train_approaching": "En approche",
+  "EDR_UI_train_number": "N° de train"
 }

@@ -14,11 +14,17 @@
   "FOOTER_thanks": "Danke an alle Beta-Tester!",
   "FOOTER_not_official": "Dies ist kein offizielles Programm von SimRail!",
 
+  "EDR_train_refresh_failed": "Zug-Daten können nicht aktualisiert werden, versuche erneut...",
+  "EDR_station_refresh_failed": "Stellwerke können nicht aktualisiert werden, versuche erneut...",
+  "EDR_timetable_refresh_failed": "Fahrpläne können nicht aktualisiert werden, versuche erneut...",
+
   "EDR_LOADING_main_message": "Lade Daten für EDR...",
   "EDR_LOADING_schedules": "Fahrpläne",
   "EDR_LOADING_stations": "Stationen",
   "EDR_LOADING_trains": "Züge",
 
+  "EDR_TRAINROW_click_to_copy": "Zum kopieren klicken",
+  "EDR_TRAINROW_copied": "In Zwischenablage kopiert!",
   "EDR_TRAINROW_layover": "Standzeit",
   "EDR_TRAINROW_layover_minutes": " min",
   "EDR_TRAINROW_line": "Linie",
@@ -35,7 +41,7 @@
   "EDR_TRAINROW_train_departing": "abgefahren",
   "EDR_TRAINROW_train_early_sign": "-",
   "EDR_TRAINROW_train_late_sign": "+",
-  "EDR_TRAINROW_waiting_for_data": "Warte auf Daten...",
+  "EDR_TRAINROW_waiting_for_data":"Warte auf Daten...",
   "EDR_TRAINROW_notify": "Bei Abfahrt benachrichtigen",
   "EDR_TRAINROW_show_on_map": "Auf Karte anzeigen",
 
@@ -47,9 +53,16 @@
   "EDR_TRAINHEADER_train_departure_time": "Abfahrtszeit",
   "EDR_TRAINHEADER_train_to": "Nach",
 
-  "EDR_UI_train_number": "Zug-Nr.",
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "Dieser Graph zeigt die geplante Abfahrts- und Ankunftszeit",
+  "EDR_GRAPH_open_new_window": "In neuem Fenster öffnen",
+  "EDR_GRAPH_title": "FDL Graph (Beta)",
+  "EDR_GRAPH_switch_axis": "Achsen tauschen",
+
   "EDR_UI_close": "Zurück zur Serverauswahl",
   "EDR_UI_dark_light_mode_switch": "Hell / Dunkel",
   "EDR_UI_filter_train_all": "Alle Züge",
-  "EDR_UI_filter_train_online": "Züge in Betrieb"
+  "EDR_UI_filter_train_online": "Züge in Betrieb",
+  "EDR_UI_filter_train_approaching": "Ankommend",
+  "EDR_UI_train_number": "Zug-Nr."
 }

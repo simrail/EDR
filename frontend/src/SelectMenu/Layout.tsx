@@ -6,7 +6,7 @@ import AppLogoWebp from "../images/logo.webp";
 import Background from "../images/background.jpg";
 import BackgroundWebp from "../images/background.webp";
 import {useTranslation} from "react-i18next";
-import {FR, GB, CZ, HU, DE, SK, IT} from "country-flag-icons/react/1x1";
+import {FR, GB, CZ, HU, DE, SK, IT, CN} from "country-flag-icons/react/1x1";
 
 import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
@@ -43,7 +43,7 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                     <Dropdown.Item icon={() => <DropdownFlagIcon><GB /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("en")}>
                         English
                     </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><CZ /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cs")}>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><CZ /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cz")}>
                         Czech
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><SK /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("sk")}>
@@ -57,6 +57,9 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><IT /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("it")}>
                         Italian
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><CN /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cn")}>
+                        Chinese
                     </Dropdown.Item>
                 </Dropdown>
 

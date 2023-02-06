@@ -1,0 +1,68 @@
+{
+  "APP_fatal_error": "发生致命错误，UI无法刷新！",
+  "APP_no_trains": "当前没有列车！服务器可能正在重启。",
+  "APP_no_timetable": "致命错误：无法获取时刻表，服务器可能正在重启。",
+  "APP_station_not_found": "致命错误：无法找到车站！",
+
+  "NAVBAR_bugs": "报告Bug",
+
+  "SELECTMENU_server_selection": "选择服务器",
+  "SELECTMENU_post_select": "选择您调度的车站",
+
+  "FOOTER_version": "版本号",
+  "FOOTER_screenshots_by": "截图提供：",
+  "FOOTER_thanks": "感谢所有测试玩家！",
+  "FOOTER_not_official": "这不是Simrail的官方app！",
+
+  "EDR_train_refresh_failed": "无法更新列车数据，正在重试......",
+  "EDR_station_refresh_failed": "无法更新调度车站情况，正在重试......",
+  "EDR_timetable_refresh_failed": "无法更新时刻表，正在重试......",
+
+  "EDR_LOADING_main_message": "加载EDR数据......",
+  "EDR_LOADING_schedules": "时刻表",
+  "EDR_LOADING_stations": "车站",
+  "EDR_LOADING_trains": "列车",
+
+  "EDR_TRAINROW_click_to_copy": "点击复制",
+  "EDR_TRAINROW_copied": "内容已复制到剪贴板！",
+  "EDR_TRAINROW_layover": "停车时间",
+  "EDR_TRAINROW_layover_minutes": "分",
+  "EDR_TRAINROW_line": "线路号",
+  "EDR_TRAINROW_peron": "站台",
+  "EDR_TRAINROW_platform": "站台",
+  "EDR_TRAINROW_position_at": "在",
+  "EDR_TRAINROW_train_delayed": "晚点",
+  "EDR_TRAINROW_train_early": "早点",
+  "EDR_TRAINROW_train_offline": "不在轨道上",
+  "EDR_TRAINROW_train_stopped": "已停车",
+  "EDR_TRAINROW_train_away": "行驶中",
+  "EDR_TRAINROW_train_minutes": "分",
+  "EDR_TRAINROW_train_eta": "ETA",
+  "EDR_TRAINROW_train_departing": "正在出站",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data":"等待数据接收完毕......",
+  "EDR_TRAINROW_notify": "发车提醒",
+  "EDR_TRAINROW_show_on_map": "在地图上显示",
+
+  "EDR_TRAINHEADER_train_number": "列车车次",
+  "EDR_TRAINHEADER_train_type": "列车种类",
+  "EDR_TRAINHEADER_train_arrival_time": "到站时间",
+  "EDR_TRAINHEADER_train_from": "从",
+  "EDR_TRAINHEADER_train_stop": "停车",
+  "EDR_TRAINHEADER_train_departure_time": "发车时间",
+  "EDR_TRAINHEADER_train_to": "去",
+
+  "EDR_GRAPH_rcs": "运行图",
+  "EDR_GRAPH_warning": "本图表为列车正常运行图",
+  "EDR_GRAPH_open_new_window": "在新窗口中打开",
+  "EDR_GRAPH_title": "列车运行图(Beta)",
+  "EDR_GRAPH_switch_axis": "切换坐标轴",
+
+  "EDR_UI_close": "返回选择服务器页面",
+  "EDR_UI_dark_light_mode_switch": "日间/夜间模式",
+  "EDR_UI_filter_train_all": "所有列车",
+  "EDR_UI_filter_train_online": "在线路上的列车",
+  "EDR_UI_filter_train_approaching": "接近列车",
+  "EDR_UI_train_number": "列车车次"
+}
