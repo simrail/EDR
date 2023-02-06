@@ -11,6 +11,7 @@ import {FR, GB, CZ, HU, DE, SK, IT, CN} from "country-flag-icons/react/1x1";
 import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
 import SRFR from "../images/communities/srfr.png";
+import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button} from "flowbite-react";
 
@@ -85,6 +86,12 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                 </Button>
                 <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/A63hJphHQ4">
                     <span className="inline-flex items-center "><img src={SRDE} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Germany</span>
+                </Button>
+                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/5cdpDv2nT8">
+                    <span className="inline-flex items-center "><img src={SRIT} height={16} width={16} alt="Community logo"/>&nbsp;Simrail ITA</span>
+                </Button>
+                <Button size="xs" color="gray" className="mx-2">
+                    <span className="inline-flex items-center "><CN height={16} width={16}/>&nbsp;CN-BX-3N</span>
                 </Button>
             </div>
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
