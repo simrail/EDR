@@ -30,10 +30,11 @@ type Props = {
     ttRow: TimeTableRow;
     headerFifthColRef: any;
     secondaryPostData: TimeTableRow[];
+    streamMode: boolean;
 }
 
-export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData}) => {
-    return <td className={tableCellCommonClassnames} ref={headerFifthColRef}>
+export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData, streamMode}) => {
+    return <td className={tableCellCommonClassnames(streamMode)} ref={headerFifthColRef}>
         <PlatformData ttRow={ttRow} />
         { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr /><PlatformData ttRow={spd} /></span>)}
     </td>

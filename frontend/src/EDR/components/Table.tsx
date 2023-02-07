@@ -40,6 +40,7 @@ export const EDRTable: React.FC<Props> = ({
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
+    const [streamMode, setStreamMode] = React.useState(false);
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
@@ -77,6 +78,8 @@ export const EDRTable: React.FC<Props> = ({
             setFilter={setFilter}
             setDisplayMode={setDisplayMode}
             setGraphModalOpen={setGraphModalOpen}
+            streamMode={streamMode}
+            setStreamMode={setStreamMode}
         />
         <div>
             <Table striped={true}>
@@ -112,6 +115,7 @@ export const EDRTable: React.FC<Props> = ({
                         setModalTrainId={setModalTrainId}
                         isWebpSupported={isWebpSupported}
                         showOnlyApproachingTrains={displayMode === "approaching"}
+                        streamMode={streamMode}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>

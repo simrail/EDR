@@ -9,6 +9,7 @@ import {TimeTableRow} from "../../index";
 import { DetailedTrain } from "../../functions/trainDetails";
 import {configByLoco} from "../../../config/trains";
 import Tooltip from "rc-tooltip";
+import classNames from "classnames";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
     if (!controlledBy) {
@@ -35,11 +36,12 @@ type Props = {
     previousDistance: number | undefined;
     trainHasPassedStation: boolean;
     isWebpSupported: boolean;
+    streamMode: boolean;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, hasEnoughData, trainBadgeColor,
        distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef, isWebpSupported
+       setModalTrainId, firstColRef, isWebpSupported, streamMode
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -57,26 +59,30 @@ export const TrainInfoCell: React.FC<Props> = ({
     }
 
     return (
-        <td className={tableCellCommonClassnames} ref={firstColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef}>
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
-                        <Badge color={trainBadgeColor} size="sm"><span className="!font-bold text-lg cursor-pointer" onClick={() => CopyToClipboard(ttRow.train_number)}>{ttRow.train_number}</span></Badge>
+                        <Badge color={trainBadgeColor} size={streamMode ? "xs" : "sm"}>
+                            <span className={classNames("!font-bold cursor-pointer", streamMode ? "text-base" : "text-lg")} onClick={() => CopyToClipboard(ttRow.train_number)}>
+                                {ttRow.train_number}
+                            </span>
+                        </Badge>
                     </Tooltip>
                     { trainDetails && <span className="ml-2">
                         <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
-                            <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={16} width={16} alt="Show on map"/></Button>
+                            <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>
                         </Tooltip>
                     </span> }
                 </div>
                 <div className="flex md:inline">
                     <div className="flex justify-end">
-                        {trainConfig?.icon && <span className="hidden lg:block"><img src={trainIcon} height={40} width={94} alt="train-icon"/></span>}
+                        {trainConfig?.icon && <span className="hidden lg:block"><img src={trainIcon} height={streamMode ? 30 : 40} width={streamMode ? 52 : 94} alt="train-icon"/></span>}
                     </div>
                     <div className="flex justify-end">
                         {
                             playerSteamInfo?.pseudo
-                                ? <span className="flex items-center"><span className="hidden md:inline">{playerSteamInfo?.pseudo}</span><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" /></span>
+                                ? <span className="flex items-center"><span className="hidden md:inline">{streamMode ? '' : playerSteamInfo?.pseudo}</span><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" /></span>
                                 : <></>
                         }
                     </div>
