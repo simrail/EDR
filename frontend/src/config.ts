@@ -137,7 +137,7 @@ export const serverTzMap: {[k: string]: string} = {
     DE5: 'Europe/Paris',
     HU1: 'Europe/Paris',
     UA1: 'Europe/Paris',
-    ES1: 'Europe/London',
+    ES1: 'Europe/Paris',
     ES2: 'America/Argentina/Buenos_Aires',
     EN1: 'Europe/London',
     EN2: 'America/New_York',
