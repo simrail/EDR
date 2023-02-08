@@ -26,6 +26,7 @@ app
     .get("/dispatch/:post", dispatchController)
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
+    .get("/updater/:platform/:current_version",)
 app.listen(8080)
 
 console.log("🚆 Simrail Community EDR backend v1.0");
