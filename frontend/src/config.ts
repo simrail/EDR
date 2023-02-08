@@ -145,6 +145,7 @@ export const serverTzMap: {[k: string]: string} = {
     EN4: 'America/Vancouver',
     EN5: 'America/New_York',
     EN6: 'Asia/Sakhalin',
+    EN7: 'Europe/London',
     EN8: 'Asia/Sakhalin',
     EN9: 'Europe/Paris',
     IT1: 'Europe/Paris',
