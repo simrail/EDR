@@ -20,6 +20,8 @@ pgClient.connect((err) => {
     }
 })
 
+global.pgClient = pgClient;
+
 const isStationInDatabase = (stationName) => {
     return pgClient.query("SELECT * from stations WHERE name=$1", [stationName])
         .then((v) => v.rows.length > 0)

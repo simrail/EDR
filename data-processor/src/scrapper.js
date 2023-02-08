@@ -81,7 +81,7 @@ const parseTimetable = (sr) => {
                 departure_date: departureDate,
                 arrival_time: arrivalTime,
                 departure_time: departureTime,
-                hourSort: Number.parseInt(`${row.scheduled_arrival.split(':')[0]}${row.scheduled_arrival.split(':')[1]}`)
+                hourSort: Number.parseInt(`${arrivalTime.split(':')[0]}${arrivalTime.split(':')[1]}`)
             }
         })
     return batchedRows;
@@ -114,7 +114,7 @@ async function scrapMap() {
 
     const res = parseTimetable(htmlContent);
 
-    // console.log("Response : ", res);
+    console.log("Response : ", res);
 
     // Getting all train timetables of the station
     console.log("🦀 Waiting for Blazor");
@@ -125,6 +125,7 @@ async function scrapMap() {
 
     let allTrainNumbers = res.map((trainRow) => trainRow.train_number);
 
+    await insertPartialTimetableInDb(res, 1);
     console.log("📅 Partial timetable was saved in DB", new Date());
 
     console.log("⌛ Preparing to scrap trains : ", allTrainNumbers)
@@ -160,3 +161,69 @@ async function scrapMap() {
 module.exports = {
     scrapMap
 };
+
+
+// DB
+
+async function insertPartialTimetableInDb(partialTimetableJson, simrailEDRStationId) {
+    const conn = global.pgClient;
+
+    return Promise.all(partialTimetableJson.map(async (trainRow) => {
+        try {
+            const dataBaseRow = await conn.query(
+                "SELECT * FROM stations_timetable_row WHERE simrail_new_edr_station_id=$1 AND train_number=$2",
+                [simrailEDRStationId.toString(), trainRow.train_number]
+            ).then((r) => r.rows?.[0]);
+
+            console.log("Data row : ", dataBaseRow);
+
+            if (dataBaseRow) {
+                console.log("Cached row : ", dataBaseRow);
+            } else {
+                // console.log("To cache row : ", trainRow);
+                return await pgClient.query(`INSERT INTO stations_timetable_row (
+                    simrail_new_edr_station_id,
+                    train_number,
+                    train_type,
+                    type_speed,
+                    stop_type,
+                    platform,
+                    arrival_time,
+                    departure_time,
+                    arrival_date,
+                    departure_date,
+                    from_post,
+                    to_post,
+                    line,
+                    start_station,
+                    terminus_station,
+                    cacheDate
+                ) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`, [
+                    simrailEDRStationId,
+                    trainRow.train_number,
+                    trainRow.type,
+                    trainRow.type_speed,
+                    trainRow.stop_type,
+                    trainRow.platform,
+                    trainRow.arrival_time,
+                    trainRow.departure_date,
+                    trainRow.arrival_date,
+                    trainRow.departure_date,
+                    trainRow.from,
+                    trainRow.to,
+                    trainRow.line,
+                    trainRow.start_station,
+                    trainRow.terminus_station,
+                    new Date()
+                ])
+            }
+
+        } catch (e) {
+            // console.error("Error inserting a row ! ", {
+            //     row: trainRow,
+            //     error: e
+            // });
+        }
+    }));
+}
