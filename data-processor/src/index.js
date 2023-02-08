@@ -16,7 +16,7 @@ pgClient.connect((err) => {
         console.error("Unable to connect to postgresql instance !")
         console.error(err);
     } else {
-        console.log("Connected to PostGresql !");
+        console.log("Connected to Postgres [DOCKER DEV] !");
     }
 })
 
@@ -59,6 +59,6 @@ scrapMap();
 app.listen(8080)
 
 process.on('exit', () => {
-    console.log("Closing PG connection. Bye bye !\n");
-    pgClient.close();
+    console.log("Closing DB connection. Bye bye !\n");
+    pgClient.end();
 })

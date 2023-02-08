@@ -1,17 +1,466 @@
-<div id="timetableTableHolder" style="max-height:760px;" tabindex="0"><table style="width:100%;" id="timetableTable" class="timetableTable"><thead><tr><th style="width:75px;" class="violet"><!--!-->Sched. arrival</th><!--!-->
-    <th style="width:45px;" class="gold"><!--!-->Hour</th><!--!-->
-    <th style="width:75px;" class="violet"><!--!-->Real arrival</th><!--!-->
-    <th style="width:45px;" class="gold"><!--!-->Hour</th><!--!-->
-    <!--!--><th style="width:45px;" class="violet">+/-</th>
-    <th style="width:35px;" class="violet"><!--!-->C</th><!--!-->
-    <th style="width:200px;" class="violet"><!--!-->Station</th><!--!-->
-    <th style="width:65px;" class="gray"><!--!-->Layover</th><!--!-->
-    <th style="width:65px;" class="gray"><!--!-->Stop type</th><!--!-->
-    <th style="width:75px;" class="violet"><!--!-->Shed. departure</th><!--!-->
-    <th style="width:45px;" class="gold"><!--!-->Hour</th><!--!-->
-    <th style="width:75px;" class="violet"><!--!-->Real departure</th><!--!-->
-    <th style="width:45px;" class="gold"><!--!-->Hour</th><!--!-->
-    <!--!--><th style="width:45px;" class="violet">+/-</th>
-    <th style="width:55px;" class="green"><!--!-->Type</th><!--!-->
-    <th style="width:55px;" class="violet"><!--!-->Line no.</th></tr></thead><!--!-->
-    <tbody></tbody></table></div></div></div></div></div>
+<thead>
+<tr>
+    <th style="width:25px;" class="violet">K</th>
+    <th style="width:25px;" class="violet">N <br>K </th>
+    <th style="width:110px;" class="gold">Scheduled <br>arrival </th>
+    <th style="width:45px;" class="red">+/-</th>
+    <th style="width:110px;" class="gold">Real <br>arrival </th>
+    <th style="width:55px;" class="red">Type</th>
+    <th style="width:70px;" class="lightBlue">Train no.</th>
+    <th style="width:200px;" class="lightBlue">From post</th>
+    <th style="width:70px;" class="green">Train no.</th>
+    <th style="width:200px;" class="green">To post</th>
+    <th style="width:40px;" class="gray">L</th>
+    <th style="width:60px" class="yellow">Line no.</th>
+    <th style="width:80px" class="gray">Layover</th>
+    <th style="width:70px" class="gray">Stop type</th>
+    <th style="width:50px" class="blue">P T</th>
+    <th style="width:110px" class="gold">Scheduled <br>departure </th>
+    <th style="width:45px" class="red">+/-</th>
+    <th style="width:110px" class="gold">Real <br>departure </th>
+    <th style="width:150px" class="darkBlue">Start station</th>
+    <th style="width:150px" class="darkBlue">Terminus station</th>
+</tr>
+</thead>
+<tbody>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:23</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:23</td>
+    <td class="defaultColor">ECE</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">41100</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:23</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:23</td>
+    <td class="defaultColor">Bohumin Vrbice</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:27</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:27</td>
+    <td class="defaultColor">MPE</td>
+    <td class="gray fontBold">24103</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:27</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:27</td>
+    <td class="defaultColor">Kielce</td>
+    <td class="defaultColor">Gliwice</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:34</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:34</td>
+    <td class="defaultColor">TLE</td>
+    <td class="gray fontBold">447033</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górn. Ząbkowice DZA R.4/7</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">160</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:34</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:34</td>
+    <td class="defaultColor">Częstochowa Towarowa</td>
+    <td class="defaultColor">Tychy</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:43</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:43</td>
+    <td class="defaultColor">ECE</td>
+    <td class="gray fontBold">14147</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:43</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:43</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+    <td class="defaultColor">Bohumin</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:45</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:45</td>
+    <td class="defaultColor">ROJ</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">40652</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:45</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:45</td>
+    <td class="defaultColor">Tychy Lodowisko</td>
+    <td class="defaultColor">Częstochowa</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:48</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:48</td>
+    <td class="defaultColor">TME</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">644056</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">186</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:48</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:48</td>
+    <td class="defaultColor">Opole Groszowice</td>
+    <td class="defaultColor">Rudniki koło Częstochowy</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:54</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:54</td>
+    <td class="defaultColor">EIJ</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">4102</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:54</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:54</td>
+    <td class="defaultColor">Gliwice</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:56</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:56</td>
+    <td class="defaultColor">LTE</td>
+    <td class="gray fontBold">242203</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">160</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:56</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:56</td>
+    <td class="defaultColor">Włoszczowa</td>
+    <td class="defaultColor">Chorzów Batory</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">MPE</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">42104</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">Gliwice</td>
+    <td class="defaultColor">Kielce</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">RPJ</td>
+    <td class="gray fontBold">40105</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 02:57</td>
+    <td class="defaultColor">Częstochowa</td>
+    <td class="defaultColor">Tychy Lodowisko</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow selectedRowByTime selectedRowDrivingThrough">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:05</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:05</td>
+    <td class="defaultColor">TCE</td>
+    <td class="gray fontBold">245023</td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="skin"></td>
+    <td class="skin fontBoldSelected fontRed">186</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:05</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:05</td>
+    <td class="defaultColor">Jędrzejów</td>
+    <td class="defaultColor">Częstochowa Towarowa</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:08</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:08</td>
+    <td class="defaultColor">ROJ</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">40152</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:08</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:08</td>
+    <td class="defaultColor">Gliwice</td>
+    <td class="defaultColor">Częstochowa</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:11</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:11</td>
+    <td class="defaultColor">EIJ</td>
+    <td class="gray fontBold">1403</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:11</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:11</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+    <td class="defaultColor">Gliwice</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:15</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:15</td>
+    <td class="defaultColor">TME</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold">421024</td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górn. Ząbkowice DZA R.4/7</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">160</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:15</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:15</td>
+    <td class="defaultColor">Częstochowa Towarowa</td>
+    <td class="defaultColor">Jędrzejów</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">ROJ</td>
+    <td class="gray fontBold">40605</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">Częstochowa</td>
+    <td class="defaultColor">Gliwice</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">TME</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">444024</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">186</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:20</td>
+    <td class="defaultColor">KATOWICE MUCHOWIEC STASZIC</td>
+    <td class="defaultColor">Widzów Teklinów</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:23</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:23</td>
+    <td class="defaultColor">ECE</td>
+    <td class="gray fontBold"></td>
+    <td class="gray">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="green fontBold">41102</td>
+    <td class="skin fontBoldSelected fontRed">Łazy</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:23</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:23</td>
+    <td class="defaultColor">Bohumin Vrbice</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:27</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:27</td>
+    <td class="defaultColor">MPE</td>
+    <td class="gray fontBold">24105</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:27</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:27</td>
+    <td class="defaultColor">Kielce</td>
+    <td class="defaultColor">Gliwice</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:34</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:34</td>
+    <td class="defaultColor">TLE</td>
+    <td class="gray fontBold">447035</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górn. Ząbkowice DZA R.4/7</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">160</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:34</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:34</td>
+    <td class="defaultColor">Częstochowa Towarowa</td>
+    <td class="defaultColor">Tychy</td>
+</tr>
+<tr oncontextmenu="blazorContextMenu.OnContextMenu(event, 'myMenu', true);" class="timetableRow">
+    <td class="defaultColor">☑</td>
+    <td class="defaultColor"></td>
+    <td class="defaultColor">08-12 03:43</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:43</td>
+    <td class="defaultColor">ECE</td>
+    <td class="gray fontBold">14101</td>
+    <td class="gray">Łazy</td>
+    <td class="green fontBold"></td>
+    <td class="skin fontBoldSelected fontRed">Dąbrowa Górnicza Ząbkowice DZA</td>
+    <td class="lightGray"></td>
+    <td class="skin fontBoldSelected fontRed">1</td>
+    <td class="emptySkin">0.0</td>
+    <td class="emptySkin"></td>
+    <td class="nightBlue"></td>
+    <td class="defaultColor">08-12 03:43</td>
+    <td class="defaultColor">0</td>
+    <td class="defaultColor">08-12 03:43</td>
+    <td class="defaultColor">Warszawa Grochów</td>
+    <td class="defaultColor">Bohumin</td>
+</tr>
+</tbody>
