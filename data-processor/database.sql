@@ -25,3 +25,4 @@ CREATE TABLE IF NOT EXISTS stations_timetable_row (
 
 ALTER TABLE stations_timetable_row ADD CONSTRAINT stations_timetable_row_pk PRIMARY KEY (train_number, simrail_new_edr_station_id);
 CREATE INDEX stations_timetable_row_simrail_new_edr_station_id ON stations_timetable_row (simrail_new_edr_station_id);
+CREATE INDEX stations_timetable_row_simrail_new_departure_date ON stations_timetable_row (simrail_new_edr_station_id);
