@@ -6,6 +6,7 @@ const Logger = morgan('short');
 
 import { dispatchController } from "./dispatchController";
 import {getPlayer, getServerList, getStationsList, getTrainsList} from "./serverController";
+import {checkupdate} from "./updaterController";
 
 const corsConfig = {
     allowedHeaders: "x-debug",
@@ -26,7 +27,7 @@ app
     .get("/dispatch/:post", dispatchController)
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
-    .get("/updater/:platform/:current_version",)
+    .get("/updater/:platform/:current_version",(req, res)=>checkupdate(req, res))
 app.listen(8080)
 
 console.log("🚆 Simrail Community EDR backend v1.0");
