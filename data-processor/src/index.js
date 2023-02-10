@@ -69,6 +69,9 @@ const fn = async () => {
         } catch (e) {
             console.error("Scrapping failed ", new Date());
             console.error("Scrapping failed ", e)
+            if (global.scrapBrowser) {
+                await global.scrapBrowser.close();
+            }
         }
     }
 }
