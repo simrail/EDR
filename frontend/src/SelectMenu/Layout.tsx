@@ -75,6 +75,9 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
 
         <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
             <div className="pl-4 pt-4 flex justify-end mr-16">
+                <Button size="xs" color="gray" className="mx-2" href="https://forum.simrail.eu/">
+                    <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Official</span>
+                </Button>
                 <Button size="xs" color="gray" className="mx-2" href="https://discord.com/invite/XgJpXpG2Eu">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Global</span>
                 </Button>
@@ -82,7 +85,7 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                     <span className="inline-flex items-center "><img src={SRFR} height={16} width={16} alt="Community logo"/>&nbsp;Simrail France</span>
                 </Button>
                 <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/DztnvgePXw">
-                    <span className="inline-flex items-center "><img src={OFPMafia} height={16} width={16} alt="Community logo"/>&nbsp;OFPMafia</span>
+                    <span className="inline-flex items-center "><img src={OFPMafia} height={16} width={16} alt="Community logo"/>&nbsp;OFPMafia CZ/SK</span>
                 </Button>
                 <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/A63hJphHQ4">
                     <span className="inline-flex items-center "><img src={SRDE} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Germany</span>
