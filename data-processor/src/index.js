@@ -4,6 +4,8 @@ const express = require("express");
 const {scrapMap} = require("./scrapper");
 const app = express();
 
+const SR_STATIONS_IDS = [3991, 124, 2375]
+
 const pgClient = new pg.Client({
     host: "127.0.0.1",
     user: "postgres",
@@ -56,7 +58,25 @@ function processPost(req, res) {
 
 app.get("/process/stations", processStations)
 
-scrapMap();
+const fn = async () => {
+    for (let i = 0; i < SR_STATIONS_IDS.length - 1; i++) {
+        try {
+            console.log("Scrapping starting ", new Date());
+            await scrapMap("stations", SR_STATIONS_IDS[i]);
+            console.log("Stations finished ", new Date());
+            await scrapMap("trains", SR_STATIONS_IDS[i]);
+            console.log("Trains finished ", new Date());
+        } catch (e) {
+            console.error("Scrapping failed ", new Date());
+            console.error("Scrapping failed ", e)
+        }
+    }
+}
+
+const mainInterval = setInterval(fn, (1800 / 2) * 1000)
+
+fn();
+// scrapMap();
 
 app.listen(8080)
 
