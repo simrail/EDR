@@ -4,9 +4,11 @@ import axios from "axios";
 interface release_response_interface {
     version: string;
     notes: string;
-    pub_date: string;
+   // pub_date: string;
     url: string | any;
-    signature: string | any;
+    signature: string ;
+
+    error: string | any
 }
 
 let platforms =
@@ -24,7 +26,7 @@ let platforms =
            "extensions" :"app.tar.gz"
        },
        {
-           "name"  :"windows-x86_64",
+           "name"  :"windows",
            "extensions" :"x64_en-US.msi.zip"
        }
     ]
@@ -33,7 +35,11 @@ export async function checkupdate(req: express.Request, res: express.Response) {
     const platform = req.params.platform
     const version = req.params.current_version
     let release = await getlatestrelease(repo, platform, version)
+    if (release.error){
+        res.status(204)
+    }
     res.send(release)
+
 }
 
 async function getlatestrelease(repo: string | undefined ,os:string ,version :string): Promise<release_response_interface | any> {
@@ -47,34 +53,39 @@ async function getlatestrelease(repo: string | undefined ,os:string ,version :st
                 console.log(error);
                 return error
             })
-            .then((response) => {
+            .then(async (response) => {
                 let release = response.data
                 let release_response: release_response_interface = {
-                    version:release.tag_name,
-                    notes:release.body,
-                    pub_date:release.published_at,
-                    url:null,
-                    signature:null
+                    version: release.tag_name,
+                    notes: release.body,
+                    //  pub_date:release.published_at,
+                    url: null,
+                    signature: "",
+                    error: null
                 }
-                release.assets.forEach(async (asset:any) => {
-                    platforms.forEach((platform ) => {
-                        if (asset.name.endsWith(platform.extensions ) && platform.name == os){
+                 for (const asset of release.assets) {
+                    for (const platform of platforms) {
+                        if (asset.name.endsWith(platform.extensions) && platform.name == os) {
                             release_response.url = asset.browser_download_url
+                        } else if (asset.name.endsWith(`${platform.extensions}.sig`) && platform.name == os) {
+                            response = await axios.get(asset.browser_download_url)
+                            release_response.signature = response.data
                         }
-                    });
-                });
-
-                if ( !release_response.url) {
-                    response.sendStatus(204);
-                }else {
-                    let latest_version = release_response.version.split('v')
-                    let current_version = version.split('v')
-                    if (latest_version > current_version){
-                        return release_response
-                    }else{
-                        response.sendStatus(204);
                     }
-                    return release_response
+                }
+                if (!release_response.url) {
+                    release_response.error = "version not found"
+                    return release_response;
+                } else {
+                    let latest_version = release_response.version.split('v')
+                    if (latest_version[1] > version) {
+
+                        release_response.version = latest_version[1]
+                        return release_response
+                    } else {
+                        release_response.error = "version updated"
+                        return release_response;
+                    }
                 }
             });
     } catch (e) {

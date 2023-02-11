@@ -8,6 +8,7 @@ import { dispatchController } from "./dispatchController";
 import {getPlayer, getServerList, getStationsList, getTrainsList} from "./serverController";
 import {checkupdate} from "./updaterController";
 
+
 const corsConfig = {
     allowedHeaders: "x-debug",
     maxAge: 3600
