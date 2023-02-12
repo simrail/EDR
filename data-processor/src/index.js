@@ -10,7 +10,7 @@ const pgClient = new pg.Client({
     host: process.env["PG_HOST"] ?? "127.0.0.1",
     user: process.env["PG_USER"] ?? "postgres",
     password: process.env["PG_PWD"] ?? "mysecretpassword",
-    port: process.env["PH_PORT"] ?? 1445
+    port: process.env["PG_PORT"] ?? 1445
 });
 
 pgClient.connect((err) => {
