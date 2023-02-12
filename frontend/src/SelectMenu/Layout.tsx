@@ -13,7 +13,7 @@ import SRDE from "../images/communities/srde.webp";
 import SRFR from "../images/communities/srfr.png";
 import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
-import {Button} from "flowbite-react";
+import {Button, DarkThemeToggle} from "flowbite-react";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -31,12 +31,13 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
     const background = isWebpSupported ? BackgroundWebp : Background;
     const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
     return <div className="text-primary">
-        <Navbar fluid={true} className="sticky top-0 bg-slate-300">
+        <Navbar fluid={true} className="sticky top-0 bg-slate-300 ">
             <Navbar.Brand href="/">
                 <img src={appLogo} height={64} width={64} alt="App Logo"/>
                 <span className="ml-4">EDR</span>
             </Navbar.Brand>
         <Navbar.Collapse>
+            <div className="flex items-center space-x-4" >
             <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><FR /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("fr")}>
                         French
@@ -70,6 +71,11 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                 <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
                     {t("NAVBAR_bugs")}
                 </Navbar.Link>
+                </div>
+                <Navbar.Link>
+                    <DarkThemeToggle />
+                </Navbar.Link>
+
             </Navbar.Collapse>
         </Navbar>
 
