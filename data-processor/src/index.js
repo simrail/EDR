@@ -7,10 +7,10 @@ const app = express();
 const SR_STATIONS_IDS = [3991, 124, 2375]
 
 const pgClient = new pg.Client({
-    host: "127.0.0.1",
-    user: "postgres",
-    password: "mysecretpassword",
-    port: 1445
+    host: process.env["PG_HOST"] ?? "127.0.0.1",
+    user: process.env["PG_USER"] ?? "postgres",
+    password: process.env["PG_PWD"] ?? "mysecretpassword",
+    port: process.env["PH_PORT"] ?? 1445
 });
 
 pgClient.connect((err) => {
