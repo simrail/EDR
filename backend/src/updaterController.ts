@@ -14,17 +14,13 @@ interface release_response_interface {
 let platforms =
    [
         {
-            "name"  :"linux-x86_64",
+            "name"  :"linux",
             "extensions" :"amd64.AppImage.tar.gz"
         },
        {
-           "name"  :"darwin-x86_64",
+           "name"  :"darwin",
            "extensions" :"app.tar.gz"
         },
-       {
-           "name"  :"darwin-aarch64",
-           "extensions" :"app.tar.gz"
-       },
        {
            "name"  :"windows",
            "extensions" :"x64_en-US.msi.zip"
