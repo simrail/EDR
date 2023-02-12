@@ -127,7 +127,7 @@ export const edrWebpImagesMap : {[k: string]: string} = {
 
 export const serverTzMap: {[k: string]: string} = {
     FR1: 'Europe/Paris',
-    FR2: 'Europe/Paris',
+    FR2: 'America/Vancouver',
     CZ1: 'Europe/Prague',
     CZ2: 'Europe/Prague',
     DE1: 'Europe/Paris',
@@ -155,7 +155,7 @@ export const serverTzMap: {[k: string]: string} = {
     PL4: 'Europe/Warsaw',
     PL5: 'Europe/Warsaw',
     PL6: 'Europe/Warsaw',
-    PL7: 'Europe/Warsaw',
+    PL7: 'HST',
     PL8: 'America/Mexico_City',
     CN1: 'Asia/Seoul',
     NL1: 'Europe/London',
