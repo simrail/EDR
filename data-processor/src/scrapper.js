@@ -317,8 +317,8 @@ async function insertPartialTimetableInDb(partialTimetableJson, simrailEDRStatio
     return Promise.all(partialTimetableJson.map(async (trainRow) => {
         try {
             const dataBaseRow = await conn.query(
-                "SELECT * FROM stations_timetable_row WHERE simrail_new_edr_station_id=$1 AND train_number=$2 AND arrival_date=$3 AND departure_date=$4",
-                [simrailEDRStationId.toString(), trainRow.train_number, trainRow.arrival_date, trainRow.departure_date]
+                "SELECT * FROM stations_timetable_row WHERE simrail_new_edr_station_id=$1 AND train_number=$2",
+                [simrailEDRStationId.toString(), trainRow.train_number]
             ).then((r) => r.rows?.[0]);
 
             // console.log("Data row : ", dataBaseRow);
