@@ -191,6 +191,7 @@ async function scrapTrainPage(allTrainNumbers, page) {
         const trainNumber = allTrainNumbers[i];
         const tr = await select(page).getElement('td:contains('+trainNumber+')')
         console.log("⌛ Preparing to scrap tr at index : ", i);
+        await  new Promise(r => setTimeout(r, 2000));
         await tr.click({delay: 1000})
         const trainRouteButton = await page.$x("//a[contains(text(), 'Train route')]")
         await Promise.all([
