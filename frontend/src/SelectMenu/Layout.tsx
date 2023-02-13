@@ -68,7 +68,7 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                 <Navbar.Link href="https://github.com/simrail/EDR" target="_blank">
                     Github
                 </Navbar.Link>
-                <Navbar.Link href="https://github.com/DKFN/edr-issues/issues" target="_blank">
+                <Navbar.Link href="https://github.com/simrail/EDR/issues" target="_blank">
                     {t("NAVBAR_bugs")}
                 </Navbar.Link>
                 </div>

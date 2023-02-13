@@ -30,5 +30,5 @@ app.listen(8080)
 
 console.log("🚆 Simrail Community EDR backend v1.0");
 console.log("💻 https://github.com/simrail/EDR");
-console.log("🐛 https://github.com/DKFN/edr-issues")
+console.log("🐛 https://github.com/simrail/EDR/issues")
 console.log("Steam API key ? ", !!process.env["STEAM_KEY"]);
