@@ -153,7 +153,7 @@ const parseTimetable = (sr, objectType = "trains") => {
             // console.log("Row : ", row);
             if (!row.train_number) return undefined;
             // console.log("Row : ", row);
-            const [arrivalDate, arrivalTime] = row.scheduled_departure.split(' ');
+            const [arrivalDate, arrivalTime] = row.scheduled_arrival.split(' ');
             const [departureDate, departureTime] = row.scheduled_departure.split(' ');
             return {
             ...row,
