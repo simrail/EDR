@@ -223,7 +223,7 @@ async function scrapTrainPage(allTrainNumbers, page) {
         await insertTrainTimetableRow(trainTT, trainNumber);
         // TODO: Parse whole table via scrolling
 
-        await  new Promise(r => setTimeout(r, 1000));
+        await  new Promise(r => setTimeout(r, 3000));
         const trainListButton = await page.$x("//a[contains(text(), 'Train list')]")
         await Promise.all([
             trainListButton[0].click(),
