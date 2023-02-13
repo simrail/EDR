@@ -189,10 +189,24 @@ async function scrollRow(allTrainNumbers, page) {
 async function scrapTrainPage(allTrainNumbers, page) {
     for (let i = 0; i < allTrainNumbers.length - 1; i++) {
         const trainNumber = allTrainNumbers[i];
-        const tr = await select(page).getElement('td:contains('+trainNumber+')')
+        const tr = await select(page).getElement('td:contains(' + trainNumber + ')')
         console.log("⌛ Preparing to scrap tr at index : ", i);
-        await  new Promise(r => setTimeout(r, 2000));
-        await tr.click({delay: 1000})
+        await new Promise(r => setTimeout(r, 2000));
+        let tries = 0;
+        let maxRetries = 3;
+        while (true) {
+            try {
+                await tr.click({delay: 1000});
+                break;
+            } catch (e) {
+                    tries++;
+                    if (tries === maxRetries) {
+                        throw e;
+                    } else {
+                        console.warn("Failed to click retrying")
+                    }
+                }
+        }
         const trainRouteButton = await page.$x("//a[contains(text(), 'Train route')]")
         await Promise.all([
             trainRouteButton[0].click({
