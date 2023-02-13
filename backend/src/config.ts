@@ -19,14 +19,23 @@ export const internalIdToSrId: {[k: string]: string} = {
     "PI": "Pilichowice",
     "KZ": "Katowice_Zawodzie",
     "SG": "Sosnowiec_Główny",
+    "SG_R52": "Sosnowiec_Główny R52", // TODO: Fake for staging
     "DG": "Dąbrowa Górnicza",
     "T1_BZ": "Będzin",
+    "BZ": "Będzin",
     "LZ_LC": "Łazy Łc",
     "ZA": "Zawiercie",
     "OP_PO": "Opoczno Południe",
     "DG_WZ": "Dąbrowa Górnicza Wschodnia",
     "DG_ZA": "",
     "SG_PO": "Sosnowiec Południowy"
+}
+
+export const newInternalIdToSrId: {[k: string]: string} = {
+    "T1_BZ": "124",
+    "BZ": "124",
+    "LZ_LC": "2375",
+    "SG_R52": "3991"
 }
 
 export const POSTS: { [key: string]: PURE_POST[] } = {

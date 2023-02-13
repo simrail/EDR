@@ -59,7 +59,7 @@ function processPost(req, res) {
 app.get("/process/stations", processStations)
 
 const fn = async () => {
-    for (let i = 0; i < SR_STATIONS_IDS.length - 1; i++) {
+    for (let i = 0; i < SR_STATIONS_IDS.length; i++) {
         try {
             console.log("Scrapping starting ", new Date());
             await scrapMap("stations", SR_STATIONS_IDS[i]);
