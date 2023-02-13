@@ -76,7 +76,7 @@ const fn = async () => {
     }
 }
 
-const mainInterval = setInterval(fn, (1800 / 2) * 1000)
+const mainInterval = setInterval(fn, 1800 * 1000)
 
 fn();
 // scrapMap();
