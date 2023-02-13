@@ -31,5 +31,5 @@ export const getTrainTimetable = async (trainNumber: string) => {
         }, ['scheduled_arrival', 'real_arrival', 'real_arrival_hour', 'real_departure', 'real_departure_hour']);
     })
 
-    return withDynamicData;
+    return _.sortBy(withDynamicData, 'hourSort');
 }
