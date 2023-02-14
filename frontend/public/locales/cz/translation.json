@@ -14,9 +14,9 @@
   "FOOTER_thanks": "Děkujeme všem beta testerům",
   "FOOTER_not_official": "Toto není oficiální aplikace SimRail",
 
-  "EDR_train_refresh_failed": "Cannot refresh train data, retrying...",
-  "EDR_station_refresh_failed": "Cannot refresh dispatch posts, retrying...",
-  "EDR_timetable_refresh_failed": "Cannot refresh the timetable, retrying...",
+  "EDR_train_refresh_failed": "Nemohu obnovit data o vlaku, zkouším znovu",
+  "EDR_station_refresh_failed": "Nemohu obnovit dispečerské stanice, zkouším znovu",
+  "EDR_timetable_refresh_failed": "Nemohu obnovit jízdní řád, zkouším znovu",
 
   "EDR_LOADING_main_message": "Načtení dat pro EDR",
   "EDR_LOADING_schedules": "Grafikon",
@@ -53,11 +53,11 @@
   "EDR_TRAINHEADER_train_departure_time": "Pravidelný odjezd",
   "EDR_TRAINHEADER_train_to": "Směr",
 
-  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_rcs": "NJŘ",
   "EDR_GRAPH_warning": "Graf zobrazuje plánovaný odjezd a příjezd",
   "EDR_GRAPH_open_new_window": "Otevřít v novém okně",
   "EDR_GRAPH_title": "Graf dispečera (beta)",
-  "EDR_GRAPH_switch_axis": "Switch axis",
+  "EDR_GRAPH_switch_axis": "Obrátit osy",
 
   "EDR_UI_close": "Zpět na výběr serverů",
   "EDR_UI_dark_light_mode_switch": "Přepínač Noc/Den",

@@ -14,9 +14,9 @@
   "FOOTER_thanks": "Grazie a tutti i beta tester!",
   "FOOTER_not_official": "Questa non è un'app SimRail ufficiale!",
 
-  "EDR_train_refresh_failed": "Cannot refresh train data, retrying...",
-  "EDR_station_refresh_failed": "Cannot refresh dispatch posts, retrying...",
-  "EDR_timetable_refresh_failed": "Cannot refresh the timetable, retrying...",
+  "EDR_train_refresh_failed": "Impossibile aggiornare i dati del treno, nuovo tentativo...",
+  "EDR_station_refresh_failed": "Impossibile aggiornare le stazioni, nuovo tentativo...",
+  "EDR_timetable_refresh_failed": "Impossibile aggiornare l'orario, riprovare...",
 
   "EDR_LOADING_main_message": "Caricamento dei dati dall'EDR...",
   "EDR_LOADING_schedules": "Orari",
@@ -49,7 +49,7 @@
   "EDR_TRAINHEADER_train_type": "Tipo di Treno",
   "EDR_TRAINHEADER_train_arrival_time": "Orario arrivo",
   "EDR_TRAINHEADER_train_from": "Da",
-  "EDR_TRAINHEADER_train_stop": "Stop",
+  "EDR_TRAINHEADER_train_stop": "Fermata",
   "EDR_TRAINHEADER_train_departure_time": "Orario Partenza",
   "EDR_TRAINHEADER_train_to": "A",
 
@@ -62,7 +62,7 @@
   "EDR_UI_close": "Torna alla selezione del server",
   "EDR_UI_dark_light_mode_switch": "Chiaro / Scuro",
   "EDR_UI_filter_train_all": "Tutti i treni",
-  "EDR_UI_filter_train_online": "Treni sul tracciato",
+  "EDR_UI_filter_train_online": "Treni sulla linea",
   "EDR_UI_filter_train_approaching": "In arrivo",
   "EDR_UI_train_number": "Treno N°"
 }
