@@ -17,7 +17,7 @@ import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
 
 
-export const tableCellCommonClassnames = "p-4"
+export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
 type Props = {
     setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     ttRow: TimeTableRow,
@@ -35,12 +35,13 @@ type Props = {
     playSoundNotification: any,
     isWebpSupported: boolean,
     showOnlyApproachingTrains: boolean;
+    streamMode: boolean;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, showOnlyApproachingTrains
+        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode
     }: Props
 ) => {
     const dateNow = nowUTC(serverTz);
@@ -89,12 +90,14 @@ const TableRow: React.FC<Props> = (
             previousDistance={previousDistance}
             trainHasPassedStation={trainHasPassedStation}
             isWebpSupported={isWebpSupported}
+            streamMode={streamMode}
         />
         <TrainTypeCell
             secondColRef={secondColRef}
             trainBadgeColor={trainBadgeColor}
             trainDetails={trainDetails}
             ttRow={ttRow}
+            streamMode={streamMode}
         />
         <TrainArrivalCell
             ttRow={ttRow}
@@ -105,17 +108,22 @@ const TableRow: React.FC<Props> = (
             expectedDeparture={expectedDeparture}
             distanceFromStation={distanceFromStation}
             thirdColRef={thirdColRef}
+            streamMode={streamMode}
         />
-        <TrainFromCell headerFourthColRef={headerFourthColRef} ttRow={ttRow} secondaryPostData={secondaryPostData} />
-        <TrainPlatformCell ttRow={ttRow} headerFifthColRef={headerFifthColRef} secondaryPostData={secondaryPostData} />
+        <TrainFromCell headerFourthColRef={headerFourthColRef} ttRow={ttRow} secondaryPostData={secondaryPostData}
+                       streamMode={streamMode} />
+        <TrainPlatformCell ttRow={ttRow} headerFifthColRef={headerFifthColRef} secondaryPostData={secondaryPostData}
+                           streamMode={streamMode} />
         <TrainDepartureCell
             headerSixthhColRef={headerSixthhColRef}
             ttRow={ttRow}
             trainHasPassedStation={trainHasPassedStation}
             trainMustDepart={trainMustDepart}
             playSoundNotification={playSoundNotification}
+            streamMode={streamMode}
         />
-        <TrainToCell ttRow={ttRow} headerSeventhColRef={headerSeventhColRef} secondaryPostData={secondaryPostData} />
+        <TrainToCell ttRow={ttRow} headerSeventhColRef={headerSeventhColRef} secondaryPostData={secondaryPostData}
+                     streamMode={streamMode}/>
     </Table.Row>
 }
 

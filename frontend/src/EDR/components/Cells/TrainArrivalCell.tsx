@@ -14,13 +14,13 @@ type Props = {
     trainHasPassedStation: boolean;
     expectedDeparture: Date;
     distanceFromStation: number;
-
     thirdColRef: any;
+    streamMode: boolean;
 }
 
 export const TrainArrivalCell: React.FC<Props> = ({
     dateNow, ttRow, trainDetails, trainHasPassedStation, serverTz,
-    thirdColRef, expectedDeparture, distanceFromStation
+    thirdColRef, expectedDeparture, distanceFromStation, streamMode
 }) => {
     const {t} = useTranslation();
     const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":").map(value => parseInt(value));
@@ -32,7 +32,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
 
 
     return (
-        <td className={tableCellCommonClassnames} ref={thirdColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
                 {ttRow.scheduled_arrival}&nbsp;
                 {

@@ -20,6 +20,8 @@ type Props = {
     setFilter: (value: string | undefined) => void;
     setDisplayMode: (value: "near" | "all" | "approaching") => void;
     setGraphModalOpen: (isOpen: boolean) =>  void;
+    streamMode: boolean;
+    setStreamMode: (v: boolean) => void;
 }
 
 
@@ -45,11 +47,10 @@ const scrollToNearestTrain = (targetLn: number) => {
 
 export const Header: React.FC<Props> = ({
     serverTz, serverCode, postCfg, displayMode, bounds, timetableLength,
-    setFilter, setDisplayMode, setGraphModalOpen
+    setFilter, setDisplayMode, setGraphModalOpen, streamMode, setStreamMode
     }) => {
     const {t} = useTranslation();
 
-    const [streamMode, setStreamMode] = React.useState(false);
 
     React.useEffect(() =>
         scrollToNearestTrain(timetableLength)
@@ -61,7 +62,7 @@ export const Header: React.FC<Props> = ({
             <div className="flex items-center justify-between px-4">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <Link to={`/`} className="underline">◀️ {t('EDR_UI_close') ?? ''}</Link>
+                    <Link to={`/`} className="underline">◀️ {!streamMode ? t('EDR_UI_close') : ''}</Link>
                 </div>
                 <DateTimeDisplay serverTz={serverTz} serverCode={serverCode} />
                 <div className="flex items-center">
