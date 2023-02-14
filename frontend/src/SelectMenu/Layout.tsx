@@ -6,7 +6,7 @@ import AppLogoWebp from "../images/logo.webp";
 import Background from "../images/background.jpg";
 import BackgroundWebp from "../images/background.webp";
 import {useTranslation} from "react-i18next";
-import {FR, GB, CZ, HU, DE, SK, IT, CN} from "country-flag-icons/react/1x1";
+import {FR, GB, CZ, HU, DE, SK, IT, CN, PL, RU} from "country-flag-icons/react/1x1";
 
 import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
@@ -62,6 +62,12 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                     </Dropdown.Item>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><CN /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cn")}>
                         Chinese
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><PL /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("pl")}>
+                        Polish
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={() => <DropdownFlagIcon><RU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("ru")}>
+                        Russian
                     </Dropdown.Item>
                 </Dropdown>
 
