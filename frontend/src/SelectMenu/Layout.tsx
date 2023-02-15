@@ -123,7 +123,7 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
             </div>
         </div>
         <div className="text-center mt-4">
-            {t("FOOTER_version")} 1.1 - {t("FOOTER_screenshots_by")} TheMulhoose - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
+            {t("FOOTER_version")} 1.2 - {t("FOOTER_screenshots_by")} TheMulhoose - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
         </div>
     </div>;
 }
