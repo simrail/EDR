@@ -10,6 +10,7 @@ import {postConfig} from "../../config/stations";
 import { TimeTableRow } from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
+import {TrainTimetableModal} from "./TrainTimetableModal";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -39,7 +40,8 @@ export const EDRTable: React.FC<Props> = ({
     }) => {
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
-    const [modalTrainId, setModalTrainId] = React.useState<string | undefined>();
+    const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
+    const [timetableModalTrainId, setTimetableModalTrainId] = React.useState<string | undefined>();
     const [streamMode, setStreamMode] = React.useState(false);
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
@@ -67,7 +69,8 @@ export const EDRTable: React.FC<Props> = ({
     const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
 
     return <div>
-        <SimRailMapModal serverCode={serverCode} trainId={modalTrainId} setModalTrainId={setModalTrainId} />
+        <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
+        <TrainTimetableModal trainId={timetableModalTrainId} setModalTrainId={setTimetableModalTrainId} />
         <Header
             serverTz={serverTz}
             serverCode={serverCode}
@@ -83,7 +86,7 @@ export const EDRTable: React.FC<Props> = ({
         />
         <div>
             <Table striped={true}>
-            <Table.Body>
+            <Table.Body className="overflow-x-auto">
                 {timetable.length > 0
                     ? timetable
                         .filter((tt) => filter ? 
@@ -112,7 +115,8 @@ export const EDRTable: React.FC<Props> = ({
                         trainDetails={trainsWithDetails[tr.train_number]}
                         timeOffset={Math.abs(Number.parseInt(format(dt, "HHmm")) - tr.hourSort)}
                         playSoundNotification={playSoundNotification}
-                        setModalTrainId={setModalTrainId}
+                        setModalTrainId={setMapModalTrainId}
+                        setTimetableTrainId={setTimetableModalTrainId}
                         isWebpSupported={isWebpSupported}
                         showOnlyApproachingTrains={displayMode === "approaching"}
                         streamMode={streamMode}

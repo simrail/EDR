@@ -10,6 +10,7 @@ import { DetailedTrain } from "../../functions/trainDetails";
 import {configByLoco} from "../../../config/trains";
 import Tooltip from "rc-tooltip";
 import classNames from "classnames";
+import TimetableIcon from "../../../images/icons/png/timetable.png";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
     if (!controlledBy) {
@@ -30,6 +31,7 @@ type Props = {
     trainBadgeColor: string;
     hasEnoughData: boolean;
     setModalTrainId: (trainId: string | undefined) => void;
+    setTimetableTrainId: (trainId: string | undefined) => void;
     firstColRef: any;
     distanceFromStation: number;
     currentDistance: number;
@@ -41,7 +43,7 @@ type Props = {
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, hasEnoughData, trainBadgeColor,
        distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef, isWebpSupported, streamMode
+       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -69,9 +71,12 @@ export const TrainInfoCell: React.FC<Props> = ({
                             </span>
                         </Badge>
                     </Tooltip>
-                    { trainDetails && <span className="ml-2">
+                    { trainDetails && <span className="ml-1 flex">
                         <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
                             <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>
+                        </Tooltip>
+                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_timetable")}</span>}>
+                            <Button size="xs" className="ml-1" onClick={() => setTimetableTrainId(ttRow.train_number)}><img src={TimetableIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                         </Tooltip>
                     </span> }
                 </div>

@@ -2,6 +2,7 @@
 import {Server, Station, Train} from "@simrail/types";
 
 export const BASE_API_URL = process.env.API_URL ?? "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
+export const STAGING_API_URL = "https://staging.simrail.deadlykungfu.ninja/"
 export const NGINX_DIRECT = "https://dispatch-api.nginx.infra.deadlykungfu.ninja:8080/"
 // export const BASE_API_URL = "http://localhost:8080/"
 const baseApiCall = (URL: string, noCDN: boolean = false) => {
@@ -18,6 +19,9 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
 
 export const getTimetable = (post: string): Promise<any> =>
     baseApiCall("dispatch/" + post);
+
+export const getTrainTimetable = (trainId: string): Promise<any> =>
+    fetch(STAGING_API_URL + "train/" + trainId).then((r) => r.json());
 
 export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);

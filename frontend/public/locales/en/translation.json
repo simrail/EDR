@@ -44,6 +44,7 @@
   "EDR_TRAINROW_waiting_for_data":"Waiting for data...",
   "EDR_TRAINROW_notify": "Notify departure",
   "EDR_TRAINROW_show_on_map": "Show on map",
+  "EDR_TRAINROW_show_timetable": "Show timetable",
 
   "EDR_TRAINHEADER_train_number": "Train N°",
   "EDR_TRAINHEADER_train_type": "Train type",

@@ -108,6 +108,12 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                 <Button size="xs" color="gray" className="mx-2">
                     <span className="inline-flex items-center "><CN height={16} width={16}/>&nbsp;CN-BX-3N</span>
                 </Button>
+                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/Kyte5PB6xf">
+                    <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Russian Speaking</span>
+                </Button>
+                <Button size="xs" color="gray" className="mx-2">
+                    <span className="inline-flex items-center "><PL height={16} width={16}/>&nbsp;Invis</span>
+                </Button>
             </div>
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
             <div className="flex items-start justify-center max-w-screen min-h-screen">

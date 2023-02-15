@@ -20,6 +20,7 @@ import {TrainToCell} from "./Cells/TrainToCell";
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
 type Props = {
     setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
+    setTimetableTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     ttRow: TimeTableRow,
     timeOffset: number,
     trainDetails: DetailedTrain,
@@ -41,12 +42,12 @@ type Props = {
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTz, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode
+        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode, setTimetableTrainId
     }: Props
 ) => {
     const dateNow = nowUTC(serverTz);
     
-    if (!post) return null;
+    // if (!post) return null;
     const postCfg = postConfig[post];
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
@@ -84,6 +85,7 @@ const TableRow: React.FC<Props> = (
             trainBadgeColor={trainBadgeColor}
             hasEnoughData={hasEnoughData}
             setModalTrainId={setModalTrainId}
+            setTimetableTrainId={setTimetableTrainId}
             firstColRef={firstColRef}
             distanceFromStation={distanceFromStation}
             currentDistance={currentDistance}
