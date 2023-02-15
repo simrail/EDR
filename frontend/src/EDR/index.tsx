@@ -17,7 +17,7 @@ import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
-import {Graph} from "./components/Graph";
+const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
     k: string;

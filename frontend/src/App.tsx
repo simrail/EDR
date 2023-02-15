@@ -26,7 +26,7 @@ function App() {
             <div className="min-h-screen dark:bg-slate-800 text-black dark:text-white">
                 <BrowserRouter>
                     <Fragment>
-                        <Suspense fallback={<Spinner />}>
+                        <Suspense fallback={<div className="flex items-center justify-around w-full"><div><Spinner /> Loading javascript chunk</div></div>}>
                         <Routes>
                             <Route path="/" element={<ServerSelect isWebpSupported={isWebpSupported} />} />
                             <Route path="/:serverCode" element={<PostSelect isWebpSupported={isWebpSupported}/>} />
