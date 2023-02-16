@@ -16,8 +16,9 @@ export async function dispatchController(req: express.Request, res: express.Resp
     console.log(`${post}`);
     try {
         const data = await getStationTimetable(newInternalIdToSrId[post]);
-        return res.send(data)
+        return res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
+            .send(data)
         /*if (!error && data && Object.values(data).length !== 0)
             return res
                 .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
@@ -37,8 +38,9 @@ export async function trainTimetableController(req: express.Request, res: expres
 
     try {
         const data = await getTrainTimetable(trainNo);
-        res.send(data)
+        res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
+            .send(data)
     } catch (e) {
         console.error("Internal server error on train timetable ", e);
         return res.sendStatus(500);
