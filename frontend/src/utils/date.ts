@@ -6,7 +6,7 @@ const options: Intl.DateTimeFormatOptions = {
     second: '2-digit',
     hour12: false
 };
-
+ // TODO: Take UTC offset from API now. And then shift the hours by the UTC offset value instead of taking TZ
 export const nowUTC = (targetTimezone: string = "Europe/Paris") => {
     const now = new Date();
     return utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,

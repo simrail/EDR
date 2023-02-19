@@ -66,6 +66,30 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
     return null;
 }
 
+const CustomizedAxisTick = (data: any, displayMode: string) => (props: any) => {
+    const { x, y } = props;
+
+    if (!props.value || props.index % 3 !== 0 || props.index === (displayMode === "vertical" ? data.length -1 : 0)) return <></>;
+    const maybeTrainNumber = Object.entries(data[props.index]).find((v, i) => v[1] === props.value);
+
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text
+                x={0}
+                y={displayMode === "vertical" ? 0 : -12}
+                dy={16 + Math.random()}
+                textAnchor="end"
+                fill="#666"
+                transform={displayMode === "vertical" ? "rotate(-45)" : ""}
+                fontSize={12}
+            >
+                {(maybeTrainNumber as any)?.[0]}
+            </text>
+        </g>
+    );
+};
+
+
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
 const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
     const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
@@ -199,12 +223,12 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <TimeComponent data-key="time" type="number" scale="time" domain={["dataMin", "dataMax"]} tickCount={20} interval={0} tickFormatter={dateFormatter} reversed={displayMode === "horizontal"}/>
-                        <ReferenceLine {...displayMode === "vertical" ? {x: dtNow.getTime()} : {y: dtNow.getTime()}}  stroke="black" strokeWidth={2} strokeOpacity={0.5} type={"dotted"} />
+                        <ReferenceLine {...displayMode === "vertical" ? {x: dtNow.getTime()} : {y: dtNow.getTime()}}  stroke="black" strokeWidth={2} strokeOpacity={0.5} type={"dotted"}  />
                         <PostComponent dataKey="name" type="category" allowDuplicatedCategory={false} />
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) =>
-                            <Line key={t.train_number} dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
+                            <Line key={t.train_number} dataKey={t.train_number} label={CustomizedAxisTick(data, displayMode)} stroke={configByType[t.type]?.graphColor ?? "purple"} >
                             </Line>
                         )}
                     </LineChart>
