@@ -1,0 +1,68 @@
+{
+  "APP_fatal_error": "L'interface utilisateur ne s'actualise pas, une erreur fatale s'est produite",
+  "APP_no_trains": "Il n'y a pas de train ! Le serveur est probablement en train de redémarrer",
+  "APP_no_timetable": "Erreur fatale : impossible de récupérer l'horaire. Le serveur Simrail est probablement en train de redémarrer",
+  "APP_station_not_found": "Erreur fatale : station actuelle introuvable.",
+
+  "NAVBAR_bugs": "Report bugs",
+
+  "SELECTMENU_server_selection": "Selection du serveur",
+  "SELECTMENU_post_select": "Selection du poste",
+
+  "FOOTER_version": "version",
+  "FOOTER_screenshots_by": "Screenshot par",
+  "FOOTER_thanks": "Merci a tous les beta testeurs",
+  "FOOTER_not_official": "Ceci n'est pas une application SimRail officielle",
+
+  "EDR_train_refresh_failed": "Impossible de rafraîchir les données des trains. Nouvelle tentative...",
+  "EDR_station_refresh_failed": "Impossible de rafraîchir les données des postes. Nouvelle tentative...",
+  "EDR_timetable_refresh_failed": "Impossible de rafraîchir les horaires. Nouvelle tentative...",
+
+  "EDR_LOADING_main_message": "Chargement des données de l'EDR",
+  "EDR_LOADING_schedules": "Horaires",
+  "EDR_LOADING_stations": "Stations",
+  "EDR_LOADING_trains": "Trains",
+
+  "EDR_TRAINROW_click_to_copy": "Copier le numero",
+  "EDR_TRAINROW_copied": "Numero copié!",
+  "EDR_TRAINROW_layover": "Halte",
+  "EDR_TRAINROW_layover_minutes": "min",
+  "EDR_TRAINROW_line": "Line",
+  "EDR_TRAINROW_peron": "Quai",
+  "EDR_TRAINROW_platform": "Platforme",
+  "EDR_TRAINROW_position_at": "à",
+  "EDR_TRAINROW_train_delayed": "Retard",
+  "EDR_TRAINROW_train_early": "Avance",
+  "EDR_TRAINROW_train_offline": "Hors-ligne",
+  "EDR_TRAINROW_train_stopped": "Arreté",
+  "EDR_TRAINROW_train_away": "S'eloigne",
+  "EDR_TRAINROW_train_minutes": "mn",
+  "EDR_TRAINROW_train_eta": "ETA",
+  "EDR_TRAINROW_train_departing": "Depart",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data":"En attente de données.",
+  "EDR_TRAINROW_notify": "Avertir du départ",
+  "EDR_TRAINROW_show_on_map": "Afficher sur la carte",
+
+  "EDR_TRAINHEADER_train_number": "N°",
+  "EDR_TRAINHEADER_train_type": "Type",
+  "EDR_TRAINHEADER_train_arrival_time": "Heure arrivée",
+  "EDR_TRAINHEADER_train_from": "Provenance",
+  "EDR_TRAINHEADER_train_stop": "Stop",
+  "EDR_TRAINHEADER_train_departure_time": "Heure depart",
+  "EDR_TRAINHEADER_train_to": "Destination",
+
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "Le graphique montre les heures d'arrivées et de depart planifiées",
+  "EDR_GRAPH_open_new_window": "Ouvrir dans une nouvelle fenetre",
+  "EDR_GRAPH_title": "Graphique de régulation (Beta)",
+  "EDR_GRAPH_switch_axis": "Inverser les axes",
+
+  "EDR_UI_close": "Retour à la sélection du serveur",
+  "EDR_UI_dark_light_mode_switch": "Sombre/Clair",
+  "EDR_UI_filter_train_all": "Tous",
+  "EDR_UI_filter_train_online": "En ligne",
+  "EDR_UI_filter_train_approaching": "En approche",
+  "EDR_UI_train_number": "N° de train"
+}

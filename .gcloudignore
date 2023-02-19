@@ -1,0 +1,7 @@
+frontend/node_modules
+frontend/build
+backend/
+desktop/node_modules
+desktop/src-tauri/target
+data-processor/
+varnish/

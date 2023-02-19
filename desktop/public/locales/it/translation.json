@@ -1,0 +1,68 @@
+{
+  "APP_fatal_error": "Si è verificato un'errore, l'interfaccia utente non si aggiorna!",
+  "APP_no_trains": "Nessun treno disponibile! Probabilmente il server si sta riavviando.",
+  "APP_no_timetable": "Errore: impossibile recuperare l'orario. il server è probabilmente in fase di riavvio.",
+  "APP_station_not_found": "Errore: impossibile trovare la stazione!",
+
+  "NAVBAR_bugs": "Segnala bug",
+
+  "SELECTMENU_server_selection": "Seleziona Server",
+  "SELECTMENU_post_select": "Seleziona stazione",
+
+  "FOOTER_version": "versione",
+  "FOOTER_screenshots_by": "Screenshot di",
+  "FOOTER_thanks": "Grazie a tutti i beta tester!",
+  "FOOTER_not_official": "Questa non è un'app SimRail ufficiale!",
+
+  "EDR_train_refresh_failed": "Impossibile aggiornare i dati del treno, nuovo tentativo...",
+  "EDR_station_refresh_failed": "Impossibile aggiornare le stazioni, nuovo tentativo...",
+  "EDR_timetable_refresh_failed": "Impossibile aggiornare l'orario, riprovare...",
+
+  "EDR_LOADING_main_message": "Caricamento dei dati dall'EDR...",
+  "EDR_LOADING_schedules": "Orari",
+  "EDR_LOADING_stations": "Stazioni",
+  "EDR_LOADING_trains": "Treni",
+
+  "EDR_TRAINROW_click_to_copy": "Clicca per copiare",
+  "EDR_TRAINROW_copied": "Copiato negli appunti!",
+  "EDR_TRAINROW_layover": "Fermata",
+  "EDR_TRAINROW_layover_minutes": "min",
+  "EDR_TRAINROW_line": "Linea",
+  "EDR_TRAINROW_peron": "Piattaforma",
+  "EDR_TRAINROW_platform": "Piattaforma",
+  "EDR_TRAINROW_position_at": "a",
+  "EDR_TRAINROW_train_delayed": "ritardato",
+  "EDR_TRAINROW_train_early": "anticipo",
+  "EDR_TRAINROW_train_offline": "Non sulla linea",
+  "EDR_TRAINROW_train_stopped": "fermo",
+  "EDR_TRAINROW_train_away": "allontanandosi",
+  "EDR_TRAINROW_train_minutes": "min",
+  "EDR_TRAINROW_train_eta": "ETA'",
+  "EDR_TRAINROW_train_departing": "in partenza",
+  "EDR_TRAINROW_train_early_sign": "-",
+  "EDR_TRAINROW_train_late_sign": "+",
+  "EDR_TRAINROW_waiting_for_data":"In attesa dei dati...",
+  "EDR_TRAINROW_notify": "Notifica Partenza",
+  "EDR_TRAINROW_show_on_map": "Mostra sulla mappa",
+
+  "EDR_TRAINHEADER_train_number": "Treno N°",
+  "EDR_TRAINHEADER_train_type": "Tipo di Treno",
+  "EDR_TRAINHEADER_train_arrival_time": "Orario arrivo",
+  "EDR_TRAINHEADER_train_from": "Da",
+  "EDR_TRAINHEADER_train_stop": "Fermata",
+  "EDR_TRAINHEADER_train_departure_time": "Orario Partenza",
+  "EDR_TRAINHEADER_train_to": "A",
+
+  "EDR_GRAPH_rcs": "RCS",
+  "EDR_GRAPH_warning": "Questo grafico mostra le partenze e gli arrivi programmati",
+  "EDR_GRAPH_open_new_window": "Apri in una nuova finestra",
+  "EDR_GRAPH_title": "Grafico capo stazione (beta)",
+  "EDR_GRAPH_switch_axis": "Inverti assi",
+
+  "EDR_UI_close": "Torna alla selezione del server",
+  "EDR_UI_dark_light_mode_switch": "Chiaro / Scuro",
+  "EDR_UI_filter_train_all": "Tutti i treni",
+  "EDR_UI_filter_train_online": "Treni sulla linea",
+  "EDR_UI_filter_train_approaching": "In arrivo",
+  "EDR_UI_train_number": "Treno N°"
+}

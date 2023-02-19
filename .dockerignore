@@ -1,0 +1,5 @@
+frontend/node_modules
+backend/
+desktop/src/node_modules
+desktop/src-tauri/target
+data-processor/
