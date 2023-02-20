@@ -1,5 +1,5 @@
 import { simrailClient } from "./simrailClient";
-import { BASE_SIMRAIL_API } from "./config";
+import {BASE_AWS_API, BASE_SIMRAIL_API} from "./config";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import axios from "axios";
@@ -34,6 +34,16 @@ export function getTrainsList(req: express.Request, res: express.Response, serve
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send((e.data as ApiResponse<Train>).data);
+    }).catch(() => {
+        return res.sendStatus(500);
+    })
+}
+
+export function getServerTz(req: express.Request, res: express.Response) {
+    return simrailClient.get("getTimeZone?serverCode=" + req.params['serverCode'], BASE_AWS_API)?.then((e) => {
+        return res
+            .setHeader("Cache-control", 'public, max-age=3060, must-revalidate')
+            .send(`${e.data}`);
     }).catch(() => {
         return res.sendStatus(500);
     })

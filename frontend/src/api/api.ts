@@ -34,3 +34,6 @@ export const getServers = (): Promise<Server[]> =>
 
 export const getPlayer = (steamId: string): Promise<any> =>
     baseApiCall("steam/" + steamId);
+
+export const getTzOffset = (serverId: string): Promise<any> =>
+    baseApiCall("server/tz/" + serverId);

@@ -1,5 +1,7 @@
 export const BASE_SIMRAIL_DISPATCH_API = "https://panel.simrail.eu:8091/";
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
+export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
+
 export const srHeaders = {
     "User-Agent": "Custom EDR vDEV",
     "xx-client": "Custom EDR",

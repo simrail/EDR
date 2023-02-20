@@ -7,7 +7,7 @@ import {nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
-import { TimeTableRow } from "..";
+import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
@@ -26,17 +26,19 @@ export type Bounds = {
 type Props = {
     timetable: TimeTableRow[];
     trainsWithDetails: {[k: string]: DetailedTrain};
-    serverTz: string
+    serverTzOffset: number
     playSoundNotification: (callback: () => void) => void;
     post: string;
     serverCode: string;
     setGraphModalOpen: (isOpen: boolean) =>  void;
     isWebpSupported: boolean;
+    filterConfig: FilterConfig;
+    setFilterConfig: (newFilterConfig: FilterConfig) => void;
 }
 
 export const EDRTable: React.FC<Props> = ({
-      playSoundNotification, timetable, trainsWithDetails, serverTz,
-      post, serverCode, setGraphModalOpen, isWebpSupported
+      playSoundNotification, timetable, trainsWithDetails, serverTzOffset,
+      post, serverCode, setGraphModalOpen, isWebpSupported, filterConfig, setFilterConfig
     }) => {
     const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
@@ -62,7 +64,7 @@ export const EDRTable: React.FC<Props> = ({
         seventhColBounds
     }
 
-    const dt = nowUTC(serverTz);
+    const dt = nowUTC(serverTzOffset);
 
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
@@ -72,17 +74,17 @@ export const EDRTable: React.FC<Props> = ({
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
         <TrainTimetableModal trainId={timetableModalTrainId} setModalTrainId={setTimetableModalTrainId} />
         <Header
-            serverTz={serverTz}
+            serverTzOffset={serverTzOffset}
             serverCode={serverCode}
             postCfg={postCfg}
-            displayMode={displayMode}
             bounds={{...bounds, showStopColumn}}
             timetableLength={timetable.length}
             setFilter={setFilter}
-            setDisplayMode={setDisplayMode}
             setGraphModalOpen={setGraphModalOpen}
             streamMode={streamMode}
             setStreamMode={setStreamMode}
+            filterConfig={filterConfig}
+            setFilterConfig={setFilterConfig}
         />
         <div>
             <Table striped={true}>
@@ -98,12 +100,12 @@ export const EDRTable: React.FC<Props> = ({
                             .filter(n => n)
                             // If any train numbers match up, filter for it
                             .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
-                        .filter((tt) => displayMode === "near" ? !!trainsWithDetails[tt.train_number] : true)
-                        .map((tr, i: number) =>
+                        .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.train_number] : true)
+                        .map((tr) =>
                     <TableRow
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
-                        serverTz={serverTz}
+                        serverTzOffset={serverTzOffset}
                         post={post}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}
@@ -120,6 +122,7 @@ export const EDRTable: React.FC<Props> = ({
                         isWebpSupported={isWebpSupported}
                         showOnlyApproachingTrains={displayMode === "approaching"}
                         streamMode={streamMode}
+                        filterConfig={filterConfig}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>
