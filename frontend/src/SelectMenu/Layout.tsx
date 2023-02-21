@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
@@ -14,6 +15,7 @@ import SRFR from "../images/communities/srfr.png";
 import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";
+import SubNavigation, { SubNavigationProps } from "../EDR/components/SubNavigation";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -26,19 +28,19 @@ type Props = {
     isWebpSupported: boolean
 }
 
-export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSupported}) => {
+export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children, title, isWebpSupported, navPreviousItem, navCurrentItem, navNextItem}) => {
     const {t, i18n} = useTranslation();
     const background = isWebpSupported ? BackgroundWebp : Background;
     const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
     return <div className="text-primary">
-        <Navbar fluid={true} className="sticky top-0 bg-slate-300 ">
+        <Navbar fluid={true} className="sticky top-0 bg-slate-300 h-20 z-10">
             <Navbar.Brand href="/">
                 <img src={appLogo} height={64} width={64} alt="App Logo"/>
                 <span className="ml-4">EDR</span>
             </Navbar.Brand>
-        <Navbar.Collapse>
-            <div className="flex items-center space-x-4" >
-            <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
+            <Navbar.Collapse>
+                <div className="flex items-center space-x-4" >
+                <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
                     <Dropdown.Item icon={() => <DropdownFlagIcon><FR /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("fr")}>
                         French
                     </Dropdown.Item>
@@ -85,6 +87,13 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
             </Navbar.Collapse>
         </Navbar>
 
+        {_.isEmpty(navPreviousItem) || _.isEmpty(navCurrentItem) || _.isEmpty(navNextItem) || (
+            <SubNavigation 
+                navPreviousItem={navPreviousItem}
+                navCurrentItem={navCurrentItem}
+                navNextItem={navNextItem}
+            />
+        )}
         <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
             <div className="pl-4 pt-4 flex justify-center mr-0 flex-wrap lg:justify-end lg:mr-16 lg:flex-nowrap">
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://forum.simrail.eu/">
