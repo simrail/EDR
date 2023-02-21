@@ -86,32 +86,32 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
         </Navbar>
 
         <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
-            <div className="pl-4 pt-4 flex justify-end mr-16">
-                <Button size="xs" color="gray" className="mx-2" href="https://forum.simrail.eu/">
+            <div className="pl-4 pt-4 flex justify-center mr-0 flex-wrap lg:justify-end lg:mr-16 lg:flex-nowrap">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://forum.simrail.eu/">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Official</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://discord.com/invite/XgJpXpG2Eu">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.com/invite/XgJpXpG2Eu">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Global</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://simrail.fr/discord">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://simrail.fr/discord">
                     <span className="inline-flex items-center "><img src={SRFR} height={16} width={16} alt="Community logo"/>&nbsp;Simrail France</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/DztnvgePXw">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/DztnvgePXw">
                     <span className="inline-flex items-center "><img src={OFPMafia} height={16} width={16} alt="Community logo"/>&nbsp;OFPMafia CZ/SK</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/A63hJphHQ4">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/A63hJphHQ4">
                     <span className="inline-flex items-center "><img src={SRDE} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Germany</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/5cdpDv2nT8">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/5cdpDv2nT8">
                     <span className="inline-flex items-center "><img src={SRIT} height={16} width={16} alt="Community logo"/>&nbsp;Simrail ITA</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0">
                     <span className="inline-flex items-center "><CN height={16} width={16}/>&nbsp;CN-BX-3N</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2" href="https://discord.gg/Kyte5PB6xf">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/Kyte5PB6xf">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Russian Speaking</span>
                 </Button>
-                <Button size="xs" color="gray" className="mx-2">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0">
                     <span className="inline-flex items-center "><PL height={16} width={16}/>&nbsp;Invis</span>
                 </Button>
             </div>
@@ -122,7 +122,7 @@ export const SelectMenuLayout: React.FC<Props> = ({children, title, isWebpSuppor
                 </div>
             </div>
         </div>
-        <div className="text-center mt-4">
+        <div className="text-center p-4">
             {t("FOOTER_version")} 1.2 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
         </div>
     </div>;
