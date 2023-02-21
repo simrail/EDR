@@ -186,8 +186,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [20.232192, 51.358965],
         graphConfig: {
-            pre: ["KN", "WP", "OZ", "PI"],
-            post: [],
+            pre: ["WP", "OZ", "PI"],
+            post: ["IDZ"],
             final: ["IDZ"]
         }
     },
