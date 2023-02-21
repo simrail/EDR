@@ -86,9 +86,9 @@ export const EDRTable: React.FC<Props> = ({
             filterConfig={filterConfig}
             setFilterConfig={setFilterConfig}
         />
-        <div>
+        <div className="child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-[calc(100vh-166px)]">
             <Table striped={true}>
-            <Table.Body className="overflow-x-auto">
+            <Table.Body>
                 {timetable.length > 0
                     ? timetable
                         .filter((tt) => filter ? 
