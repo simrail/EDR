@@ -28,7 +28,8 @@ export const internalIdToSrId: {[k: string]: string} = {
     "OP_PO": "Opoczno Południe",
     "DG_WZ": "Dąbrowa Górnicza Wschodnia",
     "DG_ZA": "",
-    "SG_PO": "Sosnowiec Południowy"
+    "SG_PO": "Sosnowiec Południowy",
+    "IDZ": "Idzikowice"
 }
 
 export const POSTS: { [key: string]: PURE_POST[] } = {
@@ -47,7 +48,8 @@ export const POSTS: { [key: string]: PURE_POST[] } = {
     "Opoczno Południe": ["Opoczno Południe"],
     "Dąbrowa Górnicza Wschodnia": ["Dąbrowa Górnicza Wschodnia"],
     "Dąbrowa Górnicza Ząbkowice": ["Dąbrowa Górnicza Ząbkowice"],
-    "Sosnowiec Południowy": ["Sosnowiec Południowy"]
+    "Sosnowiec Południowy": ["Sosnowiec Południowy"],
+    "Idzikowice": ["Idzikowice"]
 
 };
 
@@ -68,7 +70,8 @@ export type PURE_POST =
     "Opoczno Południe" |
     "Dąbrowa Górnicza Wschodnia" |
     "Dąbrowa Górnicza Ząbkowice" |
-    "Sosnowiec Południowy"
+    "Sosnowiec Południowy" |
+    "Idzikowice"
 
 export enum VMAX_BY_TYPE {
     EIJ = 200,
