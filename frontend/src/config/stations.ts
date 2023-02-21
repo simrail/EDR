@@ -77,8 +77,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [20.1210684, 51.2546948],
         graphConfig: {
             pre: ["KN", "WP", "OZ"],
-            post: ["OP_PO"],
-            final: ["IDZ"]
+            post: ["OP_PO", "IDZ"],
+            final: ["STR"]
         }
     },
     KZ: {
@@ -188,7 +188,7 @@ export const postConfig: {[k: string]: StationConfig} = {
         graphConfig: {
             pre: ["WP", "OZ", "PI"],
             post: ["IDZ"],
-            final: ["IDZ"]
+            final: ["STR"]
         }
     },
     MY: {
@@ -342,7 +342,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "IDZ",
         srId: "Idzikowice",
         trainPosRange: 0.5,
-        platformPosOverride: [20.3161252, 51.4497225]
+        platformPosOverride: [20.3161252, 51.4497225],
+        graphConfig: {
+            pre: ["WP", "OZ", "PI", "OP_PO"],
+            post: [],
+            final: ["STR"]
+        }
     },
     STR: {
         id: "STR",
