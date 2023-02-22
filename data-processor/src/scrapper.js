@@ -48,7 +48,7 @@ const SCRAPPER_TIMETABLE_ROW_HEIGHT = 35;
 const SCRAPPER_SELECTED_ROW_CLASSNAME = "timetableRow selectedRow";
 const SCRAPPER_TIMETABLE_PAGE_LEN = 16;
 const SCRAPPER_TIMETABLE_MAX_ROWS = 400; // If it evers choke, lets not make an inifinite loop :D
-const SCRAPPER_TRAINS_MAX_ROWS = 50; // If it evers choke, lets not make an inifinite loop :D
+const SCRAPPER_TRAINS_MAX_ROWS = 60; // If it evers choke, lets not make an inifinite loop :D
 const SCRAPPER_TIMETABLE_CLASSNAME_ROWS = {
     "trains": ".timetableTrainRow",
     "stations": ".timetableRow"
