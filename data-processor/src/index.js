@@ -4,7 +4,58 @@ const express = require("express");
 const {scrapMap} = require("./scrapper");
 const app = express();
 
-const SR_STATIONS_IDS = [1655, 3991, 3993, 124, 719, 2375, 1193, 3436, 1772, 4987, 2969, 3200, 2993, 5262, 733, 4010, 1349]
+const SR_STATIONS_IDS = [{
+    id: 1655, // KZ
+    fetchTrains: false
+},  {
+    id: 3991, // SG 52
+    fetchTrains: true
+}, {
+    id: 3993, // SG
+    fetchTrains: false
+}, {
+    id: 124, // BZ
+    fetchTrains: false
+}, {
+    id: 719, // DG
+    fetchTrains: false
+}, {
+    id: 2375, // LZ_LC
+    fetchTrains: true
+}, {
+    id: 1193, // GW
+    fetchTrains: false
+}, {
+    id: 3436, // PS
+    fetchTrains: false
+}, {
+    id: 1772, // KN
+    fetchTrains: true
+}, {
+    id: 4987, // WP
+    fetchTrains: true
+}, {
+    id: 2969, // OZ
+    fetchTrains: false
+}, {
+    id: 3200, // PI
+    fetchTrains: false
+}, {
+    id: 2993, // OP_PO
+    fetchTrains: false
+}, {
+    id: 5262, // ZW
+    fetchTrains: true
+}, {
+    id: 733, // DGW
+    fetchTrains: true
+}, {
+    id: 4010, // SP
+    fetchTrains: false
+}, {
+    id: 1349, // IDZ
+    fetchTrains: true
+}]
 
 const pgClient = new pg.Client({
     host: process.env["PG_HOST"] ?? "127.0.0.1",
@@ -61,10 +112,12 @@ app.get("/process/stations", processStations)
 const fn = async () => {
     for (let i = 0; i < SR_STATIONS_IDS.length; i++) {
         try {
+            const id = SR_STATIONS_IDS[i].id
             console.log("Scrapping starting ", new Date());
-            await scrapMap("stations", SR_STATIONS_IDS[i]);
+            await scrapMap("stations", id);
             console.log("Stations finished ", new Date());
-            await scrapMap("trains", SR_STATIONS_IDS[i]);
+            if (SR_STATIONS_IDS[i].fetchTrains)
+                await scrapMap("trains", id);
             console.log("Trains finished ", new Date());
         } catch (e) {
             console.error("Scrapping failed ", new Date());
