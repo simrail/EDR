@@ -1,0 +1,283 @@
+{
+  "1": {
+    "Dąbrowa Górnicza Wschodnia": 65.941,
+    "Zabrze": 18.926,
+    "Będzin": 305.524,
+    "Zawiercie Borowe Pole": 270.300,
+    "Poraj": 246.950,
+    "Dąbrowa Górnicza Gołonóg": 296.726,
+    "Warszawa Zachodnia": 2.405,
+    "Łazy": 280.4,
+    "Myszków Mrzygłód": 266.370,
+    "Częstochowa Raków": 233.5,
+    "Myszków Światowit": 263.442,
+    "Warszawa Zach. R19": null,
+    "Żarki-Letnisko": 254.088,
+    "Myszków GT": null,
+    "Sosnowiec Gł. pzs R52": 310.684,
+    "Grodzisk Mazowiecki": 30.634,
+    "Masłońskie Natalin": 250.787,
+    "Józefinów": 12.088,
+    "Katowice": 318.4,
+    "Dąbrowa Górnicza Pogoria": 295.4,
+    "Katowice Szopienice Południowe": 313,
+    "Będzin Ksawera": 302.1,
+    "Myszków": 261.016,
+    "Częstochowa": 225.8,
+    "Będzin Miasto": 304.4,
+    "Częstochowa Towarowa": 232.527,
+    "Pruszków": 15.891,
+    "Myszków Nowa Wieś": 257.525,
+    "Dąbrowa Górnicza Sikorka": 289.202,
+    "Grodzisk Maz. R58": null,
+    "Sosnowiec Główny": 309.544,
+    "Wiesiółka": 284.313,
+    "Chruszczobród": 286.557,
+    "Warszawa Włochy": 6.804,
+    "Korwinów": 239.158,
+    "Katowice Zawodzie": 315.653,
+    "Łazy Łc": 282.6,
+    "Zawiercie": 277.227,
+    "Dąbrowa Górnicza": 300.267,
+    "Dąbrowa Górnicza Ząbkowice": 292.896,
+    "Dąbrowa Górnicza Ząbkowice DZA": 292.896,
+    "Łazy Ła": 276.8
+  },
+  "2": {
+    "Warszawa Centralna": 0,
+    "Warszawa Wschodnia": 4.254,
+    "Warszawa Wsch.R.34": null
+  },
+  "4": {
+    "Opoczno Południe": 92.564,
+    "Psary": 170.479,
+    "Korytów": 14.574,
+    "Strzałki": 57.381,
+    "Biała Rawska": 40.122,
+    "Góra Włodowska": 206.688,
+    "Pilichowice": 106.588,
+    "Zawiercie": 224.676,
+    "Włoszczowa Północ": 153.650,
+    "Knapówka": 160.588,
+    "Grodzisk Maz. R58": 1.091,
+    "Idzikowice": 80.739,
+    "Szeligi": 23.542,
+    "Zawiercie GT": 224.915,
+    "Knapówka R2": 160.500,
+    "Olszamowice": 124.828
+},
+  "8": {
+    "Jędrzejów": 231.263,
+    "Kielce Słowik": 195.368,
+    "Piaski koło Kielc": null,
+    "Sędziszów Towarowy": null,
+    "Sitkówka Nowiny": 197.330,
+    "Kozłów": 262.098,
+    "Tunel": 267.778,
+    "Kostomłoty": 182.060,
+    "Suchedniów Północny": 150.037,
+    "Gniewiecin": 254.285,
+    "Skarżysko-Kamienna": 143.442,
+    "Sędziszów": 251.232,
+    "Lekomin": 168.023,
+    "Potok": 238.263,
+    "Sobków": 211.877,
+    "Suchedniów": 152.404,
+    "Wolica": 207.761,
+    "Zagnańsk": 171.297,
+    "Podchojny": 227.408,
+    "Łączna": 160.271,
+    "Kielce": 187.672,
+    "Klimontów": 256.243,
+    "Tunel R13": null,
+    "Krzcięcice": 244.543,
+    "Kielce Białogon": 191.870,
+    "Miąsowa": 219.490,
+    "Ostojow": 163.303
+  },
+  "9": {
+    "Warszawa Wsch.R.34": null,
+    "Warszawa Wsch. R.58": null
+  },
+  "45": {
+    "Warszawa Grochów R5": 2.297,
+    "Warszawa Wsch. R.58": 0.684
+  },
+  "61": {
+    "Kielce Herbskie Khb": null,
+    "Małogoszcz PZS R35": null,
+    "Ludynia": 36.699,
+    "Czarnca R19": 53.700,
+    "Szczukowice": 10.712,
+    "Górki Szczukowskie": 8.336,
+    "Rykoszyn": 19.024,
+    "Włoszczowa": 47.735,
+    "Kielce Herbskie": 2.254,
+    "Czarnca": 53.035,
+    "Małogoszcz": 27.306,
+    "Kielce Herbskie Kha": null
+  },
+  "62": {
+    "Dąbrowa Górnicza Wschodnia": 65.941,
+    "Gajówka APO": 13.755,
+    "Zarzecze": 28.029,
+    "Bukowno": 53.538,
+    "Sosnowiec Kazimierz PZS SKZ2": null,
+    "Sosnowiec Południowy": 82.732,
+    "Sosnowiec Porąbka": 75.685,
+    "Charsznica": 7.793,
+    "Tunel R13": 0.749,
+    "Sosnowiec Dańdówka": 78.930,
+    "Jeżówka": 17.315,
+    "Sławków": 61.261,
+    "Olkusz": 45.021,
+    "Chrząstowice Olkuskie": 30.379,
+    "Zarzecze APO": 29.127,
+    "Gajówka": 12.478,
+    "Bukowno Przymiarki": 57.338,
+    "Wolbrom": 22.296,
+    "Sosnowiec Kazimierz": 73.608,
+    "Dąbrowa Górnicza Strzemieszyce": 69.221,
+    "Jaroszowiec Olkuski": 35.744
+  },
+  "73": {
+    "Nida": 6.822,
+    "Włoszczowice": 19.542,
+    "Brzeziny": 4.771
+  },
+  "132": {
+    "Strzelce Opolskie": 66.931,
+    "Kotulin": 56.249,
+    "Opole Groszowice OGA": 94.510,
+    "Kamień Śląski": null,
+    "Ligota Toszecka": 53.837,
+    "Tarnów Opolski": 84.585,
+    "Toszek": 49.920,
+    "Szymiszów": 73.004,
+    "Błotnica Strzelecka": 59.118,
+    "Opole Groszowice": 95.210,
+    "Paczyna": 45.108
+  },
+  "133": {
+    "Dąbrowa Górnicza Południowa": 7.537,
+    "Dorota": 10.700,
+    "Dąbrowa Górnicza Ząbkowice": 0,
+    "Dąbrowa Górnicza Ząbkowice GTB": null,
+    "Dąbrowa Górnicza Huta Katowice": 3.564
+  },
+  "135": {
+    "Gliwice Kuźnica": 1.977,
+    "Pyskowice": 5.309
+  },
+  "137": {
+    "Zabrze": 18.926,
+    "Katowice Tow. KTC": 2.913,
+    "Katowice": 0.381,
+    "Gliwice": 27.100,
+    "Szobiszowice": 28.530,
+    "Świętochłowice": 8.413,
+    "Chorzów Batory": 6.166,
+    "Gliwice Łabędy": 32.985,
+    "Ruda Chebzie": 11.740,
+    "Ruda Śląska": 14.068,
+    "Katowice Załęże": 2.528
+  },
+  "139": {
+    "Katowice": 0,
+    "Katowice Ligota": 6.080,
+    "Brynów": 3.193,
+    "Katowice Piotrowice": 7.753,
+    "Tychy": 16.970,
+    "Katowice Podlesie": 11.483,
+    "Katowice Brynów": 3.770,
+    "Tychy Zachodnie": null,
+    "Mąkołowiec": 14.044
+  },
+  "140": {
+    "Kamień": 35.032,
+    "Leszczyny": 31.776,
+    "Rybnik Towarowy pzs RTB11": null,
+    "Rybnik": 39.702,
+    "Rybnik Towarowy": 43.383
+  },
+  "141": {
+    "Mizerów": null,
+    "Ruda Bielszowice": 13.396,
+    "Ruda Wirek": 10.386,
+    "Ruda Kochłowice": 6.643,
+    "Zabrze Makoszowy": 16.681
+  },
+  "149": {
+    "Szczygłowice": 16.090,
+    "Gierałtowice": 5.814,
+    "Leszczyny": 22.935,
+    "Mizerów": 1.580,
+    "Knurów": 11.872,
+    "Zabrze Makoszowy": 0
+  },
+  "151": {
+    "Bohumin Vrbice": null
+  },
+  "158": {
+    "Radlin Obszary": 3.147,
+    "Olza Olb": 21.457,
+    "Olza": 20.514,
+    "Wodzisław Śląski": 7.828,
+    "Chałupki": 25.036
+  },
+  "160": {
+    "Łazy": 280.654,
+    "Łazy Łc": 277.507
+  },
+  "164": {
+    "Ruda Kochłowice": 5.369,
+    "Hajduki": 2.820
+  },
+  "171": {
+    "Dorota": 16.224,
+    "Juliusz": 20.746,
+    "Dąbrowa Górnicza Wschodnia": 12.290,
+    "Sosnowiec Dańdówka": 24.549
+  },
+  "179": {
+    "Tychy Lodowisko": null,
+    "Tychy": 0,
+    "Tychy Zachodnie": 2.348,
+    "Tychy Miasto": 3.730,
+    "Tychy Grota Roweckiego": 2.282,
+    "Tychy Aleja Bielska": 2.853
+  },
+  "186": {
+    "Wiesiółka": 284.490,
+    "Dąbrowa Górnicza Sikorka": 289.447,
+    "Łazy": 280.654,
+    "Łazy Ła": null,
+    "Dąbrowa Górnicza Ząbkowice DZA": 292.904,
+    "Łazy Łc": null,
+    "Chruszczobród": 286.713
+  },
+  "571": {
+    "Czarnca R19": 0,
+    "Knapówka R2": 3.830
+  },
+  "651": {
+    "Hajduki": 1.443,
+    "Gottwald": 3.547,
+    "Katowice Tow. KTC": null
+  },
+  "660": {
+    "Sosnowiec Południowy": 0,
+    "Sosnowiec Gł. pzs R52": 1.117
+  },
+  "696": {
+    "Tychy Miasto": 0,
+    "Tychy Lodowisko": 0.336
+  },
+  "713": {
+    "Gottwald": 4.056
+  },
+  "839": {
+    "Warszawa Grochów R5": null,
+    "Warszawa Grochów": null
+  }
+}

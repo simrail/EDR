@@ -6,7 +6,6 @@ const Logger = morgan('short');
 
 import {dispatchController, trainTimetableController} from "./dispatchController";
 import {getPlayer, getServerList, getStationsList, getTrainsList} from "./serverController";
-import {Pool} from "pg";
 
 const corsConfig = {
     allowedHeaders: "x-debug",
