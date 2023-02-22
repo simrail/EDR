@@ -11,6 +11,7 @@ import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
+import classNames from "classnames";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -86,9 +87,12 @@ export const EDRTable: React.FC<Props> = ({
             filterConfig={filterConfig}
             setFilterConfig={setFilterConfig}
         />
-        <div>
+        <div className={classNames(
+            "child:snap-y child:snap-mandatory child:overflow-y-scroll ",
+                streamMode ? "child:h-[calc(100vh-102px)]" : "child:h-[calc(100vh-166px)]"
+            )}>
             <Table striped={true}>
-            <Table.Body className="overflow-x-auto">
+            <Table.Body>
                 {timetable.length > 0
                     ? timetable
                         .filter((tt) => filter ? 
