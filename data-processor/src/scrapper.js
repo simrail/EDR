@@ -3,6 +3,7 @@ const process = require("node:process");
 const select = require ('puppeteer-select');
 const cheerio = require('cheerio');
 const _ = require("lodash");
+const fns = require("date-fns");
 const SIMRAIL_EDR_URL = process.env["SIMRAIL_EDR_URL"];
 
 // THIS SHOULD BE IN A NPM LIB TO SHARE WITH THE API (in fact, no need ?)
@@ -78,7 +79,7 @@ const Promise_sequence = (promiseAry) => promiseAry.reduce((p, fn) => p.then(fn)
 async function initScrapperBrowser(stationId) {
     const browser = await pupeeter.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto(SIMRAIL_EDR_URL + "?stationId="+stationId+"&serverCode=biuro", {referer: "Community EDR Scrapper v2"});
+    await page.goto(SIMRAIL_EDR_URL + "?stationId="+stationId+"&serverCode=eu2", {referer: "Community EDR Scrapper v2"});
     global.scrapBrowser = browser; // To chatch in case of unexpected error and free resource
     return [browser, page];
 }
@@ -344,47 +345,52 @@ async function insertPartialTimetableInDb(partialTimetableJson, simrailEDRStatio
 
             if (!!dataBaseRow) {
                 console.log("🏍️  Timetable cache hit : (PK: " + dataBaseRow.train_number + " | " + trainRow.arrival_date + " | " + trainRow.departure_date + ")");
-            } else {
+                const isCacheExpired = Date.now() - dataBaseRow.cachedate > (172800 * 1000);
+                if (isCacheExpired) {
+                    console.log("Cache expired ! Deleting ...")
+                    await pgClient.query("DELETE FROM stations_timetable_row WHERE simrail_new_edr_station_id=$1 AND train_number=$2",
+                    [simrailEDRStationId.toString(), trainRow.train_number]);
+                }
+                else return Promise.resolve();
                 // console.log("To cache row : ", trainRow);
-                console.log("📅 Train Timetable saved for : " + trainRow.train_number, new Date());
-                return await pgClient.query(`INSERT INTO stations_timetable_row (
-                    simrail_new_edr_station_id,
-                    train_number,
-                    train_type,
-                    type_speed,
-                    stop_type,
-                    platform,
-                    arrival_time,
-                    departure_time,
-                    arrival_date,
-                    departure_date,
-                    from_post,
-                    to_post,
-                    line,
-                    start_station,
-                    terminus_station,
-                    cacheDate
-                ) 
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`, [
-                    simrailEDRStationId,
-                    trainRow.train_number,
-                    trainRow.type,
-                    trainRow.type_speed,
-                    trainRow.stop_type,
-                    trainRow.platform,
-                    trainRow.arrival_time,
-                    trainRow.departure_time,
-                    trainRow.arrival_date,
-                    trainRow.departure_date,
-                    trainRow.from,
-                    trainRow.to,
-                    trainRow.line,
-                    trainRow.start_station,
-                    trainRow.terminus_station,
-                    new Date()
-                ]);
             }
-
+            console.log("📅 Train Timetable saved for : " + trainRow.train_number, new Date());
+            return await pgClient.query(`INSERT INTO stations_timetable_row (
+                simrail_new_edr_station_id,
+                train_number,
+                train_type,
+                type_speed,
+                stop_type,
+                platform,
+                arrival_time,
+                departure_time,
+                arrival_date,
+                departure_date,
+                from_post,
+                to_post,
+                line,
+                start_station,
+                terminus_station,
+                cacheDate
+            ) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`, [
+                simrailEDRStationId,
+                trainRow.train_number,
+                trainRow.type,
+                trainRow.type_speed,
+                trainRow.stop_type,
+                trainRow.platform,
+                trainRow.arrival_time,
+                trainRow.departure_time,
+                trainRow.arrival_date,
+                trainRow.departure_date,
+                trainRow.from,
+                trainRow.to,
+                trainRow.line,
+                trainRow.start_station,
+                trainRow.terminus_station,
+                new Date()
+            ]);
         } catch (e) {
             console.error("Error inserting a row ! ", {
                 row: trainRow,
@@ -406,7 +412,14 @@ async function insertTrainTimetableRow(scrappedRows, trainNumber) {
 
                 if (!!dataBaseRow) {
                     console.log("🏍️  Train line cache hit : (PK: " + dataBaseRow.train_number + " | " + scrappedRow.station + ")");
-                } else {
+                    const isCacheExpired = Date.now() - dataBaseRow.cachedate > (172800 * 1000);
+                    if (isCacheExpired) {
+                        console.log("Cache expired ! Deleting ...")
+                        await pgClient.query("DELETE FROM trains_timetable_row WHERE train_number=$1 AND station=$2",
+                        [trainNumber, scrappedRow.station]);
+                    }
+                    else return Promise.resolve();
+                }
                     console.log("📅 Train row saved in DB " + trainNumber, new Date());
                     // console.log("R ", scrappedRow);
                     return await pgClient.query(`INSERT INTO trains_timetable_row (
@@ -440,8 +453,6 @@ async function insertTrainTimetableRow(scrappedRows, trainNumber) {
                         new Date(),
                         scrappedRow.stop_type
                     ]);
-
-                }
             } catch (e) {
                 console.error("Error inserting line : ", e);
             }
