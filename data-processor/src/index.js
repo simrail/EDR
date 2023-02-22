@@ -4,7 +4,7 @@ const express = require("express");
 const {scrapMap} = require("./scrapper");
 const app = express();
 
-const SR_STATIONS_IDS = [3991, 124, 2375]
+const SR_STATIONS_IDS = [1655, 3991, 3993, 124, 719, 2375, 1193, 3436, 1772, 4987, 2969, 3200, 2993, 5262, 733, 4010, 1349]
 
 const pgClient = new pg.Client({
     host: process.env["PG_HOST"] ?? "127.0.0.1",
