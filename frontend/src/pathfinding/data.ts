@@ -237,7 +237,9 @@ const OP_PO = {
 const IDZ = {
     ...postConfig.IDZ,
     left: "OP_PO",
-    right: "STR"
+    right: "STR",
+    branchA: "RDZ_R12",
+    branchB: "RDZ_P31"
 }
 
 // Strzałki
