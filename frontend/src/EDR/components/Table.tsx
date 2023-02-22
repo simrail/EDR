@@ -13,6 +13,7 @@ import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
 import i18n from "../../i18n";
 import { getTimetableStartingFromHour } from "../functions/trainsTable";
+import classNames from "classnames";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -79,7 +80,7 @@ export const EDRTable: React.FC<Props> = ({
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
-        <TrainTimetableModal trainId={timetableModalTrainId} setModalTrainId={setTimetableModalTrainId} />
+        <TrainTimetableModal trainDetails={timetableModalTrainId ? trainsWithDetails[timetableModalTrainId] : undefined} setModalTrainId={setTimetableModalTrainId} />
         <Header
             serverTzOffset={serverTzOffset}
             serverCode={serverCode}
@@ -93,9 +94,12 @@ export const EDRTable: React.FC<Props> = ({
             filterConfig={filterConfig}
             setFilterConfig={setFilterConfig}
         />
-        <div>
+        <div className={classNames(
+            "child:snap-y child:snap-mandatory child:overflow-y-scroll ",
+                streamMode ? "child:h-[calc(100vh-102px)]" : "child:h-[calc(100vh-166px)]"
+            )}>
             <Table striped={true}>
-            <Table.Body className="overflow-x-auto">
+            <Table.Body>
                 {timetable.length > 0
                     ? getTimetableStartingFromHour(
                         timetable,
