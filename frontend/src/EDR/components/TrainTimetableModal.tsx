@@ -68,7 +68,7 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
             </div>
         </Modal.Header>
         <Modal.Body>
-            <div className="max-h-[700px] overflow-y-scroll">
+            <div className="max-h-[700px] overflow-y-scroll child:px-2">
                 <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} />
             </div>
         </Modal.Body>
