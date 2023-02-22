@@ -73,7 +73,7 @@ export const EDRTable: React.FC<Props> = ({
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
-        <TrainTimetableModal trainId={timetableModalTrainId} setModalTrainId={setTimetableModalTrainId} />
+        <TrainTimetableModal trainDetails={timetableModalTrainId ? trainsWithDetails[timetableModalTrainId] : undefined} setModalTrainId={setTimetableModalTrainId} />
         <Header
             serverTzOffset={serverTzOffset}
             serverCode={serverCode}
