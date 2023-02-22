@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
@@ -66,7 +66,7 @@ export const EDRTable: React.FC<Props> = ({
     }
 
     const dt = nowUTC(serverTzOffset);
-  
+
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
