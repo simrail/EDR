@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import classNames from "classnames";
 import {Bounds} from "./Table";
 
-const tableHeadCommonClassName = "p-4"
+const tableHeadCommonClassName = "p-4 max-h-[56px] truncate"
 export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, thirdColBounds, fourthColBounds, fifthColBounds, sixthColBounds, seventhColBounds, showStopColumn}) => {
     const {t} = useTranslation();
     if (!firstColBounds) return null;
