@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
 import useMeasure, {RectReadOnly} from "react-use-measure";
-import {nowUTC} from "../../utils/date";
+import {formatTime, nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
@@ -11,6 +11,7 @@ import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
+import i18n from "../../i18n";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -65,10 +66,37 @@ export const EDRTable: React.FC<Props> = ({
     }
 
     const dt = nowUTC(serverTzOffset);
-
+  
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
+
+    const getTimetableStartingFromHour = (timetable: TimeTableRow[], startHour: string) => {      
+        // Find the index of the first time in the timetable that is equal to or
+        // greater than the start hour
+        const startIndex = timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival >= startHour);
+        
+        if (startIndex === -1) {
+          // If there is no time in the timetable that is equal to or greater than the
+          // start hour, add the times from the beginning of the 24-hour period up to
+          // (but not including) the start hour, as well as all times from the start
+          // hour until the end of the 24-hour period
+            return [
+                ...timetable.slice(0, timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival === startHour)),
+                ...timetable.slice(timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival === startHour))
+            ];
+        } else {
+          // If there is a time in the timetable that is equal to or greater than the
+          // start hour, return a new array that starts from the start index and
+          // includes all times up to the end of the 24-hour period, as well as all
+          // times from the beginning of the 24-hour period up to (but not including)
+          // the start index
+            return [
+                ...timetable.slice(startIndex),
+                ...timetable.slice(0, startIndex)
+            ];
+        }
+    }
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
@@ -90,7 +118,13 @@ export const EDRTable: React.FC<Props> = ({
             <Table striped={true}>
             <Table.Body className="overflow-x-auto">
                 {timetable.length > 0
-                    ? timetable
+                    ? getTimetableStartingFromHour(
+                        timetable,
+                        formatTime(nowUTC(serverTzOffset, 1), i18n.language, {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        }))
                         .filter((tt) => filter ? 
                             // Remove spaces, trim not enough since humans usually use space after a separator
                             filter.replace(/\s+/g, '')

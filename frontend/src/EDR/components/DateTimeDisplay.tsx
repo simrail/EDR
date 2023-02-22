@@ -1,6 +1,6 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {formatTime, nowUTC} from "../../utils/date";
+import {timeOptions, formatTime, nowUTC} from "../../utils/date";
 
 type Props = {serverTzOffset: number, serverCode: string};
 
@@ -16,7 +16,7 @@ export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverCode}) =
     }, [serverTzOffset])
 
     return <div className="text-center">
-        <span className="mr-2 text-xl">{formatTime(dt, i18n.language)}</span><br />
+        <span className="mr-2 text-xl">{formatTime(dt, i18n.language, timeOptions)}</span><br />
         <span className="text-xs">{serverCode.toUpperCase()} / (UTC {serverTzOffset})</span>
     </div>
 }
