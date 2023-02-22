@@ -41,12 +41,13 @@ export const treeTraversal = (
     if (subTree.id === finish) return nxtAcc;
     const leftPath = treeTraversal(resolveSubNode(subTree.left), finish, nxtAcc);
     const rightPath = treeTraversal(resolveSubNode(subTree.right), finish, nxtAcc);
-    const branchPath = treeTraversal(resolveSubNode(subTree.branchA), finish, nxtAcc);
+    const branchPathA = treeTraversal(resolveSubNode(subTree.branchA), finish, nxtAcc);
+    const branchPathB = treeTraversal(resolveSubNode(subTree.branchB), finish, nxtAcc);
     // TODO: pathfinding lacks weight, wich is alright for now. (Rather good enough)
     // TODO: But it needs to take distance in count instead of number of stations
     // Else pendolino would take interesting routes lmao
-    const foundViaPath = [leftPath, rightPath, branchPath].filter((p) => p?.find((e) => via && e?.id === via))
-    return foundViaPath?.[0] ?? _.minBy([leftPath, rightPath, branchPath], 'length');
+    const foundViaPath = [leftPath, rightPath, branchPathA, branchPathB].filter((p) => p?.find((e) => via && e?.id === via))
+    return foundViaPath?.[0] ?? _.minBy([leftPath, rightPath, branchPathA, branchPathB], 'length');
 }
 
 export const findPath = (start: ExtendedStationConfig, finish: string, via?: string): PathFindingLineTrace => {

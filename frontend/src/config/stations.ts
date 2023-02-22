@@ -516,6 +516,18 @@ export const postConfig: {[k: string]: StationConfig} = {
         srId: "Line R19",
         trainPosRange: 0.1,
         platformPosOverride: [19.936579673244754, 50.545345355543446]
+    },
+    RDZ_P31: {
+        id: "RDZ_P31",
+        srId: "Radzice PZS R31",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.338202, 51.483653]
+    },
+    RDZ_R12: {
+        id: "RDZ_R12",
+        srId: "Radzice R12",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.340260, 51.482987, ]
     }
 }
 

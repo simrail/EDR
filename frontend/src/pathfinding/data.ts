@@ -490,6 +490,16 @@ const STZ = {
     left: "KOZ"
 }
 
+const RDZ_P31 = {
+    ...postConfig.RDZ_P31,
+    branchA: "IDZ"
+};
+
+const RDZ_R12 = {
+    ...postConfig.RDZ_R12,
+    branchA: "IDZ"
+}
+
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
@@ -572,7 +582,10 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     KLI,
     SDZ,
     CO,
-    CH
+    CH,
+
+    RDZ_R12,
+    RDZ_P31
 
 }
 
