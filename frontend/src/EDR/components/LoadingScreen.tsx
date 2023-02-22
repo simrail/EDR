@@ -9,8 +9,9 @@ type Props = {
     timetable: TimeTableRow[];
     trains: Train[] | undefined;
     stations: Dictionary<Station>;
+    tzOffset?: number;
 }
-export const LoadingScreen: React.FC<Props> = ({timetable, trains, stations}: Props) => {
+export const LoadingScreen: React.FC<Props> = ({timetable, trains, stations, tzOffset}: Props) => {
     const {t} = useTranslation();
 
     return <div className="min-h-screen flex flex-col justify-center items-center text-center">
@@ -18,5 +19,6 @@ export const LoadingScreen: React.FC<Props> = ({timetable, trains, stations}: Pr
         <div>{t("EDR_LOADING_schedules")}: {!timetable ? <Spinner size="xs"/> : <>✓</>}</div>
         <div>{t("EDR_LOADING_stations")}: {!stations ? <Spinner size="xs"/> : <>✓</>}</div>
         <div>{t("EDR_LOADING_trains")}: {!trains ? <Spinner size="xs"/> : <>✓</>}</div>
+        <div>{t("EDR_LOADING_timezone")}: {tzOffset === undefined ? <Spinner size="xs"/> : <>✓</>}</div>
     </div>
 }

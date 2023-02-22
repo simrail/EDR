@@ -12,9 +12,10 @@ type Props = {
     trainHasPassedStation: boolean;
     trainMustDepart: boolean;
     playSoundNotification: (callBack: () => void) => void
+    streamMode: boolean;
 
 }
-export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNotification, ttRow, headerSixthhColRef, trainHasPassedStation}) => {
+export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNotification, ttRow, headerSixthhColRef, trainHasPassedStation, streamMode}) => {
     const {t} = useTranslation();
     const [notificationEnabled, setNotificationEnabled] = React.useState(false);
 
@@ -25,7 +26,7 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
     }, [notificationEnabled, trainMustDepart]);
 
     return (
-        <td className={tableCellCommonClassnames} style={{minWidth: 150}} ref={headerSixthhColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} style={{minWidth: 150}} ref={headerSixthhColRef}>
             <div className="flex items-center justify-start h-full">
                 {ttRow.scheduled_departure}
                 <div className="inline-flex items-center h-full pl-4 hidden lg:block">

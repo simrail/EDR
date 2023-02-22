@@ -8,6 +8,9 @@
 
   "SELECTMENU_server_selection": "Select Server",
   "SELECTMENU_post_select": "Select Dispatching Post",
+  "SELECTMENU_nav_current_server": "Current server",
+  "SELECTMENU_nav_previous_server": "Previous server",
+  "SELECTMENU_nav_next_server": "Next server",
 
   "FOOTER_version": "version",
   "FOOTER_screenshots_by": "Screenshot by",
@@ -44,6 +47,7 @@
   "EDR_TRAINROW_waiting_for_data":"Waiting for data...",
   "EDR_TRAINROW_notify": "Notify departure",
   "EDR_TRAINROW_show_on_map": "Show on map",
+  "EDR_TRAINROW_show_timetable": "Show timetable",
 
   "EDR_TRAINHEADER_train_number": "Train N°",
   "EDR_TRAINHEADER_train_type": "Train type",

@@ -82,7 +82,7 @@ export const configByType: {[k: string ]: {color: string, graphColor: string}} =
         graphColor: "green",
     },
     "ECE": {
-        graphColor: "blue",
+        graphColor: "lightblue",
         color: "success"
     },
     "EIJ": {

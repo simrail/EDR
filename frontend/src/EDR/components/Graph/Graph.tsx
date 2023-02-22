@@ -27,14 +27,14 @@ import {useTranslation} from "react-i18next";
 export type GraphProps = {
     post: string;
     timetable: TimeTableRow[];
-    serverTz: string;
+    serverTzOffset: number;
 }
 
 const dateFormatter = (date: Date) => {
     return format(date, "HH:mm");
 };
-const makeDate = (dateAry: [string, string], serverTz: string) => {
-    const dateNow = nowUTC(serverTz);
+const makeDate = (dateAry: [string, string], serverTzOffset: number) => {
+    const dateNow = nowUTC(serverTzOffset);
     const hours = Number.parseInt(dateAry[0]);
     const minutes = Number.parseInt(dateAry[1]);
     const isDepartureNextDay = dateNow.getHours() >= 20 && Number.parseInt(dateAry[0]) < 12;  // TODO: less but still clunky
@@ -66,11 +66,36 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
     return null;
 }
 
+const CustomizedAxisTick = (data: any, displayMode: string, color: string) => (props: any) => {
+    const { x, y } = props;
+
+    if (!props.value || props.index % 3 !== 0 || props.index === (displayMode === "vertical" ? data.length -1 : 0)) return <></>;
+    const maybeTrainNumber = Object.entries(data[props.index]).find((v, i) => v[1] === props.value);
+
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text
+                x={displayMode === "vertical" ? -12 : -6}
+                y={displayMode === "vertical" ? -6 : -12}
+                dy={16 + Math.random()}
+                textAnchor="end"
+                fill={color}
+                transform={displayMode === "vertical" ? "rotate(-45)" : ""}
+                fillOpacity={1}
+                fontSize={12}
+            >
+                {(maybeTrainNumber as any)?.[0]}
+            </text>
+        </g>
+    );
+};
+
+
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
-const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
+const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) => {
     const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
     const [zoom, setZoom] = React.useState<number>(1);
-    const [dtNow, setDtNow] = React.useState(nowUTC(serverTz));
+    const [dtNow, setDtNow] = React.useState(nowUTC(serverTzOffset));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
@@ -84,11 +109,11 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
 
     React.useEffect(() => {
         const intervalId = window.setInterval(() => {
-            setDtNow(nowUTC(serverTz));
+            setDtNow(nowUTC(serverTzOffset));
         }, 10000);
 
         return () => window.clearInterval(intervalId);
-    }, [serverTz])
+    }, [serverTzOffset])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
@@ -139,7 +164,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                 if (!nextPost) return []
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_departure : targetTrain?.scheduled_arrival;
-                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTz)]
+                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
@@ -151,7 +176,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 // console.log("ITGTK ", isTrainGoingToKatowice);
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_arrival : targetTrain?.scheduled_departure;
-                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTz)]
+                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             // console.log("All train departures : ", allTrainDepartures);
             return [{
@@ -165,7 +190,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
 
         // console.log("Final data : ", data);
         setData(data);
-    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTz, allPathsOfPosts])
+    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTzOffset, allPathsOfPosts])
 
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;
@@ -199,13 +224,18 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTz}) => {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <TimeComponent data-key="time" type="number" scale="time" domain={["dataMin", "dataMax"]} tickCount={20} interval={0} tickFormatter={dateFormatter} reversed={displayMode === "horizontal"}/>
-                        <ReferenceLine {...displayMode === "vertical" ? {x: dtNow.getTime()} : {y: dtNow.getTime()}}  stroke="black" strokeWidth={2} strokeOpacity={0.5} type={"dotted"} />
+                        <ReferenceLine {...displayMode === "vertical" ? {x: dtNow.getTime()} : {y: dtNow.getTime()}}  stroke="black" strokeWidth={2} strokeOpacity={0.5} type={"dotted"}  />
                         <PostComponent dataKey="name" type="category" allowDuplicatedCategory={false} />
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
-                        {Object.values(onlyAnHourAround).map((t) =>
-                            <Line key={t.train_number} dataKey={t.train_number} label={t.train_number} stroke={configByType[t.type]?.graphColor ?? "purple"}>
-                            </Line>
+                        {Object.values(onlyAnHourAround).map((t) => {
+                            const color = configByType[t.type]?.graphColor ?? "purple"
+                                return <Line key={t.train_number} dataKey={t.train_number}
+                                      label={CustomizedAxisTick(data, displayMode, color)}
+                                      fillOpacity={0.8}
+                                      stroke={color}>
+                                </Line>
+                            }
                         )}
                     </LineChart>
                 </ResponsiveContainer>

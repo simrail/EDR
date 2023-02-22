@@ -1,5 +1,7 @@
 export const BASE_SIMRAIL_DISPATCH_API = "https://panel.simrail.eu:8091/";
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
+export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
+
 export const srHeaders = {
     "User-Agent": "Custom EDR vDEV",
     "xx-client": "Custom EDR",
@@ -28,7 +30,8 @@ export const internalIdToSrId: {[k: string]: string} = {
     "OP_PO": "Opoczno Południe",
     "DG_WZ": "Dąbrowa Górnicza Wschodnia",
     "DG_ZA": "",
-    "SG_PO": "Sosnowiec Południowy"
+    "SG_PO": "Sosnowiec Południowy",
+    "IDZ": "Idzikowice"
 }
 
 export const newInternalIdToSrId: {[k: string]: string} = {
@@ -54,7 +57,8 @@ export const POSTS: { [key: string]: PURE_POST[] } = {
     "Opoczno Południe": ["Opoczno Południe"],
     "Dąbrowa Górnicza Wschodnia": ["Dąbrowa Górnicza Wschodnia"],
     "Dąbrowa Górnicza Ząbkowice": ["Dąbrowa Górnicza Ząbkowice"],
-    "Sosnowiec Południowy": ["Sosnowiec Południowy"]
+    "Sosnowiec Południowy": ["Sosnowiec Południowy"],
+    "Idzikowice": ["Idzikowice"]
 
 };
 
@@ -75,7 +79,8 @@ export type PURE_POST =
     "Opoczno Południe" |
     "Dąbrowa Górnicza Wschodnia" |
     "Dąbrowa Górnicza Ząbkowice" |
-    "Sosnowiec Południowy"
+    "Sosnowiec Południowy" |
+    "Idzikowice"
 
 export enum VMAX_BY_TYPE {
     EIJ = 200,

@@ -1,4 +1,5 @@
 import utcToZonedTime from 'date-fns-tz/utcToZonedTime'
+import {addDays, addHours} from "date-fns";
 
 const options: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
@@ -6,11 +7,11 @@ const options: Intl.DateTimeFormatOptions = {
     second: '2-digit',
     hour12: false
 };
-
-export const nowUTC = (targetTimezone: string = "Europe/Paris") => {
+ // TODO: Take UTC offset from API now. And then shift the hours by the UTC offset value instead of taking TZ
+export const nowUTC = (serverTzOffset: number = 0) => {
     const now = new Date();
-    return utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
-        now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), targetTimezone)
+    return addHours(utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+        now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "Europe/London"), serverTzOffset)
 }
 
 // We don't care about the date, only time
