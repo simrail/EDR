@@ -8,6 +8,9 @@
 
   "SELECTMENU_server_selection": "Select Server",
   "SELECTMENU_post_select": "Select Dispatching Post",
+  "SELECTMENU_nav_current_server": "Current server",
+  "SELECTMENU_nav_previous_server": "Previous server",
+  "SELECTMENU_nav_next_server": "Next server",
 
   "FOOTER_version": "version",
   "FOOTER_screenshots_by": "Screenshot by",
