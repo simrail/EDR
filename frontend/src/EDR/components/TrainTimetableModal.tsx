@@ -10,10 +10,19 @@ type Props = {
     setModalTrainId: (trainId: string | undefined) => void;
 }
 
-const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string}> = ({timetable, closestStation}) => {
+const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, lineTrace: any}> = ({timetable, closestStation, lineTrace}) => {
     if (!timetable) return <Spinner />
     if (timetable.length === 0) return <>&nbsp; Some trains may be missing during beta</>
-    const closestStationIndex = timetable.findIndex(ttRow => ttRow.station === closestStation);
+    const closestStationInLineTrace = () => lineTrace.map((lts: any) => [lts.srId, lts]).filter(([stationName]: [string, any]) => !!timetable.find((ttRow) => ttRow.station === stationName))[0]?.[0];
+    const maybeClosestStationDirect = timetable.findIndex(ttRow => ttRow.station === closestStation);
+
+    // I use an IIFE here because calling the linetrace is expensive, so I make sur it is called only when fallback is needed
+    const closestStationIndex = maybeClosestStationDirect === -1 ? function() {
+        const closestStation = closestStationInLineTrace();
+        return timetable.findIndex(ttRow => ttRow.station === closestStation)
+    }() : maybeClosestStationDirect
+
+    console.log("Closest station corrected : ", closestStationIndex);
 
     return (
         <Table className="max-h-[700px]" striped>
@@ -61,6 +70,8 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
         getTrainTimetable(trainDetails.TrainNoLocal).then(setTrainTimetable);
     }, [trainDetails]);
 
+    const lineTrace = trainDetails?.pfLineTrace;
+
     return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="bottom-center" style={{zIndex: 999999}}>
         <Modal.Header>
             <div className="flex justify-around">
@@ -69,7 +80,7 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
         </Modal.Header>
         <Modal.Body>
             <div className="max-h-[700px] overflow-y-scroll child:px-2">
-                <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} />
+                <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} lineTrace={lineTrace}/>
             </div>
         </Modal.Body>
     </Modal> : null;
