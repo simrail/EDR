@@ -17,6 +17,8 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
     const [servers, setServers] = React.useState<Server[] | undefined>();
     const [serversByRegion, setServersByRegion] = useState<any>();
 
+    console.log(">>>>> SEERVERS", serversByRegion);
+
     const { t, i18n } = useTranslation();
 
     React.useEffect(() => {
@@ -67,12 +69,12 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
                     <>
                         <div>
                             {serversByRegion?.serversByLanguage && (
-                                <>
-                                    {serversByRegion.serversByLanguage[0].ServerCode.substring(0, 2).toUpperCase()}
+                                <div className="flex flex-wrap justify-center">
+                                    {/* {serversByRegion.serversByLanguage[0].ServerCode.substring(0, 2).toUpperCase()} */}
                                     {serversByRegion.serversByLanguage.map((s: Server) => (
                                         <ServerCard key={s.ServerCode} server={s} itemType={'item-card'} />
                                     ))}
-                                </>
+                                </div>
                             )}
                         </div>
                         <div className="w-full flex flex-wrap justify-center">
@@ -95,8 +97,8 @@ type ServerListProps = {
 export const ServerList: React.FC<ServerListProps> = ({ servers }) => {
     return (
         <>
-            <div className="bg-white px-4 max-w-md rounded-lg shadow-md m-4 dark:bg-gray-800">
-                {servers[0].ServerCode.substring(0, 2).toUpperCase()}
+            <div className="bg-white px-4 py-2 max-w-md rounded-lg shadow-md m-4 dark:bg-gray-800">
+                {/* {servers[0].ServerCode.substring(0, 2).toUpperCase()} */}
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                     {servers.map((s: Server) => (
                         <ServerCard key={s.ServerCode} server={s} itemType={'item-list'} />
