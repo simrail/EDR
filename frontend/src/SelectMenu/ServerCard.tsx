@@ -29,7 +29,7 @@ export const ServerCard: React.FC<Props> = ({ server, itemType }) => {
             </Link>
         </li>
     ) : (
-        <Link to={serverCardPath} className="bg-white w-[150px] rounded-lg shadow-md m-4 dark:bg-gray-800 text-center overflow-hidden">
+        <Link to={serverCardPath} className="bg-white w-[150px] rounded-lg shadow-md m-4 dark:bg-gray-800 text-center overflow-hidden transition duration-150 ease-out hover:scale-105 active:scale-100  hover:shadow-xl">
             <span className="child:w-full child:h-auto" dangerouslySetInnerHTML={{ __html: flag.toString() }} />
             <span className="p-2 block text-sm">{server.ServerName}</span>
         </Link>
