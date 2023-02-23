@@ -29,9 +29,12 @@ export const ServerCard: React.FC<Props> = ({ server, itemType }) => {
             </Link>
         </li>
     ) : (
-        <Link to={serverCardPath} className="bg-white w-[150px] rounded-lg shadow-md m-4 dark:bg-gray-800 text-center overflow-hidden transition duration-150 ease-out hover:scale-105 active:scale-100  hover:shadow-xl">
-            <span className="child:w-full child:h-auto" dangerouslySetInnerHTML={{ __html: flag.toString() }} />
-            <span className="p-2 block text-sm">{server.ServerName}</span>
+        <Link to={serverCardPath} className="bg-white w-[150px] rounded-lg shadow-md m-4 dark:bg-gray-800 text-center transition duration-150 ease-out hover:scale-105 active:scale-100 hover:shadow-xl">
+            <span className="child:w-full child:h-auto child:rounded-t-lg" dangerouslySetInnerHTML={{ __html: flag.toString() }} />
+            <span className="relative p-2 block text-sm">
+                <span className={`inline-flex mr-2 w-2 h-2 text-xs font-bold ${server.IsActive ? 'bg-green-400' : 'bg-red-600'} rounded-full -top-2 -left-2 dark:border-gray-900`}></span>
+                {server.ServerName}
+            </span>
         </Link>
     )
 }
