@@ -43,28 +43,24 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
         const { [nextIndex]: nextItem, [previousIndex]: previousItem } = servers;
 
         setSubnavigationItems({
-            navPreviousItem: (
+            navPreviousItem: previousItem?.ServerCode && (
                 <Link to={`/${previousItem.ServerCode}`} className="underline underline-offset-2 hover:no-underline text-slate-500 dark:text-slate-300 flex items-center">
                     {t("SELECTMENU_nav_previous_server")}
                     <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[previousItem.ServerCode.slice(0, 2).toUpperCase()].toString() }} />
                     <span className="font-bold">{previousItem.ServerCode.toUpperCase()}</span>
                 </Link>
             ),
-            navNextItem: (
+            navNextItem: nextItem?.ServerCode && (
                 <Link to={`/${nextItem.ServerCode}`} className="underline underline-offset-2 hover:no-underline text-slate-500 dark:text-slate-300 flex items-center ml-auto">{t("SELECTMENU_nav_next_server")}
                     <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[nextItem.ServerCode.slice(0, 2).toUpperCase()].toString() }} />
-                    <span className="font-bold">{nextItem.ServerCode.toUpperCase()}</span>
+                    <span className="font-bold">{nextItem.ServerCode?.toUpperCase()}</span>
                 </Link>
             ),
-            navCurrentItem: (
+            navCurrentItem: serverCode && (
                 <Link to={`/`} className="uppercase font-bold text-slate-500 dark:text-slate-300 flex items-center">
                     {t("SELECTMENU_nav_current_server")}
-                    {serverCode && (
-                        <>
-                            <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[serverCode.slice(0, 2).toUpperCase()].toString() }} />
-                            <span className="font-bold">{serverCode.toUpperCase()}</span>
-                        </>
-                    )}
+                    <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[serverCode.slice(0, 2).toUpperCase()].toString() }} />
+                    <span className="font-bold">{serverCode.toUpperCase()}</span>
                 </Link>
             )
         })
