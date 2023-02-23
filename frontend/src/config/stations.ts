@@ -528,6 +528,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         srId: "Radzice R12",
         trainPosRange: 0.5,
         platformPosOverride: [20.340260, 51.482987, ]
+    },
+    ZEL_R6: {
+        id: "ZEL_R6",
+        srId: "Żelisławice R.6",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.859630, 50.804040]
     }
 }
 
