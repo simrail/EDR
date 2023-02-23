@@ -21,6 +21,7 @@ export const tableCellCommonClassnames = (streamMode: boolean = false) => stream
 type Props = {
     setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     setTimetableTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
+    setSelectedRow: React.Dispatch<React.SetStateAction<number | null>>,
     ttRow: TimeTableRow,
     timeOffset: number,
     trainDetails: DetailedTrain,
@@ -38,12 +39,15 @@ type Props = {
     showOnlyApproachingTrains: boolean;
     streamMode: boolean;
     filterConfig: FilterConfig;
+    index: number;
+    selectedRow: number | null;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode, setTimetableTrainId, filterConfig
+        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode, setTimetableTrainId, filterConfig, index,
+        selectedRow, setSelectedRow
     }: Props
 ) => {
     const dateNow = nowUTC(serverTzOffset);
@@ -90,7 +94,14 @@ const TableRow: React.FC<Props> = (
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
-    return <Table.Row className="snap-start dark:text-gray-100 light:text-gray-800" style={{opacity: trainHasPassedStation ? 0.5 : 1}} data-timeoffset={timeOffset}>
+    return <Table.Row
+        onClick={() => setSelectedRow(index !== selectedRow ? index : null)} 
+        className={`
+            cursor-pointer snap-start dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
+            ${trainHasPassedStation ? 'opacity-50' : 'opacity-100'}
+            ${selectedRow === index ? 'odd:bg-gray-300 even:bg-gray-300 dark:odd:bg-gray-500 dark:even:bg-gray-500' : ''}
+        `} data-timeoffset={timeOffset}
+    >
         <TrainInfoCell
             ttRow={ttRow}
             trainDetails={trainDetails}

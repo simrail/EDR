@@ -48,6 +48,7 @@ export const EDRTable: React.FC<Props> = ({
     const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
     const [timetableModalTrainId, setTimetableModalTrainId] = React.useState<string | undefined>();
     const [streamMode, setStreamMode] = React.useState(false);
+    const [selectedRow, setSelectedRow] = React.useState<number | null>(null);
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
@@ -114,12 +115,15 @@ export const EDRTable: React.FC<Props> = ({
                             // If any train numbers match up, filter for it
                             .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
                         .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.train_number] : true)
-                        .map((tr) =>
+                        .map((tr, index: number) =>
                     <TableRow
                         key={tr.train_number + "_" + tr.from + "_" + tr.to}
                         ttRow={tr}
+                        index={index}
+                        selectedRow={selectedRow}
                         serverTzOffset={serverTzOffset}
                         post={post}
+                        setSelectedRow={setSelectedRow}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}
                         thirdColRef={headerThirdColRef}
