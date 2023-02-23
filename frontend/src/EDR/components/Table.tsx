@@ -3,7 +3,7 @@ import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
 import useMeasure, {RectReadOnly} from "react-use-measure";
-import {nowUTC} from "../../utils/date";
+import {formatTime, nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
@@ -11,6 +11,8 @@ import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
+import i18n from "../../i18n";
+import { getTimetableStartingFromHour } from "../functions/trainsTable";
 import classNames from "classnames";
 
 export type Bounds = {
@@ -46,6 +48,7 @@ export const EDRTable: React.FC<Props> = ({
     const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
     const [timetableModalTrainId, setTimetableModalTrainId] = React.useState<string | undefined>();
     const [streamMode, setStreamMode] = React.useState(false);
+    const [selectedRow, setSelectedRow] = React.useState<number | null>(null);
 
     const [headerFirstColRef, firstColBounds] = useMeasure();
     const [headerSecondColRef, secondColBounds] = useMeasure();
@@ -70,6 +73,11 @@ export const EDRTable: React.FC<Props> = ({
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
+    const timetableStartHour = formatTime(nowUTC(serverTzOffset, 1), i18n.language, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
@@ -94,7 +102,9 @@ export const EDRTable: React.FC<Props> = ({
             <Table striped={true}>
             <Table.Body>
                 {timetable.length > 0
-                    ? timetable
+                    ? getTimetableStartingFromHour(
+                        timetable,
+                        timetableStartHour)
                         .filter((tt) => filter ? 
                             // Remove spaces, trim not enough since humans usually use space after a separator
                             filter.replace(/\s+/g, '')
@@ -105,12 +115,15 @@ export const EDRTable: React.FC<Props> = ({
                             // If any train numbers match up, filter for it
                             .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
                         .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.train_number] : true)
-                        .map((tr) =>
+                        .map((tr, index: number) =>
                     <TableRow
                         key={tr.train_number + "_" + tr.from_post + "_" + tr.to_post}
                         ttRow={tr}
+                        index={index}
+                        selectedRow={selectedRow}
                         serverTzOffset={serverTzOffset}
                         post={post}
+                        setSelectedRow={setSelectedRow}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}
                         thirdColRef={headerThirdColRef}

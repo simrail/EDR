@@ -35,7 +35,10 @@ const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, 
             </Table.Head>
             <Table.Body>
                 {timetable.map((ttRow, index: number) => (
-                    <Table.Row key={ttRow.station}>
+                    <Table.Row 
+                        className="hover:bg-gray-200 dark:hover:bg-gray-600"
+                        key={ttRow.station}
+                    >
                         <Table.Cell className="relative">
                             <div className="flex flex-col">
                                 <TrainTimetableTimeline isAtTheStation={ttRow.station === closestStation} itemIndex={index} closestStationIndex={closestStationIndex} />
