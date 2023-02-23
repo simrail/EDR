@@ -40,45 +40,45 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             </Navbar.Brand>
             <Navbar.Collapse>
                 <div className="flex items-center space-x-4" >
-                <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><FR /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("fr")}>
-                        French
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><GB /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("en")}>
-                        English
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><CZ /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cz")}>
-                        Czech
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><SK /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("sk")}>
-                        Slovakian
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><HU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("hu")}>
-                        Hungarian
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><DE /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("de")}>
-                        Deutsch
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><IT /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("it")}>
-                        Italian
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><CN /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cn")}>
-                        Chinese
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><PL /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("pl")}>
-                        Polish
-                    </Dropdown.Item>
-                    <Dropdown.Item icon={() => <DropdownFlagIcon><RU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("ru")}>
-                        Russian
-                    </Dropdown.Item>
-                </Dropdown>
+                    <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><FR /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("fr")}>
+                            French
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><GB /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("en")}>
+                            English
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><CZ /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cz")}>
+                            Czech
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><SK /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("sk")}>
+                            Slovakian
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><HU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("hu")}>
+                            Hungarian
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><DE /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("de")}>
+                            Deutsch
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><IT /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("it")}>
+                            Italian
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><CN /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("cn")}>
+                            Chinese
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><PL /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("pl")}>
+                            Polish
+                        </Dropdown.Item>
+                        <Dropdown.Item icon={() => <DropdownFlagIcon><RU /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("ru")}>
+                            Russian
+                        </Dropdown.Item>
+                    </Dropdown>
 
-                <Navbar.Link href="https://github.com/simrail/EDR" target="_blank">
-                    Github
-                </Navbar.Link>
-                <Navbar.Link href="https://github.com/simrail/EDR/issues" target="_blank">
-                    {t("NAVBAR_bugs")}
-                </Navbar.Link>
+                    <Navbar.Link href="https://github.com/simrail/EDR" target="_blank">
+                        Github
+                    </Navbar.Link>
+                    <Navbar.Link href="https://github.com/simrail/EDR/issues" target="_blank">
+                        {t("NAVBAR_bugs")}
+                    </Navbar.Link>
                 </div>
                 <Navbar.Link>
                     <DarkThemeToggle />
@@ -126,7 +126,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             </div>
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
             <div className="flex items-start justify-center max-w-screen min-h-screen">
-                <div className="mt-4 p-8 flex flex-wrap max-w-screen justify-center content-start">
+                <div className="p-8 flex flex-wrap max-w-screen justify-center content-start">
                     {children}
                 </div>
             </div>
