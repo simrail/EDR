@@ -77,8 +77,8 @@ export const postConfig: {[k: string]: StationConfig} = {
         platformPosOverride: [20.1210684, 51.2546948],
         graphConfig: {
             pre: ["KN", "WP", "OZ"],
-            post: ["OP_PO"],
-            final: ["IDZ"]
+            post: ["OP_PO", "IDZ"],
+            final: ["STR"]
         }
     },
     KZ: {
@@ -186,9 +186,9 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [20.232192, 51.358965],
         graphConfig: {
-            pre: ["KN", "WP", "OZ", "PI"],
-            post: [],
-            final: ["IDZ"]
+            pre: ["WP", "OZ", "PI"],
+            post: ["IDZ"],
+            final: ["STR"]
         }
     },
     MY: {
@@ -342,7 +342,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         id: "IDZ",
         srId: "Idzikowice",
         trainPosRange: 0.5,
-        platformPosOverride: [20.3161252, 51.4497225]
+        platformPosOverride: [20.3161252, 51.4497225],
+        graphConfig: {
+            pre: ["WP", "OZ", "PI", "OP_PO"],
+            post: [],
+            final: ["STR"]
+        }
     },
     STR: {
         id: "STR",
@@ -511,6 +516,24 @@ export const postConfig: {[k: string]: StationConfig} = {
         srId: "Line R19",
         trainPosRange: 0.1,
         platformPosOverride: [19.936579673244754, 50.545345355543446]
+    },
+    RDZ_P31: {
+        id: "RDZ_P31",
+        srId: "Radzice PZS R31",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.338202, 51.483653]
+    },
+    RDZ_R12: {
+        id: "RDZ_R12",
+        srId: "Radzice R12",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.340260, 51.482987, ]
+    },
+    ZEL_R6: {
+        id: "ZEL_R6",
+        srId: "Żelisławice R.6",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.859630, 50.804040]
     }
 }
 

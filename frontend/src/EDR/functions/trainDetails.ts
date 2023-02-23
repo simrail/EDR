@@ -15,6 +15,7 @@ type ExtraStationConfig = {
     left?: string,
     right?: string,
     branchA?: string
+    branchB?: string
 }
 
 export type ExtendedStationConfig = StationConfig & ExtraStationConfig;

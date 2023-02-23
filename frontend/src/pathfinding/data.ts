@@ -209,7 +209,8 @@ const WP = {
     ...postConfig.WP,
     left: "KN",
     right: "OZ",
-    branchA: "CZ_R19" // TODO: ?? Should be only psary
+    branchA: "CZ_R19", // TODO: ?? Should be only psary
+    branchB: "ZEL_R6"
 }
 
 // Olszamowice
@@ -237,7 +238,9 @@ const OP_PO = {
 const IDZ = {
     ...postConfig.IDZ,
     left: "OP_PO",
-    right: "STR"
+    right: "STR",
+    branchA: "RDZ_R12",
+    branchB: "RDZ_P31"
 }
 
 // Strzałki
@@ -490,6 +493,21 @@ const STZ = {
     left: "KOZ"
 }
 
+const RDZ_P31 = {
+    ...postConfig.RDZ_P31,
+    branchA: "IDZ"
+};
+
+const RDZ_R12 = {
+    ...postConfig.RDZ_R12,
+    branchA: "IDZ"
+}
+
+const ZEL_R6 = {
+    ...postConfig.ZEL_R6,
+    branchA: "WP"
+}
+
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
@@ -572,7 +590,11 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     KLI,
     SDZ,
     CO,
-    CH
+    CH,
+
+    RDZ_R12,
+    RDZ_P31,
+    ZEL_R6
 
 }
 
