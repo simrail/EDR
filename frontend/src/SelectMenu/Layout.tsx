@@ -33,7 +33,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
     const background = isWebpSupported ? BackgroundWebp : Background;
     const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
     return <div className="text-primary">
-        <Navbar fluid={true} className="sticky top-0 bg-slate-300 h-20 z-10">
+        <Navbar fluid={true} className="sticky top-0 bg-slate-300 h-20 z-20">
             <Navbar.Brand href="/">
                 <img src={appLogo} height={64} width={64} alt="App Logo"/>
                 <span className="ml-4">EDR</span>
