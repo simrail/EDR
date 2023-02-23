@@ -32,6 +32,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
     }, [servers, language]);
 
     const categorizeServerList = (serverList: Server[]) => {
+        const languageTrim = language.substring(0, 2).toLowerCase();
         const orderedServers = _sortBy(serverList, s => {
             return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
         });
@@ -44,12 +45,12 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
 
         const serversNotInLanguage = Object.fromEntries(
             Object.entries(categorized)
-                .filter(([key]) => key !== language.toLowerCase())
+                .filter(([key]) => key !== languageTrim)
         );
 
         const serversByLanguage = Object.fromEntries(
             Object.entries(categorized)
-                .filter(([key]) => key === language.toLowerCase())
+                .filter(([key]) => key === languageTrim)
         );
 
         setServersByRegion({
