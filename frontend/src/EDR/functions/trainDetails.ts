@@ -5,7 +5,7 @@ import {haversine, Vector_DotProduct} from "./vectors";
 import Victor from "victor";
 import {PathFindingLineTrace, PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../../pathfinding/api";
 import _uniq from "lodash/fp/uniq";
-import {postConfig, StationConfig} from "../../config/stations";
+import {postConfig, postToInternalIds, StationConfig} from "../../config/stations";
 import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 
@@ -19,19 +19,22 @@ type ExtraStationConfig = {
 
 export type ExtendedStationConfig = StationConfig & ExtraStationConfig;
 
-export const getClosestStation = (train: Train) =>
-    _minBy<ExtendedStationConfig>(
-        'distanceToStation', Object.values(postConfig)
-            .map((s) => {
-                const truePos = s.platformPosOverride;
-                return {
-                    ...s,
-                    // TODO: Handle truePos might be undefined
-                    distanceToStation: haversine(truePos as [number, number], [train.TrainData.Longitute, train.TrainData.Latititute]),
-                    stationInternalId: s.id
-                }
-            })
+export const getClosestStation = (train: Train, stationsInPath: any) => {
+    const allStationsAndDistance = stationsInPath.map((sn: string) => postToInternalIds[encodeURIComponent(sn)]?.id ? postConfig[postToInternalIds[encodeURIComponent(sn)].id] : undefined).filter((sConfig: ExtendedStationConfig) => !!sConfig)
+        .map((s: ExtendedStationConfig) => {
+            const truePos = s.platformPosOverride;
+            return {
+                ...s,
+                // TODO: Handle truePos might be undefined
+                distanceToStation: haversine(truePos as [number, number], [train.TrainData.Longitute, train.TrainData.Latititute]),
+                stationInternalId: s.id
+            }
+        })
+    return _minBy<ExtendedStationConfig>(
+        'distanceToStation',
+        allStationsAndDistance
     )
+}
 
 const getDirectionVector = (positionsArray: [number, number][]): Victor | undefined => {
     if (positionsArray.length < 2) return undefined;
@@ -42,9 +45,13 @@ const _getOverridenStationPos = (keyedStations: Dictionary<Station>) => (postId:
     postConfig[postId]?.platformPosOverride
     ?? [keyedStations[internalConfigPostIds[encodeURIComponent(postId)]].Longitude, keyedStations[postId].Latititude]
 
-export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, currentStation: StationConfig, keyedStations: Dictionary<Station>) =>(t: Train) => {
+export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, currentStation: StationConfig, keyedStations: Dictionary<Station>, trainTimetables: any) =>(t: Train) => {
     const getOverridenStationPos = _getOverridenStationPos(keyedStations);
-    const closestStation = getClosestStation(t);
+    t.TrainNoLocal === "4122" && console.log("Train timetable : ", trainTimetables[t.TrainNoLocal]);
+    const inTimetableStations =  trainTimetables[t.TrainNoLocal]?.map((ttRow: any) => ttRow.station) ?? Object.values(postConfig).map((p) => p.srId)
+    t.TrainNoLocal === "4122" && console.log("In timetable stations : ", inTimetableStations);
+    const closestStation = getClosestStation(t, inTimetableStations);
+    t.TrainNoLocal === "4122" && console.log("Closest station : ", closestStation);
     // TODO: Handle closestStation might be undefined
     const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum((closestStation as ExtendedStationConfig).id, postConfig[post].id, post);
     const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;

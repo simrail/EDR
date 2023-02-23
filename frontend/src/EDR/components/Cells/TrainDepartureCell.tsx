@@ -28,7 +28,7 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
     return (
         <td className={tableCellCommonClassnames(streamMode)} style={{minWidth: 150}} ref={headerSixthhColRef}>
             <div className="flex items-center justify-start h-full">
-                {ttRow.scheduled_departure}
+                {ttRow.departure_time}
                 <div className="inline-flex items-center h-full pl-4 hidden lg:block">
                     {
                         !trainHasPassedStation && (trainMustDepart ?

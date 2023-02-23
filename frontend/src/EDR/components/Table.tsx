@@ -107,7 +107,7 @@ export const EDRTable: React.FC<Props> = ({
                         .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.train_number] : true)
                         .map((tr) =>
                     <TableRow
-                        key={tr.train_number + "_" + tr.from + "_" + tr.to}
+                        key={tr.train_number + "_" + tr.from_post + "_" + tr.to_post}
                         ttRow={tr}
                         serverTzOffset={serverTzOffset}
                         post={post}

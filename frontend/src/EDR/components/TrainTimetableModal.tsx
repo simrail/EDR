@@ -13,6 +13,8 @@ type Props = {
 const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, lineTrace: any}> = ({timetable, closestStation, lineTrace}) => {
     if (!timetable) return <Spinner />
     if (timetable.length === 0) return <>&nbsp; Some trains may be missing during beta</>
+
+    // TODO: Remove when closest station will include the inPath parameter
     const closestStationInLineTrace = () => lineTrace.map((lts: any) => [lts.srId, lts]).filter(([stationName]: [string, any]) => !!timetable.find((ttRow) => ttRow.station === stationName))[0]?.[0];
     const maybeClosestStationDirect = timetable.findIndex(ttRow => ttRow.station === closestStation);
 

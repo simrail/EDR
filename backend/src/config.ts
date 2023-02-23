@@ -38,7 +38,20 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "T1_BZ": "124",
     "BZ": "124",
     "LZ_LC": "2375",
-    "SG_R52": "3991"
+    "SG_R52": "3991",
+    "SG": "3993",
+    "DG": "719",
+    "GW": "1193",
+    "PS": "3436",
+    "KN": "1772",
+    "WP": "4987",
+    "OZ": "2969",
+    "PI": "3200",
+    "OP_PO": "2993",
+    "ZA": "5262",
+    "DGW": "733",
+    "SP": "4010",
+    "IDZ": "1349"
 }
 
 export const POSTS: { [key: string]: PURE_POST[] } = {

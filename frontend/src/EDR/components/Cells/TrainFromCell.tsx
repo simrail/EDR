@@ -10,7 +10,7 @@ type Props = {
 }
 export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secondaryPostData, streamMode}) => (
     <td className={tableCellCommonClassnames(streamMode)} ref={headerFourthColRef}>
-        {ttRow.from}
-        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr />{spd.from}</span>)}
+        {ttRow.from_post}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr />{spd.from_post}</span>)}
     </td>
 );

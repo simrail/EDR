@@ -1,9 +1,10 @@
 import React from "react";
-import {getStations, getTimetable, getTrains, getTzOffset} from "../api/api";
+import {getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
 import _map from "lodash/fp/map";
+import _groupBy from "lodash/fp/groupBy";
 import {useTranslation} from "react-i18next";
 import {console_log} from "../utils/Logger";
 
@@ -20,12 +21,12 @@ const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
     k: string;
-    scheduled_arrival: string;
-    real_arrival: string,
+    departure_time: string;
+    arrival_time: string,
     type: TimeTableServiceType,
     train_number: string,
-    from: string,
-    to: string,
+    from_post: string,
+    to_post: string,
     line: string,
     layover: string,
     stop_type: string,
@@ -80,6 +81,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<Dictionary<Station> | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
+    const [trainTimetables, setTrainTimetables] = React.useState<any | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [tzOffset, setTzOffset] = React.useState<number | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
@@ -154,15 +156,27 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation) return;
+        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation || !trainTimetables) return;
         const keyedStations = _keyBy('Name', stations);
-        const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations);
+        console.log("Train timetables : ", trainTimetables);
+        const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations, trainTimetables);
         const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
         setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
 
         // eslint-disable-next-line
     }, [stations, trains, previousTrains.current, timetable]);
+
+    React.useEffect(() => {
+        // TODO: Add a check to avoid refetching every 10s
+        if (!trains) return;
+        const allTrainIds = trains.map((t) => t.TrainNoLocal)
+        Promise.all(allTrainIds.map(getTrainTimetable)).then((timetables) => {
+            console.log("Fetched timetables ", timetables);
+            setTrainTimetables(_groupBy('train_number', timetables.flat()))
+        });
+        console.log("All train ids : ", allTrainIds);
+    }, [trains])
 
     if (!serverCode || !post)
         redirect("/");
