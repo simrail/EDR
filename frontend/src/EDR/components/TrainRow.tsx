@@ -81,7 +81,7 @@ const TableRow: React.FC<Props> = (
     const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
 
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
-    const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
+    const trainBadgeColor = configByType[ttRow.train_type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
     // console.log("EDR", trainDetails)

@@ -21,12 +21,13 @@ type ExtraStationConfig = {
 export type ExtendedStationConfig = StationConfig & ExtraStationConfig;
 
 export const getClosestStation = (train: Train, stationsInPath: any) => {
-    const allStationsAndDistance = stationsInPath.map((sn: string) => postToInternalIds[encodeURIComponent(sn)]?.id ? postConfig[postToInternalIds[encodeURIComponent(sn)].id] : undefined).filter((sConfig: ExtendedStationConfig) => !!sConfig)
+    const allStationsAndDistance = stationsInPath
+        .map((sn: string) => postToInternalIds[encodeURIComponent(sn)]?.id ? postConfig[postToInternalIds[encodeURIComponent(sn)].id] : undefined)
+        .filter((sConfig: ExtendedStationConfig) => !!sConfig)
         .map((s: ExtendedStationConfig) => {
             const truePos = s.platformPosOverride;
             return {
                 ...s,
-                // TODO: Handle truePos might be undefined
                 distanceToStation: haversine(truePos as [number, number], [train.TrainData.Longitute, train.TrainData.Latititute]),
                 stationInternalId: s.id
             }

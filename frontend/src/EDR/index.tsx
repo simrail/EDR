@@ -23,7 +23,7 @@ export type TimeTableRow = {
     k: string;
     departure_time: string;
     arrival_time: string,
-    type: TimeTableServiceType,
+    train_type: TimeTableServiceType,
     train_number: string,
     from_post: string,
     to_post: string,

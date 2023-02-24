@@ -47,3 +47,5 @@ CREATE TABLE IF NOT EXISTS trains_timetable_row (
 );
 
 ALTER TABLE trains_timetable_row ADD CONSTRAINT trains_timetable_row_pk PRIMARY KEY (train_number, station);
+
+ALTER TABLE stations_timetable_row ADD COLUMN layover VARCHAR;

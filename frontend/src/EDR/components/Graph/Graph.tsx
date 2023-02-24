@@ -229,7 +229,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) => {
-                            const color = configByType[t.type]?.graphColor ?? "purple"
+                            const color = configByType[t.train_type]?.graphColor ?? "purple"
                                 return <Line key={t.train_number} dataKey={t.train_number}
                                       label={CustomizedAxisTick(data, displayMode, color)}
                                       fillOpacity={0.8}

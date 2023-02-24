@@ -7,6 +7,7 @@ import Tooltip from "rc-tooltip";
 
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();
+    console.log("layover :", ttRow.layover);
     return ttRow.platform || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
         <div className="flex items-center flex-col lg:flex-row align-center">
             <span className="flex">
