@@ -17,6 +17,7 @@ const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: any) 
 const json: FlexLayout.IJsonModel = {
     global: {
         tabEnableRename: false,
+        tabEnableClose: false,
     },
     borders: [],
     layout: {
@@ -57,7 +58,6 @@ const json: FlexLayout.IJsonModel = {
                                         component: "grid",
                                     },
                                 ],
-                                active: true,
                             },
                         ],
                     },
@@ -73,7 +73,6 @@ const json: FlexLayout.IJsonModel = {
                                 component: "grid",
                             },
                         ],
-                        active: true,
                     },
                 ],
             },
