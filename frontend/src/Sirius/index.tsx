@@ -38,8 +38,8 @@ const Sirius = () => {
                     <Panel defaultSize={60} maxSize={75} className="transition ease-out">
                         <TrainTimetable trainTimetable={trainTimetable} />
                     </Panel>
-                    <PanelResizeHandle className="w-full">
-                        <div className="transition mx-2 bg-slate-50 w-full flex justify-center rounded-lg text-slate-800 hover:bg-slate-100 active:bg-slate-400 active:text-slate-100 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-400">
+                    <PanelResizeHandle className="w-full px-2">
+                        <div className="transition bg-slate-50 w-full flex justify-center rounded-lg text-slate-800 hover:bg-slate-200 active:bg-slate-400 active:text-slate-100 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-400">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                 <path fillRule="evenodd" d="M11.47 4.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 01-1.06 1.06L12 6.31 8.78 9.53a.75.75 0 01-1.06-1.06l3.75-3.75zm-3.75 9.75a.75.75 0 011.06 0L12 17.69l3.22-3.22a.75.75 0 111.06 1.06l-3.75 3.75a.75.75 0 01-1.06 0l-3.75-3.75a.75.75 0 010-1.06z" clipRule="evenodd" />
                             </svg>

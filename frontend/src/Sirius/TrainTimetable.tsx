@@ -40,9 +40,9 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
                                     const vMaxLow = sltn.vMax < 70;
                                     return (
                                         <Table.Row key={`${index}-line-${sltn.line}-track-${sltn.track}`} className={`
-                                            ${vMaxHigh && '!text-green-900 !bg-green-100 hover:!bg-green-200 dark:!bg-green-300 dark:hover:!bg-green-200'}
-                                            ${vMaxMedium && '!text-yellow-900 !bg-yellow-100 hover:!bg-yellow-200 dark:!bg-yellow-300 dark:hover:!bg-yellow-200'}
-                                            ${vMaxLow && '!text-red-900 !bg-red-100 hover:!bg-red-200 dark:!bg-red-300 dark:hover:!bg-red-200'}
+                                            ${vMaxHigh ? '!text-green-900 !bg-green-100 hover:!bg-green-200 dark:!bg-green-300 dark:hover:!bg-green-200' : ''}
+                                            ${vMaxMedium ? '!text-yellow-900 !bg-yellow-100 hover:!bg-yellow-200 dark:!bg-yellow-300 dark:hover:!bg-yellow-200' : ''}
+                                            ${vMaxLow ? '!text-red-900 !bg-red-100 hover:!bg-red-200 dark:!bg-red-300 dark:hover:!bg-red-200' : ''}
                                         `}>
                                             <Table.Cell >
                                                 <div className="flex ">
