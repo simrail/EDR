@@ -7,10 +7,8 @@ type Props = {
 }
 export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode}) => {
     return (
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
-            <div className="flex">
-                <div>{serverCode} - {trainNumber} - {trainDetails.Vehicles[0]}</div>
-            </div>
+        <div className="sticky z-20 t-0 shadow-md w-full h-[30px] flex items-center bg-white dark:bg-slate-800">
+            <div>{serverCode} - {trainNumber} - {trainDetails.Vehicles[0]}</div>
         </div>
     )
 }
