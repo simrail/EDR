@@ -1,20 +1,90 @@
 import React from "react";
+import * as FlexLayout from "flexlayout-react";
 import {useParams} from "react-router-dom";
 import {getTrains, getTrainTimetable} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {SiriusHeader} from "./Header";
 import _keyBy from "lodash/keyBy";
 import {TrainTimetable} from "./TrainTimetable";
-import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
+import { TrainDetails } from "./TrainDetails";
+import { Train } from "@simrail/types";
 
 const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: any) => void) => getTrains(serverCode).then((trains) => {
     const keyedTrains = _keyBy(trains, 'TrainNoLocal');
     setTrain(keyedTrains[trainNumber]);
 });
 
+const json: FlexLayout.IJsonModel = {
+    global: {
+        tabEnableRename: false,
+    },
+    borders: [],
+    layout: {
+        type: "row",
+        id: "#2b70df36-1d90-4c03-b11c-c15a321e8b38",
+        children: [
+            {
+                type: "row",
+                id: "#1e0f0311-6f8c-4c4c-9d3b-3f26c03e2a05",
+                children: [
+                    {
+                        type: "row",
+                        id: "#3c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
+                        weight: 60,
+                        children: [
+                            {
+                                type: "tabset",
+                                id: "#4c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
+                                weight: 15,
+                                children: [
+                                    {
+                                        type: "tab",
+                                        id: "train-details-layout",
+                                        name: "Train Details",
+                                        component: "grid",
+                                    },
+                                ],
+                            },
+                            {
+                                type: "tabset",
+                                id: "#5c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
+                                weight: 85,
+                                children: [
+                                    {
+                                        type: "tab",
+                                        id: "timeline-layout",
+                                        name: "Timeline",
+                                        component: "grid",
+                                    },
+                                ],
+                                active: true,
+                            },
+                        ],
+                    },
+                    {
+                        type: "tabset",
+                        id: "#6c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
+                        weight: 40,
+                        children: [
+                            {
+                                type: "tab",
+                                id: "map-layout",
+                                name: "Map",
+                                component: "grid",
+                            },
+                        ],
+                        active: true,
+                    },
+                ],
+            },
+        ],
+    },
+};
+
 const Sirius = () => {
     const [trainTimetable, setTrainTimetable] = React.useState<any | undefined>();
-    const [train, setTrain] = React.useState<any | undefined>();
+    const [train, setTrain] = React.useState<Train | undefined>();
+    const [model, setModel] = React.useState<FlexLayout.Model>();
     const {trainNumber, serverCode} = useParams();
     React.useEffect(() => {
         if (!trainNumber || !serverCode) return;
@@ -24,31 +94,46 @@ const Sirius = () => {
             fetchTrain(trainNumber, serverCode, setTrain);
         }, 5000);
         return () => window.clearInterval(intervalId);
-    }, [trainNumber])
+    }, [trainNumber]);
+
+    React.useEffect(() => {
+        setModel(FlexLayout.Model.fromJson(json));
+    }, []);
+
+    const factory = (node: FlexLayout.TabNode) => {
+        const component = node.getId();
+        if (component === "timeline-layout" && trainTimetable) {
+            return (
+                <TrainTimetable trainTimetable={trainTimetable} />
+            );
+        }
+        if (component === "train-details-layout" && train) {
+            return (
+                <div>
+                    <TrainDetails trainNumber={trainNumber} trainDetails={train} />
+                </div>
+            );
+        }
+        if (component === "map-layout") {
+            return (
+                <iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainNumber}`} title="Simrail FR map embedded" className={"transition-all h-full w-full"} />
+            );
+        }
+    };
+
     console.log("Train number : ", trainNumber);
     console.log("Train timetable : ", trainTimetable);
     console.log("Trains : ", train);
     return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train
         ? <Spinner />
         : (
-            <div className="h-[calc(100vh-30px)]">
-                {/* autoSaveId="persistence" */}
+            <div>
                 <SiriusHeader serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} />
-                <PanelGroup direction="vertical" disablePointerEventsDuringResize={true}>
-                    <Panel defaultSize={60} maxSize={75} className="transition ease-out">
-                        <TrainTimetable trainTimetable={trainTimetable} />
-                    </Panel>
-                    <PanelResizeHandle className="w-full px-2">
-                        <div className="transition bg-slate-50 w-full flex justify-center rounded-lg text-slate-800 hover:bg-slate-200 active:bg-slate-400 active:text-slate-100 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M11.47 4.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 01-1.06 1.06L12 6.31 8.78 9.53a.75.75 0 01-1.06-1.06l3.75-3.75zm-3.75 9.75a.75.75 0 011.06 0L12 17.69l3.22-3.22a.75.75 0 111.06 1.06l-3.75 3.75a.75.75 0 01-1.06 0l-3.75-3.75a.75.75 0 010-1.06z" clipRule="evenodd" />
-                            </svg>
-                        </div>
-                    </PanelResizeHandle>
-                    <Panel defaultSize={40} maxSize={75} className="transition ease-out">
-                        <iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainNumber}`} title="Simrail FR map embedded" className={"transition-all h-full w-full"} />
-                    </Panel>
-                </PanelGroup>
+                {model && (
+                    <div className="relative h-[calc(100vh-30px)]">
+                        <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />
+                    </div>
+                )}
             </div>
         );
 }

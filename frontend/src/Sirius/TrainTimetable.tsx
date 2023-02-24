@@ -6,14 +6,14 @@ type Props = {
 }
 export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
     return (
-        <div className="h-full overflow-y-scroll">
+        <div className="h-full overflow-y-scroll child:!rounded-none child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-full">
             <Table striped={true}>
                 <Table.Body>
                     {
                         trainTimetable.map((ttRow: any) => {
                             return (
                                 <>
-                                <Table.Row key={`${ttRow.km}${ttRow.line}${ttRow.station}}`} className="hover:bg-gray-200 dark:hover:bg-gray-600">
+                                <Table.Row key={`${ttRow.km}${ttRow.line}${ttRow.station}}`} className="hover:bg-gray-200 dark:hover:bg-gray-600 snap-start">
                                     <Table.Cell>
                                         <div className="flex justify-between">
                                             <span>{ttRow.km}</span>
