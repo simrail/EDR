@@ -19,6 +19,7 @@ export const getStationTimetable = async (stationId: string) => {
         line,
         start_station,
         terminus_station,
+        layover,
         cacheDate
     FROM stations_timetable_row WHERE simrail_new_edr_station_id=$1
     `, [stationId]).then((r) => r.rows)

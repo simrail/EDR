@@ -114,7 +114,7 @@ const fn = async () => {
         try {
             const id = SR_STATIONS_IDS[i].id
             console.log("Scrapping starting ", new Date());
-            await scrapMap("stations", id);
+            // await scrapMap("stations", id);
             console.log("Stations finished ", new Date());
             if (SR_STATIONS_IDS[i].fetchTrains)
                 await scrapMap("trains", id);
