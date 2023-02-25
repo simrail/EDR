@@ -194,7 +194,7 @@ function getTrueTrainNumber(pageContent, expectedTrainNumber) {
 async function scrapTrainPage(allTrainNumbers, page) {
     for (let i = 0; i < allTrainNumbers.length - 1; i++) {
         const trainNumber = allTrainNumbers[i];
-        const tr = await select(page).getElement('td:contains(' + allTrainNumbers[2]/*trainNumber*/ + ')')
+        const tr = await select(page).getElement('td:contains(' + trainNumber + ')')
         console.log("⌛ Preparing to scrap tr at index : ", i);
         await new Promise(r => setTimeout(r, 2000));
         try {
