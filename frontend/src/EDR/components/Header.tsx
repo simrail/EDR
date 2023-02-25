@@ -71,8 +71,8 @@ export const Header: React.FC<Props> = ({
     const displayMode = getDisplayMode(filterConfig);
 
     return (
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
-            <div className="flex items-center justify-between px-4">
+        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800 overflow-y-scroll">
+            <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
                     <Link to={`/`} className="underline">◀️ {!streamMode ? t('EDR_UI_close') : ''}</Link>

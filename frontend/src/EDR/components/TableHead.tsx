@@ -8,7 +8,7 @@ export const TableHead: React.FC<Bounds> = ({firstColBounds, secondColBounds, th
     const {t} = useTranslation();
     if (!firstColBounds) return null;
     // console_log("Fourth bou,ds", fourthColBounds)
-    return <div className="flex items-center font-bold">
+    return <div className="flex items-center font-bold max-w-screen overflow-y-scroll">
         <div className={tableHeadCommonClassName} style={{minWidth: firstColBounds.width}}>
             {t('EDR_TRAINHEADER_train_number')}
         </div>
