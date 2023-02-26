@@ -6,7 +6,7 @@ type Props = {
 }
 export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
     return (
-        <div className="h-full overflow-y-scroll child:!rounded-none child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-full">
+        <div className="h-full child:!rounded-none child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-full">
             <Table striped={true}>
                 <Table.Body>
                     {
@@ -43,6 +43,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
                                             ${vMaxHigh ? '!text-green-900 !bg-green-100 hover:!bg-green-200 dark:!bg-green-300 dark:hover:!bg-green-200' : ''}
                                             ${vMaxMedium ? '!text-yellow-900 !bg-yellow-100 hover:!bg-yellow-200 dark:!bg-yellow-300 dark:hover:!bg-yellow-200' : ''}
                                             ${vMaxLow ? '!text-red-900 !bg-red-100 hover:!bg-red-200 dark:!bg-red-300 dark:hover:!bg-red-200' : ''}
+                                            snap-start
                                         `}>
                                             <Table.Cell >
                                                 <div className="flex ">
