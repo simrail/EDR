@@ -14,7 +14,7 @@ type Props = {
 }
 export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, setAutoScroll}) => {
     return (
-        <div className="sticky z-20 px-2 t-0 shadow-md w-full h-[30px] flex columns-3 items-center bg-white dark:bg-slate-800 overflow-x-auto">
+        <div className="sticky z-20 px-2 t-0 shadow-md w-full h-[40px] flex columns-3 items-center bg-white dark:bg-slate-800 overflow-x-auto">
             <div className="flex max-h-[28px] w-max-content">
                 <Link to={`/${serverCode}/trains`} className="flex underline hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">

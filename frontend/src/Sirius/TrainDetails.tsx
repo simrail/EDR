@@ -8,8 +8,6 @@ type Props = {
 }
 
 export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => {
-    console.log(">>>>>>>>>>>", trainDetails);
-    console.log(">>>>>>>>>>>", trainNumber);
     return (
         <div className="child:!rounded-none child:shadow-none">
             <Table striped={true}>

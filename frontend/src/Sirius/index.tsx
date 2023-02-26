@@ -147,7 +147,7 @@ const Sirius = () => {
             <div>
                 <SiriusHeader autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
                 {model && (
-                    <div className="relative h-[calc(100vh-30px)]">
+                    <div className="relative h-[calc(100vh-40px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />
                     </div>
                 )}

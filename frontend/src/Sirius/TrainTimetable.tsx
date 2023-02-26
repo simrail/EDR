@@ -60,7 +60,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     )}
                                     data-internalid={internalId}
                                 >
-                                    <Table.Cell className="relative">
+                                    <Table.Cell className="relative pl-8">
                                         <div className="flex flex-col">
                                             <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
                                             <div className="flex justify-between">
@@ -94,7 +94,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             ${vMaxLow ? '!text-red-900 !bg-red-100 hover:!bg-red-200 dark:!bg-red-300 dark:hover:!bg-red-200' : ''}
                                             snap-start
                                         `}>
-                                            <Table.Cell className="relative">
+                                            <Table.Cell className="relative pl-8">
                                                 <TrainTimetableTimeline renderOnlyLine itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
                                                 <div className="flex ">
                                                     <span>{sltn.axisStart}</span>
