@@ -38,7 +38,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                     Auto&nbsp;scroll: <Button onClick={() => setAutoScroll(!autoScroll)} className="ml-1" size="xs">{autoScroll ? "On" : "Off"}</Button>
                 </div>
                 <div className="flex items-center ml-0 mx-2">
-                    <Button onClick={resetLayout} className="ml-1" size="xs">Reset layout</Button>
+                    <Button onClick={resetLayout} className="ml-1" color="light" size="xs">Reset Driver View</Button>
                 </div>
                 <DarkThemeToggle className="!p-0" />
             </div>

@@ -148,7 +148,11 @@ const Sirius = () => {
     console.log("Train timetable : ", trainTimetable);
     console.log("Trains : ", train);
     return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train || !serverTzOffset
-        ? <Spinner />
+        ? (
+            <div className="h-screen w-screen flex justify-center items-center">
+                <Spinner />
+            </div>
+        )
         : (
             <div>
                 <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
