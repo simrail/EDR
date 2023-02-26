@@ -11,8 +11,9 @@ type Props = {
     serverTzOffset: number;
     autoScroll: boolean;
     setAutoScroll: (v: boolean) => void;
+    resetLayout: () => void;
 }
-export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, setAutoScroll}) => {
+export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, setAutoScroll, resetLayout}) => {
     return (
         <div className="sticky z-20 px-2 t-0 shadow-md w-full h-[40px] flex columns-3 items-center bg-white dark:bg-slate-800 overflow-x-auto">
             <div className="flex max-h-[28px] w-max-content">
@@ -35,6 +36,9 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
             <div className="flex justify-end">
                 <div className="flex items-center mx-2">
                     Auto&nbsp;scroll: <Button onClick={() => setAutoScroll(!autoScroll)} className="ml-1" size="xs">{autoScroll ? "On" : "Off"}</Button>
+                </div>
+                <div className="flex items-center ml-0 mx-2">
+                    <Button onClick={resetLayout} className="ml-1" size="xs">Reset layout</Button>
                 </div>
                 <DarkThemeToggle className="!p-0" />
             </div>

@@ -65,7 +65,7 @@
     --font-size: medium;
     --font-family: Roboto, Arial, sans-serif;
     --color-overflow: #64748b;
-    --color-icon: #64748b;
+    --color-icon: var(--color-text);
     --color-tabset-background: var(--color-1);
     --color-tabset-background-selected: var(--color-1);
     --color-tabset-background-maximized: var(--color-6);

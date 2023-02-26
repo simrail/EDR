@@ -15,10 +15,10 @@ const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: any) 
     setTrain(keyedTrains[trainNumber]);
 });
 
-const json: FlexLayout.IJsonModel = {
+const driverViewLayout: FlexLayout.IJsonModel = {
     global: {
         tabEnableRename: false,
-        tabEnableClose: false,
+        tabEnableFloat: true,
     },
     borders: [],
     layout: {
@@ -44,6 +44,7 @@ const json: FlexLayout.IJsonModel = {
                                         id: "train-details-layout",
                                         name: "Train Details",
                                         component: "grid",
+                                        enableClose: true,
                                     },
                                 ],
                             },
@@ -57,6 +58,7 @@ const json: FlexLayout.IJsonModel = {
                                         id: "timeline-layout",
                                         name: "Timeline",
                                         component: "grid",
+                                        enableClose: false,
                                     },
                                 ],
                             },
@@ -72,6 +74,7 @@ const json: FlexLayout.IJsonModel = {
                                 id: "map-layout",
                                 name: "Map",
                                 component: "grid",
+                                enableClose: false,
                             },
                         ],
                     },
@@ -112,9 +115,12 @@ const Sirius = () => {
     }, [trainTimetable]);
 
     React.useEffect(() => {
-        setModel(FlexLayout.Model.fromJson(json));
+        resetLayout();
     }, []);
-
+    
+    const resetLayout = () => {
+        setModel(FlexLayout.Model.fromJson(driverViewLayout));
+    };
 
     console.log("Server Tz offset : ", serverTzOffset);
     const factory = (node: FlexLayout.TabNode) => {
@@ -145,7 +151,7 @@ const Sirius = () => {
         ? <Spinner />
         : (
             <div>
-                <SiriusHeader autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
+                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
                 {model && (
                     <div className="relative h-[calc(100vh-40px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />
