@@ -75,7 +75,12 @@ export const Header: React.FC<Props> = ({
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <Link to={`/`} className="underline">◀️ {!streamMode ? t('EDR_UI_close') : ''}</Link>
+                    <Link to={`/${serverCode}`} className="underline flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-1">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                        </svg>
+                        {!streamMode ? t('EDR_UI_back') : ''}
+                    </Link>
                 </div>
                 <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
                 <div className="flex items-center">
