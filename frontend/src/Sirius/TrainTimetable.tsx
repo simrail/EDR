@@ -1,23 +1,72 @@
 import React from "react";
 import {Table} from "flowbite-react";
+import {Train} from "@simrail/types";
+import {postToInternalIds, StationConfig} from "../config/stations";
+import {haversine} from "../EDR/functions/vectors";
+import _minBy from "lodash/minBy";
+import classNames from "classnames";
+import TrainTimetableTimeline from "../EDR/components/TrainTimetableTimeline";
 
 type Props = {
     trainTimetable: any;
+    train: Train;
+    allStationsInpath: any;
+    autoScroll: boolean;
 }
-export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
+
+const scrollToNearestStation = (nearestStationId: string) => {
+    const allTrainRows = [...Array.from(document.querySelectorAll('[data-internalId]').values())];
+    const nearestStationRow = allTrainRows.find((e) => e.getAttribute("data-internalid") === nearestStationId)
+    if (nearestStationRow) {
+        nearestStationRow.scrollIntoView({
+            block: "center"
+        })
+    }
+}
+export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpath, train, autoScroll}) => {
+
+    const [trainLongitude, trainLatitude] = [train.TrainData.Longitute, train.TrainData.Latititute];
+    const allStationsDistance: any = allStationsInpath.map((station: StationConfig) => {
+
+        return {
+            ...station,
+            distance: haversine([trainLongitude, trainLatitude], station.platformPosOverride!)
+        }
+    })
+
+    const nearestStation: any = _minBy(allStationsDistance, 'distance');
+
+    const closestStationIndex = trainTimetable.map((s: any) => s.station).findIndex((s: string) => s === nearestStation?.srId)
+    console.log("Closest station Index : ", closestStationIndex);
+
+
+    console.log("Nearest station : ", nearestStation);
+
+    autoScroll && scrollToNearestStation(nearestStation?.id);
     return (
         <div className="h-full child:!rounded-none child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-full">
             <Table striped={true}>
                 <Table.Body>
                     {
-                        trainTimetable.map((ttRow: any) => {
+                        trainTimetable.map((ttRow: any, index: number) => {
+                            const internalId = postToInternalIds[encodeURIComponent(ttRow.station)]?.id
                             return (
                                 <>
-                                <Table.Row key={`${ttRow.km}${ttRow.line}${ttRow.station}}`} className="hover:bg-gray-200 dark:hover:bg-gray-600 snap-start">
-                                    <Table.Cell>
-                                        <div className="flex justify-between">
-                                            <span>{ttRow.km}</span>
-                                            <span>L{ttRow.line}</span>
+                                <Table.Row
+                                    key={`${ttRow.km}${ttRow.line}${ttRow.station}}`}
+                                    className={classNames(
+                                        "hover:bg-gray-200 dark:hover:bg-gray-600 snap-start",
+                                    {"!bg-amber-100": internalId === nearestStation?.id}
+                                    )}
+                                    data-internalid={internalId}
+                                >
+                                    <Table.Cell className="relative">
+                                        <div className="flex flex-col">
+                                            <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
+                                            <div className="flex justify-between">
+                                                <span>{ttRow.km}</span>
+                                                <span>L{ttRow.line}</span>
+                                            </div>
                                         </div>
                                     </Table.Cell>
                                     <Table.Cell>
@@ -34,18 +83,19 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable}) => {
                                     </Table.Cell>
                                 </Table.Row>
                             {
-                                ttRow.speedLimitsToNextStation.map((sltn: any, index: number) => {
+                                ttRow.speedLimitsToNextStation.map((sltn: any, _index: number) => {
                                     const vMaxHigh = sltn.vMax > 100;
                                     const vMaxMedium = sltn.vMax >= 70 && sltn.vMax <= 100;
                                     const vMaxLow = sltn.vMax < 70;
                                     return (
-                                        <Table.Row key={`${index}-line-${sltn.line}-track-${sltn.track}`} className={`
+                                        <Table.Row key={`${_index}-line-${sltn.line}-track-${sltn.track}`} className={`
                                             ${vMaxHigh ? '!text-green-900 !bg-green-100 hover:!bg-green-200 dark:!bg-green-300 dark:hover:!bg-green-200' : ''}
                                             ${vMaxMedium ? '!text-yellow-900 !bg-yellow-100 hover:!bg-yellow-200 dark:!bg-yellow-300 dark:hover:!bg-yellow-200' : ''}
                                             ${vMaxLow ? '!text-red-900 !bg-red-100 hover:!bg-red-200 dark:!bg-red-300 dark:hover:!bg-red-200' : ''}
                                             snap-start
                                         `}>
-                                            <Table.Cell >
+                                            <Table.Cell className="relative">
+                                                <TrainTimetableTimeline renderOnlyLine itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
                                                 <div className="flex ">
                                                     <span>{sltn.axisStart}</span>
                                                 </div>

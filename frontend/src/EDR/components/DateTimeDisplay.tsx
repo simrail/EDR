@@ -2,9 +2,9 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {timeOptions, formatTime, nowUTC} from "../../utils/date";
 
-type Props = {serverTzOffset: number, serverCode: string};
+type Props = {serverTzOffset: number, serverCode: string, hideDetails?: boolean};
 
-export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverCode}) => {
+export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverCode, hideDetails = false}) => {
     const {i18n} = useTranslation();
     const [dt, setDt] = React.useState(nowUTC(serverTzOffset));
 
@@ -16,7 +16,7 @@ export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverCode}) =
     }, [serverTzOffset])
 
     return <div className="text-center">
-        <span className="mr-2 text-xl">{formatTime(dt, i18n.language, timeOptions)}</span><br />
-        <span className="text-xs">{serverCode.toUpperCase()} / (UTC {serverTzOffset})</span>
+        <span className="mr-2 text-xl">{formatTime(dt, i18n.language, timeOptions)}</span>
+        {!hideDetails && <><br /><span className="text-xs">{serverCode.toUpperCase()} / (UTC {serverTzOffset})</span></> }
     </div>
 }

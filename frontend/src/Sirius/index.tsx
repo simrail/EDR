@@ -1,13 +1,14 @@
 import React from "react";
 import * as FlexLayout from "flexlayout-react";
 import {useParams} from "react-router-dom";
-import {getTrains, getTrainTimetable} from "../api/api";
+import {getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {SiriusHeader} from "./Header";
 import _keyBy from "lodash/keyBy";
 import {TrainTimetable} from "./TrainTimetable";
 import { TrainDetails } from "./TrainDetails";
 import { Train } from "@simrail/types";
+import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
 
 const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: any) => void) => getTrains(serverCode).then((trains) => {
     const keyedTrains = _keyBy(trains, 'TrainNoLocal');
@@ -81,13 +82,17 @@ const json: FlexLayout.IJsonModel = {
 };
 
 const Sirius = () => {
+    const [autoScroll, setAutoScroll] = React.useState(true);
+    const [serverTzOffset, setServerTzOffset] = React.useState<number>();
     const [trainTimetable, setTrainTimetable] = React.useState<any | undefined>();
     const [train, setTrain] = React.useState<Train | undefined>();
     const [model, setModel] = React.useState<FlexLayout.Model>();
+    const [allStationsInPath, setAllStationsInPath] = React.useState<StationConfig[] | undefined>();
     const {trainNumber, serverCode} = useParams();
     React.useEffect(() => {
         if (!trainNumber || !serverCode) return;
-        getTrainTimetable(trainNumber).then(setTrainTimetable)
+        getTrainTimetable(trainNumber).then(setTrainTimetable);
+        getTzOffset(serverCode).then(setServerTzOffset)
         fetchTrain(trainNumber, serverCode, setTrain);
         const intervalId = window.setInterval(() => {
             fetchTrain(trainNumber, serverCode, setTrain);
@@ -96,14 +101,27 @@ const Sirius = () => {
     }, [trainNumber]);
 
     React.useEffect(() => {
+        if (!trainTimetable) return;
+        const allStationsInPath = trainTimetable
+            .map((ttRow: any) => ttRow.station)
+            .map((stationName: string) => postToInternalIds[encodeURIComponent(stationName)])
+            .filter((sc: any) => !!sc)
+            .map((sc: any) => postConfig[sc.id])
+        setAllStationsInPath(allStationsInPath);
+
+    }, [trainTimetable]);
+
+    React.useEffect(() => {
         setModel(FlexLayout.Model.fromJson(json));
     }, []);
 
+
+    console.log("Server Tz offset : ", serverTzOffset);
     const factory = (node: FlexLayout.TabNode) => {
         const component = node.getId();
-        if (component === "timeline-layout" && trainTimetable) {
+        if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {
             return (
-                <TrainTimetable trainTimetable={trainTimetable} />
+                <TrainTimetable autoScroll={autoScroll} trainTimetable={trainTimetable} train={train} allStationsInpath={allStationsInPath}/>
             );
         }
         if (component === "train-details-layout" && train) {
@@ -123,11 +141,11 @@ const Sirius = () => {
     console.log("Train number : ", trainNumber);
     console.log("Train timetable : ", trainTimetable);
     console.log("Trains : ", train);
-    return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train
+    return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train || !serverTzOffset
         ? <Spinner />
         : (
             <div>
-                <SiriusHeader serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} />
+                <SiriusHeader autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
                 {model && (
                     <div className="relative h-[calc(100vh-30px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />
