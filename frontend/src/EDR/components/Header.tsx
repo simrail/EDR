@@ -91,7 +91,7 @@ export const Header: React.FC<Props> = ({
                 </div>
             </div>
             <div className="flex items-center justify-between w-full px-4 mt-2">
-                <TextInput sizing={streamMode ? "sm" : "md"} id="trainNumberFilter" className="mb-2 grow" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
+                <TextInput sizing={streamMode ? "sm" : "md"} id="trainNumberFilter" className="mb-2 min-w-[100px] grow" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
                 <div className="flex ml-4 mb-2">
                     <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "default" ? "default" : undefined}
                             onClick={() => { setFilterConfig(presetFilterConfig.default); scrollToNearestTrain(timetableLength); }}>

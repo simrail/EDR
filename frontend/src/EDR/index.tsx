@@ -7,6 +7,7 @@ import _map from "lodash/fp/map";
 import _groupBy from "lodash/fp/groupBy";
 import {useTranslation} from "react-i18next";
 import {console_log} from "../utils/Logger";
+import _difference from "lodash/difference";
 
 import {LoadingScreen} from "./components/LoadingScreen";
 import {DetailedTrain, getTrainDetails} from "./functions/trainDetails";
@@ -158,20 +159,20 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     React.useEffect(() => {
         if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation || !trainTimetables) return;
         const keyedStations = _keyBy('Name', stations);
-        console.log("Train timetables : ", trainTimetables);
         const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations, trainTimetables);
         const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
         setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
 
         // eslint-disable-next-line
-    }, [stations, trains, previousTrains.current, timetable]);
+    }, [stations, trains, previousTrains.current, timetable, trainTimetables]);
 
     React.useEffect(() => {
         // TODO: Add a check to avoid refetching every 10s
         if (!trains) return;
         const allTrainIds = trains.map((t) => t.TrainNoLocal)
-        Promise.all(allTrainIds.map(getTrainTimetable)).then((timetables) => {
+        const previousTrainIds = Object.keys(previousTrains?.current ?? []);
+        Promise.all(_difference(allTrainIds, previousTrainIds).map(getTrainTimetable)).then((timetables) => {
             console.log("Fetched timetables ", timetables);
             setTrainTimetables(_groupBy('train_number', timetables.flat()))
         });
