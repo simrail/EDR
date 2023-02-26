@@ -1,21 +1,21 @@
 .flexlayout__layout {
-  --color-text: black;
+  --color-text: #334155;
   --color-background: white;
   --color-base: white;
-  --color-1: #f7f7f7;
-  --color-2: #f0f0f0;
-  --color-3: #e9e9e9;
-  --color-4: #e2e2e2;
-  --color-5: #dbdbdb;
-  --color-6: #d4d4d4;
-  --color-drag1: rgb(95, 134, 196);
-  --color-drag2: rgb(119, 166, 119);
+  --color-1: #f8fafc;
+  --color-2: #f1f5f9;
+  --color-3: #e2e8f0;
+  --color-4: #cbd5e1;
+  --color-5: #94a3b8;
+  --color-6: #64748b;
+  --color-drag1: rgb(96, 165, 250);
+  --color-drag2: rgb(190, 242, 100);
   --color-drag1-background: rgba(95, 134, 196, 0.1);
   --color-drag2-background: rgba(119, 166, 119, 0.075);
   --font-size: medium;
   --font-family: Roboto, Arial, sans-serif;
-  --color-overflow: gray;
-  --color-icon: gray;
+  --color-overflow: #475569;
+  --color-icon: #475569;
   --color-tabset-background: var(--color-background);
   --color-tabset-background-selected: var(--color-1);
   --color-tabset-background-maximized: var(--color-6);
@@ -26,13 +26,13 @@
   --color-border-divider-line: var(--color-4);
   --color-tab-selected: var(--color-text);
   --color-tab-selected-background: var(--color-4);
-  --color-tab-unselected: gray;
+  --color-tab-unselected: #475569;
   --color-tab-unselected-background: transparent;
   --color-tab-textbox: var(--color-text);
   --color-tab-textbox-background: var(--color-3);
   --color-border-tab-selected: var(--color-text);
   --color-border-tab-selected-background: var(--color-4);
-  --color-border-tab-unselected: gray;
+  --color-border-tab-unselected: #475569;
   --color-border-tab-unselected-background: var(--color-2);
   --color-splitter: var(--color-2);
   --color-splitter-hover: var(--color-4);
@@ -45,7 +45,57 @@
   --color-popup-unselected-background: white;
   --color-popup-selected: var(--color-text);
   --color-popup-selected-background: var(--color-3);
-  --color-edge-marker: gray;
+  --color-edge-marker: #475569;
+}
+
+.dark .flexlayout__layout {
+    --color-text: #f8fafc;
+    --color-background: #1e293b;
+    --color-base: #374151;
+    --color-1: #111827;
+    --color-2: #1f2937;
+    --color-3: #374151;
+    --color-4: #4b5563;
+    --color-5: #6b7280;
+    --color-6: #a1a1aa;
+    --color-drag1: rgb(207, 232, 255);
+    --color-drag2: rgb(236, 252, 203);
+    --color-drag1-background: rgba(128, 128, 128, 0.15);
+    --color-drag2-background: rgba(128, 128, 128, 0.15);
+    --font-size: medium;
+    --font-family: Roboto, Arial, sans-serif;
+    --color-overflow: #64748b;
+    --color-icon: #64748b;
+    --color-tabset-background: var(--color-1);
+    --color-tabset-background-selected: var(--color-1);
+    --color-tabset-background-maximized: var(--color-6);
+    --color-tabset-divider-line: var(--color-4);
+    --color-tabset-header-background: var(--color-1);
+    --color-tabset-header: var(--color-text);
+    --color-border-background: var(--color-1);
+    --color-border-divider-line: var(--color-4);
+    --color-tab-selected: var(--color-text);
+    --color-tab-selected-background: var(--color-4);
+    --color-tab-unselected: #64748b;
+    --color-tab-unselected-background: transparent;
+    --color-tab-textbox: var(--color-text);
+    --color-tab-textbox-background: var(--color-3);
+    --color-border-tab-selected: var(--color-text);
+    --color-border-tab-selected-background: var(--color-4);
+    --color-border-tab-unselected: #64748b;
+    --color-border-tab-unselected-background: var(--color-2);
+    --color-splitter: var(--color-5);
+    --color-splitter-hover: var(--color-6);
+    --color-splitter-drag: #cbd5e1;
+    --color-drag-rect-border: var(--color-4);
+    --color-drag-rect-background: var(--color-1);
+    --color-drag-rect: var(--color-text);
+    --color-popup-border: var(--color-6);
+    --color-popup-unselected: var(--color-text);
+    --color-popup-unselected-background: black;
+    --color-popup-selected: var(--color-text);
+    --color-popup-selected-background: var(--color-4);
+    --color-edge-marker: #64748b;  
 }
 
 .flexlayout__layout {
