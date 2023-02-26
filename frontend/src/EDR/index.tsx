@@ -158,25 +158,26 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
         if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation || !trainTimetables) return;
-        const keyedStations = _keyBy('Name', stations);
-        const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations, trainTimetables);
-        const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
+        setTimeout(() => {
+            const keyedStations = _keyBy('Name', stations);
+            const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations, trainTimetables);
+            const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
-        setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
-
+            setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
+        }, 1);
         // eslint-disable-next-line
-    }, [stations, trains, previousTrains.current, timetable, trainTimetables]);
+    }, [stations, JSON.stringify(trains), JSON.stringify(previousTrains.current), JSON.stringify(timetable), JSON.stringify(trainTimetables)]);
 
     React.useEffect(() => {
         // TODO: Add a check to avoid refetching every 10s
         if (!trains) return;
         const allTrainIds = trains.map((t) => t.TrainNoLocal)
         const previousTrainIds = Object.keys(previousTrains?.current ?? []);
-        Promise.all(_difference(allTrainIds, previousTrainIds).map(getTrainTimetable)).then((timetables) => {
-            console.log("Fetched timetables ", timetables);
-            setTrainTimetables(_groupBy('train_number', timetables.flat()))
+        const difference = _difference(allTrainIds, previousTrainIds);
+        if (difference.length === 0) return;
+        Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
+            setTrainTimetables(_groupBy('train_number', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
         });
-        console.log("All train ids : ", allTrainIds);
     }, [trains])
 
     if (!serverCode || !post)

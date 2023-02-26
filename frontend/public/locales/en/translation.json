@@ -25,6 +25,7 @@
   "EDR_LOADING_schedules": "Schedules",
   "EDR_LOADING_stations": "Stations",
   "EDR_LOADING_trains": "Trains",
+  "EDR_LOADING_timezone": "TimeZone",
 
   "EDR_TRAINROW_click_to_copy": "Click to copy",
   "EDR_TRAINROW_copied": "Copied to clipboard!",
@@ -69,5 +70,6 @@
   "EDR_UI_filter_train_all": "All trains",
   "EDR_UI_filter_train_online": "Trains on track",
   "EDR_UI_filter_train_approaching": "Approaching",
-  "EDR_UI_train_number": "Train N°"
+  "EDR_UI_train_number": "Train N°",
+  "EDR_UI_filter_custom": "Custom"
 }

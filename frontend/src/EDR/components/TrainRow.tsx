@@ -95,7 +95,7 @@ const TableRow: React.FC<Props> = (
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
     return <Table.Row
-        onClick={() => setSelectedRow(index !== selectedRow ? index : null)} 
+        onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations
         className={`
             snap-start dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
             ${trainHasPassedStation ? 'opacity-50' : 'opacity-100'}
@@ -154,4 +154,7 @@ const TableRow: React.FC<Props> = (
     </Table.Row>
 }
 
-export default React.memo(TableRow)
+export default React.memo(TableRow, (prevProps, nextProps) => {
+    return JSON.stringify(prevProps.trainDetails) === JSON.stringify(nextProps.trainDetails)
+    && JSON.stringify(prevProps.ttRow) === JSON.stringify(nextProps.ttRow)
+})
