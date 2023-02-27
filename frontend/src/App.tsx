@@ -7,7 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { SupportsWebp } from './EDR/functions/webp';
 import {TrainSelect} from "./SelectMenu/TrainSelect";
-import Sirius from "./Sirius";
+const Sirius = React.lazy(() => import("./Sirius"));
 const ServerSelect = React.lazy(() => import("./SelectMenu/ServerSelect"));
 const PostSelect = React.lazy(() => import("./SelectMenu/PostSelect"));
 const EDR = React.lazy(() => import("./EDR"));

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _isEmpty from "lodash/isEmpty";
 import React, {ReactNode} from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
@@ -87,7 +87,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             </Navbar.Collapse>
         </Navbar>
 
-        {_.isEmpty(navPreviousItem) || _.isEmpty(navCurrentItem) || _.isEmpty(navNextItem) || (
+        {_isEmpty(navPreviousItem) || _isEmpty(navCurrentItem) || _isEmpty(navNextItem) || (
             <SubNavigation 
                 navPreviousItem={navPreviousItem}
                 navCurrentItem={navCurrentItem}

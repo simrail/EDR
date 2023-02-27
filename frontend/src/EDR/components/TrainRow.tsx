@@ -36,7 +36,6 @@ type Props = {
     headerSeventhColRef: any,
     playSoundNotification: any,
     isWebpSupported: boolean,
-    showOnlyApproachingTrains: boolean;
     streamMode: boolean;
     filterConfig: FilterConfig;
     index: number;
@@ -46,7 +45,7 @@ type Props = {
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode, setTimetableTrainId, filterConfig, index,
+        playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig, index,
         selectedRow, setSelectedRow
     }: Props
 ) => {

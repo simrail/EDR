@@ -1,6 +1,6 @@
 import React from "react";
 import {getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
-import {Alert, Spinner} from "flowbite-react";
+import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
 import _map from "lodash/fp/map";

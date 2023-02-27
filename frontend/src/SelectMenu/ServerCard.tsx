@@ -1,6 +1,5 @@
 import React from "react";
 import { countriesFlags } from "../config";
-import { console_log } from "../utils/Logger";
 import { Link } from "react-router-dom";
 import { Server } from "@simrail/types";
 

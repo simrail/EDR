@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, Checkbox, Modal} from "flowbite-react";
 import {FilterConfig, presetFilterConfig} from "../index";
-import {fi} from "date-fns/locale";
 
 type Props = {
     isOpen: boolean;

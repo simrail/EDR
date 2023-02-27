@@ -101,7 +101,7 @@ const Sirius = () => {
             fetchTrain(trainNumber, serverCode, setTrain);
         }, 5000);
         return () => window.clearInterval(intervalId);
-    }, [trainNumber]);
+    }, [trainNumber, serverCode]);
 
     React.useEffect(() => {
         if (!trainTimetable) return;

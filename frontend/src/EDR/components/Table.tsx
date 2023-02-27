@@ -43,7 +43,6 @@ export const EDRTable: React.FC<Props> = ({
       playSoundNotification, timetable, trainsWithDetails, serverTzOffset,
       post, serverCode, setGraphModalOpen, isWebpSupported, filterConfig, setFilterConfig
     }) => {
-    const [displayMode, setDisplayMode] = React.useState<string>("all");
     const [filter, setFilter] = React.useState<string | undefined>();
     const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
     const [timetableModalTrainId, setTimetableModalTrainId] = React.useState<string | undefined>();
@@ -137,7 +136,6 @@ export const EDRTable: React.FC<Props> = ({
                         setModalTrainId={setMapModalTrainId}
                         setTimetableTrainId={setTimetableModalTrainId}
                         isWebpSupported={isWebpSupported}
-                        showOnlyApproachingTrains={displayMode === "approaching"}
                         streamMode={streamMode}
                         filterConfig={filterConfig}
                     />) : <div className="w-full text-center"><Spinner /></div>

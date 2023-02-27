@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import _sortBy from "lodash/sortBy";
 import { console_log } from "../utils/Logger";
 import { Server } from "@simrail/types";
-import _ from "lodash";
 
 type Props = {
     isWebpSupported: boolean
