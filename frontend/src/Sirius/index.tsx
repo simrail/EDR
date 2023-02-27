@@ -122,7 +122,7 @@ const Sirius = () => {
         setModel(FlexLayout.Model.fromJson(driverViewLayout));
     };
 
-    console.log("Server Tz offset : ", serverTzOffset);
+    // console.log("Server Tz offset : ", serverTzOffset);
     const factory = (node: FlexLayout.TabNode) => {
         const component = node.getId();
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {

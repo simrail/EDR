@@ -24,7 +24,7 @@ const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, 
         return timetable.findIndex(ttRow => ttRow.station === closestStation)
     }() : maybeClosestStationDirect
 
-    console.log("Closest station corrected : ", closestStationIndex);
+    // console.log("Closest station corrected : ", closestStationIndex);
 
     return (
         <Table className="max-h-[700px]" striped>

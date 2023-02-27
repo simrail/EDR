@@ -115,7 +115,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         return () => window.clearInterval(intervalId);
     }, [serverTzOffset])
 
-    console.log("Only an hour around : ", onlyAnHourAround);
+    // console.log("Only an hour around : ", onlyAnHourAround);
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
@@ -166,7 +166,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                 if (!nextPost) return []
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.departure_time : targetTrain?.arrival_time;
-                console.log("Target train : ", targetTrain);
+                // console.log("Target train : ", targetTrain);
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
@@ -198,7 +198,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;
 
-    console.log("Data : ", data);
+    // console.log("Data : ", data);
     return (
             <>
                 <div className="text-center inline-flex items-center justify-center w-full">

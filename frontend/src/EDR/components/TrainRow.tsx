@@ -93,7 +93,7 @@ const TableRow: React.FC<Props> = (
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
-    console.log("Rendered");
+    // console.log("Rendered");
 
     return <Table.Row
         onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations

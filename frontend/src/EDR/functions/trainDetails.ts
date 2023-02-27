@@ -49,11 +49,11 @@ const _getOverridenStationPos = (keyedStations: Dictionary<Station>) => (postId:
 
 export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, currentStation: StationConfig, keyedStations: Dictionary<Station>, trainTimetables: any) =>(t: Train) => {
     const getOverridenStationPos = _getOverridenStationPos(keyedStations);
-    t.TrainNoLocal === "4122" && console.log("Train timetable : ", trainTimetables[t.TrainNoLocal]);
+    // t.TrainNoLocal === "4122" && console.log("Train timetable : ", trainTimetables[t.TrainNoLocal]);
     const inTimetableStations =  trainTimetables[t.TrainNoLocal]?.map((ttRow: any) => ttRow.station) ?? Object.values(postConfig).map((p) => p.srId)
-    t.TrainNoLocal === "4122" && console.log("In timetable stations : ", inTimetableStations);
+    // t.TrainNoLocal === "4122" && console.log("In timetable stations : ", inTimetableStations);
     const closestStation = getClosestStation(t, inTimetableStations);
-    t.TrainNoLocal === "4122" && console.log("Closest station : ", closestStation);
+    // t.TrainNoLocal === "4122" && console.log("Closest station : ", closestStation);
     // TODO: Handle closestStation might be undefined
     const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum((closestStation as ExtendedStationConfig).id, postConfig[post].id, post);
     const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;
