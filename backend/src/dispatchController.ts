@@ -1,5 +1,5 @@
 import { scrapRoute } from "./scrapper";
-import {internalIdToSrId, newInternalIdToSrId, POSTS} from "./config";
+import {internalIdToSrId, newInternalIdToSrId, POSTS, verboseStopTypeToStationStopType} from "./config";
 import express from "express";
 import {getStationTimetable} from "./sql/stations";
 import {getTrainTimetable} from "./sql/train";
@@ -65,11 +65,29 @@ export async function dispatchController(req: express.Request, res: express.Resp
     }
 }
 
+const convertSrApiRow = (srTrainApiRow: any) => {
+    const arrivalTime = srTrainApiRow.arrivalTime?.split(" ")[1];
+    return {
+        train_number: srTrainApiRow.displayedTrainNumber,
+        scheduled_arrival_hour: arrivalTime,
+        scheduled_departure_hour: srTrainApiRow.departureTime?.split(" ")[1],
+        train_type: srTrainApiRow.trainType,
+        line: srTrainApiRow.line,
+        km: srTrainApiRow.mileage,
+        maxSpeed: srTrainApiRow.maxSpeed,
+        stop_type: verboseStopTypeToStationStopType[srTrainApiRow.stopType],
+        hourSort: Number.parseInt(arrivalTime?.replace(':', '') ?? 0),
+        station: srTrainApiRow.nameForPerson
+    }
+}
+
 export async function trainTimetableController(req: express.Request, res: express.Response) {
     const {trainNo} = req.params;
 
     try {
-        const data = await getTrainTimetable(trainNo);
+        const data = (global as any).trainData[trainNo]?.timetable?.map(convertSrApiRow);
+        console.log("Data : ", data);
+
         res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
             .send(data)

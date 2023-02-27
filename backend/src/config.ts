@@ -130,3 +130,10 @@ export const translate_fields = {
     "Terminus station": "terminus_station",
     "Carrier": "carrier"
 }
+
+export const verboseStopTypeToStationStopType: {[k: string]: string | null} = {
+    "NoStopOver": null,
+    "CommercialStop": "ph",
+    "NoncommercialStop": "pt",
+};
+

@@ -83,7 +83,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     </Table.Cell>
                                 </Table.Row>
                             {
-                                ttRow.speedLimitsToNextStation.map((sltn: any, _index: number) => {
+                                /*ttRow.speedLimitsToNextStation.map((sltn: any, _index: number) => {
                                     const vMaxHigh = sltn.vMax > 100;
                                     const vMaxMedium = sltn.vMax >= 70 && sltn.vMax <= 100;
                                     const vMaxLow = sltn.vMax < 70;
@@ -125,7 +125,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             </Table.Cell>
                                         </Table.Row>
                                     )
-                                })
+                                })*/
                             }
                             </>
                             )

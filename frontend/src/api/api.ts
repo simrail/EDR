@@ -7,7 +7,7 @@ export const NGINX_DIRECT = "https://dispatch-api.nginx.infra.deadlykungfu.ninja
 
 // For a smooth transition, all 1.3 will go to staging env. 1.2 will stay in prod
 // This will avoid disruptiong for current users despite API changes
-export const BASE_API_URL = STAGING_API_URL; // "http://localhost:8080/"
+export const BASE_API_URL = /*STAGING_API_URL;*/ "http://localhost:8080/"
 const baseApiCall = (URL: string, noCDN: boolean = false) => {
     // TODO: Add error toast
     const outbound = (noCDN ? NGINX_DIRECT : BASE_API_URL) + URL;
@@ -24,7 +24,7 @@ export const getTimetable = (post: string): Promise<any> =>
     baseApiCall("dispatch/" + post + "?mergePosts=true");
 
 export const getTrainTimetable = (trainId: string): Promise<any> =>
-    fetch(STAGING_API_URL + "train/" + trainId).then((r) => r.json());
+    fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());
 
 export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);
