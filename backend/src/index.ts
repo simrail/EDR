@@ -4,8 +4,8 @@ import cors from "cors";
 const app = express();
 const Logger = morgan('short');
 
-import { dispatchController } from "./dispatchController";
-import {getPlayer, getServerList, getServerTz, getStationsList, getTrainsList} from "./serverController";
+import {dispatchController, trainTimetableController} from "./dispatchController";
+import {getPlayer, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController";
 
 const corsConfig = {
     allowedHeaders: "x-debug",
@@ -14,7 +14,6 @@ const corsConfig = {
 
 // TODO: Consider using HelmetJS as well - https://helmetjs.github.io/
 app.use(cors(corsConfig)).use(Logger);
-
 app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
@@ -25,6 +24,7 @@ app
     .get("/stations/:serverCode", (req: express.Request, res: express.Response) => getStationsList(req, res, req.params['serverCode']))
     .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
     .get("/dispatch/:post", dispatchController)
+    .get("/train/:trainNo", trainTimetableController)
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
 app.listen(8080)

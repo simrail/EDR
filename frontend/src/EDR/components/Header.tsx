@@ -75,7 +75,12 @@ export const Header: React.FC<Props> = ({
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
                     <span>{postCfg.srId}</span>
-                    <Link to={`/`} className="underline">◀️ {!streamMode ? t('EDR_UI_close') : ''}</Link>
+                    <Link to={`/${serverCode}`} className="underline flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+                        </svg>
+                        {!streamMode ? t('EDR_UI_back') : ''}
+                    </Link>
                 </div>
                 <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
                 <div className="flex items-center">
@@ -86,7 +91,7 @@ export const Header: React.FC<Props> = ({
                 </div>
             </div>
             <div className="flex items-center justify-between w-full px-4 mt-2">
-                <TextInput sizing={streamMode ? "sm" : "md"} id="trainNumberFilter" className="mb-2 grow" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
+                <TextInput sizing={streamMode ? "sm" : "md"} id="trainNumberFilter" className="mb-2 min-w-[100px] grow" onChange={(e) => setFilter(e.target.value)} placeholder={t('EDR_UI_train_number') ?? ''}/>
                 <div className="flex ml-4 mb-2">
                     <Button size={streamMode ? "xs" : "md"} className="shrink-0" color={displayMode !== "default" ? "default" : undefined}
                             onClick={() => { setFilterConfig(presetFilterConfig.default); scrollToNearestTrain(timetableLength); }}>

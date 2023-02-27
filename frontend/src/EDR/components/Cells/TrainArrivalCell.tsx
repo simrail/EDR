@@ -1,7 +1,6 @@
 import React from "react";
 import {Badge} from "flowbite-react";
 import {tableCellCommonClassnames} from "../TrainRow";
-import {getDateWithHourAndMinutes, getTimeDelay} from "../../functions/timeUtils";
 import {TimeTableRow} from "../../index";
 import {DetailedTrain} from "../../functions/trainDetails";
 import {useTranslation} from "react-i18next";
@@ -28,7 +27,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
     return (
         <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
-                {ttRow.scheduled_arrival}&nbsp;
+                {ttRow.arrival_time}&nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
                         ? <span

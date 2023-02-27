@@ -115,6 +115,8 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         return () => window.clearInterval(intervalId);
     }, [serverTzOffset])
 
+    // console.log("Only an hour around : ", onlyAnHourAround);
+
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
         if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
@@ -159,23 +161,24 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
                 // console.log("tt", targetTrain);
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to)]?.id;
+                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
                 // console.log("Next post: ", nextPost);
                 if (!nextPost) return []
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_departure : targetTrain?.scheduled_arrival;
+                const targetValue = isTrainGoingToKatowice ? targetTrain?.departure_time : targetTrain?.arrival_time;
+                // console.log("Target train : ", targetTrain);
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
                 // console.log("tt", targetTrain);
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to)]?.id;
+                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
                 // console.log("Next post: ", nextPost);
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 // console.log("ITGTK ", isTrainGoingToKatowice);
-                const targetValue = isTrainGoingToKatowice ? targetTrain?.scheduled_arrival : targetTrain?.scheduled_departure;
+                const targetValue = isTrainGoingToKatowice ? targetTrain?.arrival_time : targetTrain?.departure_time;
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             // console.log("All train departures : ", allTrainDepartures);
@@ -195,6 +198,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;
 
+    // console.log("Data : ", data);
     return (
             <>
                 <div className="text-center inline-flex items-center justify-center w-full">
@@ -229,7 +233,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) => {
-                            const color = configByType[t.type]?.graphColor ?? "purple"
+                            const color = configByType[t.train_type]?.graphColor ?? "purple"
                                 return <Line key={t.train_number} dataKey={t.train_number}
                                       label={CustomizedAxisTick(data, displayMode, color)}
                                       fillOpacity={0.8}

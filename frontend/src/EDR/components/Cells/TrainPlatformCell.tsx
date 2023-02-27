@@ -7,7 +7,7 @@ import Tooltip from "rc-tooltip";
 
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();
-    return ttRow.platform || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
+    return ttRow.platform.replace(" ", '') || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
         <div className="flex items-center flex-col lg:flex-row align-center">
             <span className="flex">
                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>

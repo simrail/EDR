@@ -16,6 +16,10 @@
 # production
 /frontend/build
 
+# Processor
+/data-processor/node_modules
+/data-processor/dump.sql
+
 # misc
 .DS_Store
 .env.local

@@ -3,7 +3,7 @@ import { TimeTableRow } from "..";
 export const getTimetableStartingFromHour = (timetable: TimeTableRow[], startHour: string) => {      
     // Find the index of the first time in the timetable that is equal to or
     // greater than the start hour
-    const startIndex = timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival >= startHour);
+    const startIndex = timetable.findIndex((time: TimeTableRow) => time.arrival_time >= startHour);
     
     if (startIndex === -1) {
       // If there is no time in the timetable that is equal to or greater than the
@@ -11,8 +11,8 @@ export const getTimetableStartingFromHour = (timetable: TimeTableRow[], startHou
       // (but not including) the start hour, as well as all times from the start
       // hour until the end of the 24-hour period
         return [
-            ...timetable.slice(0, timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival === startHour)),
-            ...timetable.slice(timetable.findIndex((time: TimeTableRow) => time.scheduled_arrival === startHour))
+            ...timetable.slice(0, timetable.findIndex((time: TimeTableRow) => time.arrival_time === startHour)),
+            ...timetable.slice(timetable.findIndex((time: TimeTableRow) => time.arrival_time === startHour))
         ];
     } else {
       // If there is a time in the timetable that is equal to or greater than the

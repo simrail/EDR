@@ -12,7 +12,7 @@ export function getServerList(req: express.Request, res: express.Response) {
         // Sort by server number
         serverData.sort((s1, s2) => s1.ServerCode.slice(0, 2).toUpperCase() === s2.ServerCode.slice(0, 2).toUpperCase() && s1.ServerCode.slice(2) < s2.ServerCode.slice(2) ? -1 : 0);
         return res
-            .setHeader("Cache-control", 'public, max-age=3600')
+            .setHeader("Cache-control", 'public, max-age=60, stale-if-error=3060')
             .send(serverData);
     }).catch(() => {
         return res.sendStatus(500);

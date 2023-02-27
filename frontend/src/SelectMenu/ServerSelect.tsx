@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import _sortBy from "lodash/sortBy";
 import { console_log } from "../utils/Logger";
 import { Server } from "@simrail/types";
-import _ from "lodash";
 
 type Props = {
     isWebpSupported: boolean
@@ -32,6 +31,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
     }, [servers, language]);
 
     const categorizeServerList = (serverList: Server[]) => {
+        const languageTrim = language.substring(0, 2).toLowerCase();
         const orderedServers = _sortBy(serverList, s => {
             return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
         });
@@ -44,12 +44,12 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
 
         const serversNotInLanguage = Object.fromEntries(
             Object.entries(categorized)
-                .filter(([key]) => key !== language.toLowerCase())
+                .filter(([key]) => key !== languageTrim)
         );
 
         const serversByLanguage = Object.fromEntries(
             Object.entries(categorized)
-                .filter(([key]) => key === language.toLowerCase())
+                .filter(([key]) => key === languageTrim)
         );
 
         setServersByRegion({
@@ -62,9 +62,13 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
     return <SelectMenuLayout title={t("SELECTMENU_server_selection")} isWebpSupported={isWebpSupported}>
         {
             !serversByRegion
-                ? <Spinner />
+                ? (
+                    <div className="flex justify-center items-center">
+                        <Spinner size="xl" />
+                    </div>
+                )
                 : (
-                    <>
+                    <div className="mt-4">
                         <div>
                             {serversByRegion?.serversByLanguage && (
                                 <div className="flex flex-wrap justify-center text-slate-700 dark:text-slate-100">
@@ -81,7 +85,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
                                 ))
                             )}
                         </div>
-                    </>
+                    </div>
                 )
         }
     </SelectMenuLayout>

@@ -1,5 +1,5 @@
-import _ from "lodash";
-import React from "react";
+import _isEmpty from "lodash/isEmpty";
+import React, {ReactNode} from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
 import AppLogo from "../images/logo.png";
@@ -16,6 +16,7 @@ import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";
 import SubNavigation, { SubNavigationProps } from "../EDR/components/SubNavigation";
+import { Link } from "react-router-dom";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -25,13 +26,16 @@ const DropdownFlagIcon: React.FC<any> = ({children}) =>
 type Props = {
     children?: any,
     title: string,
-    isWebpSupported: boolean
+    isWebpSupported: boolean,
+    serverCode?: string,
 }
 
-export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children, title, isWebpSupported, navPreviousItem, navCurrentItem, navNextItem}) => {
+export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children, title, isWebpSupported, navPreviousItem, navCurrentItem, navNextItem, serverCode}) => {
     const {t, i18n} = useTranslation();
     const background = isWebpSupported ? BackgroundWebp : Background;
     const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
+    const isOnTrainsWindow = window.location.pathname.includes('trains');
+
     return <div className="text-primary">
         <Navbar fluid={true} className="sticky top-0 bg-slate-300 h-20 z-20">
             <Navbar.Brand href="/">
@@ -87,7 +91,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             </Navbar.Collapse>
         </Navbar>
 
-        {_.isEmpty(navPreviousItem) || _.isEmpty(navCurrentItem) || _.isEmpty(navNextItem) || (
+        {_isEmpty(navPreviousItem) || _isEmpty(navCurrentItem) || _isEmpty(navNextItem) || (
             <SubNavigation 
                 navPreviousItem={navPreviousItem}
                 navCurrentItem={navCurrentItem}
@@ -125,14 +129,27 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 </Button>
             </div>
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
-            <div className="flex items-start justify-center max-w-screen min-h-screen">
-                <div className="p-8 flex flex-wrap max-w-screen justify-center content-start">
-                    {children}
+
+            {serverCode ? (
+                <div className="flex items-start justify-center max-w-screen min-h-screen">
+                    <div className="p-8 flex flex-wrap max-w-screen justify-center content-start w-full">
+                        <ul className="w-full text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400 mb-8">
+                            <li className="w-full">
+                                <Link to={`/${serverCode}/`} className={`${!isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-4 focus:ring-blue-300 focus:outline-none`} aria-current="page">Stations</Link>
+                            </li>
+                            <li className="w-full">
+                                <Link to={`/${serverCode}/trains`} className={`${isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-r-lg focus:ring-4 focus:outline-none focus:ring-blue-300`}>Trains</Link>
+                            </li>
+                        </ul>
+                        {children}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                children
+            )}
         </div>
         <div className="text-center p-4">
-            {t("FOOTER_version")} 1.2 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
+            {t("FOOTER_version")} 1.3 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
         </div>
     </div>;
 }

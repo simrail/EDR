@@ -36,7 +36,6 @@ type Props = {
     headerSeventhColRef: any,
     playSoundNotification: any,
     isWebpSupported: boolean,
-    showOnlyApproachingTrains: boolean;
     streamMode: boolean;
     filterConfig: FilterConfig;
     index: number;
@@ -46,7 +45,7 @@ type Props = {
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, showOnlyApproachingTrains, streamMode, setTimetableTrainId, filterConfig, index,
+        playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig, index,
         selectedRow, setSelectedRow
     }: Props
 ) => {
@@ -59,21 +58,21 @@ const TableRow: React.FC<Props> = (
 
     const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, post, ttRow.from, ttRow.to, closestStationid, currentDistance) : false;
-    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
+    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, post, ttRow.from_post, ttRow.to_post, closestStationid, currentDistance) : false;
+    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.rawDistances?.length ?? 1); // Before the condition was wrong
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
     // console_log("Post cfg", postCfg);
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === post && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
-    const [departureExpectedHours, departureExpectedMinutes] = ttRow.scheduled_departure.split(":").map(value => parseInt(value));
+    const [departureExpectedHours, departureExpectedMinutes] = ttRow.departure_time.split(":").map(value => parseInt(value));
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const isDepartureNextDay = dateNow.getHours() >= 20 && departureExpectedHours < 12;  // TODO: less but still clunky
     const isDeparturePreviousDay = departureExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedDeparture = getDateWithHourAndMinutes(dateNow, departureExpectedHours, departureExpectedMinutes, isDepartureNextDay, isDeparturePreviousDay);
 
-    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.scheduled_arrival.split(":").map(value => parseInt(value));
+    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.arrival_time.split(":").map(value => parseInt(value));
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
@@ -81,7 +80,7 @@ const TableRow: React.FC<Props> = (
     const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
 
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
-    const trainBadgeColor = configByType[ttRow.type]?.color ?? "purple";
+    const trainBadgeColor = configByType[ttRow.train_type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
     // console.log("EDR", trainDetails)
@@ -94,8 +93,10 @@ const TableRow: React.FC<Props> = (
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
+    // console.log("Rendered");
+
     return <Table.Row
-        onClick={() => setSelectedRow(index !== selectedRow ? index : null)} 
+        onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations
         className={`
             snap-start dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
             ${trainHasPassedStation ? 'opacity-50' : 'opacity-100'}
@@ -154,4 +155,8 @@ const TableRow: React.FC<Props> = (
     </Table.Row>
 }
 
-export default React.memo(TableRow)
+export default React.memo(TableRow, (prevProps, nextProps) => {
+    return JSON.stringify(prevProps.trainDetails) === JSON.stringify(nextProps.trainDetails)
+    && JSON.stringify(prevProps.ttRow) === JSON.stringify(nextProps.ttRow)
+    && JSON.stringify(prevProps.filterConfig) === JSON.stringify(nextProps.filterConfig)
+})
