@@ -7,7 +7,7 @@ type Props = {
     setModalTrainId: (number: string | undefined) => void;
 }
 
-const frameHeight = "min-h-[300px] md:min-h-[400px] lg:min-h-[600px] w-full"
+export const frameHeight = "max-h-[70vh] min-h-[300px] md:min-h-[400px] lg:min-h-[600px] w-full"
 export const SimRailMapModal: React.FC<Props> = ({trainId, setModalTrainId, serverCode}) => (
     <Modal className="z-20" show={!!trainId} size="7xl" onClose={() => setModalTrainId(undefined)} position="bottom-center" style={{zIndex: 999999}}>
         <Modal.Header>

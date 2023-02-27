@@ -4,6 +4,7 @@ import {getTrainTimetable} from "../../api/api";
 import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import { DetailedTrain } from "../functions/trainDetails";
 import TrainTimetableTimeline from "./TrainTimetableTimeline";
+import {frameHeight} from "./SimRailMapModal";
 
 type Props = {
     trainDetails?: DetailedTrain | undefined;
@@ -27,7 +28,7 @@ const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, 
     // console.log("Closest station corrected : ", closestStationIndex);
 
     return (
-        <Table className="max-h-[700px]" striped>
+        <Table className={frameHeight} striped>
             <Table.Head>
                 <Table.HeadCell>Times</Table.HeadCell>
                 <Table.HeadCell>Station</Table.HeadCell>

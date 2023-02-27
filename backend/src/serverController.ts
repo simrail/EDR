@@ -1,5 +1,5 @@
 import { simrailClient } from "./simrailClient";
-import {BASE_AWS_API, BASE_SIMRAIL_API} from "./config";
+import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import axios from "axios";
@@ -21,6 +21,12 @@ export function getServerList(req: express.Request, res: express.Response) {
 
 export function getStationsList(req: express.Request, res: express.Response, serverCode: string) {
     return simrailClient.get("stations-open?serverCode=" + serverCode)?.then((e) => {
+        if (e.data.count === 0) {
+            const fakedStations = Object.entries(internalIdToSrId).map(([k , n]) => ({Name: n, Prefix: k}));
+            return res
+                .setHeader("Cache-control", "public, max-age=360")
+                .send(fakedStations)
+        }
         return res
             .setHeader("Cache-control", 'public, max-age=3600')
             .send((e.data as ApiResponse<Station>).data);

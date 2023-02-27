@@ -67,13 +67,17 @@ export const POSTS: { [key: string]: string[] } = {
     "SG": [newInternalIdToSrId["SG"], newInternalIdToSrId["SG_R52"]],
     "DG": [newInternalIdToSrId["DG"]],
     "BZ": [newInternalIdToSrId["BZ"]],
+    "T1_BZ": [newInternalIdToSrId["BZ"]],
     "LZ_LC": [newInternalIdToSrId["LZ_LC"]],
     "ZA": [newInternalIdToSrId["ZA"]],
     "OP": [newInternalIdToSrId["OP_PO"]],
     "DG_WZ": [newInternalIdToSrId["DG_WZ"]],
     "DGZ": [newInternalIdToSrId["DGZ"]],
     "SP": [newInternalIdToSrId["SP"]],
-    "IDZ": [newInternalIdToSrId["IDZ"]]
+    "IDZ": [newInternalIdToSrId["IDZ"]],
+    "SG_PO": [newInternalIdToSrId["SG_PO"]],
+    "OP_PO": [newInternalIdToSrId["OP_PO"]]
+
 
 };
 
