@@ -37,12 +37,14 @@ export const TrainSelect = () => {
     }, [servers, serverCode]);
 
     return (
-        <SelectMenuLayout title={
-            <div className="flex justify-center items-center">
-            TrainSelect
-            <Link to={"/"+serverCode}><Button className="ml-4" size="xl">Stations</Button></Link>
-            </div>
-        } isWebpSupported={false} navNextItem={subNavigationItems?.navNextItem} navCurrentItem={subNavigationItems?.navCurrentItem} navPreviousItem={subNavigationItems?.navPreviousItem}>
+        <SelectMenuLayout 
+            title={"TrainSelect"}
+            isWebpSupported={false}
+            navNextItem={subNavigationItems?.navNextItem}
+            navCurrentItem={subNavigationItems?.navCurrentItem}
+            navPreviousItem={subNavigationItems?.navPreviousItem}
+            serverCode={serverCode}
+        >
             {
                 !trains
                     ? <Spinner size="xl" />

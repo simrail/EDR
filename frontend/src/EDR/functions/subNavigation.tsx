@@ -27,21 +27,27 @@ export const getPreviousAndNextServer = ({ servers, currentServer, text, isTrain
     return {
         navPreviousItem: previousItem?.ServerCode && (
             <Link to={`/${previousItem.ServerCode}${isTrainList ? '/trains' : ''}`} className="underline underline-offset-2 hover:no-underline text-slate-500 dark:text-slate-300 flex items-center">
-                {text?.previousLabel}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                <span className="hidden sm:block">{text?.previousLabel}</span>
                 <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[previousItem.ServerCode.slice(0, 2).toUpperCase()].toString() }} />
                 <span className="font-bold">{previousItem.ServerCode.toUpperCase()}</span>
             </Link>
         ),
         navNextItem: nextItem?.ServerCode && (
             <Link to={`/${nextItem.ServerCode}${isTrainList ? '/trains' : ''}`} className="underline underline-offset-2 hover:no-underline text-slate-500 dark:text-slate-300 flex items-center ml-auto">
-                {text?.nextLabel}
+                <span className="hidden sm:block">{text?.nextLabel}</span>
                 <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[nextItem.ServerCode.slice(0, 2).toUpperCase()].toString() }} />
                 <span className="font-bold">{nextItem.ServerCode?.toUpperCase()}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
             </Link>
         ),
         navCurrentItem: currentServer && (
             <Link to={`/`} className="uppercase font-bold text-slate-500 dark:text-slate-300 flex items-center">
-                {text?.currentLabel}
+                <span className="hidden sm:block">{text?.currentLabel}</span>
                 <span className="ml-2 mr-1 child:w-6 child:h-auto" dangerouslySetInnerHTML={{ __html: countriesFlags[currentServer.slice(0, 2).toUpperCase()].toString() }} />
                 <span className="font-bold">{currentServer.toUpperCase()}</span>
             </Link>

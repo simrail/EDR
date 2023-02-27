@@ -64,7 +64,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
             !serversByRegion
                 ? <Spinner />
                 : (
-                    <>
+                    <div className="mt-4">
                         <div>
                             {serversByRegion?.serversByLanguage && (
                                 <div className="flex flex-wrap justify-center text-slate-700 dark:text-slate-100">
@@ -81,7 +81,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
                                 ))
                             )}
                         </div>
-                    </>
+                    </div>
                 )
         }
     </SelectMenuLayout>

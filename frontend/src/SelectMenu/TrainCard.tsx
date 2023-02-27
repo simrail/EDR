@@ -8,7 +8,6 @@ type Props = {
     train: any;
 }
 export const TrainCard: React.FC<Props> = ({ train }) => {
-    console.log(">>>>>>>>>>>>>>", train);
     const { serverCode } = useParams();
     const navigate = useNavigate();
     const trainConfig = configByLoco[train?.Vehicles[0]];
