@@ -1,6 +1,6 @@
 import React from "react";
 import {getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
-import {Alert} from "flowbite-react";
+import {Alert, Spinner} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
 import _map from "lodash/fp/map";
@@ -146,7 +146,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         window.trainsRefreshWebWorkerId = window.setInterval(() => {
             if (!serverCode) return;
             getTrains(serverCode).then(setTrains);
-        }, 10000);
+        }, 5000);
         if (!window.trainsRefreshWebWorkerId) {
             enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
             return;
@@ -199,21 +199,24 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                               trains={trains}
                               stations={stations as Dictionary<Station>}
                               tzOffset={tzOffset}
+                              trainSchedules={trainTimetables}
         />
 
     return <>
-        {timetable && tzOffset !== undefined && post && timetable.length && (isGraphModalOpen || graphFullScreenMode)
-            ? <Graph
-                fullScreenMode={graphFullScreenMode}
-                isOpen={isGraphModalOpen}
-                timetable={timetable}
-                post={post} onClose={() =>
-                setGraphModalOpen(false)}
-                serverTzOffset={tzOffset}
-            />
-            : null
+        {
+            timetable && tzOffset !== undefined && post && timetable.length && (isGraphModalOpen || graphFullScreenMode)
+                ? <Graph
+                    fullScreenMode={graphFullScreenMode}
+                    isOpen={isGraphModalOpen}
+                    timetable={timetable}
+                    post={post} onClose={() =>
+                    setGraphModalOpen(false)}
+                    serverTzOffset={tzOffset}
+                />
+                : null
         }
-        {!graphFullScreenMode && tzOffset !== undefined && <EDRTable playSoundNotification={playSoundNotification}
+        { !graphFullScreenMode && tzOffset !== undefined && trainTimetables
+            ? <EDRTable playSoundNotification={playSoundNotification}
                 timetable={timetable!}
                 serverTzOffset={tzOffset}
                 trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
@@ -224,8 +227,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 filterConfig={filterConfig}
                 setFilterConfig={setFilterConfig}
             />
+            : null
         }
-            </>;
+    </>
 }
 
 export default EDR;

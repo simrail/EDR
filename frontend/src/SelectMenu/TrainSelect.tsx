@@ -1,8 +1,8 @@
 import React from "react";
 import { getServers, getTrains } from "../api/api";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { SelectMenuLayout } from "./Layout";
-import { Accordion, Spinner, TextInput } from "flowbite-react";
+import {Accordion, Button, Spinner, TextInput} from "flowbite-react";
 import { TrainCard } from "./TrainCard";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
@@ -37,7 +37,12 @@ export const TrainSelect = () => {
     }, [servers, serverCode]);
 
     return (
-        <SelectMenuLayout title="TrainSelect" isWebpSupported={false} navNextItem={subNavigationItems?.navNextItem} navCurrentItem={subNavigationItems?.navCurrentItem} navPreviousItem={subNavigationItems?.navPreviousItem}>
+        <SelectMenuLayout title={
+            <div className="flex justify-center items-center">
+            TrainSelect
+            <Link to={"/"+serverCode}><Button className="ml-4" size="xl">Stations</Button></Link>
+            </div>
+        } isWebpSupported={false} navNextItem={subNavigationItems?.navNextItem} navCurrentItem={subNavigationItems?.navCurrentItem} navPreviousItem={subNavigationItems?.navPreviousItem}>
             {
                 !trains
                     ? <Spinner size="xl" />

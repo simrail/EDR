@@ -51,8 +51,6 @@ export async function scrapRoute(res: express.Response, post: string): Promise<[
 
         const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'train_number'));
 
-        // console.log("KSPR", keyedSecondaryPostsRows);
-
         // Handle stations that have multiple posts, merge their data into a single entry
         const mergedPostsRows = primaryPostRows.reduce((acc, v) => [
             ...acc,

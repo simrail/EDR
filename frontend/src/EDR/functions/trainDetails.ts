@@ -82,7 +82,7 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
         pfLineTrace: pfLineTrace,
         closestStation: pfClosestStation?.srId ?? closestStation?.srId,
         closestStationId: closestStation?.id,
-        rawDistances: rawDistancesArray.length > 5 ? rawDistancesArray.slice(1) : distanceArray,
+        rawDistances: rawDistancesArray.length > 3 ? rawDistancesArray.slice(1) : distanceArray,
         positionsArray: positionsArray.length > 5 ? positionsArray.slice(2) : positionsArray,
         directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
         dotProductForGoingAway: dotProductForGoingAway,

@@ -26,6 +26,7 @@
   "EDR_LOADING_stations": "Stations",
   "EDR_LOADING_trains": "Trains",
   "EDR_LOADING_timezone": "TimeZone",
+  "EDR_LOADING_trains_schedules": "Train timetables",
 
   "EDR_TRAINROW_click_to_copy": "Click to copy",
   "EDR_TRAINROW_copied": "Copied to clipboard!",

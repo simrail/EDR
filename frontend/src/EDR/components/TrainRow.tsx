@@ -60,7 +60,7 @@ const TableRow: React.FC<Props> = (
     const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
     const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, post, ttRow.from_post, ttRow.to_post, closestStationid, currentDistance) : false;
-    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.distanceToStation?.length ?? 1);
+    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.rawDistances?.length ?? 1); // Before the condition was wrong
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
@@ -93,6 +93,8 @@ const TableRow: React.FC<Props> = (
     if (filterConfig.maxRange && distanceFromStation > filterConfig.maxRange) return null;
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
+
+    console.log("Rendered");
 
     return <Table.Row
         onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations
@@ -157,4 +159,5 @@ const TableRow: React.FC<Props> = (
 export default React.memo(TableRow, (prevProps, nextProps) => {
     return JSON.stringify(prevProps.trainDetails) === JSON.stringify(nextProps.trainDetails)
     && JSON.stringify(prevProps.ttRow) === JSON.stringify(nextProps.ttRow)
+    && JSON.stringify(prevProps.filterConfig) === JSON.stringify(nextProps.filterConfig)
 })

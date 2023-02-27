@@ -56,24 +56,24 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "SG_PO": "4010"
 }
 
-export const POSTS: { [key: string]: PURE_POST[] } = {
-    "Góra Włodowska": ["Góra Włodowska"],
-    "Psary": ["Psary"],
-    "Knapówka": ["Knapówka"],
-    "Włoszczowa Północ": ["Włoszczowa Północ"],
-    "Olszamowice": ["Olszamowice"],
-    "Pilichowice": ["Pilichowice"],
-    "Katowice_Zawodzie": ["Katowice_Zawodzie"],
-    "Sosnowiec_Główny": ["Sosnowiec_Główny", "Sosnowiec_Gł._pzs_R52"],
-    "Dąbrowa Górnicza": ["Dąbrowa Górnicza"],
-    "Będzin": ["Będzin"],
-    "Łazy Łc": ["Łazy Łc"],
-    "Zawiercie": ["Zawiercie"],
-    "Opoczno Południe": ["Opoczno Południe"],
-    "Dąbrowa Górnicza Wschodnia": ["Dąbrowa Górnicza Wschodnia"],
-    "Dąbrowa Górnicza Ząbkowice": ["Dąbrowa Górnicza Ząbkowice"],
-    "Sosnowiec Południowy": ["Sosnowiec Południowy"],
-    "Idzikowice": ["Idzikowice"]
+export const POSTS: { [key: string]: string[] } = {
+    "GW": [newInternalIdToSrId["GW"]],
+    "PS": [newInternalIdToSrId["PS"]],
+    "KN": [newInternalIdToSrId["KN"]],
+    "WP": [newInternalIdToSrId["WP"]],
+    "OZ": [newInternalIdToSrId["OZ"]],
+    "PI": [newInternalIdToSrId["PI"]],
+    "KZ": [newInternalIdToSrId["KZ"]],
+    "SG": [newInternalIdToSrId["SG"], newInternalIdToSrId["SG_R52"]],
+    "DG": [newInternalIdToSrId["DG"]],
+    "BZ": [newInternalIdToSrId["BZ"]],
+    "LZ_LC": [newInternalIdToSrId["LZ_LC"]],
+    "ZA": [newInternalIdToSrId["ZA"]],
+    "OP": [newInternalIdToSrId["OP_PO"]],
+    "DG_WZ": [newInternalIdToSrId["DG_WZ"]],
+    "DGZ": [newInternalIdToSrId["DGZ"]],
+    "SP": [newInternalIdToSrId["SP"]],
+    "IDZ": [newInternalIdToSrId["IDZ"]]
 
 };
 

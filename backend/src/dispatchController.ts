@@ -3,6 +3,35 @@ import {internalIdToSrId, newInternalIdToSrId, POSTS} from "./config";
 import express from "express";
 import {getStationTimetable} from "./sql/stations";
 import {getTrainTimetable} from "./sql/train";
+import _ from "lodash";
+
+const mergePostRows = (allPostsResponse: any[]) => {
+    const primaryPostRows = allPostsResponse[0];
+    const secondaryPostsRows = allPostsResponse.slice(1);
+
+    const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'train_number'));
+
+    // Handle stations that have multiple posts, merge their data into a single entry
+    const mergedPostsRows = primaryPostRows.reduce((acc: any[], v: any) => [
+        ...acc,
+        {
+            ...v,
+            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.train_number])
+        }
+    ], []);
+
+    const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'train_number');
+
+    // TODO: This has state, temporary fix
+    secondaryPostsRows.map((secondary_post_trains: any[]) => {
+        for (const train of secondary_post_trains) {
+            if (!keyedFirstPostTrains[train.train_number])
+                mergedPostsRows.push(train);
+        }
+    });
+
+    return _.sortBy(mergedPostsRows, 'hourSort');
+}
 
 export async function dispatchController(req: express.Request, res: express.Response) {
     const {post} = req.params;
@@ -15,10 +44,13 @@ export async function dispatchController(req: express.Request, res: express.Resp
 
     console.log(`${post}`);
     try {
-        const data = await getStationTimetable(newInternalIdToSrId[post]);
+        const mergePosts = req.query.mergePosts === "true"
+        const postsToFetch = mergePosts ? POSTS[post] : [newInternalIdToSrId[post]];
+        const data = await Promise.all(postsToFetch.map(getStationTimetable));
+        const mergedPosts = mergePostRows(data);
         return res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
-            .send(data)
+            .send(mergedPosts)
         /*if (!error && data && Object.values(data).length !== 0)
             return res
                 .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')

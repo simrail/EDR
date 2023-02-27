@@ -1,6 +1,7 @@
 import connPool from "../sqlPool";
 import _ from "lodash";
 import fs from "node:fs";
+import {VMAX_BY_TYPE} from "../config";
 
 export const getStationTimetable = async (stationId: string) => {
     const stationTimetableRows = await connPool.query(`
@@ -29,6 +30,7 @@ export const getStationTimetable = async (stationId: string) => {
     const withDynamicData = stationTimetableRows.map((row) => {
         return _.omit({
             ...row,
+            type_speed: VMAX_BY_TYPE[row.train_type],
             hourSort: Number.parseInt(`${row.arrival_time.split(':')[0]}${row.arrival_time.split(':')[1]}`),
         }, ['arrival_date', 'departure_date']);
     })

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import React, {ReactNode} from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
 import AppLogo from "../images/logo.png";
@@ -24,7 +24,7 @@ const DropdownFlagIcon: React.FC<any> = ({children}) =>
 
 type Props = {
     children?: any,
-    title: string,
+    title: ReactNode,
     isWebpSupported: boolean
 }
 
@@ -132,7 +132,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             </div>
         </div>
         <div className="text-center p-4">
-            {t("FOOTER_version")} 1.2 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
+            {t("FOOTER_version")} 1.3 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
         </div>
     </div>;
 }

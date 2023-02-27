@@ -9,6 +9,7 @@ import {Link, useParams} from "react-router-dom";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { countriesFlags } from "../config";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
+import {Button} from "flowbite-react";
 
 type Props = {
     isWebpSupported: boolean,
@@ -40,7 +41,12 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
         }));
     }, [servers, serverCode]);
 
-    return <SelectMenuLayout title={t("SELECTMENU_post_select")} isWebpSupported={isWebpSupported} navNextItem={subNavigationItems?.navNextItem} navCurrentItem={subNavigationItems?.navCurrentItem} navPreviousItem={subNavigationItems?.navPreviousItem}>
+    return <SelectMenuLayout title={
+            <div className="flex justify-center items-center">
+                {t("SELECTMENU_post_select")}
+                <Link to={"/"+serverCode+"/trains"}><Button className="ml-4" size="xl">Trains</Button></Link>
+            </div>
+    } isWebpSupported={isWebpSupported} navNextItem={subNavigationItems?.navNextItem} navCurrentItem={subNavigationItems?.navCurrentItem} navPreviousItem={subNavigationItems?.navPreviousItem}>
         {
             !posts
             ? <Spinner size="xl"/>
