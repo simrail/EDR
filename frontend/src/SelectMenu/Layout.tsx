@@ -135,10 +135,10 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                     <div className="p-8 flex flex-wrap max-w-screen justify-center content-start">
                         <ul className="w-full text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400 mb-8">
                             <li className="w-full">
-                                <Link to={`/${serverCode}/trains`} className={`${isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-4 focus:ring-blue-300 focus:outline-none`} aria-current="page">Trains</Link>
+                                <Link to={`/${serverCode}/`} className={`${!isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-4 focus:ring-blue-300 focus:outline-none`} aria-current="page">Stations</Link>
                             </li>
                             <li className="w-full">
-                                <Link to={`/${serverCode}/`} className={`${!isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-r-lg focus:ring-4 focus:outline-none focus:ring-blue-300`}>Stations</Link>
+                                <Link to={`/${serverCode}/trains`} className={`${isOnTrainsWindow ? 'active text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700'} inline-block w-full p-4 rounded-lg sm:rounded-none sm:rounded-r-lg focus:ring-4 focus:outline-none focus:ring-blue-300`}>Trains</Link>
                             </li>
                         </ul>
                         {children}
