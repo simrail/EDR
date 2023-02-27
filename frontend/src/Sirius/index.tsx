@@ -150,7 +150,7 @@ const Sirius = () => {
     return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train || !serverTzOffset
         ? (
             <div className="h-screen w-screen flex justify-center items-center">
-                <Spinner />
+                <Spinner size="xl" />
             </div>
         )
         : (

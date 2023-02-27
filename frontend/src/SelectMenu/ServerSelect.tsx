@@ -62,7 +62,11 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
     return <SelectMenuLayout title={t("SELECTMENU_server_selection")} isWebpSupported={isWebpSupported}>
         {
             !serversByRegion
-                ? <Spinner />
+                ? (
+                    <div className="flex justify-center items-center">
+                        <Spinner size="xl" />
+                    </div>
+                )
                 : (
                     <div className="mt-4">
                         <div>
