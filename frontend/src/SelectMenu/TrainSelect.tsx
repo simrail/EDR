@@ -22,7 +22,7 @@ export const TrainSelect = () => {
         if (!serverCode) return;
         getServers().then(setServers);
         getTrains(serverCode).then(setTrains)
-    }, []);
+    }, [serverCode]);
 
     React.useEffect(() => {
         console.log('...', trains);
