@@ -144,10 +144,7 @@ const Sirius = () => {
         }
     };
 
-    console.log("Train number : ", trainNumber);
-    console.log("Train timetable : ", trainTimetable);
-    console.log("Trains : ", train);
-    return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train || !serverTzOffset
+    return !serverCode || !trainNumber || !trainTimetable || trainTimetable.length === 0 || !train || serverTzOffset === undefined
         ? (
             <div className="h-screen w-screen flex justify-center items-center">
                 <Spinner size="xl" />
