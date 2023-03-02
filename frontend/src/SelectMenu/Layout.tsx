@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {FR, GB, CZ, HU, DE, SK, IT, CN, PL, RU} from "country-flag-icons/react/1x1";
 
 import SGCS from "../images/communities/sgcs.webp";
-import SRDE from "../images/communities/srde.webp";
+import SRDACH from "../images/communities/SRDACH.webp";
 import SRFR from "../images/communities/srfr.png";
 import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
@@ -112,8 +112,8 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/DztnvgePXw">
                     <span className="inline-flex items-center "><img src={OFPMafia} height={16} width={16} alt="Community logo"/>&nbsp;OFPMafia CZ/SK</span>
                 </Button>
-                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/A63hJphHQ4">
-                    <span className="inline-flex items-center "><img src={SRDE} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Germany</span>
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/YWrRGYqNC8">
+                    <span className="inline-flex items-center "><img src={SRDACH} height={16} width={16} alt="Community logo"/>&nbsp;Simrail DACH</span>
                 </Button>
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/5cdpDv2nT8">
                     <span className="inline-flex items-center "><img src={SRIT} height={16} width={16} alt="Community logo"/>&nbsp;Simrail ITA</span>
