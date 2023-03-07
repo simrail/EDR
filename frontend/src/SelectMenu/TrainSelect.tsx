@@ -1,8 +1,8 @@
 import React from "react";
 import { getServers, getTrains } from "../api/api";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import { SelectMenuLayout } from "./Layout";
-import {Accordion, Button, Spinner, TextInput} from "flowbite-react";
+import {Spinner} from "flowbite-react";
 import { TrainCard } from "./TrainCard";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";

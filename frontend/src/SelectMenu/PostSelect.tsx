@@ -5,11 +5,9 @@ import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
 import { Server, Station } from "@simrail/types";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
-import { countriesFlags } from "../config";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
-import {Button} from "flowbite-react";
 
 type Props = {
     isWebpSupported: boolean,

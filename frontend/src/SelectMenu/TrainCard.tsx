@@ -16,7 +16,7 @@ export const TrainCard: React.FC<Props> = ({ train }) => {
             if (!train.TrainNoLocal || !serverCode) return;
             navigate(`/${serverCode}/train/${train.TrainNoLocal}`);
         }}>
-            {trainConfig?.icon ? <div className="flex items-center"><img src={trainConfig.icon} width={160}/></div> : null }
+            {trainConfig?.icon ? <div className="flex items-center"><img src={trainConfig.icon} alt="train icon" width={160}/></div> : null }
             <div className="flex items-center">
                 <span className="font-bold">{train.TrainNoLocal}</span>&nbsp;- {train?.Vehicles[0].split("/")[0]}
             </div>
