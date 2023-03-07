@@ -61,7 +61,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     <Table.Row
                                         className={classNames(
                                             "hover:bg-gray-200 dark:hover:bg-gray-600 snap-start",
-                                        {"!bg-amber-100 !text-gray-600 hover:!bg-amber-200": internalId === nearestStation?.id}
+                                        {"!bg-amber-200 !text-gray-600 hover:!bg-amber-300": internalId === nearestStation?.id}
                                         )}
                                         data-internalid={internalId}
                                     >
