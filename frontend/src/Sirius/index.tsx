@@ -156,10 +156,10 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
                 <TrainTimetable autoScroll={autoScroll} trainTimetable={trainTimetable} train={train} allStationsInpath={allStationsInPath} isWebpSupported={isWebpSupported}/>
             );
         }
-        if (component === "train-details-layout" && train) {
+        if (component === "train-details-layout" && train && trainTimetable) {
             return (
                 <div>
-                    <TrainDetails trainNumber={trainNumber} trainDetails={train} />
+                    <TrainDetails trainNumber={trainNumber} trainDetails={train} trainTimeTable={trainTimetable} />
                 </div>
             );
         }

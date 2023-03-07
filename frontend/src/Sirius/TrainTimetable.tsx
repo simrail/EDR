@@ -1,5 +1,5 @@
 import React from "react";
-import {Table} from "flowbite-react";
+import {Badge, Table} from "flowbite-react";
 import {Train} from "@simrail/types";
 import {postToInternalIds, StationConfig} from "../config/stations";
 import {haversine} from "../EDR/functions/vectors";
@@ -67,24 +67,27 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     >
                                         <Table.Cell className="relative pl-8">
                                             <div className="flex flex-col">
-                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
+                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stop_type} />
                                                 <div className="flex justify-between">
-                                                    <span>{Math.round(ttRow.km * 10) / 10} km</span>
+                                                    <span>{ttRow.km ? `${(Math.round(ttRow.km * 100) / 100)}  km` : ''} </span>
                                                     <span>L{ttRow.line}</span>
                                                 </div>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {ttRow.scheduled_arrival_hour}
+                                            <div className="flex justify-between">
+                                                <span>{ttRow.scheduled_arrival_hour}</span>
+                                                <span>{ttRow.stop_type && <Badge>{`${ttRow.stop_type}`}</Badge>}</span>
+                                            </div>
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        <Table.Cell className="pl-0">
                                             {ttRow.station}
                                         </Table.Cell>
                                         <Table.Cell>
                                             {ttRow.scheduled_departure_hour}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {ttRow.layover}
+                                            {ttRow.layover ? `${ttRow.layover}  min` : ''}
                                         </Table.Cell>
                                     </Table.Row>
                                 {

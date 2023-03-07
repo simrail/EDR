@@ -2,13 +2,15 @@ import React from 'react';
 import { Table } from 'flowbite-react';
 import { Train } from '@simrail/types';
 import { useTranslation } from 'react-i18next';
+import { TrainTimeTableRow } from '.';
 
 type Props = {
     trainNumber: string | undefined;
     trainDetails: Train;
+    trainTimeTable: TrainTimeTableRow[];
 }
 
-export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => {
+export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber, trainTimeTable }) => {
     const {t} = useTranslation();
 
     return (
@@ -44,7 +46,7 @@ export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => 
                             {t("DRIVER_DETAILS_service_type")}:
                         </Table.Cell>
                         <Table.Cell>
-                            {trainDetails.TrainName}
+                            {trainTimeTable[0].train_type}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>
