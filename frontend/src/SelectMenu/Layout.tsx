@@ -1,5 +1,5 @@
 import _isEmpty from "lodash/isEmpty";
-import React, {ReactNode} from "react";
+import React from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
 import AppLogo from "../images/logo.png";

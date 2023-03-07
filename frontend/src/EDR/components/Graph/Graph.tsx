@@ -13,8 +13,7 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
-    ReferenceLine,
-    TooltipProps
+    ReferenceLine
 } from 'recharts';
 import {configByType} from "../../../config/trains";
 import {format} from "date-fns";
