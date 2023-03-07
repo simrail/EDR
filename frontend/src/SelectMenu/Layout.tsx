@@ -1,5 +1,5 @@
 import _isEmpty from "lodash/isEmpty";
-import React, {ReactNode} from "react";
+import React from "react";
 import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
 import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
 import AppLogo from "../images/logo.png";
@@ -11,7 +11,7 @@ import {FR, GB, CZ, HU, DE, SK, IT, CN, PL, RU} from "country-flag-icons/react/1
 
 import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
-import SRFR from "../images/communities/srfr.png";
+import SRFR from "../images/communities/srfr.webp";
 import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";

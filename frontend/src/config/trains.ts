@@ -7,6 +7,7 @@ import EN96_001 from "../images/trains/png/EN96-001.png";
 import EP07_135 from '../images/trains/png/EP07-135.png';
 import EU07_CARGO from "../images/trains/png/EU07_CARGO.png";
 import ET25_DRAGON from "../images/trains/png/ET25-Dragon.png";
+import EP08_001 from "../images/trains/png/EP08.png";
 import ED250_PENDOLINO_WEBP from "../images/trains/webp/ED250-Pendolino.webp";
 import EU07_IC_WEBP from "../images/trains/webp/EU07_IC.webp";
 import E186_TRAXX_WEBP from "../images/trains/webp/E186-TRAXX.webp";
@@ -16,6 +17,7 @@ import EN96_001_WEBP from "../images/trains/webp/EN96-001.webp";
 import EP07_135_WEBP from '../images/trains/webp/EP07-135.webp';
 import EU07_CARGO_WEBP from "../images/trains/webp/EU07_CARGO.webp";
 import ET25_DRAGON_WEBP from "../images/trains/webp/ET25-Dragon.webp";
+import EP08_001_WEBP from "../images/trains/webp/EP08.webp";
 
 export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "Pendolino/ED250-018 Variant": {
@@ -65,6 +67,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "Dragon2/E6ACTad": {
         icon: ET25_DRAGON,
         iconWebp: ET25_DRAGON_WEBP
+    },
+    "4E/EP08-001": {
+        icon: EP08_001,
+        iconWebp: EP08_001_WEBP
     }
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF
