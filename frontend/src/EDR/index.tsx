@@ -18,6 +18,7 @@ import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
+import { TrainTimeTableRow } from "../Sirius";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
@@ -100,7 +101,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         if (!serverCode || !post) return;
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
-            getTimetable(post).then((data: TimeTableRow[]) => {
+            getTimetable(post).then((data) => {
                 setTimetable(data);
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
@@ -178,7 +179,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
             setTrainTimetables(_groupBy('train_number', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
         });
-    }, [trains])
+    }, [trains, trainTimetables])
 
     if (!serverCode || !post)
         redirect("/");

@@ -5,13 +5,14 @@ import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import { DetailedTrain } from "../functions/trainDetails";
 import TrainTimetableTimeline from "./TrainTimetableTimeline";
 import {frameHeight} from "./SimRailMapModal";
+import { TrainTimeTableRow } from "../../Sirius";
 
 type Props = {
     trainDetails?: DetailedTrain | undefined;
     setModalTrainId: (trainId: string | undefined) => void;
 }
 
-const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, lineTrace: any}> = ({timetable, closestStation, lineTrace}) => {
+const TrainTimetableBody: React.FC<{timetable?: TrainTimeTableRow[], closestStation?: string, lineTrace: any}> = ({timetable, closestStation, lineTrace}) => {
     if (!timetable) return <Spinner />
     if (timetable.length === 0) return <>&nbsp; Some trains may be missing during beta</>
 
@@ -66,7 +67,7 @@ const TrainTimetableBody: React.FC<{timetable?: any[], closestStation?: string, 
 }
 
 export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, setModalTrainId}) => {
-    const [trainTimetable, setTrainTimetable] = React.useState();
+    const [trainTimetable, setTrainTimetable] = React.useState<TrainTimeTableRow[] | undefined>();
 
     React.useEffect(() => {
         if (trainDetails?.TrainNoLocal === undefined)  {

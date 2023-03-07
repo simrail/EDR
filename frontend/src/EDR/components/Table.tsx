@@ -71,7 +71,7 @@ export const EDRTable: React.FC<Props> = ({
 
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
-    const showStopColumn = timetable.length > 0 && timetable.some((row: any) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
+    const showStopColumn = timetable.length > 0 && timetable.some((row) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
     const timetableStartHour = formatTime(nowUTC(serverTzOffset, 1), i18n.language, {
         hour: '2-digit',
         minute: '2-digit',

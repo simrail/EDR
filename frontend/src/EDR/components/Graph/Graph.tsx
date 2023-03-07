@@ -13,7 +13,8 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
-    ReferenceLine
+    ReferenceLine,
+    TooltipProps
 } from 'recharts';
 import {configByType} from "../../../config/trains";
 import {format} from "date-fns";
@@ -23,6 +24,7 @@ import _sortBy from "lodash/sortBy";
 import {LayoutType} from "recharts/types/util/types";
 import {Button} from "flowbite-react";
 import {useTranslation} from "react-i18next";
+import { Dictionary } from "lodash";
 
 export type GraphProps = {
     post: string;
@@ -33,7 +35,7 @@ export type GraphProps = {
 const dateFormatter = (date: Date) => {
     return format(date, "HH:mm");
 };
-const makeDate = (dateAry: [string, string], serverTzOffset: number) => {
+const makeDate = (dateAry: string[], serverTzOffset: number) => {
     const dateNow = nowUTC(serverTzOffset);
     const hours = Number.parseInt(dateAry[0]);
     const minutes = Number.parseInt(dateAry[1]);
@@ -52,7 +54,7 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
         return (
             <div className="custom-tooltip p-2 flex flex-col bg-white">
                 <span>{label}</span>
-                {_sortBy(payload, 'value').map((p: any) => {
+                {_sortBy(payload, 'value').map((p) => {
                     return (
                         <div className="flex justify-between w-full" key={p.dataKey}>
                             <span style={{color: p.stroke}}>{p.dataKey}&nbsp;&nbsp;</span><span>{format(new Date(p.value), "HH:mm")}</span>
@@ -97,7 +99,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const [zoom, setZoom] = React.useState<number>(1);
     const [dtNow, setDtNow] = React.useState(nowUTC(serverTzOffset));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
-    const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
+    const [neighboursTimetables, setNeighboursTimetables] = React.useState<Dictionary<Dictionary<TimeTableRow>>>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
     const [data, setData] = React.useState<any[]>();
     const {t} = useTranslation();
@@ -157,7 +159,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
 
         const postsToScan = [...gottenPostConfig.graphConfig!.pre, post, ...gottenPostConfig.graphConfig!.post];
         const data = postsToScan.flatMap((postId, postIdx) => {
-            const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
+            const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t): [] | [string, number] => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
                 // console.log("tt", targetTrain);
                 if (!targetTrain) return [];

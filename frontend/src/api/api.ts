@@ -1,5 +1,7 @@
 // const BASE_API_URL = "http://localhost:8080/";
 import {Server, Station, Train} from "@simrail/types";
+import { TimeTableRow } from "../EDR";
+import { TrainTimeTableRow } from "../Sirius";
 
 export const BASE_API_URL = process.env.API_URL ?? "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
 // export const STAGING_API_URL = "https://staging.simrail.deadlykungfu.ninja/"
@@ -19,10 +21,10 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
         .then(res => res.json())
 }
 
-export const getTimetable = (post: string): Promise<any> =>
+export const getTimetable = (post: string): Promise<TimeTableRow[]> =>
     baseApiCall("dispatch/" + post + "?mergePosts=true");
 
-export const getTrainTimetable = (trainId: string): Promise<any> =>
+export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]> =>
     fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());
 
 export const getTrains = (server: string): Promise<Train[]> =>

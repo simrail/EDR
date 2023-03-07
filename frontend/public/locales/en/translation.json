@@ -72,5 +72,12 @@
   "EDR_UI_filter_train_online": "Trains on track",
   "EDR_UI_filter_train_approaching": "Approaching",
   "EDR_UI_train_number": "Train N°",
-  "EDR_UI_filter_custom": "Custom"
+  "EDR_UI_filter_custom": "Custom",
+
+  "DRIVER_DETAILS_train_number": "Train number",
+  "DRIVER_DETAILS_start_station": "Originating station",
+  "DRIVER_DETAILS_end_station": "Destination station",
+  "DRIVER_DETAILS_service_type": "Service type",
+  "DRIVER_DETAILS_train_model": "Train model"
+  
 }

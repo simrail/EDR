@@ -1,19 +1,19 @@
 import React from "react";
 import { getServers, getTrains } from "../api/api";
-import {Link, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { SelectMenuLayout } from "./Layout";
-import {Accordion, Button, Spinner, TextInput} from "flowbite-react";
+import { Spinner} from "flowbite-react";
 import { TrainCard } from "./TrainCard";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
-import { Server } from "@simrail/types";
+import { Server, Train } from "@simrail/types";
 import { useTranslation } from "react-i18next";
 
 export const TrainSelect = () => {
-    const [trainFilter, setTrainFilter] = React.useState<any | undefined>();
+    const [trainFilter, setTrainFilter] = React.useState<Train[] | undefined>();
     const [searchTrainInput, setSearchTrainInput] = React.useState('');
     const [servers, setServers] = React.useState<Server[] | undefined>();
-    const [trains, setTrains] = React.useState<any | undefined>();
+    const [trains, setTrains] = React.useState<Train[] | undefined>();
     const [subNavigationItems, setSubnavigationItems] = React.useState<SubNavigationProps>();
     const { serverCode } = useParams();
     const { t } = useTranslation();
@@ -27,7 +27,7 @@ export const TrainSelect = () => {
     React.useEffect(() => {
         console.log('...', trains);
         if (searchTrainInput) {
-            setTrainFilter(trains.filter((train: any) => train.TrainNoLocal.includes(searchTrainInput)));
+            setTrainFilter(trains?.filter((train) => train.TrainNoLocal.includes(searchTrainInput)));
         } else {
             setTrainFilter(trains);
         }
@@ -69,7 +69,7 @@ export const TrainSelect = () => {
                                 </div>
                             </div>
                             <div className="flex flex-wrap justify-center">
-                                {trainFilter && trainFilter.map((t: any) => (
+                                {trainFilter && trainFilter.map((t) => (
                                     <TrainCard key={t.TrainNoLocal} train={t} />
                                 ))}
                             </div>

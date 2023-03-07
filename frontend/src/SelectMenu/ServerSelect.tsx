@@ -36,7 +36,7 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
             return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
         });
 
-        const categorized = orderedServers.reduce((result: any, server: Server) => {
+        const categorized = orderedServers.reduce((result: {[k: string]: Server[]}, server: Server) => {
             const key = server.ServerCode.substring(0, 2);
             (result[key] || (result[key] = [])).push(server);
             return result;

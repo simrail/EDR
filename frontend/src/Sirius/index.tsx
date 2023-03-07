@@ -9,8 +9,30 @@ import {TrainTimetable} from "./TrainTimetable";
 import { TrainDetails } from "./TrainDetails";
 import { Train } from "@simrail/types";
 import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
+import { TimeTableServiceType } from "../config/trains";
 
-const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: any) => void) => getTrains(serverCode).then((trains) => {
+export type TrainTimeTableRow = {
+    train_number: string,
+    scheduled_arrival_hour: string,
+    station: string,
+    layover: string,
+    scheduled_departure_hour: string,
+    train_type: TimeTableServiceType,
+    line: string,
+    cachedate: string,
+    stop_type: string,
+    hourSort: number,
+    km: number,
+    speedLimitsToNextStation: [{
+        lineNo: string,
+        axisStart: number,
+        axisEnd: number,
+        vMax: string,
+        track: string
+    }]
+};
+
+const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: Train) => void) => getTrains(serverCode).then((trains) => {
     const keyedTrains = _keyBy(trains, 'TrainNoLocal');
     setTrain(keyedTrains[trainNumber]);
 });
@@ -84,10 +106,14 @@ const driverViewLayout: FlexLayout.IJsonModel = {
     },
 };
 
-const Sirius = () => {
+type Props = {
+    isWebpSupported: boolean,
+}
+
+const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     const [autoScroll, setAutoScroll] = React.useState(true);
     const [serverTzOffset, setServerTzOffset] = React.useState<number>();
-    const [trainTimetable, setTrainTimetable] = React.useState<any | undefined>();
+    const [trainTimetable, setTrainTimetable] = React.useState<TrainTimeTableRow[] | undefined>();
     const [train, setTrain] = React.useState<Train | undefined>();
     const [model, setModel] = React.useState<FlexLayout.Model>();
     const [allStationsInPath, setAllStationsInPath] = React.useState<StationConfig[] | undefined>();
@@ -106,10 +132,10 @@ const Sirius = () => {
     React.useEffect(() => {
         if (!trainTimetable) return;
         const allStationsInPath = trainTimetable
-            .map((ttRow: any) => ttRow.station)
-            .map((stationName: string) => postToInternalIds[encodeURIComponent(stationName)])
-            .filter((sc: any) => !!sc)
-            .map((sc: any) => postConfig[sc.id])
+            .map((ttRow) => ttRow.station)
+            .map((stationName) => postToInternalIds[encodeURIComponent(stationName)])
+            .filter((sc) => !!sc)
+            .map((sc) => postConfig[sc.id])
         setAllStationsInPath(allStationsInPath);
 
     }, [trainTimetable]);
@@ -127,7 +153,7 @@ const Sirius = () => {
         const component = node.getId();
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {
             return (
-                <TrainTimetable autoScroll={autoScroll} trainTimetable={trainTimetable} train={train} allStationsInpath={allStationsInPath}/>
+                <TrainTimetable autoScroll={autoScroll} trainTimetable={trainTimetable} train={train} allStationsInpath={allStationsInPath} isWebpSupported={isWebpSupported}/>
             );
         }
         if (component === "train-details-layout" && train) {

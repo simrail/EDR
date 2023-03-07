@@ -34,7 +34,7 @@ function App() {
                             <Route path="/:serverCode" element={<PostSelect isWebpSupported={isWebpSupported}/>} />
                             <Route path="/:serverCode/trains" element={<TrainSelect/>} />
                             <Route path="/:serverCode/station/:post" element={<EDR playSoundNotification={playSoundNotification} isWebpSupported={isWebpSupported}/>} />
-                            <Route path="/:serverCode/train/:trainNumber" element={<Sirius />} />
+                            <Route path="/:serverCode/train/:trainNumber" element={<Sirius isWebpSupported={isWebpSupported}/>} />
                         </Routes>
                         </Suspense>
                     </Fragment>
