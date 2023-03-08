@@ -77,9 +77,9 @@ const Promise_sequence = (promiseAry) => promiseAry.reduce((p, fn) => p.then(fn)
  * @returns {Promise<Page>}
  */
 async function initScrapperBrowser(stationId) {
-    const browser = await pupeeter.launch({headless: false});
+    const browser = await pupeeter.launch({headless: true});
     const page = await browser.newPage();
-    await page.goto(SIMRAIL_EDR_URL + "?stationId="+stationId+"&serverCode=eu2", {referer: "Community EDR Scrapper v2"});
+    await page.goto(SIMRAIL_EDR_URL + "?stationId="+stationId+"&serverCode=pl1", {referer: "Community EDR Scrapper v2"});
     global.scrapBrowser = browser; // To chatch in case of unexpected error and free resource
     return [browser, page];
 }
@@ -345,7 +345,7 @@ module.exports = {
 // DB
 
 async function insertPartialTimetableInDb(partialTimetableJson, simrailEDRStationId) {
-    const conn = global.pgClient;
+    /*const conn = global.pgClient;
 
     return Promise.all(partialTimetableJson.map(async (trainRow) => {
         try {
@@ -412,11 +412,12 @@ async function insertPartialTimetableInDb(partialTimetableJson, simrailEDRStatio
                 error: e
             });
         }
-    }));
+    }));*/
+    return Promise.resolve();
 }
 
 async function insertTrainTimetableRow(scrappedRows, trainNumber) {
-    const conn = global.pgClient;
+    /*const conn = global.pgClient;
         return Promise.all(scrappedRows.map(async (scrappedRow) => {
             try {
                 const dataBaseRow = await conn.query(
@@ -471,5 +472,6 @@ async function insertTrainTimetableRow(scrappedRows, trainNumber) {
             } catch (e) {
                 console.error("Error inserting line : ", e);
             }
-    }))
+    }))*/
+    return Promise.resolve();
 }

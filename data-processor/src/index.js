@@ -57,6 +57,7 @@ const SR_STATIONS_IDS = [{
     fetchTrains: true
 }]
 
+/*
 const pgClient = new pg.Client({
     host: process.env["PG_HOST"] ?? "127.0.0.1",
     user: process.env["PG_USER"] ?? "postgres",
@@ -74,7 +75,8 @@ pgClient.connect((err) => {
 })
 
 global.pgClient = pgClient;
-
+*/
+process.setMaxListeners(0);
 const isStationInDatabase = (stationName) => {
     return pgClient.query("SELECT * from stations WHERE name=$1", [stationName])
         .then((v) => v.rows.length > 0)
@@ -114,16 +116,16 @@ const fn = async () => {
         try {
             const id = SR_STATIONS_IDS[i].id
             console.log("Scrapping starting ", new Date());
-            // await scrapMap("stations", id);
+            scrapMap("stations", id);
             console.log("Stations finished ", new Date());
             if (SR_STATIONS_IDS[i].fetchTrains)
-                await scrapMap("trains", id);
+                scrapMap("trains", id);
             console.log("Trains finished ", new Date());
         } catch (e) {
             console.error("Scrapping failed ", new Date());
             console.error("Scrapping failed ", e)
             if (global.scrapBrowser) {
-                await global.scrapBrowser.close();
+                global.scrapBrowser.close();
             }
         }
     }
