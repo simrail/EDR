@@ -138,6 +138,7 @@ export const EDRTable: React.FC<Props> = ({
                         isWebpSupported={isWebpSupported}
                         streamMode={streamMode}
                         filterConfig={filterConfig}
+                        serverCode={serverCode}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>

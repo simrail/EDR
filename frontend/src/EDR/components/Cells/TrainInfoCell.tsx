@@ -11,6 +11,8 @@ import {configByLoco} from "../../../config/trains";
 import Tooltip from "rc-tooltip";
 import classNames from "classnames";
 import TimetableIcon from "../../../images/icons/png/timetable.png";
+import ScheduleIcon from "../../../images/icons/png/schedule.png";
+import { Link } from "react-router-dom";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
     if (!controlledBy) {
@@ -39,11 +41,12 @@ type Props = {
     trainHasPassedStation: boolean;
     isWebpSupported: boolean;
     streamMode: boolean;
+    serverCode: string;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, hasEnoughData, trainBadgeColor,
        distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId
+       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId, serverCode
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -77,6 +80,11 @@ export const TrainInfoCell: React.FC<Props> = ({
                         </Tooltip>
                         <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_timetable")}</span>}>
                             <Button size="xs" className="ml-1" onClick={() => setTimetableTrainId(ttRow.train_number)}><img src={TimetableIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
+                        </Tooltip>
+                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_switch_to_driver_view")}</span>}>
+                            <Link to={`/${serverCode}/train/${ttRow.train_number}`}>
+                                <Button size="xs" className="ml-1" href=""><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
+                            </Link>
                         </Tooltip>
                     </span> }
                 </div>
