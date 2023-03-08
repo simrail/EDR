@@ -83,7 +83,7 @@ export const TrainInfoCell: React.FC<Props> = ({
                         </Tooltip>
                         <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_switch_to_driver_view")}</span>}>
                             <Link to={`/${serverCode}/train/${ttRow.train_number}`}>
-                                <Button size="xs" className="ml-1" href=""><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
+                                <Button size="xs" className="ml-1"><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                             </Link>
                         </Tooltip>
                     </span> }
