@@ -136,7 +136,7 @@ const mainInterval = setInterval(fn, 1800 * 1000)
 fn();
 // scrapMap();
 
-app.listen(8080)
+// app.listen(8080)
 
 process.on('exit', () => {
     console.log("Closing DB connection. Bye bye !\n");
