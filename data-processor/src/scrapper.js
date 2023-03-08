@@ -77,7 +77,10 @@ const Promise_sequence = (promiseAry) => promiseAry.reduce((p, fn) => p.then(fn)
  * @returns {Promise<Page>}
  */
 async function initScrapperBrowser(stationId) {
-    const browser = await pupeeter.launch({headless: true});
+    const browser = await pupeeter.launch({
+        headless: true,
+        args: ['--no-sandbox']
+    });
     const page = await browser.newPage();
     await page.goto(SIMRAIL_EDR_URL + "?stationId="+stationId+"&serverCode=pl1", {referer: "Community EDR Scrapper v2"});
     global.scrapBrowser = browser; // To chatch in case of unexpected error and free resource
