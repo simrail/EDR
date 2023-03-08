@@ -78,3 +78,17 @@ export async function trainTimetableController(req: express.Request, res: expres
         return res.sendStatus(500);
     }
 }
+
+export async function trainTimetableListController(req: express.Request, res: express.Response) {
+    const trainNoList = req.body.trainNoList as string[];
+
+    try {
+        const data = trainNoList.map(async trainNo => await getTrainTimetable(trainNo));
+        res
+            .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
+            .send(data)
+    } catch (e) {
+        console.error("Internal server error on train timetable ", e);
+        return res.sendStatus(500);
+    }
+}

@@ -4,7 +4,7 @@ import cors from "cors";
 const app = express();
 const Logger = morgan('short');
 
-import {dispatchController, trainTimetableController} from "./dispatchController";
+import {dispatchController, trainTimetableController, trainTimetableListController} from "./dispatchController";
 import {getPlayer, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController";
 
 const corsConfig = {
@@ -25,6 +25,7 @@ app
     .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
     .get("/dispatch/:post", dispatchController)
     .get("/train/:trainNo", trainTimetableController)
+    .post("/train/batch", trainTimetableListController)
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
 app.listen(8080)

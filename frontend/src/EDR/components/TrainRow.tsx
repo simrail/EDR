@@ -40,13 +40,14 @@ type Props = {
     filterConfig: FilterConfig;
     index: number;
     selectedRow: number | null;
+    serverCode: string;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig, index,
-        selectedRow, setSelectedRow
+        selectedRow, setSelectedRow, serverCode
     }: Props
 ) => {
     const dateNow = nowUTC(serverTzOffset);
@@ -117,6 +118,7 @@ const TableRow: React.FC<Props> = (
             trainHasPassedStation={trainHasPassedStation}
             isWebpSupported={isWebpSupported}
             streamMode={streamMode}
+            serverCode={serverCode}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

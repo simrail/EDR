@@ -1,20 +1,25 @@
 import React from 'react';
 import { Table } from 'flowbite-react';
 import { Train } from '@simrail/types';
+import { useTranslation } from 'react-i18next';
+import { TrainTimeTableRow } from '.';
 
 type Props = {
     trainNumber: string | undefined;
     trainDetails: Train;
+    trainTimeTable: TrainTimeTableRow[];
 }
 
-export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => {
+export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber, trainTimeTable }) => {
+    const {t} = useTranslation();
+
     return (
         <div className="child:!rounded-none child:shadow-none">
             <Table striped={true}>
                 <Table.Body>
                     <Table.Row>
                         <Table.Cell>
-                            Train Number:
+                            {t("DRIVER_DETAILS_train_number")}:
                         </Table.Cell>
                         <Table.Cell>
                             {trainNumber}
@@ -22,7 +27,7 @@ export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => 
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>
-                            Start Station:
+                            {t("DRIVER_DETAILS_start_station")}:
                         </Table.Cell>
                         <Table.Cell>
                             {trainDetails.StartStation}
@@ -30,7 +35,7 @@ export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => 
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>
-                            End Station:
+                            {t("DRIVER_DETAILS_end_station")}:
                         </Table.Cell>
                         <Table.Cell>
                             {trainDetails.EndStation}
@@ -38,15 +43,15 @@ export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber }) => 
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>
-                            Train Name:
+                            {t("DRIVER_DETAILS_service_type")}:
                         </Table.Cell>
                         <Table.Cell>
-                            {trainDetails.TrainName}
+                            {trainTimeTable[0].train_type}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>
-                            Train Model:
+                            {t("DRIVER_DETAILS_train_model")}:
                         </Table.Cell>
                         <Table.Cell>
                             {trainDetails.Vehicles[0]}

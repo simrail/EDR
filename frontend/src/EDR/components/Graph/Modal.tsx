@@ -12,7 +12,7 @@ export type GraphModalProps = {
 export const GraphModal: React.FC<GraphModalProps> = ({children, isOpen, onClose}) => {
     const {t} = useTranslation();
     return (
-        <Modal className="z-50" position="bottom-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
+        <Modal className="z-50" position="top-center" show={isOpen}  size="9xl" onClose={onClose} style={{zIndex: 999999}}>
         <Modal.Header>
             <div className="flex justify-between w-full">
                 <span>{t("EDR_GRAPH_title")}</span>
