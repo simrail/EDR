@@ -79,7 +79,7 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
 
     const lineTrace = trainDetails?.pfLineTrace;
 
-    return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="bottom-center" style={{zIndex: 999999}}>
+    return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="top-center" style={{zIndex: 999999}}>
         <Modal.Header>
             <div className="flex justify-around">
                 <span>N° {trainDetails?.TrainNoLocal} (Beta)</span>
