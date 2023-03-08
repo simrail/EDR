@@ -1,5 +1,5 @@
 import React from "react";
-import {getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
+import {getStations, getTimetable, getTrains, getTrainTimetableList, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
@@ -175,7 +175,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         const previousTrainIds = Object.keys(previousTrains?.current ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
-        Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
+        getTrainTimetableList(difference).then((timetables) => {
             setTrainTimetables(_groupBy('train_number', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
         });
     }, [trains, trainTimetables])

@@ -27,6 +27,9 @@ export const getTimetable = (post: string): Promise<TimeTableRow[]> =>
 export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]> =>
     fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());
 
+export const getTrainTimetableList = (trainIdList: string[]): Promise<TrainTimeTableRow[][]> =>
+    fetch(BASE_API_URL + "train/batch", { method: "POST", body: JSON.stringify(trainIdList)}).then((r) => r.json());
+
 export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);
 
