@@ -13,7 +13,7 @@ const _allSpeeds = fetch("https://webhost.simkol.pl/speeds.json").then(r => r.js
 }))
 export const getTrainTimetable = async (trainNumber: string) => {
     const allSpeeds = await (_allSpeeds.then((as) => _.groupBy(as, "lineNo")));
-    const data = await connPool.query(`
+    let data = await connPool.query(`
         SELECT
             train_number,
             scheduled_arrival,
@@ -31,6 +31,26 @@ export const getTrainTimetable = async (trainNumber: string) => {
             stop_type
         FROM trains_timetable_row WHERE train_number=$1
     `, [trainNumber]).then((r) => r.rows);
+
+    // Since there are no actual dates (only hours and minutes)
+    // We need to check if the train timetable moves through to the next day and make sure
+    // that entries after midnight are not sorted right after the departure station
+    // since the 'hour sort' is basically false data for this case
+
+    // We assume that the departure station is always first
+    if (data[1].hourSort <= 30 && data[data.length - 1].hourSort > 2300) {
+        const lastStationAfterMidnightIndex = data.findIndex((row, index) => {
+            if (data[index + 1] !== undefined) {
+                return data[index + 1].hourSort - row.hourSort > 1000;
+            } else {
+                return false;
+            }
+        });
+        
+        const rowsToMove = data.slice(1, lastStationAfterMidnightIndex + 1);
+        data.splice(1, rowsToMove.length);
+        data = data.concat(rowsToMove);
+    }
 
     const isTheTrainNorthbound = Number.parseInt(trainNumber) % 2 === 0;
 
