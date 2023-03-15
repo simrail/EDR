@@ -95,7 +95,7 @@ export const EDRTable: React.FC<Props> = ({
             setFilterConfig={setFilterConfig}
         />
         <div className={classNames(
-            "child:snap-y child:snap-mandatory child:overflow-y-scroll ",
+            "child:overflow-y-scroll ",
                 streamMode ? "child:h-[calc(100vh-102px)]" : "child:h-[calc(100vh-166px)]"
             )}>
             <Table striped={true}>

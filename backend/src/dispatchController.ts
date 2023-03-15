@@ -1,48 +1,48 @@
-import { scrapRoute } from "./scrapper";
-import {internalIdToSrId, newInternalIdToSrId, POSTS} from "./config";
+import {internalIdToSrId, newInternalIdToSrId, POSTS} from "./config.js";
 import express from "express";
-import {getStationTimetable} from "./sql/stations";
-import {getTrainTimetable} from "./sql/train";
+import {getStationTimetable} from "./dataTransformer/stations.js";
+import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
+import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
 
-const mergePostRows = (allPostsResponse: any[]) => {
+const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
     const secondaryPostsRows = allPostsResponse.slice(1);
 
     const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'train_number'));
 
     // Handle stations that have multiple posts, merge their data into a single entry
-    const mergedPostsRows = primaryPostRows.reduce((acc: any[], v: any) => [
+    const mergedPostsRows = primaryPostRows.reduce((acc, v) => [
         ...acc,
         {
             ...v,
             secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.train_number])
         }
-    ], []);
+    ], new Array<IFrontendStationTrainRow>());
 
     const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'train_number');
 
     // TODO: This has state, temporary fix
-    secondaryPostsRows.map((secondary_post_trains: any[]) => {
+    secondaryPostsRows.map((secondary_post_trains) => {
         for (const train of secondary_post_trains) {
-            if (!keyedFirstPostTrains[train.train_number])
+            if (!keyedFirstPostTrains[train.train_number]) {
                 mergedPostsRows.push(train);
+            }
         }
     });
 
-    return _.sortBy(mergedPostsRows, 'hourSort');
+    return _.sortBy(mergedPostsRows, 'arrival_time_object');
 }
 
 export async function dispatchController(req: express.Request, res: express.Response) {
-    const {post} = req.params;
+    const { post } = req.params;
 
     if (!internalIdToSrId[post])
         return res.status(400).send({
             "error": "PEBKAC",
             "message": "Server or post is not supported"
-        })
+        });
 
-    console.log(`${post}`);
     try {
         const mergePosts = req.query.mergePosts === "true"
         const postsToFetch = mergePosts ? POSTS[post] : [newInternalIdToSrId[post]];
@@ -50,15 +50,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
         const mergedPosts = mergePostRows(data);
         return res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
-            .send(mergedPosts)
-        /*if (!error && data && Object.values(data).length !== 0)
-            return res
-                .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
-                .send(data)
-        else {
-            console.error("Error: ", error);
-            return res.sendStatus(500);
-        }*/
+            .send(mergedPosts);
     } catch (e) {
         console.error("Internal server error on dispatch timetable ", e);
         return res.sendStatus(500);
@@ -72,7 +64,7 @@ export async function trainTimetableController(req: express.Request, res: expres
         const data = await getTrainTimetable(trainNo);
         res
             .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
-            .send(data)
+            .send(data);
     } catch (e) {
         console.error("Internal server error on train timetable ", e);
         return res.sendStatus(500);
@@ -81,12 +73,13 @@ export async function trainTimetableController(req: express.Request, res: expres
 
 export async function trainTimetableListController(req: express.Request, res: express.Response) {
     const trainNoList = req.body.trainNoList as string[];
-
     try {
-        const data = trainNoList.map(async trainNo => await getTrainTimetable(trainNo));
-        res
-            .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
-            .send(data)
+        const data = trainNoList.map(trainNo => getTrainTimetable(trainNo));
+        Promise.all(data).then(result =>
+            res
+                .setHeader("Cache-control", 'public, max-age=86400 stale-if-error=604800 must-revalidate')
+                .send(result)
+        );
     } catch (e) {
         console.error("Internal server error on train timetable ", e);
         return res.sendStatus(500);

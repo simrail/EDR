@@ -4,16 +4,16 @@ import cors from "cors";
 const app = express();
 const Logger = morgan('short');
 
-import {dispatchController, trainTimetableController, trainTimetableListController} from "./dispatchController";
-import {getPlayer, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController";
+import {dispatchController, trainTimetableController, trainTimetableListController} from "./dispatchController.js";
+import {getPlayer, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController.js";
+import helmet from "helmet";
 
 const corsConfig = {
     allowedHeaders: "x-debug",
     maxAge: 3600
 };
 
-// TODO: Consider using HelmetJS as well - https://helmetjs.github.io/
-app.use(cors(corsConfig)).use(Logger);
+app.use(cors(corsConfig)).use(Logger).use(helmet()).use(express.json());
 app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
@@ -27,10 +27,9 @@ app
     .get("/train/:trainNo", trainTimetableController)
     .post("/train/batch", trainTimetableListController)
     .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
-    .get("/steam/:steamId", (req, res) => getPlayer(req, res, req.params['steamId']))
-app.listen(8080)
+    .get("/steam/:steamId", getPlayer);
+app.listen(8080);
 
-console.log("🚆 Simrail Community EDR backend v1.3");
+console.log("🚆 Simrail Community EDR backend v2.0-alpha");
 console.log("💻 https://github.com/simrail/EDR");
 console.log("🐛 https://github.com/simrail/EDR/issues")
-console.log("Steam API key ? ", !!process.env["STEAM_KEY"]);

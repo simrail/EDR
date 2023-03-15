@@ -99,7 +99,7 @@ const TableRow: React.FC<Props> = (
     return <Table.Row
         onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations
         className={`
-            snap-start dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
+            dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
             ${trainHasPassedStation ? 'opacity-50' : 'opacity-100'}
             ${selectedRow === index ? '!bg-gray-300  !dark:bg-gray-500' : ''}
         `} data-timeoffset={timeOffset}

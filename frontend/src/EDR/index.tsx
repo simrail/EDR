@@ -18,11 +18,13 @@ import { Dictionary } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
+import { format } from "date-fns";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
     k: string;
     departure_time: string;
+    arrival_time_object: Date;
     arrival_time: string,
     train_type: TimeTableServiceType,
     train_number: string,
@@ -101,6 +103,11 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
             getTimetable(post).then((data) => {
+                data = data.map(row => {
+                    row.hourSort = Number.parseInt(format(new Date(row.arrival_time_object), "HHmm"));
+
+                    return row;
+                });
                 setTimetable(data);
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
@@ -176,7 +183,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
         getTrainTimetableList(difference).then((timetables) => {
-            setTrainTimetables(_groupBy('train_number', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
+            setTrainTimetables(_groupBy('train_number', timetables.flat()));
         });
     }, [trains, trainTimetables])
 

@@ -17,8 +17,7 @@ const baseApiCall = (URL: string, noCDN: boolean = false) => {
         headers: new Headers({
             "x-debug": new URLSearchParams(window.location.search).get("betaToken") ?? "No token"
         })
-    })
-        .then(res => res.json())
+    }).then(res => res.json());
 }
 
 export const getTimetable = (post: string): Promise<TimeTableRow[]> =>
@@ -28,7 +27,13 @@ export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]>
     fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());
 
 export const getTrainTimetableList = (trainIdList: string[]): Promise<TrainTimeTableRow[][]> =>
-    fetch(BASE_API_URL + "train/batch", { method: "POST", body: JSON.stringify(trainIdList)}).then((r) => r.json());
+    fetch(BASE_API_URL + "train/batch", {
+        method: "POST",
+        body: JSON.stringify({trainNoList: trainIdList }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((r) => r.json());
 
 export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);

@@ -50,7 +50,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
 
     autoScroll && scrollToNearestStation(nearestStation?.id);
     return (
-        <div className="h-full child:!rounded-none child:snap-y child:snap-mandatory child:overflow-y-scroll child:h-full">
+        <div className="h-full child:!rounded-none child:overflow-y-scroll child:h-full">
             <Table striped={true}>
                 <Table.Body>
                     {
@@ -60,7 +60,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                 <React.Fragment key={`${ttRow.km}${ttRow.line}${ttRow.station}}`}>
                                     <Table.Row
                                         className={classNames(
-                                            "hover:bg-gray-200 dark:hover:bg-gray-600 snap-start",
+                                            "hover:bg-gray-200 dark:hover:bg-gray-600",
                                         {"!bg-amber-200 !text-gray-600 hover:!bg-amber-300": internalId === nearestStation?.id}
                                         )}
                                         data-internalid={internalId}
@@ -99,7 +99,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             return <React.Fragment key={`${_index}-line-${sltn.lineNo}-track-${sltn.track}`}></React.Fragment>;
                                         }
                                         return (
-                                            <Table.Row key={`${_index}-line-${sltn.lineNo}-track-${sltn.track}`} className={`snap-start ma-0`}>
+                                            <Table.Row key={`${_index}-line-${sltn.lineNo}-track-${sltn.track}`} className={` ma-0`}>
                                                 <Table.Cell className="relative pl-8">
                                                     <TrainTimetableTimeline renderOnlyLine itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
                                                     <div className="flex ">

@@ -45,7 +45,15 @@ const makeDate = (dateAry: string[], serverTzOffset: number) => {
 }
 
 const getStationTimetable = (postId: string) => {
-    return getTimetable(postId).then((d) => [postId, _keyBy(d, "train_number")]);
+    return getTimetable(postId).then((d) => {
+        d = d.map(row => {
+            row.hourSort = Number.parseInt(format(new Date(row.arrival_time_object), "HHmm"));
+
+            return row;
+        });
+        
+        return [postId, _keyBy(d, "train_number")];
+    });
 }
 
 const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {

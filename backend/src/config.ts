@@ -1,15 +1,12 @@
-export const BASE_SIMRAIL_DISPATCH_API = "https://panel.simrail.eu:8091/";
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
 export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
+export const BASE_SIMKOL_API = "https://webhost.simkol.pl";
 
 export const srHeaders = {
-    "User-Agent": "Custom EDR vDEV",
-    "xx-client": "Custom EDR",
-    "xx-maintainer": "DeadlyKungFu.Ninja",
-    "xx-contact": "DeadlyKungFu.Ninja#8294",
-    "xx-executor": "outbound.gcp.infra.deadlykungfu.ninja",
-    "xx-message": "Beta access only for you, that monitor this network : https://edr.deadlykungfu.ninja/?betaToken=unjN6"
-    // "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
+    "User-Agent": "Simrail.app EDR vDEV",
+    "xx-client": "Simrail.app EDR",
+    "xx-maintainer": "CrypterEmerald",
+    "xx-contact": "tally.github@gmail.com",
 };
 
 export const internalIdToSrId: {[k: string]: string} = {

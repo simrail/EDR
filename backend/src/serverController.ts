@@ -1,8 +1,7 @@
-import { simrailClient } from "./simrailClient";
-import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config";
+import { simrailClient } from "./simrailClient.js";
+import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
-import axios from "axios";
 
 export function getServerList(req: express.Request, res: express.Response) {
     return simrailClient.get("servers-open", BASE_SIMRAIL_API)?.then((e) => {
@@ -16,7 +15,7 @@ export function getServerList(req: express.Request, res: express.Response) {
             .send(serverData);
     }).catch(() => {
         return res.sendStatus(500);
-    })
+    });
 }
 
 export function getStationsList(req: express.Request, res: express.Response, serverCode: string) {
@@ -32,7 +31,7 @@ export function getStationsList(req: express.Request, res: express.Response, ser
             .send((e.data as ApiResponse<Station>).data);
     }).catch(() => {
         return res.sendStatus(500);
-    })
+    });
 }
 
 export function getTrainsList(req: express.Request, res: express.Response, serverCode: string) {
@@ -42,7 +41,7 @@ export function getTrainsList(req: express.Request, res: express.Response, serve
             .send((e.data as ApiResponse<Train>).data);
     }).catch(() => {
         return res.sendStatus(500);
-    })
+    });
 }
 
 export function getServerTz(req: express.Request, res: express.Response) {
@@ -52,29 +51,15 @@ export function getServerTz(req: express.Request, res: express.Response) {
             .send(`${e.data}`);
     }).catch(() => {
         return res.sendStatus(500);
-    })
+    });
 }
 
-const STEAM_API_KEY = process.env["STEAM_KEY"];
-
-export function getPlayer(req: express.Request, res: express.Response, steamId: string) {
-    if (!STEAM_API_KEY) {
-        console.error("No steam API key, unable to fetch steam profile!");
+export function getPlayer(req: express.Request, res: express.Response) {
+    return simrailClient.get(`users-open/${req.params['steamId']}`)?.then((e) => {
+        return res
+            .setHeader("Cache-control", 'public, max-age=3060, must-revalidate')
+            .send(e.data);
+    }).catch(() => {
         return res.sendStatus(500);
-    }
-
-    return axios
-        .get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${STEAM_API_KEY}&format=json&steamids=${steamId}`)
-        .then((response) => {
-            if (response.status === 200) {
-                return res
-                    .setHeader("Cache-control", 'public, max-age=86400')
-                    .send(response.data.response.players.map((sr: any) => ({avatar: sr.avatar, pseudo: sr.personaname})))
-            }
-            else
-                return res.sendStatus(500)
-        }).catch(() => {
-            return res.sendStatus(500);
-        })
-
+    });
 }

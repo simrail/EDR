@@ -15,7 +15,9 @@ import ScheduleIcon from "../../../images/icons/png/schedule.png";
 import { Link } from "react-router-dom";
 
 const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
-    if (!controlledBy) {
+    setState(undefined);
+    return;
+    /** if (!controlledBy) {
         setState(undefined);
         return;
     }
@@ -24,7 +26,7 @@ const getPlayerDetails = (controlledBy: string | null | undefined, setState: (va
             setState(res[0]);
     }).catch(() => {
         setTimeout(() => getPlayerDetails(controlledBy, setState), 1000);
-    })
+    });*/
 }
 
 type Props = {
