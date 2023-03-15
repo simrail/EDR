@@ -11,7 +11,7 @@ import {FR, GB, CZ, HU, DE, SK, IT, CN, PL, RU} from "country-flag-icons/react/1
 
 import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
-import SRFR from "../images/communities/srfr.png";
+import SRFR from "../images/communities/srfr.webp";
 import SRIT from "../images/communities/srit.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";
