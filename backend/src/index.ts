@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 const app = express();
 const Logger = morgan('short');
 
@@ -8,8 +8,8 @@ import {dispatchController, trainTimetableController, trainTimetableListControll
 import {getPlayer, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController.js";
 import helmet from "helmet";
 
-const corsConfig = {
-    allowedHeaders: "x-debug",
+const corsConfig: CorsOptions = {
+    allowedHeaders: "content-type",
     maxAge: 3600
 };
 
@@ -26,7 +26,6 @@ app
     .get("/dispatch/:post", dispatchController)
     .get("/train/:trainNo", trainTimetableController)
     .post("/train/batch", trainTimetableListController)
-    .get("/dispatch/:serverCode/:post", dispatchController) // Temporary fallback for old client versions
     .get("/steam/:steamId", getPlayer);
 app.listen(8080);
 

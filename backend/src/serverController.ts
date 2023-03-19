@@ -23,7 +23,7 @@ export function getStationsList(req: express.Request, res: express.Response, ser
         if (e.data.count === 0) {
             const fakedStations = Object.entries(internalIdToSrId).map(([k , n]) => ({Name: n, Prefix: k}));
             return res
-                .setHeader("Cache-control", "public, max-age=360")
+                .setHeader("Cache-control", "public, max-age=300")
                 .send(fakedStations)
         }
         return res
