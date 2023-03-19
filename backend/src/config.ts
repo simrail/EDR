@@ -28,7 +28,8 @@ export const internalIdToSrId: {[k: string]: string} = {
     "DG_WZ": "Dąbrowa Górnicza Wschodnia",
     "DG_ZA": "",
     "SG_PO": "Sosnowiec Południowy",
-    "IDZ": "Idzikowice"
+    "IDZ": "Idzikowice",
+    "GRO_MAZ": "Grodzisk Mazowiecki"
 }
 
 export const newInternalIdToSrId: {[k: string]: string} = {
@@ -50,7 +51,8 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "SP": "4010",
     "IDZ": "1349",
     "KZ": "1655",
-    "SG_PO": "4010"
+    "SG_PO": "4010",
+    "GRO_MAZ": "1251"
 }
 
 export const POSTS: { [key: string]: string[] } = {
@@ -73,8 +75,8 @@ export const POSTS: { [key: string]: string[] } = {
     "SP": [newInternalIdToSrId["SP"]],
     "IDZ": [newInternalIdToSrId["IDZ"]],
     "SG_PO": [newInternalIdToSrId["SG_PO"]],
-    "OP_PO": [newInternalIdToSrId["OP_PO"]]
-
+    "OP_PO": [newInternalIdToSrId["OP_PO"]],
+    "GRO_MAZ": [newInternalIdToSrId["GRO_MAZ"]]
 
 };
 
@@ -96,7 +98,8 @@ export type PURE_POST =
     "Dąbrowa Górnicza Wschodnia" |
     "Dąbrowa Górnicza Ząbkowice" |
     "Sosnowiec Południowy" |
-    "Idzikowice"
+    "Idzikowice" |
+    "Grodzisk Mazowiecki"
 
 export enum VMAX_BY_TYPE {
     EIJ = 200,
