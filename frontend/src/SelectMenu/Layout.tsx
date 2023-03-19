@@ -13,6 +13,7 @@ import SGCS from "../images/communities/sgcs.webp";
 import SRDE from "../images/communities/srde.webp";
 import SRFR from "../images/communities/srfr.webp";
 import SRIT from "../images/communities/srit.webp";
+import SRCN from "../images/communities/srcn.webp";
 import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";
 import SubNavigation, { SubNavigationProps } from "../EDR/components/SubNavigation";
@@ -118,14 +119,14 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/5cdpDv2nT8">
                     <span className="inline-flex items-center "><img src={SRIT} height={16} width={16} alt="Community logo"/>&nbsp;Simrail ITA</span>
                 </Button>
-                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0">
-                    <span className="inline-flex items-center "><CN height={16} width={16}/>&nbsp;CN-BX-3N</span>
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://jq.qq.com/?_wv=1027&k=ntP0ehbU">
+                    <span className="inline-flex items-center "><img src={SRCN} height={16} width={16} alt="Community logo"/>&nbsp;SimRail CN</span>
                 </Button>
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/Kyte5PB6xf">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Russian Speaking</span>
                 </Button>
-                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0">
-                    <span className="inline-flex items-center "><PL height={16} width={16}/>&nbsp;Invis</span>
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/SBjfNW8F3U">
+                    <span className="inline-flex items-center "><PL height={16} width={16}/>Simrail Polska</span>
                 </Button>
             </div>
             <h3 className="pt-8 text-center text-white text-3xl">{title}</h3>
