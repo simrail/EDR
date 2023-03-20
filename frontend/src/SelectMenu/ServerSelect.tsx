@@ -24,39 +24,43 @@ export const ServerSelect: React.FC<Props> = ({ isWebpSupported }) => {
 
     const language = i18n.language.toUpperCase();
 
+    
+
     React.useEffect(() => {
+        const categorizeServerList = (serverList: Server[]) => {
+            const languageTrim = language.substring(0, 2).toLowerCase();
+            const orderedServers = _sortBy(serverList, s => {
+                return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
+            });
+    
+            const categorized = orderedServers.reduce((result: {[k: string]: Server[]}, server: Server) => {
+                const key = server.ServerCode.substring(0, 2);
+                (result[key] || (result[key] = [])).push(server);
+                return result;
+            }, {});
+    
+            const serversNotInLanguage = Object.fromEntries(
+                Object.entries(categorized)
+                    .filter(([key]) => key !== languageTrim)
+            );
+    
+            const serversByLanguage = Object.fromEntries(
+                Object.entries(categorized)
+                    .filter(([key]) => key === languageTrim)
+            );
+    
+            setServersByRegion({
+                serversByLanguage: Object.values(serversByLanguage)[0],
+                serversNotInLanguage: Object.values(serversNotInLanguage),
+            });
+        }
+
         if (servers) {
             categorizeServerList(servers);
         }
     }, [servers, language]);
 
-    const categorizeServerList = (serverList: Server[]) => {
-        const languageTrim = language.substring(0, 2).toLowerCase();
-        const orderedServers = _sortBy(serverList, s => {
-            return language.includes(s.ServerCode.slice(0, 2).toUpperCase()) ? -1 : 0
-        });
-
-        const categorized = orderedServers.reduce((result: {[k: string]: Server[]}, server: Server) => {
-            const key = server.ServerCode.substring(0, 2);
-            (result[key] || (result[key] = [])).push(server);
-            return result;
-        }, {});
-
-        const serversNotInLanguage = Object.fromEntries(
-            Object.entries(categorized)
-                .filter(([key]) => key !== languageTrim)
-        );
-
-        const serversByLanguage = Object.fromEntries(
-            Object.entries(categorized)
-                .filter(([key]) => key === languageTrim)
-        );
-
-        setServersByRegion({
-            serversByLanguage: Object.values(serversByLanguage)[0],
-            serversNotInLanguage: Object.values(serversNotInLanguage),
-        });
-    }
+    
     console_log("servers: ", serversByRegion);
 
     return <SelectMenuLayout title={t("SELECTMENU_server_selection")} isWebpSupported={isWebpSupported}>

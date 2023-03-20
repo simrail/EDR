@@ -2,6 +2,7 @@ import { simrailClient } from "./simrailClient.js";
 import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
+import { ISteamUserList } from "./interfaces/ISteamUserList.js";
 
 export function getServerList(req: express.Request, res: express.Response) {
     return simrailClient.get("servers-open", BASE_SIMRAIL_API)?.then((e) => {
@@ -54,11 +55,11 @@ export function getServerTz(req: express.Request, res: express.Response) {
     });
 }
 
-export function getPlayer(req: express.Request, res: express.Response) {
-    return simrailClient.get(`users-open/${req.params['steamId']}`)?.then((e) => {
+export function getPlayers(req: express.Request, res: express.Response) {
+    return simrailClient.get(`users-open/${req.params['steamIdList']}?force=true`)?.then((e) => {
         return res
             .setHeader("Cache-control", 'public, max-age=3060, must-revalidate')
-            .send(e.data);
+            .send(e.data as ISteamUserList);
     }).catch(() => {
         return res.sendStatus(500);
     });

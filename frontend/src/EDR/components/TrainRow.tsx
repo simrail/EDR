@@ -15,13 +15,13 @@ import {TrainFromCell} from "./Cells/TrainFromCell";
 import {TrainPlatformCell} from "./Cells/TrainPlatformCell";
 import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
+import { ISteamUserList } from "../../config/ISteamUserList";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
 type Props = {
     setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     setTimetableTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
-    setSelectedRow: React.Dispatch<React.SetStateAction<number | null>>,
     ttRow: TimeTableRow,
     timeOffset: number,
     trainDetails: DetailedTrain,
@@ -38,21 +38,18 @@ type Props = {
     isWebpSupported: boolean,
     streamMode: boolean;
     filterConfig: FilterConfig;
-    index: number;
-    selectedRow: number | null;
     serverCode: string;
+    players: ISteamUserList | undefined;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
-        playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig, index,
-        selectedRow, setSelectedRow, serverCode
+        playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig,
+        serverCode, players
     }: Props
 ) => {
     const dateNow = nowUTC(serverTzOffset);
-    
-    // if (!post) return null;
     const postCfg = postConfig[post];
     const closestStationid = trainDetails?.closestStationId;
     const pathFindingLineTrace = trainDetails?.pfLineTrace;
@@ -64,7 +61,6 @@ const TableRow: React.FC<Props> = (
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
     const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
-    // console_log("Post cfg", postCfg);
     // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
     const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === post && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.departure_time.split(":").map(value => parseInt(value));
@@ -84,31 +80,22 @@ const TableRow: React.FC<Props> = (
     const trainBadgeColor = configByType[ttRow.train_type]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
-    // console.log("EDR", trainDetails)
-
-
-    // ETA && console_log("ETA", ETA);
-
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
     if (filterConfig.maxRange && distanceFromStation > filterConfig.maxRange) return null;
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
-    // console.log("Rendered");
 
     return <Table.Row
-        onClick={() => {}/*setSelectedRow(index !== selectedRow ? index : null)*/}  // Disabled due to performance optimisations
         className={`
             dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
-            ${trainHasPassedStation ? 'opacity-50' : 'opacity-100'}
-            ${selectedRow === index ? '!bg-gray-300  !dark:bg-gray-500' : ''}
+            ${trainHasPassedStation || !trainDetails ? 'opacity-50' : 'opacity-100'}
         `} data-timeoffset={timeOffset}
     >
         <TrainInfoCell
             ttRow={ttRow}
             trainDetails={trainDetails}
             trainBadgeColor={trainBadgeColor}
-            hasEnoughData={hasEnoughData}
             setModalTrainId={setModalTrainId}
             setTimetableTrainId={setTimetableTrainId}
             firstColRef={firstColRef}
@@ -119,6 +106,7 @@ const TableRow: React.FC<Props> = (
             isWebpSupported={isWebpSupported}
             streamMode={streamMode}
             serverCode={serverCode}
+            players={players}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

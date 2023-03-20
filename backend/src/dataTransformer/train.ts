@@ -4,7 +4,6 @@ import axios from "axios";
 import { ISpeedLimitApi } from "../interfaces/ISpeedLimitApi.js";
 import { ISpeedLimit } from "../interfaces/ISpeedLimit.js";
 import { IServerTrain } from "../interfaces/IServerTrain.js";
-import { ITrainTimeTable } from "../interfaces/ITrainTimeTable.js";
 import { BASE_SIMKOL_API } from "../config.js";
 import { IFrontendTrainScheduleRow } from "../interfaces/IFrontendTrainScheduleRow.js";
 
@@ -44,6 +43,7 @@ export const getTrainTimetable = async (trainNumber: string) => {
             train_type: checkpoint.trainType,
             line: checkpoint.line.toString(),
             stop_type: checkpoint.stopTypeNumber,
+            point_id: checkpoint.pointId,
             speedLimitsToNextStation: allSpeedLimitsBetweenStationAndNextStation
         };
     })

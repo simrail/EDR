@@ -1,5 +1,5 @@
 import React from "react";
-import {getStations, getTimetable, getTrains, getTrainTimetableList, getTzOffset} from "../api/api";
+import {getPlayers, getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
@@ -14,11 +14,11 @@ import {DetailedTrain, getTrainDetails} from "./functions/trainDetails";
 import {postConfig} from "../config/stations";
 import { TimeTableServiceType } from "../config/trains";
 import { Station, Train } from "@simrail/types";
-import { Dictionary } from "lodash";
+import { Dictionary, isEqual } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
-import { format } from "date-fns";
+import { ISteamUserList } from "../config/ISteamUserList";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
@@ -29,7 +29,9 @@ export type TimeTableRow = {
     train_type: TimeTableServiceType,
     train_number: string,
     from_post: string,
+    from_post_id: string,
     to_post: string,
+    to_post_id: string,
     line: string,
     layover: string,
     stop_type: string,
@@ -41,6 +43,7 @@ export type TimeTableRow = {
     carrier: string,
     type_speed: number,
     hourSort: number,
+    pointId: string,
     secondaryPostsRows: TimeTableRow[]
 };
 
@@ -86,6 +89,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     const [trains, setTrains] = React.useState<Train[] | undefined>();
     const [trainTimetables, setTrainTimetables] = React.useState<any | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
+    const [players, setPlayers] = React.useState<ISteamUserList | undefined>();
     const [tzOffset, setTzOffset] = React.useState<number | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
     const [isGraphModalOpen, setGraphModalOpen] = React.useState<boolean>(false);
@@ -98,13 +102,13 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
 
     // Gets raw simrail data
-    const fetchAllDatas = () => {
+    const fetchAllData = () => {
         if (!serverCode || !post) return;
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
             getTimetable(post).then((data) => {
                 data = data.map(row => {
-                    row.hourSort = Number.parseInt(format(new Date(row.arrival_time_object), "HHmm"));
+                    row.hourSort = Number.parseInt(row.arrival_time.split(':').join(''));
 
                     return row;
                 });
@@ -113,22 +117,29 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                     setStations(_keyBy('Name', data));
                     getTrains(serverCode).then((data) => {
                         setTrains(data);
-                        setLoading(false);
+                        // Get steam IDs & remove null values
+                        const steamIds = data.map(train => train.TrainData.ControlledBySteamID).filter((steamId): steamId is Exclude<typeof steamId, null> => steamId !== null);
+                        if (steamIds !== undefined && steamIds !== null && steamIds?.length > 0) {
+                            getPlayers(steamIds).then(playerData => {
+                                setPlayers(playerData);
+                                setLoading(false);
+                            }).catch(() => {
+                                enqueueSnackbar(t('EDR_player_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
+                            });
+                        } else {
+                            setLoading(false);
+                        }
                     }).catch(() => {
                         enqueueSnackbar(t('EDR_train_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
-                        setTimeout(fetchAllDatas, 5000);
                     });
                 }).catch(() => {
                     enqueueSnackbar(t('EDR_station_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
-                    setTimeout(fetchAllDatas, 5000);
                 });
             }).catch(() => {
                 enqueueSnackbar(t('EDR_timetable_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
-                setTimeout(fetchAllDatas, 5000);
             });
         }).catch(() => {
             enqueueSnackbar(t('EDR_timetable_refresh_failed'), { preventDuplicate: true, variant: 'error', autoHideDuration: 5000 });
-            setTimeout(fetchAllDatas, 5000);
         });
     }
 
@@ -139,7 +150,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         setLoading(true);
         console_log("Current station : ", currentStation);
         if (!serverCode || !currentStation) return;
-        fetchAllDatas();
+        fetchAllData();
         // eslint-disable-next-line
     }, [serverCode, post]);
 
@@ -152,15 +163,22 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     React.useEffect(() => {
         window.trainsRefreshWebWorkerId = window.setInterval(() => {
             if (!serverCode) return;
-            getTrains(serverCode).then(setTrains);
-        }, 5000);
+            getTrains(serverCode).then(data => {
+                setTrains(data);
+                const steamIds = data.map(train => train.TrainData.ControlledBySteamID).filter((steamId): steamId is Exclude<typeof steamId, null> => steamId !== null).sort();
+                const knownSteamIds = players?.data.map(player => player.SteamId).sort();
+                if (knownSteamIds !== undefined && !isEqual(steamIds, knownSteamIds)) {
+                    getPlayers(steamIds).then(setPlayers);
+                }
+            });
+        }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
             enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
             return;
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
         // eslint-disable-next-line
-    }, [serverCode]);
+    }, [serverCode, players]);
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
@@ -176,16 +194,16 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     }, [stations, JSON.stringify(trains), JSON.stringify(previousTrains.current), JSON.stringify(timetable), JSON.stringify(trainTimetables)]);
 
     React.useEffect(() => {
-        // TODO: Add a check to avoid refetching every 10s
         if (!trains) return;
-        const allTrainIds = trains.map((t) => t.TrainNoLocal)
+        // Filter for trains that have a checkpoint at the current station
+        const allTrainIds = trains.map((t) => (timetable as TimeTableRow[])?.findIndex(entry => entry.train_number === t.TrainNoLocal) > -1 ? t.TrainNoLocal: null).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
         const previousTrainIds = Object.keys(previousTrains?.current ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
-        getTrainTimetableList(difference).then((timetables) => {
-            setTrainTimetables(_groupBy('train_number', timetables.flat()));
+        Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
+            setTrainTimetables(_groupBy('train_number', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
         });
-    }, [trains, trainTimetables])
+    }, [trains, trainTimetables, timetable])
 
     if (!serverCode || !post)
         redirect("/");
@@ -207,6 +225,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                               stations={stations as Dictionary<Station>}
                               tzOffset={tzOffset}
                               trainSchedules={trainTimetables}
+                              players={players}
         />
 
     return <>
@@ -233,6 +252,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 isWebpSupported={isWebpSupported}
                 filterConfig={filterConfig}
                 setFilterConfig={setFilterConfig}
+                players={players}
             />
             : null
         }

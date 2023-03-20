@@ -23,6 +23,7 @@ export type TrainTimeTableRow = {
     stop_type: string,
     hourSort: number,
     km: number,
+    point_id: string,
     speedLimitsToNextStation: [{
         lineNo: string,
         axisStart: number,
@@ -148,7 +149,6 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         setModel(FlexLayout.Model.fromJson(driverViewLayout));
     };
 
-    // console.log("Server Tz offset : ", serverTzOffset);
     const factory = (node: FlexLayout.TabNode) => {
         const component = node.getId();
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {

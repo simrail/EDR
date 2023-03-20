@@ -3,7 +3,6 @@ import {Badge, Button} from "flowbite-react";
 import { useSnackbar } from "notistack";
 import World from "../../../sounds/world.svg";
 import {tableCellCommonClassnames} from "../TrainRow";
-import {getPlayer} from "../../../api/api";
 import {useTranslation} from "react-i18next";
 import {TimeTableRow} from "../../index";
 import { DetailedTrain } from "../../functions/trainDetails";
@@ -13,27 +12,12 @@ import classNames from "classnames";
 import TimetableIcon from "../../../images/icons/png/timetable.png";
 import ScheduleIcon from "../../../images/icons/png/schedule.png";
 import { Link } from "react-router-dom";
-
-const getPlayerDetails = (controlledBy: string | null | undefined, setState: (value: any | undefined) => void) => {
-    setState(undefined);
-    return;
-    /** if (!controlledBy) {
-        setState(undefined);
-        return;
-    }
-    getPlayer(controlledBy).then((res) => {
-        if (res[0])
-            setState(res[0]);
-    }).catch(() => {
-        setTimeout(() => getPlayerDetails(controlledBy, setState), 1000);
-    });*/
-}
+import { ISteamUserList } from "../../../config/ISteamUserList";
 
 type Props = {
     ttRow: TimeTableRow;
     trainDetails: DetailedTrain;
     trainBadgeColor: string;
-    hasEnoughData: boolean;
     setModalTrainId: (trainId: string | undefined) => void;
     setTimetableTrainId: (trainId: string | undefined) => void;
     firstColRef: any;
@@ -44,21 +28,19 @@ type Props = {
     isWebpSupported: boolean;
     streamMode: boolean;
     serverCode: string;
+    players: ISteamUserList | undefined;
 }
 export const TrainInfoCell: React.FC<Props> = ({
-       ttRow, trainDetails, hasEnoughData, trainBadgeColor,
+       ttRow, trainDetails, trainBadgeColor,
        distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId, serverCode
+       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId, serverCode, players
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
-    const [playerSteamInfo, setPlayerSteamInfo] = React.useState<any>();
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
-    const controlledBy = trainDetails?.TrainData?.ControlledBySteamID;
+    const controllingPlayer = players?.data?.find(player => player.SteamId === trainDetails?.TrainData?.ControlledBySteamID)?.SteamInfo?.[0];
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
-
-    React.useEffect(() => getPlayerDetails(controlledBy, setPlayerSteamInfo), [controlledBy]);
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
@@ -77,13 +59,13 @@ export const TrainInfoCell: React.FC<Props> = ({
                         </Badge>
                     </Tooltip>
                     { trainDetails && <span className="ml-1 flex">
-                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
+                        <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
                             <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.train_number)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>
                         </Tooltip>
-                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_show_timetable")}</span>}>
+                        <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_show_timetable")}</span>}>
                             <Button size="xs" className="ml-1" onClick={() => setTimetableTrainId(ttRow.train_number)}><img src={TimetableIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                         </Tooltip>
-                        <Tooltip placement="right" overlay={<span>{t("EDR_TRAINROW_switch_to_driver_view")}</span>}>
+                        <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_switch_to_driver_view")}</span>}>
                             <Link to={`/${serverCode}/train/${ttRow.train_number}`}>
                                 <Button size="xs" className="ml-1"><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                             </Link>
@@ -96,8 +78,8 @@ export const TrainInfoCell: React.FC<Props> = ({
                     </div>
                     <div className="flex justify-end">
                         {
-                            playerSteamInfo?.pseudo
-                                ? <span className="flex items-center"><span className="hidden md:inline">{streamMode ? '' : playerSteamInfo?.pseudo}</span><img className="mx-2" width={16} src={playerSteamInfo.avatar} alt="avatar" /></span>
+                            controllingPlayer?.personaname
+                                ? <span className="flex items-center"><span className="hidden md:inline">{streamMode ? '' : controllingPlayer?.personaname}</span><img className="mx-2" width={16} src={controllingPlayer?.avatar} alt="avatar" /></span>
                                 : <></>
                         }
                     </div>

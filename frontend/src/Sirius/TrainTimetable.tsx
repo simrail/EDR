@@ -41,12 +41,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
     })
 
     const nearestStation = _minBy(allStationsDistance, 'distance');
-
     const closestStationIndex = trainTimetable.map((s) => s.station).findIndex((s) => s === nearestStation?.srId)
-    // console.log("Closest station Index : ", closestStationIndex);
-
-
-    // console.log("Nearest station : ", nearestStation);
 
     autoScroll && scrollToNearestStation(nearestStation?.id);
     return (

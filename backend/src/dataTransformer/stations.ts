@@ -33,11 +33,14 @@ export const getStationTimetable = async (stationId: string) => {
             departure_time: stationEntry.departureTime?.split(' ')[1].substring(0, 5),
             type_speed: stationEntry.maxSpeed,
             from_post: previousEntry?.nameForPerson,
+            from_post_id: previousEntry?.pointId,
             to_post: nextEntry?.nameForPerson,
+            to_post_id: nextEntry?.pointId,
             line: stationEntry.line,
             start_station: train.startStation,
             terminus_station: train.endStation,
-            layover: stationEntry.plannedStop
+            layover: stationEntry.plannedStop,
+            pointId: stationEntry.pointId
         };
     });
 

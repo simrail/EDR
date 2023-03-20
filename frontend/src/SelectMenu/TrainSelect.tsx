@@ -25,7 +25,6 @@ export const TrainSelect = () => {
     }, [serverCode]);
 
     React.useEffect(() => {
-        console.log('...', trains);
         if (searchTrainInput) {
             setTrainFilter(trains?.filter((train) => train.TrainNoLocal.includes(searchTrainInput)));
         } else {
@@ -44,7 +43,7 @@ export const TrainSelect = () => {
             },
             isTrainList: true,
         }));
-    }, [servers, serverCode]);
+    }, [servers, serverCode, t]);
 
     return (
         <SelectMenuLayout 
@@ -79,3 +78,5 @@ export const TrainSelect = () => {
         </SelectMenuLayout>
     )
 }
+
+export default TrainSelect;

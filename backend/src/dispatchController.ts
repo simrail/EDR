@@ -44,7 +44,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
         });
 
     try {
-        const mergePosts = req.query.mergePosts === "true"
+        const mergePosts = req.query.mergePosts === "true";
         const postsToFetch = mergePosts ? POSTS[post] : [newInternalIdToSrId[post]];
         const data = await Promise.all(postsToFetch.map(getStationTimetable));
         const mergedPosts = mergePostRows(data);
@@ -65,21 +65,6 @@ export async function trainTimetableController(req: express.Request, res: expres
         res
             .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
             .send(data);
-    } catch (e) {
-        console.error("Internal server error on train timetable ", e);
-        return res.sendStatus(500);
-    }
-}
-
-export async function trainTimetableListController(req: express.Request, res: express.Response) {
-    const trainNoList = req.body.trainNoList as string[];
-    try {
-        const data = trainNoList.map(trainNo => getTrainTimetable(trainNo));
-        Promise.all(data).then(result =>
-            res
-                .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
-                .send(result)
-        );
     } catch (e) {
         console.error("Internal server error on train timetable ", e);
         return res.sendStatus(500);

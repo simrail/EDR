@@ -9,6 +9,14 @@ import TRACK_WEBP from './images/icons/png/track.png';
 import RIGHT_ARROW_WEBP from './images/icons/png/right-chevron.png';
 import BELL_WEBP from './images/icons/png/bell.png';
 import CHECK_WEBP from './images/icons/png/check.png';
+import DIRECTION_LEFT from './images/icons/png/left-arrow.png';
+import DIRECTION_LEFT_WEBP from './images/icons/webp/left-arrow.webp';
+import DIRECTION_RIGHT from './images/icons/png/right-arrow.png';
+import DIRECTION_RIGHT_WEBP from './images/icons/webp/right-arrow.webp';
+import DIRECTION_UP from './images/icons/png/up-arrow.png';
+import DIRECTION_UP_WEBP from './images/icons/webp/up-arrow.webp';
+import DIRECTION_DOWN from './images/icons/png/down-arrow.png';
+import DIRECTION_DOWN_WEBP from './images/icons/webp/down-arrow.webp';
 
 import GW from "./images/posts/jpg/gw.jpg";
 import PS from "./images/posts/jpg/ps.jpg";
@@ -127,6 +135,10 @@ export const edrImagesMap : {[k: string]: string} = {
     RIGHT_ARROW,
     BELL,
     CHECK,
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT,
+    DIRECTION_UP,
+    DIRECTION_DOWN,
 }
 
 export const edrWebpImagesMap : {[k: string]: string} = {
@@ -135,6 +147,10 @@ export const edrWebpImagesMap : {[k: string]: string} = {
     RIGHT_ARROW: RIGHT_ARROW_WEBP,
     BELL: BELL_WEBP,
     CHECK: CHECK_WEBP,
+    DIRECTION_LEFT: DIRECTION_LEFT_WEBP,
+    DIRECTION_RIGHT: DIRECTION_RIGHT_WEBP,
+    DIRECTION_UP: DIRECTION_UP_WEBP,
+    DIRECTION_DOWN: DIRECTION_DOWN_WEBP,
 }
 
 export const serverTzMap: {[k: string]: string} = {
