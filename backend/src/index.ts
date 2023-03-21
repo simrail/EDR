@@ -5,7 +5,7 @@ const app = express();
 const Logger = morgan('short');
 
 import {dispatchController, trainTimetableController} from "./dispatchController.js";
-import {getPlayers, getServerList, getStationsList, getTrainsList, getServerTz} from "./serverController.js";
+import {getServerList, getStationsList, getTrainsList, getServerTz, getPlayer} from "./serverController.js";
 import helmet from "helmet";
 
 const corsConfig: CorsOptions = {
@@ -25,7 +25,7 @@ app
     .get("/trains/:serverCode", (req: express.Request, res: express.Response) => getTrainsList(req, res, req.params['serverCode']))
     .get("/dispatch/:post", dispatchController)
     .get("/train/:trainNo", trainTimetableController)
-    .get("/steam/:steamIdList", getPlayers);
+    .get("/steam/:steamId", getPlayer);
 app.listen(process.env.LISTEN_PORT);
 
 console.log("🚆 Simrail Community EDR backend v2.0-alpha");

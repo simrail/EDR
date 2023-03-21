@@ -1,5 +1,5 @@
 import {Server, Station, Train} from "@simrail/types";
-import { ISteamUserList } from "../config/ISteamUserList";
+import { ISteamUser } from "../config/ISteamUser";
 import { TimeTableRow } from "../EDR";
 import { TrainTimeTableRow } from "../Sirius";
 
@@ -27,8 +27,8 @@ export const getStations = (server: string): Promise<Station[]> =>
 export const getServers = (): Promise<Server[]> =>
     baseApiCall("servers");
 
-export const getPlayers = (steamIds: string[]): Promise<ISteamUserList> =>
-    baseApiCall("steam/" + steamIds.join(','));
+export const getPlayer = (steamId: string): Promise<ISteamUser> =>
+    baseApiCall("steam/" + steamId);
 
 export const getTzOffset = (serverId: string): Promise<any> =>
     baseApiCall("server/tz/" + serverId);

@@ -2,7 +2,8 @@ import { simrailClient } from "./simrailClient.js";
 import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
-import { ISteamUserList } from "./interfaces/ISteamUserList.js";
+import { ISteamUser } from "./interfaces/ISteamUser.js";
+import axios from "axios";
 
 export function getServerList(req: express.Request, res: express.Response) {
     return simrailClient.get("servers-open", BASE_SIMRAIL_API)?.then((e) => {
@@ -55,12 +56,26 @@ export function getServerTz(req: express.Request, res: express.Response) {
     });
 }
 
-export function getPlayers(req: express.Request, res: express.Response) {
-    return simrailClient.get(`users-open/${req.params['steamIdList']}?force=true`)?.then((e) => {
-        return res
-            .setHeader("Cache-control", 'public, max-age=3060, must-revalidate')
-            .send(e.data as ISteamUserList);
-    }).catch(() => {
+const STEAM_API_KEY = process.env.STEAM_API_KEY;
+
+export function getPlayer(req: express.Request, res: express.Response) {
+    if (!STEAM_API_KEY) {
+        console.error("No steam API key, unable to fetch steam profile!");
         return res.sendStatus(500);
-    });
+    }
+
+    return axios
+        .get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${STEAM_API_KEY}&format=json&steamids=${req.params.steamId}`)
+        .then((response) => {
+            if (response.status === 200) {
+                return res
+                    .setHeader("Cache-control", 'public, max-age=86400')
+                    .send(response.data.response.players?.[0] as ISteamUser);
+            } else {
+                return res.sendStatus(500);
+            }
+        }).catch(() => {
+            return res.sendStatus(500);
+        })
+
 }

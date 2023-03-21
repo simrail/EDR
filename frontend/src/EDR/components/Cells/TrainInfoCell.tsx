@@ -12,7 +12,7 @@ import classNames from "classnames";
 import TimetableIcon from "../../../images/icons/png/timetable.png";
 import ScheduleIcon from "../../../images/icons/png/schedule.png";
 import { Link } from "react-router-dom";
-import { ISteamUserList } from "../../../config/ISteamUserList";
+import { ISteamUser } from "../../../config/ISteamUser";
 
 type Props = {
     ttRow: TimeTableRow;
@@ -28,7 +28,7 @@ type Props = {
     isWebpSupported: boolean;
     streamMode: boolean;
     serverCode: string;
-    players: ISteamUserList | undefined;
+    players: ISteamUser[] | undefined;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, trainBadgeColor,
@@ -38,7 +38,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
     const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
-    const controllingPlayer = players?.data?.find(player => player.SteamId === trainDetails?.TrainData?.ControlledBySteamID)?.SteamInfo?.[0];
+    const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
 

@@ -12,7 +12,7 @@ import { DetailedTrain } from "../functions/trainDetails";
 import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
 import classNames from "classnames";
-import { ISteamUserList } from "../../config/ISteamUserList";
+import { ISteamUser } from "../../config/ISteamUser";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -36,7 +36,7 @@ type Props = {
     isWebpSupported: boolean;
     filterConfig: FilterConfig;
     setFilterConfig: (newFilterConfig: FilterConfig) => void;
-    players: ISteamUserList | undefined;
+    players: ISteamUser[] | undefined;
 }
 
 export const EDRTable: React.FC<Props> = ({

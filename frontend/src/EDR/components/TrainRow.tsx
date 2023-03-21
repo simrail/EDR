@@ -15,7 +15,7 @@ import {TrainFromCell} from "./Cells/TrainFromCell";
 import {TrainPlatformCell} from "./Cells/TrainPlatformCell";
 import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
-import { ISteamUserList } from "../../config/ISteamUserList";
+import { ISteamUser } from "../../config/ISteamUser";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
@@ -39,7 +39,7 @@ type Props = {
     streamMode: boolean;
     filterConfig: FilterConfig;
     serverCode: string;
-    players: ISteamUserList | undefined;
+    players: ISteamUser[] | undefined;
 }
 
 const TableRow: React.FC<Props> = (
