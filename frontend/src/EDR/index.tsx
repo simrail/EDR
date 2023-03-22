@@ -197,11 +197,11 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     React.useEffect(() => {
         if (!trains) return;
         const allPlayerIds = trains.map((t) => t.TrainData.ControlledBySteamID).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
-        const previousPlayerIds = Object.keys(previousPlayers?.current ?? []);
+        const previousPlayerIds = previousPlayers?.current?.map(player => player.steamid) ?? [];
         const difference = _difference(allPlayerIds, previousPlayerIds);
         if (difference.length === 0) return;
-        Promise.all(difference.map(getPlayer)).then(setPlayers);
-    }, [players, trains])
+        Promise.all(difference.map(getPlayer)).then(data => setPlayers(players !== undefined ? players?.concat(data) : data));
+    }, [trains, players])
 
     if (!serverCode || !post)
         redirect("/");
