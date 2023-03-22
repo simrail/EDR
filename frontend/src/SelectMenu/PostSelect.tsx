@@ -1,6 +1,6 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
-import {getServers, getStations} from "../api/api";
+import {getPlayer, getServers, getStations} from "../api/api";
 import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
@@ -8,6 +8,7 @@ import { Server, Station } from "@simrail/types";
 import {useParams} from "react-router-dom";
 import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
+import { ISteamUser } from "../config/ISteamUser";
 
 type Props = {
     isWebpSupported: boolean,
@@ -16,6 +17,7 @@ type Props = {
 export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
     const [posts, setPosts] = React.useState<Station[] | undefined>();
     const [servers, setServers] = React.useState<Server[] | undefined>();
+    const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
     const [subNavigationItems, setSubnavigationItems] = React.useState<SubNavigationProps>();
     const {serverCode} = useParams();
     const {t} = useTranslation();
@@ -23,9 +25,12 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
     React.useEffect(() => {
         if (!serverCode) return;
         getServers().then(setServers);
-        getStations(serverCode).then(setPosts);
-        // eslint-disable-next-line
-    }, []);
+        getStations(serverCode).then(postData => {
+            setPosts(postData);
+            const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);;
+            Promise.all(steamIds.map(getPlayer)).then(setPlayers);
+        });
+    }, [serverCode]);
 
     React.useEffect(() => {
         setSubnavigationItems(getPreviousAndNextServer({ 
@@ -53,7 +58,7 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
             : posts
                 // Sort posts by their name, move Ł to L, as UTF-8 would place it at the end
                 .sort((post1, post2) => post1.Name.replace('Ł', 'L') < post2.Name.replace('Ł', 'L') ? -1 : 1)
-                .map((post) => <PostCard key={post.Prefix} post={post} isWebpSupported={isWebpSupported}/>)
+                .map((post) => <PostCard key={post.Prefix} post={post} isWebpSupported={isWebpSupported} controllingPlayer={players?.find(player => player.steamid === post.DispatchedBy?.[0]?.SteamId)}/>)
         }
     </SelectMenuLayout>;
 }
