@@ -506,6 +506,12 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [20.7638017, 52.1570244]
     },
+    KOR: {
+        id: "KOR",
+        srId: "Korytów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.495777, 52.022659]
+    },
     PRSZ: {
         id: "PRSZ",
         srId: "Pruszków",
@@ -649,6 +655,12 @@ export const postConfig: Dictionary<StationConfig> = {
         srId: "Żelisławice R.6",
         trainPosRange: 0.5,
         platformPosOverride: [19.859630, 50.804040]
+    },
+    ZYR: {
+        id: "ZYR",
+        srId: "Żyrardów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.448360, 52.052271]
     }
 }
 

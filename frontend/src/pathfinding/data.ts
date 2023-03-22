@@ -254,6 +254,12 @@ const STR = {
 const SZE = {
     ...postConfig.SZE,
     left: "STR",
+    right: "KOR"
+}
+
+const KOR = {
+    ...postConfig.KOR,
+    left: "SZE",
     right: "JKT"
 }
 
@@ -508,6 +514,11 @@ const ZEL_R6 = {
     branchA: "WP"
 }
 
+const ZYR = {
+    ...postConfig.ZYR,
+    branchA: "GRO_MAZ"
+}
+
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
@@ -546,6 +557,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     IDZ: IDZ,
     STR,
     SZE,
+    KOR,
     JKT,
     GRO_MAZ,
     MIL,
@@ -594,7 +606,9 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
 
     RDZ_R12,
     RDZ_P31,
-    ZEL_R6
+    ZEL_R6,
+
+    ZYR
 
 }
 
