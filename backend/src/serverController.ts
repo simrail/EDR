@@ -25,11 +25,11 @@ export function getStationsList(req: express.Request, res: express.Response) {
         if (e.data.count === 0) {
             const fakedStations = Object.entries(internalIdToSrId).map(([k , n]) => ({Name: n, Prefix: k}));
             return res
-                .setHeader("Cache-control", "public, max-age=300")
+                .setHeader("Cache-control", "public, max-age=60")
                 .send(fakedStations)
         }
         return res
-            .setHeader("Cache-control", 'public, max-age=3600')
+            .setHeader("Cache-control", 'public, max-age=60')
             .send((e.data as ApiResponse<Station>).data);
     }).catch(() => {
         return res.sendStatus(500);
