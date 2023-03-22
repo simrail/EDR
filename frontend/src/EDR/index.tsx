@@ -180,6 +180,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         // eslint-disable-next-line
     }, [stations, JSON.stringify(trains), JSON.stringify(previousTrains.current), JSON.stringify(timetable), JSON.stringify(trainTimetables)]);
 
+    // Get missing train timetables when a new train spawns on the map
     React.useEffect(() => {
         if (!trains) return;
         // Filter for trains that have a checkpoint at the current station
@@ -192,6 +193,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         });
     }, [trains, trainTimetables, timetable])
 
+    // Get new player info when someone takes over a train
     React.useEffect(() => {
         if (!trains) return;
         const allPlayerIds = trains.map((t) => t.TrainData.ControlledBySteamID).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);

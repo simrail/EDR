@@ -18,58 +18,60 @@ import DIRECTION_UP_WEBP from './images/icons/webp/up-arrow.webp';
 import DIRECTION_DOWN from './images/icons/png/down-arrow.png';
 import DIRECTION_DOWN_WEBP from './images/icons/webp/down-arrow.webp';
 
-import GW from "./images/posts/jpg/gw.jpg";
-import PS from "./images/posts/jpg/ps.jpg";
-import KN from "./images/posts/jpg/kn.jpg";
-import WP from "./images/posts/jpg/wp.jpg";
-import OL from "./images/posts/jpg/ol.jpg";
-import PI from "./images/posts/jpg/pi.jpg";
-import KZ from "./images/posts/jpg/kz.jpg";
-import SG from "./images/posts/jpg/sg.jpg";
-import DG from "./images/posts/jpg/dg.jpg";
-import BN from "./images/posts/jpg/bn.jpg";
-import LC from "./images/posts/jpg/lc.jpg";
-import ZA from "./images/posts/jpg/zw.jpg";
-import OP_PO from "./images/posts/jpg/op_po.jpg";
-import DGW from "./images/posts/jpg/dgw.jpg";
-import SG_PO from "./images/posts/jpg/sg_po.jpg";
-import T1_BZ from "./images/posts/jpg/t1_bz.jpg";
-import IDZ from "./images/posts/jpg/idz.jpg";
-import GW_WEBP from "./images/posts/webp/gw.webp";
-import PS_WEBP from "./images/posts/webp/ps.webp";
-import KN_WEBP from "./images/posts/webp/kn.webp";
-import WP_WEBP from "./images/posts/webp/wp.webp";
-import OL_WEBP from "./images/posts/webp/ol.webp";
-import PI_WEBP from "./images/posts/webp/pi.webp";
-import KZ_WEBP from "./images/posts/webp/kz.webp";
-import SG_WEBP from "./images/posts/webp/sg.webp";
-import DG_WEBP from "./images/posts/webp/dg.webp";
-import BN_WEBP from "./images/posts/webp/bn.webp";
-import LC_WEBP from "./images/posts/webp/lc.webp";
-import ZA_WEBP from "./images/posts/webp/zw.webp";
-import OP_PO_WEBP from "./images/posts/webp/op_po.webp";
-import DGW_WEBP from "./images/posts/webp/dgw.webp";
-import SG_PO_WEBP from "./images/posts/webp/sg_po.webp";
-import T1_BZ_WEBP from "./images/posts/webp/t1_bz.webp";
-import IDZ_WEBP from "./images/posts/webp/idz.webp";
+import BN from "./images/posts/jpg/Bedzin.jpg";
+import DG from "./images/posts/jpg/Dabrowa_Gornicza.jpg";
+import DGW from "./images/posts/jpg/Dabrowa_Gornicza_Wschodnia.jpg";
+import GM from "./images/posts/jpg/Grodzisk_Mazowiecki.jpg";
+import GW from "./images/posts/jpg/Gora_Wlodowska.jpg";
+import IDZ from "./images/posts/jpg/Idzikowice.jpg";
+import KZ from "./images/posts/jpg/Katowice_Zawodzie.jpg";
+import KN from "./images/posts/jpg/Knapowka.jpg";
+import LC from "./images/posts/jpg/Lazy_Lc.jpg";
+import OL from "./images/posts/jpg/Olszamowice.jpg";
+import OP_PO from "./images/posts/jpg/Opoczno_Poludnie.jpg";
+import PI from "./images/posts/jpg/Pilichowice.jpg";
+import PS from "./images/posts/jpg/Psary.jpg";
+import SG from "./images/posts/jpg/Sosnowiec_Glowny.jpg";
+import SG_PO from "./images/posts/jpg/Sosnowiec_Poludniowy.jpg";
+import WP from "./images/posts/jpg/Wloszczowa_Polnoc.jpg";
+import ZA from "./images/posts/jpg/Zawiercie.jpg";
+
+
+import BN_WEBP from "./images/posts/webp/Bedzin.webp";
+import DG_WEBP from "./images/posts/webp/Dabrowa_Gornicza.webp";
+import DGW_WEBP from "./images/posts/webp/Dabrowa_Gornicza_Wschodnia.webp";
+import GM_WEBP from "./images/posts/webp/Grodzisk_Mazowiecki.webp";
+import GW_WEBP from "./images/posts/webp/Gora_Wlodowska.webp";
+import IDZ_WEBP from "./images/posts/webp/Idzikowice.webp";
+import KZ_WEBP from "./images/posts/webp/Katowice_Zawodzie.webp";
+import KN_WEBP from "./images/posts/webp/Knapowka.webp";
+import LC_WEBP from "./images/posts/webp/Lazy_Lc.webp";
+import OL_WEBP from "./images/posts/webp/Olszamowice.webp";
+import OP_PO_WEBP from "./images/posts/webp/Opoczno_Poludnie.webp";
+import PI_WEBP from "./images/posts/webp/Pilichowice.webp";
+import PS_WEBP from "./images/posts/webp/Psary.webp";
+import SG_WEBP from "./images/posts/webp/Sosnowiec_Glowny.webp";
+import SG_PO_WEBP from "./images/posts/webp/Sosnowiec_Poludniowy.webp";
+import WP_WEBP from "./images/posts/webp/Wloszczowa_Polnoc.webp";
+import ZA_WEBP from "./images/posts/webp/Zawiercie.webp";
 
 import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL} from 'country-flag-icons/string/3x2'
 
 export const LOGGING = false;
 
 export const countriesFlags: {[k: string]: string} = {
-    EN: GB,
-    FR,
-    PL,
-    CZ,
-    ES,
-    DE,
-    UA,
-    IT,
     CN,
-    PT,
+    CZ,
+    DE,
+    EN: GB,
+    ES,
+    FR,
     HU,
-    NL
+    IT,
+    NL,
+    PL,
+    PT,
+    UA,
 }
 
 
@@ -90,43 +92,43 @@ export const internalConfigPostIds: {[k: string]: string} = {
 };
 
 export const optimizedPostsImagesMap: {[k: string]: string} = {
-    GW,
-    PS,
-    KN,
-    WP,
-    OL,
-    PI,
-    KZ,
-    SG,
+    B: BN,
     DG,
-    BN,
-    ŁC: LC,
-    ZW: ZA,
-    OP: OP_PO,
     DW: DGW,
-    SPŁ1: SG_PO,
-    B: T1_BZ,
+    GR: GM,
+    GW,
     ID: IDZ,
+    KN,
+    KZ,
+    ŁC: LC,
+    OL,
+    OP: OP_PO,
+    PI,
+    PS,
+    SG,
+    SPŁ1: SG_PO,
+    WP,
+    ZW: ZA,
 }
 
 export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
-    GW: GW_WEBP,
-    PS: PS_WEBP,
-    KN: KN_WEBP,
-    WP: WP_WEBP,
-    OL: OL_WEBP,
-    PI: PI_WEBP,
-    KZ: KZ_WEBP,
-    SG: SG_WEBP,
+    B: BN_WEBP,
     DG: DG_WEBP,
-    BN: BN_WEBP,
-    ŁC: LC_WEBP,
-    ZW: ZA_WEBP,
-    OP: OP_PO_WEBP,
     DW: DGW_WEBP,
-    SPŁ1: SG_PO_WEBP,
-    B: T1_BZ_WEBP,
+    GR: GM_WEBP,
+    GW: GW_WEBP,
     ID: IDZ_WEBP,
+    KN: KN_WEBP,
+    KZ: KZ_WEBP,
+    ŁC: LC_WEBP,
+    OL: OL_WEBP,
+    OP: OP_PO_WEBP,
+    PI: PI_WEBP,
+    PS: PS_WEBP,
+    SG: SG_WEBP,
+    SPŁ1: SG_PO_WEBP,
+    WP: WP_WEBP,
+    ZW: ZA_WEBP,
 }
 
 export const edrImagesMap : {[k: string]: string} = {
@@ -151,42 +153,6 @@ export const edrWebpImagesMap : {[k: string]: string} = {
     DIRECTION_RIGHT: DIRECTION_RIGHT_WEBP,
     DIRECTION_UP: DIRECTION_UP_WEBP,
     DIRECTION_DOWN: DIRECTION_DOWN_WEBP,
-}
-
-export const serverTzMap: {[k: string]: string} = {
-    FR1: 'Europe/Paris',
-    FR2: 'America/Vancouver',
-    CZ1: 'Europe/Prague',
-    CZ2: 'Europe/Prague',
-    DE1: 'Europe/Paris',
-    DE2: 'Europe/Paris',
-    DE3: 'Europe/Paris',
-    DE4: 'Pacific/Honolulu',
-    DE5: 'Europe/Paris',
-    HU1: 'Europe/Paris',
-    UA1: 'Europe/Paris',
-    ES1: 'Europe/Paris',
-    ES2: 'America/Argentina/Buenos_Aires',
-    EN1: 'Europe/London',
-    EN2: 'America/New_York',
-    EN3: 'America/Vancouver',
-    EN4: 'America/Vancouver',
-    EN5: 'America/New_York',
-    EN6: 'Asia/Sakhalin',
-    EN7: 'Europe/London',
-    EN8: 'Asia/Sakhalin',
-    EN9: 'Europe/Paris',
-    IT1: 'Europe/Paris',
-    PL1: 'Europe/Warsaw',
-    PL2: 'Europe/Warsaw',
-    PL3: 'US/Hawaii',
-    PL4: 'Europe/Warsaw',
-    PL5: 'Europe/Warsaw',
-    PL6: 'Europe/Warsaw',
-    PL7: 'HST',
-    PL8: 'America/Mexico_City',
-    CN1: 'Asia/Seoul',
-    NL1: 'Europe/London',
 }
 
 export const searchSeparator = ','
