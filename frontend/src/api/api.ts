@@ -3,7 +3,7 @@ import { ISteamUser } from "../config/ISteamUser";
 import { TimeTableRow } from "../EDR";
 import { TrainTimeTableRow } from "../Sirius";
 
-export const BASE_API_URL = "https://dispatch-api.cdn.infra.deadlykungfu.ninja/"
+export const BASE_API_URL = "http://example.com/";
 
 const baseApiCall = (URL: string) => {
     // TODO: Add error toast
