@@ -4,6 +4,7 @@ import {getStationTimetable} from "./dataTransformer/stations.js";
 import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
 import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
+import { IServerTrain } from "./interfaces/IServerTrain.js";
 
 const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
@@ -34,8 +35,13 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     return _.sortBy(mergedPostsRows, 'arrival_time_object');
 }
 
-export async function dispatchController(req: express.Request, res: express.Response) {
+export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
     const { post } = req.params;
+
+    if (trainList === undefined || trainList === null) {
+        console.error("Timetable is empty, cannot process dispatch request!")
+        return res.sendStatus(500);
+    }
 
     if (!internalIdToSrId[post])
         return res.status(400).send({
@@ -46,7 +52,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
     try {
         const mergePosts = req.query.mergePosts === "true";
         const postsToFetch = mergePosts ? POSTS[post] : [newInternalIdToSrId[post]];
-        const data = await Promise.all(postsToFetch.map(getStationTimetable));
+        const data = await Promise.all(postsToFetch.map(post => getStationTimetable(post, trainList)));
         const mergedPosts = mergePostRows(data);
         return res
             .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
@@ -57,11 +63,16 @@ export async function dispatchController(req: express.Request, res: express.Resp
     }
 }
 
-export async function trainTimetableController(req: express.Request, res: express.Response) {
+export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
     const {trainNo} = req.params;
 
+    if (trainList === undefined || trainList === null) {
+        console.error("Timetable is empty, cannot process train timetable request!")
+        return res.sendStatus(500);
+    }
+
     try {
-        const data = await getTrainTimetable(trainNo);
+        const data = await getTrainTimetable(trainNo, trainList);
         res
             .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
             .send(data);

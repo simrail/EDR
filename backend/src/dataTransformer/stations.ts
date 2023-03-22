@@ -1,11 +1,8 @@
 import _ from "lodash";
-import fs from "fs";
 import { IServerTrain } from "../interfaces/IServerTrain.js";
 import { IFrontendStationTrainRow } from "../interfaces/IFrontendStationTrainRow.js";
 
-const trainList = JSON.parse(fs.readFileSync("official-edr-data.json", "utf8")) as IServerTrain[];
-
-export const getStationTimetable = async (stationId: string) => {
+export const getStationTimetable = async (stationId: string, trainList: IServerTrain[]) => {
     const trainsForStation = trainList.filter(train => train.timetable.some(checkpoint => checkpoint.pointId === stationId));
     const withDynamicData: IFrontendStationTrainRow[] = trainsForStation.map((train) => {
         const stationEntry = train.timetable.find(checkpoint => checkpoint.pointId === stationId);

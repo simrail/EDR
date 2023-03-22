@@ -1,5 +1,4 @@
 import _ from "lodash";
-import fs from "fs";
 import axios from "axios";
 import { ISpeedLimitApi } from "../interfaces/ISpeedLimitApi.js";
 import { ISpeedLimit } from "../interfaces/ISpeedLimit.js";
@@ -7,8 +6,6 @@ import { IServerTrain } from "../interfaces/IServerTrain.js";
 import { BASE_SIMKOL_API } from "../config.js";
 import { IFrontendTrainScheduleRow } from "../interfaces/IFrontendTrainScheduleRow.js";
 
-// TODO: Instead of getting whole timetable, chop this data into smaller chunks
-const trainList = JSON.parse(fs.readFileSync("official-edr-data.json", "utf8")) as IServerTrain[];
 const speedLimits: Promise<ISpeedLimit[]> = axios.get<ISpeedLimitApi[]>(`${BASE_SIMKOL_API}/speeds.json`).then((result) => result.data.map(speedLimit => {
     return {
         ...speedLimit,
@@ -18,7 +15,7 @@ const speedLimits: Promise<ISpeedLimit[]> = axios.get<ISpeedLimitApi[]>(`${BASE_
     };
 }));
 
-export const getTrainTimetable = async (trainNumber: string) => {
+export const getTrainTimetable = async (trainNumber: string, trainList: IServerTrain[]) => {
     // Group limits by line number to make searches easier
     const allSpeeds = await (speedLimits.then((limit) => _.groupBy(limit, "lineNo")));
     let trainTimeTable = trainList.find(trainData => trainData.trainNoLocal === trainNumber)?.timetable;
