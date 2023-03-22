@@ -17,10 +17,10 @@ export const CellLineData: React.FC<Props> = ({ttRow}) => {
 
     return <>
         <span className="pr-2">
-            { isHeadingLeft && <span className="font-bold">🢀</span>}
-            { isHeadingRight && <span className="font-bold">🢂</span>}
-            { isHeadingUp && <span className="font-bold">🢁</span>}
-            { isHeadingDown && <span className="font-bold">🢃</span>}
+        { isHeadingLeft && <span className="font-bold text-orange-400">🢀</span>}
+        { isHeadingRight && <span className="font-bold text-teal-400">🢂</span>}
+        { isHeadingUp && <span className="font-bold text-green-400">🢁</span>}
+        { isHeadingDown && <span className="font-bold text-purple-400">🢃</span>}
         </span>
         {ttRow.to_post}
         <img className="inline-block pl-1 pb-1" src={edrImagesMap.RIGHT_ARROW} height={18} width={18} alt="r_arrow"/>️
