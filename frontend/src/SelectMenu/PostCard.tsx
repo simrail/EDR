@@ -2,8 +2,14 @@ import React from "react";
 import {optimizedPostsImagesMap, optimizedPostsWebpImagesMap} from "../config";
 import {postToInternalIds} from "../config/stations";
 import {Link, useParams} from "react-router-dom";
+import { Station } from "@simrail/types";
 
-export const PostCard: React.FC<any> = ({post, isWebpSupported}) => {
+type Props = {
+    post: Station,
+    isWebpSupported: boolean,
+}
+
+export const PostCard: React.FC<Props> = ({post, isWebpSupported}) => {
     const {serverCode} = useParams();
     const realId = postToInternalIds[encodeURIComponent(post.Name)]?.id;
     const postImages = isWebpSupported ? optimizedPostsWebpImagesMap : optimizedPostsImagesMap;

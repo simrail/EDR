@@ -20,6 +20,18 @@ type Props = {
     isWebpSupported: boolean;
 }
 
+const stopTypeToLetters = (type: string | undefined) => {
+    const stopType = parseInt(type || "0");
+    switch (stopType) {
+        case 1:
+            return 'ph';
+        case 2:
+            return 'pt';
+        default:
+            return '';
+    }
+}
+
 const scrollToNearestStation = (nearestStationId: string | undefined) => {
     const allTrainRows = [...Array.from(document.querySelectorAll('[data-internalId]').values())];
     const nearestStationRow = allTrainRows.find((e) => e.getAttribute("data-internalid") === nearestStationId)
@@ -64,7 +76,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             <div className="flex flex-col">
                                                 <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stop_type} />
                                                 <div className="flex justify-between">
-                                                    <span>{ttRow.km ? `${(Math.round(ttRow.km * 100) / 100)}  km` : ''} </span>
+                                                    <span>{ttRow.km ? `${(Math.round(ttRow.km * 100) / 100)} km` : ''}</span>
                                                     <span>L{ttRow.line}</span>
                                                 </div>
                                             </div>
@@ -72,7 +84,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         <Table.Cell>
                                             <div className="flex justify-between">
                                                 <span>{ttRow.scheduled_arrival_hour}</span>
-                                                <span>{ttRow.stop_type && <Badge>{`${ttRow.stop_type}`}</Badge>}</span>
+                                                <span>{parseInt(ttRow.stop_type || "0") > 0 && <Badge>{`${stopTypeToLetters(ttRow.stop_type)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell className="pl-0">

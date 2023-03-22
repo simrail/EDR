@@ -37,7 +37,7 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
                 currentLabel: t("SELECTMENU_nav_current_server") || '',
             }
         }));
-    }, [servers, serverCode]);
+    }, [servers, serverCode, t]);
 
     return <SelectMenuLayout 
         title={t("SELECTMENU_post_select")}
@@ -50,7 +50,10 @@ export const PostSelect: React.FC<Props> = ({isWebpSupported}) => {
         {
             !posts
             ? <Spinner size="xl"/>
-            : posts.map((post) => <PostCard key={post.Prefix} post={post} isWebpSupported={isWebpSupported}/>)
+            : posts
+                // Sort posts by their name, move Ł to L, as UTF-8 would place it at the end
+                .sort((post1, post2) => post1.Name.replace('Ł', 'L') < post2.Name.replace('Ł', 'L') ? -1 : 1)
+                .map((post) => <PostCard key={post.Prefix} post={post} isWebpSupported={isWebpSupported}/>)
         }
     </SelectMenuLayout>;
 }

@@ -126,7 +126,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         fetchTrain(trainNumber, serverCode, setTrain);
         const intervalId = window.setInterval(() => {
             fetchTrain(trainNumber, serverCode, setTrain);
-        }, 5000);
+        }, 10000);
         return () => window.clearInterval(intervalId);
     }, [trainNumber, serverCode]);
 
