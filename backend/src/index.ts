@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors, { CorsOptions } from "cors";
+import compression from "compression";
 const app = express();
 const Logger = morgan('short');
 
@@ -13,7 +14,7 @@ const corsConfig: CorsOptions = {
     maxAge: 3600
 };
 
-app.use(cors(corsConfig)).use(Logger).use(helmet()).use(express.json());
+app.use(cors(corsConfig)).use(Logger).use(helmet()).use(express.json()).use(compression());
 app
     /*.set("etag", false)
     .set("Cache-control", "no-cache")*/
