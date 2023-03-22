@@ -27,6 +27,7 @@ export const getStationTimetable = async (stationId: string) => {
             train_number: train.trainNoLocal,
             train_type: stationEntry.trainType,
             stop_type: stationEntry.stopTypeNumber,
+            track: stationEntry.track,
             platform: stationEntry.platform,
             arrival_time_object: stationEntry.arrivalTime != null ? new Date(stationEntry.arrivalTime): new Date(0),
             arrival_time: stationEntry.arrivalTime?.split(' ')[1].substring(0, 5),

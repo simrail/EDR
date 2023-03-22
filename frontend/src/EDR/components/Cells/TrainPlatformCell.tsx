@@ -20,7 +20,7 @@ const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_platform")}</span>}>
                         <img className="mx-2 pl-1 h-[13px] lg:h-[26px]" src={edrImagesMap.TRACK} alt="track"/>
                     </Tooltip>
-                    {ttRow.platform.split(' ')[0]}&nbsp;/&nbsp;{ttRow.platform.split(' ')[1]}</>}
+                    {ttRow.platform}&nbsp;/&nbsp;{ttRow.track}</>}
             </span>
         </div>
     ) : null;

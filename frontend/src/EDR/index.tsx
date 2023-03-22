@@ -36,6 +36,7 @@ export type TimeTableRow = {
     layover: string,
     stop_type: string,
     platform: string,
+    track: number,
     scheduled_departure: string,
     real_departure: string,
     start_station: string,
