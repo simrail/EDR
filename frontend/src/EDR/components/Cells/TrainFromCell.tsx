@@ -2,7 +2,6 @@ import React from "react";
 import { dispatchDirections } from "../../../config/stations";
 import {TimeTableRow} from "../../index";
 import {tableCellCommonClassnames} from "../TrainRow";
-import { edrImagesMap } from "../../../config";
 
 type Props = {
     headerFourthColRef: any;
@@ -20,10 +19,10 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
     return (<td className={tableCellCommonClassnames(streamMode)} ref={headerFourthColRef}>
         <div className="inline-flex">
             <span className="pr-2">
-                { isFromLeft && <img height={20} width={20} src={edrImagesMap.DIRECTION_RIGHT} alt="right-arrow" />}
-                { isFromRight && <img height={20} width={20} src={edrImagesMap.DIRECTION_LEFT} alt="left-arrow" />}
-                { isFromUp && <img height={20} width={20} src={edrImagesMap.DIRECTION_DOWN} alt="down-arrow" />}
-                { isFromDown && <img height={20} width={20} src={edrImagesMap.DIRECTION_UP} alt="up-arrow" />}
+                { isFromLeft && <span className="font-bold">🢂</span>}
+                { isFromRight && <span className="font-bold">🢀</span>}
+                { isFromUp && <span className="font-bold">🢃</span>}
+                { isFromDown && <span className="font-bold">🢁</span>}
             </span>
             {ttRow.from_post}
         </div>
@@ -38,10 +37,10 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
             return (<span key={spd.train_number + i}><hr />
                 <div className="inline-flex">
                     <span className="pr-2">
-                        { isFromLeft && <img height={20} width={20} src={edrImagesMap.DIRECTION_RIGHT} alt="right-arrow" />}
-                        { isFromRight && <img height={20} width={20} src={edrImagesMap.DIRECTION_LEFT} alt="left-arrow" />}
-                        { isFromUp && <img height={20} width={20} src={edrImagesMap.DIRECTION_DOWN} alt="down-arrow" />}
-                        { isFromDown && <img height={20} width={20} src={edrImagesMap.DIRECTION_UP} alt="up-arrow" />}
+                        { isFromLeft && <span className="font-bold">🢂</span>}
+                        { isFromRight && <span className="font-bold">🢀</span>}
+                        { isFromUp && <span className="font-bold">🢃</span>}
+                        { isFromDown && <span className="font-bold">🢁</span>}
                     </span>
                     <span>
                         {spd.from_post}
