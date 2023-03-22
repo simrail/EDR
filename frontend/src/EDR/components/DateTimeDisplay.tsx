@@ -18,6 +18,6 @@ export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverCode, hi
 
     return <div className="text-center">
         <span className="mr-2 text-xl">{formatTime(dt, i18n.language, timeOptions)}</span>
-        {!hideDetails && <><br /><span className="text-xs">{serverCode.toUpperCase()} / (UTC {getNumberSign(serverTzOffset)}{serverTzOffset})</span></> }
+        {!hideDetails && <><br /><span className="text-xs">{serverCode.toUpperCase()} / (UTC{serverTzOffset !== 0 && ` ${getNumberSign(serverTzOffset)}${serverTzOffset}`})</span></> }
     </div>
 }
