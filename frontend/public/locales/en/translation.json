@@ -5,6 +5,7 @@
   "APP_station_not_found": "Fatal error: Station couldn't be found!",
 
   "NAVBAR_bugs": "Report bugs",
+  "NAVBAR_language": "Language",
 
   "SELECTMENU_server_selection": "Select Server",
   "SELECTMENU_post_select": "Select Dispatching Post",
