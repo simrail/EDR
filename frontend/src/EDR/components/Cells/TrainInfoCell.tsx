@@ -87,7 +87,7 @@ export const TrainInfoCell: React.FC<Props> = ({
             </div>
             <div className="w-full flex flex-col md:flex-row">
                 {  distanceFromStation
-                    ? <div className="inline-flex"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}&nbsp;</span>{distanceFromStation}km&nbsp;<div className="max-w-[70px] md:max-w-full max-h-[1rem] overflow-hidden">{trainDetails?.closestStation}</div></div>
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}&nbsp;</span>{trainDetails?.closestStation},&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
@@ -98,8 +98,8 @@ export const TrainInfoCell: React.FC<Props> = ({
                             : trainHasPassedStation ?
                                 <>{t("EDR_TRAINROW_train_away")}</>
                                 : ETA && Math.round(ETA) < 20
-                                    ? <>{Math.round(ETA)}{t("EDR_TRAINROW_train_minutes")}</>
-                                    : trainDetails?.TrainData?.Velocity === 0 ? <>{t('EDR_TRAINROW_train_stopped')}</> : undefined
+                                    ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
+                                    : trainDetails?.TrainData?.Velocity === 0 ? <>({t('EDR_TRAINROW_train_stopped')})</> : undefined
                         : undefined
                 }
             </div>
