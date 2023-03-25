@@ -119,7 +119,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/5cdpDv2nT8">
                     <span className="inline-flex items-center "><img src={SRIT} height={16} width={16} alt="Community logo"/>&nbsp;Simrail ITA</span>
                 </Button>
-                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://jq.qq.com/?_wv=1027&k=ntP0ehbU">
+                <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/3NdnVDme5k">
                     <span className="inline-flex items-center "><img src={SRCN} height={16} width={16} alt="Community logo"/>&nbsp;SimRail CN</span>
                 </Button>
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://discord.gg/Kyte5PB6xf">
