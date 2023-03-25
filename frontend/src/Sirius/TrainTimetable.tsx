@@ -11,6 +11,9 @@ import WARNING from "../images/icons/png/warning.png";
 import INFO_WEBP from "../images/icons/webp/information.webp";
 import WARNING_WEBP from "../images/icons/webp/warning.webp";
 import { TrainTimeTableRow } from ".";
+import Tooltip from "rc-tooltip";
+import { useTranslation } from "react-i18next";
+import { edrImagesMap } from "../config";
 
 type Props = {
     trainTimetable: TrainTimeTableRow[];
@@ -42,6 +45,8 @@ const scrollToNearestStation = (nearestStationId: string | undefined) => {
     }
 }
 export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpath, train, autoScroll, isWebpSupported}) => {
+
+    const {t} = useTranslation();
 
     const [trainLongitude, trainLatitude] = [train.TrainData.Longitute, train.TrainData.Latititute];
     const allStationsDistance = allStationsInpath.map((station) => {
@@ -94,7 +99,12 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             {ttRow.scheduled_departure_hour}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {ttRow.layover ? `${ttRow.layover}  min` : ''}
+                                            {(Math.floor(parseInt(ttRow.layover)) > 0 || parseInt(ttRow.stop_type) > 0) && <span className="flex">
+                                                <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
+                                                    <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
+                                                </Tooltip>
+                                                {parseFloat(ttRow.layover)}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
+                                            </span>}
                                         </Table.Cell>
                                     </Table.Row>
                                 {
