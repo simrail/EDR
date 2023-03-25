@@ -38,7 +38,8 @@ export const getStationTimetable = async (stationId: string, trainList: IServerT
             start_station: train.startStation,
             terminus_station: train.endStation,
             layover: stationEntry.plannedStop,
-            pointId: stationEntry.pointId
+            pointId: stationEntry.pointId,
+            stationIndex: stationEntry.indexOfPoint
         };
     });
 

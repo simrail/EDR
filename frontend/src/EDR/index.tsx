@@ -45,6 +45,7 @@ export type TimeTableRow = {
     type_speed: number,
     hourSort: number,
     pointId: string,
+    stationIndex: number,
     secondaryPostsRows: TimeTableRow[]
 };
 

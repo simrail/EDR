@@ -1,10 +1,8 @@
 import React from "react";
 import {Table} from "flowbite-react";
 import {nowUTC} from "../../utils/date";
-import {PathFinding_HasTrainPassedStation} from "../../pathfinding/api";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
-import {postConfig} from "../../config/stations";
 import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import { subMinutes } from "date-fns";
@@ -50,19 +48,13 @@ const TableRow: React.FC<Props> = (
     }: Props
 ) => {
     const dateNow = nowUTC(serverTzOffset);
-    const postCfg = postConfig[post];
-    const closestStationid = trainDetails?.closestStationId;
-    const pathFindingLineTrace = trainDetails?.pfLineTrace;
 
     const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const initialPfHasPassedStation = pathFindingLineTrace ? PathFinding_HasTrainPassedStation(pathFindingLineTrace, post, ttRow.from_post, ttRow.to_post, closestStationid, currentDistance) : false;
     const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.rawDistances?.length ?? 1); // Before the condition was wrong
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
-    const hasEnoughData = trainDetails?.distanceToStation.length > 2 || !trainDetails ;
 
-    // TODO: It would be better to use a direction vector to calculate if its going to or away from the station, but my vector math looks off so this will do for now
-    const trainHasPassedStation = initialPfHasPassedStation || (hasEnoughData ? closestStationid === post && currentDistance > previousDistance && distanceFromStation > postCfg.trainPosRange : false);
+    const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
     const [departureExpectedHours, departureExpectedMinutes] = ttRow.departure_time.split(":").map(value => parseInt(value));
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const isDepartureNextDay = dateNow.getHours() >= 20 && departureExpectedHours < 12;  // TODO: less but still clunky
