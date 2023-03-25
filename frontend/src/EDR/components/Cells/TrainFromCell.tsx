@@ -19,10 +19,10 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
     return (<td className={tableCellCommonClassnames(streamMode)} ref={headerFourthColRef}>
         <div className="inline-flex">
             <span className="pr-2">
-                { isFromLeft && <span className="font-bold text-teal-400">🢂</span>}
-                { isFromRight && <span className="font-bold text-orange-400">🢀</span>}
-                { isFromUp && <span className="font-bold text-purple-400">🢃</span>}
-                { isFromDown && <span className="font-bold text-green-400">🢁</span>}
+                { isFromLeft && <span className="font-bold text-teal-400">【🢂】</span>}
+                { isFromRight && <span className="font-bold text-orange-400">【🢀】</span>}
+                { isFromUp && <span className="font-bold text-purple-400">【🢃】</span>}
+                { isFromDown && <span className="font-bold text-green-400">【🢁】</span>}
             </span>
             {ttRow.from_post}
         </div>
@@ -37,10 +37,10 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
             return (<span key={spd.train_number + i}><hr />
                 <div className="inline-flex">
                     <span className="pr-2">
-                        { isFromLeft && <span className="font-bold text-teal-400">🢂</span>}
-                        { isFromRight && <span className="font-bold text-orange-400">🢀</span>}
-                        { isFromUp && <span className="font-bold text-purple-400">🢃</span>}
-                        { isFromDown && <span className="font-bold text-green-400">🢁</span>}
+                        { isFromLeft && <span className="font-bold text-teal-400">【🢂】</span>}
+                        { isFromRight && <span className="font-bold text-orange-400">【🢀】</span>}
+                        { isFromUp && <span className="font-bold text-purple-400">【🢃】</span>}
+                        { isFromDown && <span className="font-bold text-green-400">【🢁】</span>}
                     </span>
                     <span>
                         {spd.from_post}
