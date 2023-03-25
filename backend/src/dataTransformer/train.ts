@@ -34,7 +34,7 @@ export const getTrainTimetable = async (trainNumber: string, trainList: IServerT
             train_number: checkpoint.displayedTrainNumber,
             scheduled_arrival_hour: checkpoint.arrivalTime?.split(' ')[1].substring(0, 5),
             station: checkpoint.nameForPerson,
-            layover: checkpoint.stopDuration.toString(),
+            layover: checkpoint.plannedStop.toString(),
             km: checkpoint.mileage,
             scheduled_departure_hour: checkpoint.departureTime?.split(' ')[1].substring(0, 5),
             train_type: checkpoint.trainType,
