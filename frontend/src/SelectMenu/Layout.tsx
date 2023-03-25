@@ -44,8 +44,8 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 <span className="ml-4">EDR</span>
             </Navbar.Brand>
             <Navbar.Collapse>
-                <div className="flex items-center space-x-4" >
-                    <Dropdown label={<>Language ({i18n.language.toUpperCase()})</>} inline>
+                <div className="flex items-center space-x-4">
+                    <Dropdown label={<>{t("NAVBAR_language")} ({i18n.language.toUpperCase()})</>} inline>
                         <Dropdown.Item icon={() => <DropdownFlagIcon><FR /></DropdownFlagIcon>} onClick={() => i18n.changeLanguage("fr")}>
                             French
                         </Dropdown.Item>
