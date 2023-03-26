@@ -2,9 +2,9 @@
 
 ## Enhanced timetable experience for Simrail dispatch posts
 
-The project aims to provide a better, more functional and more modern timetable experience for dispatchers. Created by [@DKFN](https://github.com/DKFN).
+The project aims to provide a better, more functional and more modern timetable experience for dispatchers. Created by [@DKFN](https://github.com/DKFN). Currently maintained by [@Tallyrald](https://github.com/Tallyrald)
 
-### ➡️➡️➡️[The app is available right here.](https://edr.simrail.fr/)⬅️⬅️⬅️
+### ➡️➡️➡️[The app is available right here.](https://edr.simrail.app/)⬅️⬅️⬅️
 
 Main features include but are not limited to:
 
@@ -32,7 +32,9 @@ If you feel like contributing, please take a look at [current issues](https://gi
 - Each fixes that should be deployed immediatly on the current version must be done on the current version branch, then, we will rebase master branch with de fix
 
 ## Reusing part of the code
+
 You are welcome to use part or all the code for your own projects. But we kindly ask you to follow these rules:
+
 - State somewhere that part of the code uses this project code
 - If you bring significant enhancements to the code, share it with us (either via DM or a PR or an issue) and/or the SimRail modding community
 - If you directly use the API, don't be reckless in the amount of requests made
@@ -44,13 +46,14 @@ Of course, we will not send lawyers to your house if you don't follow these rule
 Translations are happening via [Transifex](https://www.transifex.com/simrail-community/edr). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
 
 ## Self Hosting
-Self hosting documentation is planned. The software needs a few adjustements to make it work easilly, but if you know your way around the code you can already do so ! :)
+
+Self hosting documentation is planned. The software needs a few adjustements to make it work easilly, but if you know your way around the code you can already do so! :)
 
 ## Thank you
 
 A big thank you to the game developers for making [Simrail](https://store.steampowered.com/app/1422130/SimRail__The_Railway_Simulator/) and providing the necessary data for this app to work.
 
-Anorther big thanks for all the SimRail community that has made this project grow way beyond my wildest expectations !
+Anorther big thanks to all the SimRail community that has made this project grow way beyond my wildest expectations!
 
 ## License
 

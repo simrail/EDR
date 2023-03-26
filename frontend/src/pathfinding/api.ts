@@ -72,8 +72,6 @@ export const PathFinding_FindPathAndHaversineSum = (start: string, finish: strin
         console.error("Pathfinding error ! ", {start, finish});
         return [undefined, 0];
     }
-    // console.log("Pah a ", pathA)
-    // console.log("Pah b ", pathB)
     const lineTrace = _uniq([...pathA, ...pathB])
     const filteredAllPosPoints: ([number, number])[] =  lineTrace?.map?.((node) =>  node?.platformPosOverride)
         ?.filter((v) => v && !!v[0] && !!v[1]) as [number, number][];

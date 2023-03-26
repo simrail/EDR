@@ -56,9 +56,9 @@ const getDisplayMode = (filterConfig: FilterConfig) => {
 }
 
 export const Header: React.FC<Props> = ({
-                                            serverTzOffset, serverCode, postCfg, bounds, timetableLength,
+    serverTzOffset, serverCode, postCfg, bounds, timetableLength,
     setFilter, setGraphModalOpen, streamMode, setStreamMode, filterConfig, setFilterConfig
-    }) => {
+}) => {
     const {t} = useTranslation();
 
     const [configModalOpen, setConfigModaOpen] = React.useState(false);

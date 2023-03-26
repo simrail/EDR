@@ -11,7 +11,7 @@ export const timeOptions: Intl.DateTimeFormatOptions = {
 export const nowUTC = (serverTzOffset: number = 0, addDelay?: number) => {
     const now = new Date();
     return addHours(utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
-        addDelay ? now.getUTCHours() - addDelay : now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "Europe/London"), serverTzOffset)
+        addDelay ? now.getUTCHours() - addDelay : now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT"), serverTzOffset)
 }
 
 // We don't care about the date, only time
