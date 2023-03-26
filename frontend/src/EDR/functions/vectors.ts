@@ -33,6 +33,5 @@ export function haversine(coords1: [number, number], coords2: [number, number], 
 
 export const Vector_DotProduct = (a: [number, number], b: Victor) => {
     const vecA = Victor.fromArray(a);
-    // console.log("Dot product : ", dot);
     return vecA.dot(b);
 }

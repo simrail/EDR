@@ -23,6 +23,7 @@ import _sortBy from "lodash/sortBy";
 import {LayoutType} from "recharts/types/util/types";
 import {Button} from "flowbite-react";
 import {useTranslation} from "react-i18next";
+import { Dictionary } from "lodash";
 
 export type GraphProps = {
     post: string;
@@ -33,7 +34,7 @@ export type GraphProps = {
 const dateFormatter = (date: Date) => {
     return format(date, "HH:mm");
 };
-const makeDate = (dateAry: [string, string], serverTzOffset: number) => {
+const makeDate = (dateAry: string[], serverTzOffset: number) => {
     const dateNow = nowUTC(serverTzOffset);
     const hours = Number.parseInt(dateAry[0]);
     const minutes = Number.parseInt(dateAry[1]);
@@ -44,7 +45,15 @@ const makeDate = (dateAry: [string, string], serverTzOffset: number) => {
 }
 
 const getStationTimetable = (postId: string) => {
-    return getTimetable(postId).then((d) => [postId, _keyBy(d, "train_number")]);
+    return getTimetable(postId).then((d) => {
+        d = d.map(row => {
+            row.hourSort = Number.parseInt(row.arrival_time.split(':').join(''));
+
+            return row;
+        });
+        
+        return [postId, _keyBy(d, "train_number")];
+    });
 }
 
 const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
@@ -52,7 +61,7 @@ const CustomTooltip: React.FC<any> = ({ active, payload, label }) => {
         return (
             <div className="custom-tooltip p-2 flex flex-col bg-white">
                 <span>{label}</span>
-                {_sortBy(payload, 'value').map((p: any) => {
+                {_sortBy(payload, 'value').map((p) => {
                     return (
                         <div className="flex justify-between w-full" key={p.dataKey}>
                             <span style={{color: p.stroke}}>{p.dataKey}&nbsp;&nbsp;</span><span>{format(new Date(p.value), "HH:mm")}</span>
@@ -97,7 +106,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const [zoom, setZoom] = React.useState<number>(1);
     const [dtNow, setDtNow] = React.useState(nowUTC(serverTzOffset));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
-    const [neighboursTimetables, setNeighboursTimetables] = React.useState<any>();
+    const [neighboursTimetables, setNeighboursTimetables] = React.useState<Dictionary<Dictionary<TimeTableRow>>>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
     const [data, setData] = React.useState<any[]>();
     const {t} = useTranslation();
@@ -105,7 +114,6 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         () => _keyBy(timetable.filter((ttRow) =>
             Math.abs(ttRow.hourSort - currentHourSort) <= 130 / zoom), "train_number"),
         [currentHourSort, timetable, zoom]);
-    // console.log("Current hour sort : ", currentHourSort);
 
     React.useEffect(() => {
         const intervalId = window.setInterval(() => {
@@ -114,8 +122,6 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
 
         return () => window.clearInterval(intervalId);
     }, [serverTzOffset])
-
-    // console.log("Only an hour around : ", onlyAnHourAround);
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
@@ -150,38 +156,29 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
 
     React.useEffect(() => {
         if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;
-        // console.log("Around DT", onlyAnHourAround);
         const gottenPostConfig = postConfig[post];
         if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
-        // console.log(neighboursTimetables)
 
         const postsToScan = [...gottenPostConfig.graphConfig!.pre, post, ...gottenPostConfig.graphConfig!.post];
         const data = postsToScan.flatMap((postId, postIdx) => {
-            const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
+            const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t): [] | [string, number] => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
-                // console.log("tt", targetTrain);
                 if (!targetTrain) return [];
                 const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
-                // console.log("Next post: ", nextPost);
                 if (!nextPost) return []
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.departure_time : targetTrain?.arrival_time;
-                // console.log("Target train : ", targetTrain);
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
-                // console.log("tt", targetTrain);
                 if (!targetTrain) return [];
                 const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
-                // console.log("Next post: ", nextPost);
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                // console.log("ITGTK ", isTrainGoingToKatowice);
                 const targetValue = isTrainGoingToKatowice ? targetTrain?.arrival_time : targetTrain?.departure_time;
                 return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
-            // console.log("All train departures : ", allTrainDepartures);
             return [{
                 name: postId,
                 ...allTrainArrivals
@@ -191,14 +188,12 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
             }]
         });
 
-        // console.log("Final data : ", data);
         setData(data);
     }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTzOffset, allPathsOfPosts])
 
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;
 
-    // console.log("Data : ", data);
     return (
             <>
                 <div className="text-center inline-flex items-center justify-center w-full">

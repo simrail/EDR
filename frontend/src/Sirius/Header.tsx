@@ -1,3 +1,4 @@
+import { Train } from "@simrail/types";
 import {Button, DarkThemeToggle} from "flowbite-react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +7,7 @@ import {DateTimeDisplay} from "../EDR/components/DateTimeDisplay";
 
 type Props = {
     trainNumber: string;
-    trainDetails: any;
+    trainDetails: Train;
     serverCode: string;
     serverTzOffset: number;
     autoScroll: boolean;

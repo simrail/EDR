@@ -15,6 +15,6 @@ export const TrainTypeCell: React.FC<Props> = ({secondColRef, trainBadgeColor, t
     <td className={tableCellCommonClassnames(streamMode)}  ref={secondColRef}>
         <div className="flex justify-center items-center flex-col space-around">
             <Badge className="" color={trainBadgeColor}>{ttRow.train_type}</Badge>&nbsp;
-            {Math.floor(trainDetails?.TrainData?.Velocity) || 0}/{ttRow.type_speed ?? '??'}km/h
+            {Math.floor(trainDetails?.TrainData?.Velocity) || 0} km/h
         </div>
     </td>;

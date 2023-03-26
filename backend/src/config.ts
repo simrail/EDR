@@ -1,15 +1,12 @@
-export const BASE_SIMRAIL_DISPATCH_API = "https://panel.simrail.eu:8091/";
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
 export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
+export const BASE_SIMKOL_API = "https://webhost.simkol.pl";
 
 export const srHeaders = {
-    "User-Agent": "Custom EDR vDEV",
-    "xx-client": "Custom EDR",
-    "xx-maintainer": "DeadlyKungFu.Ninja",
-    "xx-contact": "DeadlyKungFu.Ninja#8294",
-    "xx-executor": "outbound.gcp.infra.deadlykungfu.ninja",
-    "xx-message": "Beta access only for you, that monitor this network : https://edr.deadlykungfu.ninja/?betaToken=unjN6"
-    // "xx-message": "Please dont ban this IP this is me developing stuff (not production server)"
+    "User-Agent": "Simrail.app EDR vDEV",
+    "xx-client": "Simrail.app EDR",
+    "xx-maintainer": "CrypterEmerald",
+    "xx-contact": "tally.github@gmail.com",
 };
 
 export const internalIdToSrId: {[k: string]: string} = {
@@ -31,7 +28,11 @@ export const internalIdToSrId: {[k: string]: string} = {
     "DG_WZ": "Dąbrowa Górnicza Wschodnia",
     "DG_ZA": "",
     "SG_PO": "Sosnowiec Południowy",
-    "IDZ": "Idzikowice"
+    "IDZ": "Idzikowice",
+    "GRO_MAZ": "Grodzisk Mazowiecki",
+    "DOR": "Dorota",
+    "KOR": "Korytów",
+    "SZE": "Szeligi"
 }
 
 export const newInternalIdToSrId: {[k: string]: string} = {
@@ -53,7 +54,11 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "SP": "4010",
     "IDZ": "1349",
     "KZ": "1655",
-    "SG_PO": "4010"
+    "SG_PO": "4010",
+    "GRO_MAZ": "1251",
+    "DOR": "835",
+    "KOR": "1852",
+    "SZE": "4338"
 }
 
 export const POSTS: { [key: string]: string[] } = {
@@ -76,61 +81,9 @@ export const POSTS: { [key: string]: string[] } = {
     "SP": [newInternalIdToSrId["SP"]],
     "IDZ": [newInternalIdToSrId["IDZ"]],
     "SG_PO": [newInternalIdToSrId["SG_PO"]],
-    "OP_PO": [newInternalIdToSrId["OP_PO"]]
-
-
+    "OP_PO": [newInternalIdToSrId["OP_PO"]],
+    "GRO_MAZ": [newInternalIdToSrId["GRO_MAZ"]],
+    "KOR": [newInternalIdToSrId["KOR"]],
+    "DOR": [newInternalIdToSrId["DOR"]],
+    "SZE": [newInternalIdToSrId["SZE"]]
 };
-
-export type PURE_POST = 
-    "Góra Włodowska" |
-    "Psary" |
-    "Knapówka" |
-    "Włoszczowa Północ" |
-    "Olszamowice" |
-    "Pilichowice" |
-    "Katowice_Zawodzie" |
-    "Sosnowiec_Główny" |
-    "Sosnowiec_Gł._pzs_R52" |
-    "Dąbrowa Górnicza" |
-    "Będzin" |
-    "Łazy Łc" |
-    "Zawiercie" |
-    "Opoczno Południe" |
-    "Dąbrowa Górnicza Wschodnia" |
-    "Dąbrowa Górnicza Ząbkowice" |
-    "Sosnowiec Południowy" |
-    "Idzikowice"
-
-export enum VMAX_BY_TYPE {
-    EIJ = 200,
-    ECE = 125,
-    MPE = 125,
-    RPJ = 120,
-    ROJ = 120,
-    LTE = 125,
-    TME = 80,
-    TLE = 80,
-    TCE = 85
-};
-
-export const translate_fields = {
-    "K": "k",
-    "NK": "nk",
-    "Scheduled arrival": "scheduled_arrival",
-    "+/-": "offset",
-    "Real arrival": "real_arrival",
-    "Type": "type",
-    "Train no.": "train_number",
-    "From post": "from",
-    "To post": "to",
-    "Track": "track",
-    "Line no.": "line",
-    "Layover": "layover",
-    "Stop type": "stop_type",
-    "P T": "platform",
-    "Scheduled departure": "scheduled_departure",
-    "Real departure": "real_departure",
-    "Start station": "start_station",
-    "Terminus station": "terminus_station",
-    "Carrier": "carrier"
-}

@@ -1,4 +1,6 @@
+import { Dictionary, NumericDictionary } from "lodash";
 import _keyBy from "lodash/keyBy";
+import { StationId } from "../enums/stationId";
 
 export type StationConfig = {
     id: string,
@@ -13,7 +15,134 @@ export type StationConfig = {
     secondaryPosts?: string[]
 }
 
-export const postConfig: {[k: string]: StationConfig} = {
+type StationNeighbours = {
+    down?: Array<StationId>
+    left?: Array<StationId>;
+    right?: Array<StationId>;
+    up?: Array<StationId>;
+}
+
+export const dispatchDirections: NumericDictionary<StationNeighbours> = {
+    [StationId.Katowice_Zawodzie]: {
+        left: [StationId.Sosnowiec_Gl_pzs_R52],
+        right: [StationId.Katowice]
+    },
+    [StationId.Sosnowiec_Gl_pzs_R52]: {
+        down: [StationId.Sosnowiec_Poludniowy],
+        left: [StationId.Katowice_Zawodzie],
+        right: [StationId.Sosnowiec_Glowny]
+    },
+    [StationId.Sosnowiec_Glowny]: {
+        down: [StationId.Sosnowiec_Poludniowy],
+        left: [StationId.Sosnowiec_Gl_pzs_R52],
+        right: [StationId.Bedzin]
+    },
+    [StationId.Bedzin]: {
+        left: [StationId.Sosnowiec_Glowny],
+        right: [StationId.Dabrowa_Gornicza]
+    },
+    [StationId.Dabrowa_Gornicza]: {
+        left: [StationId.Bedzin],
+        right: [StationId.Dabrowa_Gornicza_Zabkowice]
+    },
+    [StationId.Dabrowa_Gornicza_Zabkowice]: {
+        left: [StationId.Dabrowa_Gornicza, StationId.Dabrowa_Gornicza_Huta_Katowice_R7, StationId.Dabrowa_Gornicza_Huta_Katowice],
+        right: [StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Lazy_Lc]
+    },
+    [StationId.Lazy_Lc]: {
+        left: [StationId.Lazy],
+        right: [StationId.Dabrowa_Gornicza_Zabkowice, StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Przemiarki]
+    },
+    [StationId.Zawiercie]: {
+        left: [StationId.Lazy_La],
+        right: [StationId.Myszkow, StationId.Gora_Wlodowska]
+    },
+    [StationId.Gora_Wlodowska]: {
+        left: [StationId.Zawiercie],
+        right: [StationId.Psary]
+    },
+    [StationId.Psary]: {
+        down: [StationId.Starzyny, StationId.Starzyny_R5],
+        left: [StationId.Gora_Wlodowska],
+        right: [StationId.Knapowka]
+    },
+    [StationId.Knapowka]: {
+        left: [StationId.Psary],
+        right: [StationId.Wloszczowa_Polnoc, StationId.Czarnca_R19, StationId.Czarnca]
+    },
+    [StationId.Wloszczowa_Polnoc]: {
+        left: [StationId.Knapowka, StationId.Czarnca, StationId.Czarnca_R19, StationId.Zelislawice_R6, StationId.Zelislawice],
+        right: [StationId.Olszamowice]
+    },
+    [StationId.Olszamowice]: {
+        left: [StationId.Pilichowice],
+        right: [StationId.Wloszczowa_Polnoc]
+    },
+    [StationId.Pilichowice]: {
+        left: [StationId.Opoczno_Poludnie],
+        right: [StationId.Olszamowice]
+    },
+    [StationId.Opoczno_Poludnie]: {
+        left: [StationId.Pilichowice],
+        right: [StationId.Idzikowice]
+    },
+    [StationId.Idzikowice]: {
+        down: [StationId.Radzice_R12, StationId.Radzice],
+        left: [StationId.Opoczno_Poludnie],
+        right: [StationId.Strzalki],
+        up: [StationId.Radzice_pzs_R31],
+    },
+    [StationId.Grodzisk_Mazowiecki]: {
+        left: [StationId.Pruszkow],
+        right: [StationId.Zyrardow, StationId.Korytow]
+    },
+    [StationId.Sosnowiec_Poludniowy]: {
+        left: [StationId.Sosnowiec_Glowny],
+        right: [StationId.Sosnowiec_Dandowka],
+        down: [StationId.Sosnowiec_Gl_pzs_R52]
+    },
+    [StationId.Dabrowa_Gornicza_Wschodnia]: {
+        left: [StationId.Dabrowa_Gornicza_Strzemieszyce_R75, StationId.Dabrowa_Gornicza_Strzemieszyce, StationId.Dorota],
+        right: [StationId.Slawkow, StationId.Koziol_R12, StationId.Koziol]
+    },
+    [StationId.Dorota]: {
+        left: [StationId.Juliusz, StationId.Sosnowiec_Maczki],
+        right: [StationId.Dabrowa_Gornicza_Wschodnia, StationId.Dabrowa_Gornicza_Poludniowa]
+    },
+    [StationId.Korytow]: {
+        left: [StationId.Szeligi],
+        right: [StationId.Grodzisk_Mazowiecki]
+    },
+    [StationId.Szeligi]: {
+        left: [StationId.Biala_Rawska],
+        right: [StationId.Korytow]
+    }
+}
+
+export const internalIdToPointId: {[k: string]: number} = {
+    "T1_BZ": 124,
+    "BZ": 124,
+    "LZ_LC": 2375,
+    "SG_R52": 3991,
+    "SG": 3993,
+    "DG": 719,
+    "GW": 1193,
+    "PS": 3436,
+    "KN": 1772,
+    "WP": 4987,
+    "OZ": 2969,
+    "PI": 3200,
+    "OP_PO": 2993,
+    "ZA": 5262,
+    "DG_WZ": 733,
+    "SP": 4010,
+    "IDZ": 1349,
+    "KZ": 1655,
+    "SG_PO": 4010,
+    "GRO_MAZ": 1251
+}
+
+export const postConfig: Dictionary<StationConfig> = {
     GW: {
         id: "GW",
         srId: "Góra Włodowska",
@@ -391,6 +520,12 @@ export const postConfig: {[k: string]: StationConfig} = {
         trainPosRange: 0.5,
         platformPosOverride: [20.7638017, 52.1570244]
     },
+    KOR: {
+        id: "KOR",
+        srId: "Korytów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.495777, 52.022659]
+    },
     PRSZ: {
         id: "PRSZ",
         srId: "Pruszków",
@@ -534,7 +669,43 @@ export const postConfig: {[k: string]: StationConfig} = {
         srId: "Żelisławice R.6",
         trainPosRange: 0.5,
         platformPosOverride: [19.859630, 50.804040]
-    }
+    },
+    ZYR: {
+        id: "ZYR",
+        srId: "Żyrardów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.448360, 52.052271]
+    },
+    KOZ_R12: {
+        id: "KOZ_R12",
+        srId: "Kozioł R12",
+        trainPosRange: 0.5,
+
+    },
+    PRZ: {
+        id: "PRZ",
+        srId: "Przemiarki",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.340207, 50.385943]
+    },
+    DG_T_R5: {
+        id: "DG_T_R5",
+        srId: "Dąbrowa Górnicza Towarowa DTA R5",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.377485, 50.329225]
+    },
+    KOZI: {
+        id: "KOZI",
+        srId: "Kozioł",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.382807, 50.308508]
+    },
+    KOZI_R12: {
+        id: "KOZI_R12",
+        srId: "Kozioł R12",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.358590, 50.299019]
+    },
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({

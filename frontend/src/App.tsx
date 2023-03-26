@@ -6,15 +6,12 @@ import {useSoundNotification} from "./EDR/hooks/useSoundNotification";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { SupportsWebp } from './EDR/functions/webp';
-import {TrainSelect} from "./SelectMenu/TrainSelect";
+import ServerSelect from './SelectMenu/ServerSelect';
+const TrainSelect = React.lazy(() => import("./SelectMenu/TrainSelect"));
 const Sirius = React.lazy(() => import("./Sirius"));
-const ServerSelect = React.lazy(() => import("./SelectMenu/ServerSelect"));
 const PostSelect = React.lazy(() => import("./SelectMenu/PostSelect"));
 const EDR = React.lazy(() => import("./EDR"));
 
-// TODO: Add a graph view of the regulator table https://images-ext-1.discordapp.net/external/7o6s9Hg5wVE41mRwSFfsX5D7erzJCfIx9I4CnhAZM-4/https/maligne-e-t4.transilien.com/wp-content/uploads/2017/01/20170110_153237.jpg?width=717&height=403
-// TODO: With the three previous and three next posts. Try to adjust with the instantaneous delay if possible
-// TODO: And after beta add expected delay
 function App() {
     const [SoundNotification, playSoundNotification] = useSoundNotification();
     let [isWebpSupported, setIsWebpSupported] = React.useState(false);
@@ -34,7 +31,7 @@ function App() {
                             <Route path="/:serverCode" element={<PostSelect isWebpSupported={isWebpSupported}/>} />
                             <Route path="/:serverCode/trains" element={<TrainSelect/>} />
                             <Route path="/:serverCode/station/:post" element={<EDR playSoundNotification={playSoundNotification} isWebpSupported={isWebpSupported}/>} />
-                            <Route path="/:serverCode/train/:trainNumber" element={<Sirius />} />
+                            <Route path="/:serverCode/train/:trainNumber" element={<Sirius isWebpSupported={isWebpSupported}/>} />
                         </Routes>
                         </Suspense>
                     </Fragment>

@@ -143,7 +143,8 @@ const WI = {
 const LZ_LC = {
     ...postConfig.LZ_LC,
     left: "WI",
-    right: "LZ"
+    right: "LZ",
+    branchA: "PRZ"
 };
 
 // Lazy
@@ -254,6 +255,12 @@ const STR = {
 const SZE = {
     ...postConfig.SZE,
     left: "STR",
+    right: "KOR"
+}
+
+const KOR = {
+    ...postConfig.KOR,
+    left: "SZE",
     right: "JKT"
 }
 
@@ -376,6 +383,7 @@ const DG_WZ = {
     left: "DOR",
     right: "SLK",
     branchA: "DG_ST",
+    branchB: "KOZ_R12"
 }
 
 const DG_ST = {
@@ -508,6 +516,35 @@ const ZEL_R6 = {
     branchA: "WP"
 }
 
+const ZYR = {
+    ...postConfig.ZYR,
+    branchA: "GRO_MAZ"
+}
+
+const PRZ = {
+    ...postConfig.PRZ,
+    left: "LZ_LC",
+    right: "DG_T_R5"
+}
+
+const DG_T_R5 = {
+    ...postConfig.DG_T_R5,
+    left: "PRZ",
+    right: "KOZI"
+}
+
+const KOZI = {
+    ...postConfig.KOZ,
+    left: "DG_T_R5",
+    right: "KOZI_R12"
+}
+
+const KOZI_R12 = {
+    ...postConfig.KOZ,
+    left: "KOZI",
+    right: "DG_WZ"
+}
+
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
@@ -546,6 +583,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     IDZ: IDZ,
     STR,
     SZE,
+    KOR,
     JKT,
     GRO_MAZ,
     MIL,
@@ -594,8 +632,13 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
 
     RDZ_R12,
     RDZ_P31,
-    ZEL_R6
+    ZEL_R6,
 
+    ZYR,
+    PRZ,
+    DG_T_R5,
+    KOZI,
+    KOZI_R12
 }
 
 
