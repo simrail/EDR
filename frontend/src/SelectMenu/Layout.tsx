@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {FR, GB, CZ, HU, DE, SK, IT, CN, PL, RU, RO} from "country-flag-icons/react/1x1";
 
 import SGCS from "../images/communities/sgcs.webp";
-import SRDACH from "../images/communities/SRDACH.webp";
+import SRDACH from "../images/communities/dach.webp";
 import SRFR from "../images/communities/srfr.webp";
 import SRIT from "../images/communities/srit.webp";
 import SRCN from "../images/communities/srcn.webp";
