@@ -8,8 +8,8 @@
 
 - Backend rewrite which replaces the official EDR website scraper with the official API
 - Infrastructure (hosting) has been completely changed
-- Full server timetable refreshes every day at 03:00 based on EN1 (for now)
-- Add support for Grodzisk Mazowiecki
+- Full server timetable refreshes every day at 04:00 (Warsaw time) based on EN1 (for now)
+- Add support for Grodzisk Mazowiecki and upcoming dispatch posts
 
 ### Additional changes and enhancements
 
@@ -22,6 +22,7 @@
 - Driver view now shows stops (and their type)
 - Multiple visual enhancements to driver view
 - Train list for driver view is now grouped and sorted
+- Romanian language is now supported
 
 ### Fixes
 

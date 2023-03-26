@@ -5,9 +5,13 @@
   "APP_station_not_found": "Végzetes hiba: A kiválasztott állomás nem elérhető.",
 
   "NAVBAR_bugs": "Hibajelentés",
+  "NAVBAR_language": "Nyelv",
 
   "SELECTMENU_server_selection": "Szerver választás",
   "SELECTMENU_post_select": "Diszpécser helyszín választás",
+  "SELECTMENU_nav_current_server": "Jelenlegi szerver",
+  "SELECTMENU_nav_previous_server": "Előző szerver",
+  "SELECTMENU_nav_next_server": "Következő szerver",
 
   "FOOTER_version": "Verziószám:",
   "FOOTER_screenshots_by": "A képet készítette",
@@ -22,6 +26,8 @@
   "EDR_LOADING_schedules": "Menetrendek",
   "EDR_LOADING_stations": "Állomások",
   "EDR_LOADING_trains": "Vonatok",
+  "EDR_LOADING_timezone": "Időzóna",
+  "EDR_LOADING_trains_schedules": "Vonatok menetrendje",
 
   "EDR_TRAINROW_click_to_copy": "Kattints a másoláshoz",
   "EDR_TRAINROW_copied": "Vágólapra másolva!",
@@ -44,6 +50,8 @@
   "EDR_TRAINROW_waiting_for_data":"Adatra vár.",
   "EDR_TRAINROW_notify": "Hangjelzés induláskor",
   "EDR_TRAINROW_show_on_map": "Mutasd a térképen",
+  "EDR_TRAINROW_show_timetable": "Menetrend",
+  "EDR_TRAINROW_switch_to_driver_view": "Váltás vonatvezető nézetre",
 
   "EDR_TRAINHEADER_train_number": "Vonat száma, jelenlegi helye",
   "EDR_TRAINHEADER_train_type": "Típus / Sebesség",
@@ -60,9 +68,18 @@
   "EDR_GRAPH_switch_axis": "Tengelyek felcserélése",
 
   "EDR_UI_close": "Vissza a kiszolgáló kiválasztásához",
+  "EDR_UI_back": "Vissza az állomás kiválasztásához",
   "EDR_UI_dark_light_mode_switch": "Sötét/Világos téma váltása",
   "EDR_UI_filter_train_all": "Minden vonat",
   "EDR_UI_filter_train_online": "Most közlekedik",
   "EDR_UI_filter_train_approaching": "Érkezik",
-  "EDR_UI_train_number": "Vonat szám keresés"
+  "EDR_UI_train_number": "Vonat szám keresés",
+  "EDR_UI_filter_custom": "Egyéni",
+
+  "DRIVER_DETAILS_train_number": "Vonat száma",
+  "DRIVER_DETAILS_start_station": "Kiindulási állomás",
+  "DRIVER_DETAILS_end_station": "Végállomás",
+  "DRIVER_DETAILS_service_type": "Vonat kategória",
+  "DRIVER_DETAILS_train_model": "Mozdony típus"
+  
 }

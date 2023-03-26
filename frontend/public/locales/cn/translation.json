@@ -5,9 +5,13 @@
   "APP_station_not_found": "致命错误：无法找到车站！",
 
   "NAVBAR_bugs": "报告Bug",
+  "NAVBAR_language": "Language",
 
   "SELECTMENU_server_selection": "选择服务器",
   "SELECTMENU_post_select": "选择您调度的车站",
+  "SELECTMENU_nav_current_server": "Current server",
+  "SELECTMENU_nav_previous_server": "Previous server",
+  "SELECTMENU_nav_next_server": "Next server",
 
   "FOOTER_version": "版本号",
   "FOOTER_screenshots_by": "截图提供：",
@@ -22,6 +26,8 @@
   "EDR_LOADING_schedules": "时刻表",
   "EDR_LOADING_stations": "车站",
   "EDR_LOADING_trains": "列车",
+  "EDR_LOADING_timezone": "TimeZone",
+  "EDR_LOADING_trains_schedules": "Train timetables",
 
   "EDR_TRAINROW_click_to_copy": "点击复制",
   "EDR_TRAINROW_copied": "内容已复制到剪贴板！",
@@ -44,6 +50,8 @@
   "EDR_TRAINROW_waiting_for_data":"等待数据接收完毕......",
   "EDR_TRAINROW_notify": "发车提醒",
   "EDR_TRAINROW_show_on_map": "在地图上显示",
+  "EDR_TRAINROW_show_timetable": "Show timetable",
+  "EDR_TRAINROW_switch_to_driver_view": "Switch to driver view",
 
   "EDR_TRAINHEADER_train_number": "列车车次",
   "EDR_TRAINHEADER_train_type": "列车种类",
@@ -60,9 +68,18 @@
   "EDR_GRAPH_switch_axis": "切换坐标轴",
 
   "EDR_UI_close": "返回选择服务器页面",
+  "EDR_UI_back": "Back to Post Selection",
   "EDR_UI_dark_light_mode_switch": "日间/夜间模式",
   "EDR_UI_filter_train_all": "所有列车",
   "EDR_UI_filter_train_online": "在线路上的列车",
   "EDR_UI_filter_train_approaching": "接近列车",
-  "EDR_UI_train_number": "列车车次"
+  "EDR_UI_train_number": "列车车次",
+  "EDR_UI_filter_custom": "Custom",
+
+  "DRIVER_DETAILS_train_number": "Train number",
+  "DRIVER_DETAILS_start_station": "Originating station",
+  "DRIVER_DETAILS_end_station": "Destination station",
+  "DRIVER_DETAILS_service_type": "Service type",
+  "DRIVER_DETAILS_train_model": "Train model"
+  
 }
