@@ -32,3 +32,4 @@
 - Timezone display was missing correct number signs
 - Driver view now omits repeated speed limit signs
 - Driver view had sorting problems when a train was in service during midnight
+- In certain cases the dispatch post list could crash
