@@ -150,7 +150,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             )}
         </div>
         <div className="text-center p-4">
-            {t("FOOTER_version")} 1.3 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")} - <a href="https://github.com/simrail/EDR">Github project</a>
+            {t("FOOTER_version")} 2.0 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
         </div>
     </div>;
 }

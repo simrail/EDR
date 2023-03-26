@@ -29,7 +29,10 @@ export const internalIdToSrId: {[k: string]: string} = {
     "DG_ZA": "",
     "SG_PO": "Sosnowiec Południowy",
     "IDZ": "Idzikowice",
-    "GRO_MAZ": "Grodzisk Mazowiecki"
+    "GRO_MAZ": "Grodzisk Mazowiecki",
+    "DOR": "Dorota",
+    "KOR": "Korytów",
+    "SZE": "Szeligi"
 }
 
 export const newInternalIdToSrId: {[k: string]: string} = {
@@ -52,7 +55,10 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "IDZ": "1349",
     "KZ": "1655",
     "SG_PO": "4010",
-    "GRO_MAZ": "1251"
+    "GRO_MAZ": "1251",
+    "DOR": "835",
+    "KOR": "1852",
+    "SZE": "4338"
 }
 
 export const POSTS: { [key: string]: string[] } = {
@@ -76,6 +82,8 @@ export const POSTS: { [key: string]: string[] } = {
     "IDZ": [newInternalIdToSrId["IDZ"]],
     "SG_PO": [newInternalIdToSrId["SG_PO"]],
     "OP_PO": [newInternalIdToSrId["OP_PO"]],
-    "GRO_MAZ": [newInternalIdToSrId["GRO_MAZ"]]
-
+    "GRO_MAZ": [newInternalIdToSrId["GRO_MAZ"]],
+    "KOR": [newInternalIdToSrId["KOR"]],
+    "DOR": [newInternalIdToSrId["DOR"]],
+    "SZE": [newInternalIdToSrId["SZE"]]
 };

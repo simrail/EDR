@@ -17,8 +17,8 @@ export type StationConfig = {
 
 type StationNeighbours = {
     down?: Array<StationId>
-    left: Array<StationId>;
-    right: Array<StationId>;
+    left?: Array<StationId>;
+    right?: Array<StationId>;
     up?: Array<StationId>;
 }
 
@@ -51,7 +51,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     },
     [StationId.Lazy_Lc]: {
         left: [StationId.Lazy],
-        right: [StationId.Dabrowa_Gornicza_Zabkowice, StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7]
+        right: [StationId.Dabrowa_Gornicza_Zabkowice, StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Przemiarki]
     },
     [StationId.Zawiercie]: {
         left: [StationId.Lazy_La],
@@ -71,7 +71,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.Wloszczowa_Polnoc, StationId.Czarnca_R19, StationId.Czarnca]
     },
     [StationId.Wloszczowa_Polnoc]: {
-        left: [StationId.Knapowka, StationId.Czarnca, StationId.Czarnca_R19, StationId.Zelislawice_R6],
+        left: [StationId.Knapowka, StationId.Czarnca, StationId.Czarnca_R19, StationId.Zelislawice_R6, StationId.Zelislawice],
         right: [StationId.Olszamowice]
     },
     [StationId.Olszamowice]: {
@@ -87,8 +87,10 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.Idzikowice]
     },
     [StationId.Idzikowice]: {
+        down: [StationId.Radzice_R12, StationId.Radzice],
         left: [StationId.Opoczno_Poludnie],
-        right: [StationId.Radzice, StationId.Radzice_R12, StationId.Radzice_pzs_R31, StationId.Strzalki]
+        right: [StationId.Strzalki],
+        up: [StationId.Radzice_pzs_R31],
     },
     [StationId.Grodzisk_Mazowiecki]: {
         left: [StationId.Pruszkow],
@@ -97,11 +99,23 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.Sosnowiec_Poludniowy]: {
         left: [StationId.Sosnowiec_Glowny],
         right: [StationId.Sosnowiec_Dandowka],
-        down: [StationId.Sosnowiec_Gl_pzs_R52],
+        down: [StationId.Sosnowiec_Gl_pzs_R52]
     },
     [StationId.Dabrowa_Gornicza_Wschodnia]: {
         left: [StationId.Dabrowa_Gornicza_Strzemieszyce_R75, StationId.Dabrowa_Gornicza_Strzemieszyce, StationId.Dorota],
-        right: [StationId.Slawkow]
+        right: [StationId.Slawkow, StationId.Koziol_R12, StationId.Koziol]
+    },
+    [StationId.Dorota]: {
+        left: [StationId.Juliusz, StationId.Sosnowiec_Maczki],
+        right: [StationId.Dabrowa_Gornicza_Wschodnia, StationId.Dabrowa_Gornicza_Poludniowa]
+    },
+    [StationId.Korytow]: {
+        left: [StationId.Szeligi],
+        right: [StationId.Grodzisk_Mazowiecki]
+    },
+    [StationId.Szeligi]: {
+        left: [StationId.Biala_Rawska],
+        right: [StationId.Korytow]
     }
 }
 
@@ -661,7 +675,37 @@ export const postConfig: Dictionary<StationConfig> = {
         srId: "Żyrardów",
         trainPosRange: 0.5,
         platformPosOverride: [20.448360, 52.052271]
-    }
+    },
+    KOZ_R12: {
+        id: "KOZ_R12",
+        srId: "Kozioł R12",
+        trainPosRange: 0.5,
+
+    },
+    PRZ: {
+        id: "PRZ",
+        srId: "Przemiarki",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.340207, 50.385943]
+    },
+    DG_T_R5: {
+        id: "DG_T_R5",
+        srId: "Dąbrowa Górnicza Towarowa DTA R5",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.377485, 50.329225]
+    },
+    KOZI: {
+        id: "KOZI",
+        srId: "Kozioł",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.382807, 50.308508]
+    },
+    KOZI_R12: {
+        id: "KOZI_R12",
+        srId: "Kozioł R12",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.358590, 50.299019]
+    },
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({

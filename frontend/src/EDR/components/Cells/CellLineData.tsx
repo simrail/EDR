@@ -10,8 +10,8 @@ type Props = {
 export const CellLineData: React.FC<Props> = ({ttRow}) => {
     const {t} = useTranslation();
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
-    const isHeadingLeft = directions.left.includes(parseInt(ttRow.to_post_id));
-    const isHeadingRight = directions.right.includes(parseInt(ttRow.to_post_id));
+    const isHeadingLeft = directions?.left?.includes(parseInt(ttRow.to_post_id));
+    const isHeadingRight = directions?.right?.includes(parseInt(ttRow.to_post_id));
     const isHeadingUp = directions?.up?.includes(parseInt(ttRow.to_post_id));
     const isHeadingDown = directions?.down?.includes(parseInt(ttRow.to_post_id));
 

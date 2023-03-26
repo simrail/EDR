@@ -11,8 +11,8 @@ type Props = {
 }
 export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secondaryPostData, streamMode}) => {
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
-    const isFromLeft = directions.left.includes(parseInt(ttRow.from_post_id));
-    const isFromRight = directions.right.includes(parseInt(ttRow.from_post_id));
+    const isFromLeft = directions?.left?.includes(parseInt(ttRow.from_post_id));
+    const isFromRight = directions?.right?.includes(parseInt(ttRow.from_post_id));
     const isFromUp = directions?.up?.includes(parseInt(ttRow.from_post_id));
     const isFromDown = directions?.down?.includes(parseInt(ttRow.from_post_id));
 
@@ -29,8 +29,8 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
         
         { secondaryPostData.map((spd: TimeTableRow, i: number) => {
             const directions = dispatchDirections[parseInt(spd.pointId)];
-            const isFromLeft = directions.left.includes(parseInt(spd.from_post_id));
-            const isFromRight = directions.right.includes(parseInt(spd.from_post_id));
+            const isFromLeft = directions?.left?.includes(parseInt(spd.from_post_id));
+            const isFromRight = directions?.right?.includes(parseInt(spd.from_post_id));
             const isFromUp = directions?.up?.includes(parseInt(spd.from_post_id));
             const isFromDown = directions?.down?.includes(parseInt(spd.from_post_id));
             
