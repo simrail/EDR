@@ -67,12 +67,14 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.Knapowka]
     },
     [StationId.Knapowka]: {
+        down: [StationId.Czarnca, StationId.Czarnca_R19],
         left: [StationId.Psary],
-        right: [StationId.Wloszczowa_Polnoc, StationId.Czarnca_R19, StationId.Czarnca]
+        right: [StationId.Wloszczowa_Polnoc]
     },
     [StationId.Wloszczowa_Polnoc]: {
-        left: [StationId.Knapowka, StationId.Czarnca, StationId.Czarnca_R19, StationId.Zelislawice_R6, StationId.Zelislawice],
-        right: [StationId.Olszamowice]
+        left: [StationId.Knapowka],
+        right: [StationId.Olszamowice],
+        up: [StationId.Zelislawice, StationId.Zelislawice_R6]
     },
     [StationId.Olszamowice]: {
         left: [StationId.Pilichowice],
