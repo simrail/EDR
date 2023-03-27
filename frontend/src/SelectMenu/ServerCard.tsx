@@ -11,7 +11,7 @@ type Props = {
 export const ServerCard: React.FC<Props> = ({ server, itemType }) => {
     const serverCountryCode = server.ServerCode.slice(0, 2);
     const flag = countriesFlags[serverCountryCode.toUpperCase()];
-    const serverCardPath = server.ServerCode ? `/${server.ServerCode}` : '';
+    const serverCardPath = server.ServerCode && server.IsActive ? `/${server.ServerCode}` : '';
     
     const textTooLong = (text: string) => {
         const regex = /\[(.*?)\]/g;
