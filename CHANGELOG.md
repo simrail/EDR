@@ -1,8 +1,6 @@
 # Simrail Community EDR Changelog
 
-## *V2 - Unreleased*
-
----
+## *2.0 - 2023.03.27*
 
 ### Important changes
 
@@ -13,15 +11,15 @@
 
 ### Additional changes and enhancements
 
-- Dispatch posts have new and optimized images on the selection screen
+- Dispatch posts have new and optimized images on the selection screen and they are alphabetically sorted
 - Train pictures have been optimized
 - EDR view has a new button for trains that switches to their respective driver view
 - EDR view now shows direction of each train based on dispatcher's perspective (and the dispatcher monitor in-game)
 - EDR view has better information on whether the train has passed the station
-- Changed Chinese & Polish community badges
+- Changed Chinese, Polish and German community badges
 - Driver view now shows stops (and their type)
 - Multiple visual enhancements to driver view
-- Train list for driver view is now grouped and sorted
+- Train list for driver view is now grouped and sorted by train number
 - Romanian language is now supported
 
 ### Fixes
@@ -34,4 +32,4 @@
 - Driver view now omits repeated speed limit signs
 - Driver view had sorting problems when a train was in service during midnight
 - In certain cases the dispatch post list could crash
-- Fixed timezone could be incorrect in certain areas with DST changes
+- Fixed timezone could be incorrect in certain areas with DST
