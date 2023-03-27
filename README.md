@@ -43,7 +43,7 @@ Of course, we will not send lawyers to your house if you don't follow these rule
 
 ## Localization
 
-Translations are happening via [Transifex](https://www.transifex.com/simrail-community/edr). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
+Translations are happening via [Transifex](https://explore.transifex.com/simrail-community/edr/). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
 
 ## Self Hosting
 
