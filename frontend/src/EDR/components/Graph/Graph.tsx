@@ -46,13 +46,7 @@ const makeDate = (dateAry: string[], serverTzOffset: number) => {
 
 const getStationTimetable = (postId: string) => {
     return getTimetable(postId).then((d) => {
-        d = d.map(row => {
-            row.hourSort = Number.parseInt(row.arrival_time.split(':').join(''));
-
-            return row;
-        });
-        
-        return [postId, _keyBy(d, "train_number")];
+        return [postId, _keyBy(d, "trainNumber")];
     });
 }
 
@@ -112,7 +106,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const {t} = useTranslation();
     const onlyAnHourAround = React.useMemo(
         () => _keyBy(timetable.filter((ttRow) =>
-            Math.abs(ttRow.hourSort - currentHourSort) <= 130 / zoom), "train_number"),
+            Math.abs(Number.parseInt(format(ttRow.arrivalTimeObject, "HHmm")) - currentHourSort) <= 130 / zoom), "trainNumber"),
         [currentHourSort, timetable, zoom]);
 
     React.useEffect(() => {
@@ -155,6 +149,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     }, [post]);
 
     React.useEffect(() => {
+        console.log(onlyAnHourAround);
         if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;
         const gottenPostConfig = postConfig[post];
         if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
@@ -162,22 +157,22 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         const postsToScan = [...gottenPostConfig.graphConfig!.pre, post, ...gottenPostConfig.graphConfig!.post];
         const data = postsToScan.flatMap((postId, postIdx) => {
             const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t): [] | [string, number] => {
-                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
+                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNumber];
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
+                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id;
                 if (!nextPost) return []
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                const targetValue = isTrainGoingToKatowice ? targetTrain?.departure_time : targetTrain?.arrival_time;
-                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
+                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.departureTimeObject) : dateFormatter(targetTrain?.arrivalTimeObject);
+                return [targetTrain.trainNumber, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
-                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.train_number];
+                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNumber];
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.to_post)]?.id;
+                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id;
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                const targetValue = isTrainGoingToKatowice ? targetTrain?.arrival_time : targetTrain?.departure_time;
-                return [targetTrain.train_number, makeDate(targetValue.split(":"), serverTzOffset)]
+                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.arrivalTimeObject) : dateFormatter(targetTrain?.departureTimeObject);
+                return [targetTrain.trainNumber, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             return [{
                 name: postId,
@@ -228,8 +223,8 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                         <Tooltip content={<CustomTooltip />} />
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) => {
-                            const color = configByType[t.train_type]?.graphColor ?? "purple"
-                                return <Line key={t.train_number} dataKey={t.train_number}
+                            const color = configByType[t.trainType]?.graphColor ?? "purple"
+                                return <Line key={t.trainNumber} dataKey={t.trainNumber}
                                       label={CustomizedAxisTick(data, displayMode, color)}
                                       fillOpacity={0.8}
                                       stroke={color}>

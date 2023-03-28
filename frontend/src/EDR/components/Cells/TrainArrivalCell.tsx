@@ -4,6 +4,7 @@ import {tableCellCommonClassnames} from "../TrainRow";
 import {TimeTableRow} from "../../index";
 import {DetailedTrain} from "../../functions/trainDetails";
 import {useTranslation} from "react-i18next";
+import { format } from "date-fns";
 
 type Props = {
     ttRow: TimeTableRow;
@@ -27,7 +28,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
     return (
         <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
-                {ttRow.arrival_time}&nbsp;
+                {format(ttRow.arrivalTimeObject, 'HH:mm')}&nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
                         ? <span

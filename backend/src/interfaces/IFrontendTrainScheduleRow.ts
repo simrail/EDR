@@ -1,14 +1,15 @@
 import { ISpeedLimit } from "./ISpeedLimit";
 
 export interface IFrontendTrainScheduleRow {
-    train_number: string,
-    scheduled_arrival_hour: string | undefined,
+    trainNumber: string,
+    scheduledArrivalObject: Date,
     station: string,
-    layover: string,
+    layover: number,
     km: number,
-    scheduled_departure_hour: string | undefined,
-    train_type: string,
-    line: string,
-    stop_type: number,
-    speedLimitsToNextStation: ISpeedLimit[]
+    scheduledDepartureObject: Date,
+    trainType: string,
+    line: number,
+    stopType: number,
+    pointId: string,
+    speedLimitsToNextStation: ISpeedLimit[],
 }

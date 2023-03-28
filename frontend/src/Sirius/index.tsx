@@ -12,18 +12,16 @@ import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
 import { TimeTableServiceType } from "../config/trains";
 
 export type TrainTimeTableRow = {
-    train_number: string,
-    scheduled_arrival_hour: string,
+    trainNumber: string,
+    scheduledArrivalObject: Date,
+    scheduledDepartureObject: Date,
     station: string,
     layover: string,
-    scheduled_departure_hour: string,
-    train_type: TimeTableServiceType,
+    trainType: TimeTableServiceType,
     line: string,
-    cachedate: string,
-    stop_type: string,
-    hourSort: number,
+    stopType: string,
     km: number,
-    point_id: string,
+    pointId: string,
     speedLimitsToNextStation: [{
         lineNo: string,
         axisStart: number,

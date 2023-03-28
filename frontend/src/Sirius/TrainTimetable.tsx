@@ -14,6 +14,7 @@ import { TrainTimeTableRow } from ".";
 import Tooltip from "rc-tooltip";
 import { useTranslation } from "react-i18next";
 import { edrImagesMap } from "../config";
+import { format } from "date-fns";
 
 type Props = {
     trainTimetable: TrainTimeTableRow[];
@@ -79,7 +80,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     >
                                         <Table.Cell className="relative pl-8">
                                             <div className="flex flex-col">
-                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stop_type} />
+                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopType} />
                                                 <div className="flex justify-between">
                                                     <span>{ttRow.km ? `${(Math.round(ttRow.km * 100) / 100)} km` : ''}</span>
                                                     <span>L{ttRow.line}</span>
@@ -88,18 +89,18 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         </Table.Cell>
                                         <Table.Cell>
                                             <div className="flex justify-between">
-                                                <span>{ttRow.scheduled_arrival_hour}</span>
-                                                <span>{parseInt(ttRow.stop_type || "0") > 0 && <Badge>{`${stopTypeToLetters(ttRow.stop_type)}`}</Badge>}</span>
+                                                <span>{format(ttRow.scheduledArrivalObject, 'HH:mm')}</span>
+                                                <span>{parseInt(ttRow.stopType || "0") > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopType)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell className="pl-0">
                                             {ttRow.station}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {ttRow.scheduled_departure_hour}
+                                            {format(ttRow.scheduledDepartureObject, 'HH:mm')}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {(Math.floor(parseInt(ttRow.layover)) > 0 || parseInt(ttRow.stop_type) > 0) && <span className="flex">
+                                            {(Math.floor(parseInt(ttRow.layover)) > 0 || parseInt(ttRow.stopType) > 0) && <span className="flex">
                                                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
                                                     <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                                                 </Tooltip>

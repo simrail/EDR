@@ -13,5 +13,3 @@ export const getDateWithHourAndMinutes = (dateNow: Date, expectedHours: number, 
 
 export const getTimeDelay = (dateNow: Date, expected: Date) =>
     differenceInMinutes(dateNow, expected);
-
-

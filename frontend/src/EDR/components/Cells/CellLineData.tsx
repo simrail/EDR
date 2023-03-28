@@ -10,10 +10,10 @@ type Props = {
 export const CellLineData: React.FC<Props> = ({ttRow}) => {
     const {t} = useTranslation();
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
-    const isHeadingLeft = directions?.left?.includes(parseInt(ttRow.to_post_id));
-    const isHeadingRight = directions?.right?.includes(parseInt(ttRow.to_post_id));
-    const isHeadingUp = directions?.up?.includes(parseInt(ttRow.to_post_id));
-    const isHeadingDown = directions?.down?.includes(parseInt(ttRow.to_post_id));
+    const isHeadingLeft = directions?.left?.includes(parseInt(ttRow.toPostId));
+    const isHeadingRight = directions?.right?.includes(parseInt(ttRow.toPostId));
+    const isHeadingUp = directions?.up?.includes(parseInt(ttRow.toPostId));
+    const isHeadingDown = directions?.down?.includes(parseInt(ttRow.toPostId));
 
     return <>
         <span className="pr-2">
@@ -22,7 +22,7 @@ export const CellLineData: React.FC<Props> = ({ttRow}) => {
         { isHeadingUp && <span className="font-bold text-green-400">【🢁】</span>}
         { isHeadingDown && <span className="font-bold text-purple-400">【🢃】</span>}
         </span>
-        {ttRow.to_post}
+        {ttRow.toPost}
         <img className="inline-block pl-1 pb-1" src={edrImagesMap.RIGHT_ARROW} height={18} width={18} alt="r_arrow"/>️
         <b><span className="hidden lg:inline">{t("EDR_TRAINROW_line")}:&nbsp;</span>{ttRow.line}</b>
     </>

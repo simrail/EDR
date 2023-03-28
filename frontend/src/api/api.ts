@@ -1,4 +1,5 @@
 import {Server, Station, Train} from "@simrail/types";
+import { subHours } from "date-fns";
 import { ISteamUser } from "../config/ISteamUser";
 import { TimeTableRow } from "../EDR";
 import { TrainTimeTableRow } from "../Sirius";
@@ -13,7 +14,12 @@ const baseApiCall = (URL: string) => {
 }
 
 export const getTimetable = (post: string): Promise<TimeTableRow[]> =>
-    baseApiCall("dispatch/" + post + "?mergePosts=true");
+    baseApiCall("dispatch/" + post + "?mergePosts=true").then((data: TimeTableRow[]) => data.map(tr => {
+        tr.arrivalTimeObject = subHours(new Date(tr.arrivalTimeObject), (new Date().getTimezoneOffset() * -1) / 60);
+        tr.departureTimeObject = subHours(new Date(tr.departureTimeObject), (new Date().getTimezoneOffset() * -1) / 60);
+
+        return tr;
+    }));
 
 export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]> =>
     fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());

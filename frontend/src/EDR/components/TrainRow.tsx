@@ -5,7 +5,7 @@ import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
 import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
-import { subMinutes } from "date-fns";
+import { format, subMinutes } from "date-fns";
 import {TrainInfoCell} from "./Cells/TrainInfoCell";
 import {TrainTypeCell} from "./Cells/TrainTypeCell";
 import {TrainArrivalCell} from "./Cells/TrainArrivalCell";
@@ -21,10 +21,8 @@ type Props = {
     setModalTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     setTimetableTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     ttRow: TimeTableRow,
-    timeOffset: number,
     trainDetails: DetailedTrain,
     serverTzOffset: number,
-    post: string;
     firstColRef: any,
     secondColRef: any,
     thirdColRef: any,
@@ -41,7 +39,7 @@ type Props = {
 }
 
 const TableRow: React.FC<Props> = (
-    {setModalTrainId, ttRow, timeOffset, trainDetails, serverTzOffset, post,
+    {setModalTrainId, ttRow, trainDetails, serverTzOffset,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig,
         serverCode, players
@@ -55,13 +53,15 @@ const TableRow: React.FC<Props> = (
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
-    const [departureExpectedHours, departureExpectedMinutes] = ttRow.departure_time.split(":").map(value => parseInt(value));
+    const departureExpectedHours = ttRow.departureTimeObject.getHours();
+    const departureExpectedMinutes = ttRow.departureTimeObject.getMinutes();
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const isDepartureNextDay = dateNow.getHours() >= 20 && departureExpectedHours < 12;  // TODO: less but still clunky
     const isDeparturePreviousDay = departureExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedDeparture = getDateWithHourAndMinutes(dateNow, departureExpectedHours, departureExpectedMinutes, isDepartureNextDay, isDeparturePreviousDay);
 
-    const [arrivalExpectedHours, arrivalExpectedMinutes] = ttRow.arrival_time.split(":").map(value => parseInt(value));
+    const arrivalExpectedHours = ttRow.arrivalTimeObject.getHours();
+    const arrivalExpectedMinutes = ttRow.arrivalTimeObject.getMinutes();
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
@@ -69,7 +69,7 @@ const TableRow: React.FC<Props> = (
     const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
 
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
-    const trainBadgeColor = configByType[ttRow.train_type]?.color ?? "purple";
+    const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
@@ -82,7 +82,7 @@ const TableRow: React.FC<Props> = (
         className={`
             dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
             ${trainHasPassedStation || !trainDetails ? 'opacity-50' : 'opacity-100'}
-        `} data-timeoffset={timeOffset}
+        `} data-timeoffset={Math.abs(parseInt(format(dateNow, "HHmm")) - parseInt(format(ttRow.arrivalTimeObject, 'HHmm')))}
     >
         <TrainInfoCell
             ttRow={ttRow}

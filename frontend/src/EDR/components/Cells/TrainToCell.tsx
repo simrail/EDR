@@ -14,6 +14,6 @@ export const TrainToCell: React.FC<Props> = ({headerSeventhColRef, ttRow, second
         <div className="inline-flex">
             <CellLineData ttRow={ttRow} />
         </div>
-        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.train_number + i}><hr /><div className="inline-flex"><CellLineData ttRow={spd} /></div></span>)}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.trainNumber + i}><hr /><div className="inline-flex"><CellLineData ttRow={spd} /></div></span>)}
     </td>
 )

@@ -3,13 +3,11 @@ import {Table, Spinner} from "flowbite-react";
 import {searchSeparator} from "../../config";
 import TableRow from "./TrainRow";
 import useMeasure, {RectReadOnly} from "react-use-measure";
-import {nowUTC} from "../../utils/date";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
 import {FilterConfig, TimeTableRow} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
-import {format} from "date-fns";
 import {TrainTimetableModal} from "./TrainTimetableModal";
 import classNames from "classnames";
 import { ISteamUser } from "../../config/ISteamUser";
@@ -66,8 +64,6 @@ export const EDRTable: React.FC<Props> = ({
         seventhColBounds
     }
 
-    const dt = nowUTC(serverTzOffset);
-
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
@@ -104,14 +100,13 @@ export const EDRTable: React.FC<Props> = ({
                             // Remove empty values (if last char is separator, no filtering would occur due to empty string)
                             .filter(n => n)
                             // If any train numbers match up, filter for it
-                            .some((train_filter) => tt.train_number.startsWith(train_filter)) : true)
-                        .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.train_number] : true)
+                            .some((train_filter) => tt.trainNumber.startsWith(train_filter)) : true)
+                        .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.trainNumber] : true)
                         .map(tr =>
                     <TableRow
-                        key={tr.train_number + "_" + tr.from_post + "_" + tr.to_post}
+                        key={tr.trainNumber + "_" + tr.fromPost + "_" + tr.toPost}
                         ttRow={tr}
                         serverTzOffset={serverTzOffset}
-                        post={post}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}
                         thirdColRef={headerThirdColRef}
@@ -119,8 +114,7 @@ export const EDRTable: React.FC<Props> = ({
                         headerFifthColRef={headerFifthColRef}
                         headerSixthhColRef={headerSixthhColRef}
                         headerSeventhColRef={headerSeventhColRef}
-                        trainDetails={trainsWithDetails[tr.train_number]}
-                        timeOffset={Math.abs(Number.parseInt(format(dt, "HHmm")) - tr.hourSort)}
+                        trainDetails={trainsWithDetails[tr.trainNumber]}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setMapModalTrainId}
                         setTimetableTrainId={setTimetableModalTrainId}

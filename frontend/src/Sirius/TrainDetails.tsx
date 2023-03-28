@@ -46,7 +46,7 @@ export const TrainDetails: React.FC<Props> = ({ trainDetails, trainNumber, train
                             {t("DRIVER_DETAILS_service_type")}:
                         </Table.Cell>
                         <Table.Cell>
-                            {trainTimeTable[0].train_type}
+                            {trainTimeTable[0].trainType}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>

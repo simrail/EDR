@@ -6,6 +6,7 @@ import { DetailedTrain } from "../functions/trainDetails";
 import TrainTimetableTimeline from "./TrainTimetableTimeline";
 import {frameHeight} from "./SimRailMapModal";
 import { TrainTimeTableRow } from "../../Sirius";
+import { format } from "date-fns";
 
 type Props = {
     trainDetails?: DetailedTrain | undefined;
@@ -42,20 +43,20 @@ const TrainTimetableBody: React.FC<{timetable?: TrainTimeTableRow[], closestStat
                         <Table.Cell className="relative">
                             <div className="flex flex-col">
                                 <TrainTimetableTimeline isAtTheStation={ttRow.station === closestStation} itemIndex={index} closestStationIndex={closestStationIndex} />
-                                {ttRow.scheduled_arrival_hour?.length > 0 && (
+                                {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                     <>
-                                        {ttRow.scheduled_arrival_hour}
+                                        {format(ttRow.scheduledArrivalObject, 'HH:mm')}
                                         <br />
                                     </>
                                 )}
-                                {ttRow.scheduled_departure_hour}
+                                {format(ttRow.scheduledDepartureObject, 'HH:mm')}
                             </div>
                         </Table.Cell>
                         <Table.Cell>
                             {ttRow.station}
                         </Table.Cell>
                         <Table.Cell>
-                            {ttRow.layover}&nbsp;{ttRow.stop_type}
+                            {ttRow.layover}&nbsp;{ttRow.stopType}
                         </Table.Cell>
                     </Table.Row>
                 ))}

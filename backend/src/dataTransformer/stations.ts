@@ -21,27 +21,26 @@ export const getStationTimetable = async (stationId: string, trainList: IServerT
         }
 
         return {
-            train_number: train.trainNoLocal,
-            train_type: stationEntry.trainType,
-            stop_type: stationEntry.stopTypeNumber,
+            trainNumber: train.trainNoLocal,
+            trainType: stationEntry.trainType,
+            stopType: stationEntry.stopTypeNumber,
             track: stationEntry.track,
             platform: stationEntry.platform,
-            arrival_time_object: stationEntry.arrivalTime != null ? new Date(stationEntry.arrivalTime): new Date(0),
-            arrival_time: stationEntry.arrivalTime?.split(' ')[1].substring(0, 5),
-            departure_time: stationEntry.departureTime?.split(' ')[1].substring(0, 5),
-            type_speed: stationEntry.maxSpeed,
-            from_post: previousEntry?.nameForPerson,
-            from_post_id: previousEntry?.pointId,
-            to_post: nextEntry?.nameForPerson,
-            to_post_id: nextEntry?.pointId,
+            arrivalTimeObject: stationEntry.arrivalTime != null ? new Date(stationEntry.arrivalTime): new Date(0),
+            departureTimeObject: stationEntry.departureTime != null ? new Date(stationEntry.departureTime): new Date(3000, 12, 31),
+            typeSpeed: stationEntry.maxSpeed,
+            fromPost: previousEntry?.nameForPerson,
+            fromPostId: previousEntry?.pointId,
+            toPost: nextEntry?.nameForPerson,
+            toPostId: nextEntry?.pointId,
             line: stationEntry.line,
-            start_station: train.startStation,
-            terminus_station: train.endStation,
+            startStation: train.startStation,
+            terminusStation: train.endStation,
             layover: stationEntry.plannedStop,
             pointId: stationEntry.pointId,
             stationIndex: stationEntry.indexOfPoint
         };
     });
 
-    return _.sortBy(withDynamicData, 'arrival_time_object');
+    return _.sortBy(withDynamicData, 'arrivalTimeObject');
 }
