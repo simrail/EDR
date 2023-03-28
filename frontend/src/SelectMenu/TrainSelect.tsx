@@ -1,5 +1,5 @@
 import React from "react";
-import { getServers, getTrains } from "../api/api";
+import { getPlayer, getServers, getTrains } from "../api/api";
 import { useParams} from "react-router-dom";
 import { SelectMenuLayout } from "./Layout";
 import { Spinner} from "flowbite-react";
@@ -8,6 +8,7 @@ import { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
 import { Server, Train } from "@simrail/types";
 import { useTranslation } from "react-i18next";
+import { ISteamUser } from "../config/ISteamUser";
 
 export const TrainSelect = () => {
     const [trainFilter, setTrainFilter] = React.useState<Train[] | undefined>();
@@ -15,6 +16,7 @@ export const TrainSelect = () => {
     const [servers, setServers] = React.useState<Server[] | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
     const [subNavigationItems, setSubnavigationItems] = React.useState<SubNavigationProps>();
+    const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
     const { serverCode } = useParams();
     const { t } = useTranslation();
 
@@ -31,6 +33,13 @@ export const TrainSelect = () => {
             setTrainFilter(trains);
         }
     }, [trains, searchTrainInput]);
+
+    React.useEffect(() => {
+        if (!trains) return;
+        const allPlayerIds = trains.map((t) => t.TrainData.ControlledBySteamID).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
+        if (allPlayerIds.length === 0) return;
+        Promise.all(allPlayerIds.map(getPlayer)).then(setPlayers);
+    }, [trains])
 
     React.useEffect(() => {
         setSubnavigationItems(getPreviousAndNextServer({ 
@@ -69,17 +78,17 @@ export const TrainSelect = () => {
                             </div>
                             <div className="flex flex-wrap justify-center pt-4">
                                 {trainFilter && trainFilter.filter(t => parseInt(t.TrainNoLocal) < 10000).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} />
+                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
                                 ))}
                             </div>
                             <div className="flex flex-wrap justify-center pt-4">
                                 {trainFilter && trainFilter.filter(t => parseInt(t.TrainNoLocal) >=10000 && parseInt(t.TrainNoLocal) < 100000).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} />
+                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
                                 ))}
                             </div>
                             <div className="flex flex-wrap justify-center pt-4">
                                 {trainFilter && trainFilter.filter(t => parseInt(t.TrainNoLocal) >= 100000).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} />
+                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
                                 ))}
                             </div>
                         </div>
