@@ -41,6 +41,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
+    const nextStationName = trainDetails?.timetable?.find(entry => entry.indexOfPoint === trainDetails?.TrainData?.VDDelayedTimetableIndex)?.nameForPerson || trainDetails?.closestStation;
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
@@ -87,19 +88,17 @@ export const TrainInfoCell: React.FC<Props> = ({
             </div>
             <div className="w-full flex flex-col md:flex-row">
                 {  distanceFromStation
-                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_at")}&nbsp;</span>{trainDetails?.closestStation},&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span>{nextStationName},&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
                     distanceFromStation
-                        ? previousDistance === currentDistance
-                            ? <>{t('EDR_TRAINROW_train_stopped')}</>
-                            : trainHasPassedStation ?
-                                <>{t("EDR_TRAINROW_train_away")}</>
-                                : ETA && Math.round(ETA) < 20
-                                    ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
-                                    : trainDetails?.TrainData?.Velocity === 0 ? <>({t('EDR_TRAINROW_train_stopped')})</> : undefined
+                        ? trainHasPassedStation
+                            ? <>({t("EDR_TRAINROW_train_away")})</>
+                            : ETA && Math.round(ETA) < 20
+                                ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
+                                : undefined
                         : undefined
                 }
             </div>

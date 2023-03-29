@@ -19,11 +19,10 @@ type Props = {
 type BodyProps = {
     timetable?: TrainTimeTableRow[];
     closestStation?: string;
-    closestStationId?: string;
     lineTrace: any;
 }
 
-const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, closestStationId, lineTrace}) => {
+const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, lineTrace}) => {
     const {t} = useTranslation();
     if (!timetable) return <Spinner />
     if (timetable.length === 0) return <>&nbsp;</>
@@ -89,6 +88,8 @@ const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, clo
 export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, setModalTrainId, trainTimetable}) => {
     const lineTrace = trainDetails?.pfLineTrace;
 
+    const nextStationName = trainDetails?.timetable?.find(entry => entry.indexOfPoint === trainDetails?.TrainData?.VDDelayedTimetableIndex)?.nameForPerson || trainDetails?.closestStation;
+
     return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="top-center" style={{zIndex: 999999}}>
         <Modal.Header>
             <div className="flex justify-around">
@@ -97,7 +98,7 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
         </Modal.Header>
         <Modal.Body>
             <div className="max-h-[700px] overflow-y-scroll child:px-2">
-                <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} closestStationId={trainDetails.closestStationId} lineTrace={lineTrace}/>
+                <TrainTimetableBody timetable={trainTimetable} closestStation={nextStationName} lineTrace={lineTrace}/>
             </div>
         </Modal.Body>
     </Modal> : null;

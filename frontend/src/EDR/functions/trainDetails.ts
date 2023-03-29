@@ -80,7 +80,8 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
         positionsArray: positionsArray.length > 5 ? positionsArray.slice(2) : positionsArray,
         directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
         dotProductForGoingAway: dotProductForGoingAway,
-        goingAwayFromStation: dotProductForGoingAway === 0 ? previousGoingAwayFromStatn ? previousGoingAwayFromStatn  : false : dotProductForGoingAway < 0
+        goingAwayFromStation: dotProductForGoingAway === 0 ? previousGoingAwayFromStatn ? previousGoingAwayFromStatn  : false : dotProductForGoingAway < 0,
+        timetable: trainTimetables[t.TrainNoLocal]
     } as DetailedTrain
 }
 
@@ -93,7 +94,8 @@ type TrainDetails = {
     positionsArray: [number, number][],
     directionVector: Victor,
     dotProductForGoingAway: number,
-    goingAwayFromStation: boolean
+    goingAwayFromStation: boolean,
+    timetable: TrainTimeTableRow[],
 }
 
 export type DetailedTrain = Train & TrainDetails;
