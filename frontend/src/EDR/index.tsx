@@ -22,23 +22,35 @@ import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
 const Graph = React.lazy(() => import("./components/Graph"));
 
+
+
 export type TimeTableRow = {
-    arrivalTimeObject: Date;
-    departureTimeObject: Date;
-    trainType: TimeTableServiceType,
-    trainNumber: string,
-    fromPost: string,
-    fromPostId: string,
-    toPost: string,
-    toPostId: string,
-    line: string,
-    layover: string,
-    stopType: string,
-    platform: string,
-    track: number,
+    trainNoLocal: string,
+    trainName: string,
     startStation: string,
-    terminusStation: string,
-    typeSpeed: number,
+    endStation: string,
+    usageNotes: string | null,
+    ownNotes: string | null,
+    isQualityTracked: boolean,
+    isOverGauge: boolean,
+    isOverWeight: boolean,
+    isOtherExceptional: boolean,
+    isHighRiskCargo: boolean,
+    isDangerousCargo: boolean,
+    carrierName: string,
+    trainType: TimeTableServiceType,
+    stopType: number,
+    track: number | null,
+    platform: string | null,
+    scheduledArrivalObject: Date,
+    scheduledDepartureObject: Date,
+    maxSpeed: number,
+    fromPost: string | undefined,
+    fromPostId: string | undefined,
+    toPost: string | undefined,
+    toPostId: string | undefined,
+    line: number,
+    plannedStop: number,
     pointId: string,
     stationIndex: number,
     secondaryPostsRows: TimeTableRow[]
@@ -105,7 +117,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
             getTimetable(post).then((data) => {
-                setTimetable(data.sort((row1, row2) => parseInt(format(row1.arrivalTimeObject, 'HHmm')) - parseInt(format(row2.arrivalTimeObject, 'HHmm'))));
+                setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
                     getTrains(serverCode).then((data) => {
@@ -176,11 +188,10 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     React.useEffect(() => {
         if (!trains) return;
         // Filter for trains that have a checkpoint at the current station
-        const allTrainIds = trains.map((t) => (timetable as TimeTableRow[])?.findIndex(entry => entry.trainNumber === t.TrainNoLocal) > -1 ? t.TrainNoLocal: null).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
+        const allTrainIds = trains.map((t) => (timetable as TimeTableRow[])?.findIndex(entry => entry.trainNoLocal === t.TrainNoLocal) > -1 ? t.TrainNoLocal: null).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
         const previousTrainIds = Object.keys(trainTimetables ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
-        console.log(difference)
         Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
             setTrainTimetables(groupBy(flatMap(timetables).concat(...Object.values(trainTimetables ?? {})), 'displayedTrainNumber'))
         });

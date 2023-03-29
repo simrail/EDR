@@ -28,7 +28,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
     return (
         <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
-                {format(ttRow.arrivalTimeObject, 'HH:mm')}&nbsp;
+                {format(ttRow.scheduledArrivalObject, 'HH:mm')}&nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
                         ? <span

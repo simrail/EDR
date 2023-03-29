@@ -10,10 +10,10 @@ type Props = {
 export const CellLineData: React.FC<Props> = ({ttRow}) => {
     const {t} = useTranslation();
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
-    const isHeadingLeft = directions?.left?.includes(parseInt(ttRow.toPostId));
-    const isHeadingRight = directions?.right?.includes(parseInt(ttRow.toPostId));
-    const isHeadingUp = directions?.up?.includes(parseInt(ttRow.toPostId));
-    const isHeadingDown = directions?.down?.includes(parseInt(ttRow.toPostId));
+    const isHeadingLeft = ttRow.toPostId ? directions?.left?.includes(parseInt(ttRow.toPostId)) : false;
+    const isHeadingRight = ttRow.toPostId ? directions?.right?.includes(parseInt(ttRow.toPostId)) : false;
+    const isHeadingUp = ttRow.toPostId ? directions?.up?.includes(parseInt(ttRow.toPostId)) : false;
+    const isHeadingDown = ttRow.toPostId ? directions?.down?.includes(parseInt(ttRow.toPostId)) : false;
 
     return <>
         <span className="pr-2">

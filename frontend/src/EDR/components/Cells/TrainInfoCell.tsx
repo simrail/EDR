@@ -53,20 +53,20 @@ export const TrainInfoCell: React.FC<Props> = ({
                 <div className="flex items-center">
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
                         <Badge color={trainBadgeColor} size={streamMode ? "xs" : "sm"}>
-                            <span className={classNames("!font-bold cursor-pointer", streamMode ? "text-base" : "text-lg")} onClick={() => CopyToClipboard(ttRow.trainNumber)}>
-                                {ttRow.trainNumber}
+                            <span className={classNames("!font-bold cursor-pointer", streamMode ? "text-base" : "text-lg")} onClick={() => CopyToClipboard(ttRow.trainNoLocal)}>
+                                {ttRow.trainNoLocal}
                             </span>
                         </Badge>
                     </Tooltip>
                     { trainDetails && <span className="ml-1 flex">
                         <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
-                            <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.trainNumber)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>
+                            <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.trainNoLocal)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>
                         </Tooltip>
                         <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_show_timetable")}</span>}>
-                            <Button size="xs" className="ml-1" onClick={() => setTimetableTrainId(ttRow.trainNumber)}><img src={TimetableIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
+                            <Button size="xs" className="ml-1" onClick={() => setTimetableTrainId(ttRow.trainNoLocal)}><img src={TimetableIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                         </Tooltip>
                         <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_switch_to_driver_view")}</span>}>
-                            <Link to={`/${serverCode}/train/${ttRow.trainNumber}`}>
+                            <Link to={`/${serverCode}/train/${ttRow.trainNoLocal}`}>
                                 <Button size="xs" className="ml-1"><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                             </Link>
                         </Tooltip>

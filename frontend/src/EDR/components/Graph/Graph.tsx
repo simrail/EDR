@@ -46,7 +46,7 @@ const makeDate = (dateAry: string[], serverTzOffset: number) => {
 
 const getStationTimetable = (postId: string) => {
     return getTimetable(postId).then((d) => {
-        return [postId, _keyBy(d, "trainNumber")];
+        return [postId, _keyBy(d, "trainNoLocal")];
     });
 }
 
@@ -106,7 +106,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     const {t} = useTranslation();
     const onlyAnHourAround = React.useMemo(
         () => _keyBy(timetable.filter((ttRow) =>
-            Math.abs(Number.parseInt(format(ttRow.arrivalTimeObject, "HHmm")) - currentHourSort) <= 130 / zoom), "trainNumber"),
+            Math.abs(Number.parseInt(format(ttRow.scheduledArrivalObject, "HHmm")) - currentHourSort) <= 130 / zoom), "trainNoLocal"),
         [currentHourSort, timetable, zoom]);
 
     React.useEffect(() => {
@@ -156,22 +156,22 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         const postsToScan = [...gottenPostConfig.graphConfig!.pre, post, ...gottenPostConfig.graphConfig!.post];
         const data = postsToScan.flatMap((postId, postIdx) => {
             const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t): [] | [string, number] => {
-                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNumber];
+                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNoLocal];
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id;
-                if (!nextPost) return []
+                const nextPost = targetTrain.toPost ? postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id : false;
+                if (!nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.departureTimeObject) : dateFormatter(targetTrain?.arrivalTimeObject);
-                return [targetTrain.trainNumber, makeDate(targetValue.split(":"), serverTzOffset)]
+                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledDepartureObject) : dateFormatter(targetTrain?.scheduledArrivalObject);
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
-                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNumber];
+                const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNoLocal];
                 if (!targetTrain) return [];
-                const nextPost = postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id;
+                const nextPost = targetTrain.toPost ? postToInternalIds[encodeURIComponent(targetTrain.toPost)]?.id : false;
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
-                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.arrivalTimeObject) : dateFormatter(targetTrain?.departureTimeObject);
-                return [targetTrain.trainNumber, makeDate(targetValue.split(":"), serverTzOffset)]
+                const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledArrivalObject) : dateFormatter(targetTrain?.scheduledDepartureObject);
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset)]
             }))
             return [{
                 name: postId,
@@ -223,7 +223,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                         <Legend />
                         {Object.values(onlyAnHourAround).map((t) => {
                             const color = configByType[t.trainType]?.graphColor ?? "purple"
-                                return <Line key={t.trainNumber} dataKey={t.trainNumber}
+                                return <Line key={t.trainNoLocal} dataKey={t.trainNoLocal}
                                       label={CustomizedAxisTick(data, displayMode, color)}
                                       fillOpacity={0.8}
                                       stroke={color}>

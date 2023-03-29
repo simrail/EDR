@@ -7,13 +7,13 @@ import Tooltip from "rc-tooltip";
 
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();
-    return ttRow.platform?.replace(" ", '') || Math.ceil(parseInt(ttRow.layover)) !== 0 ? (
+    return ttRow.platform?.replace(" ", '') || Math.ceil(ttRow.plannedStop) !== 0 ? (
         <div className="flex items-center flex-col lg:flex-row align-center">
             <span className="flex">
                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
                     <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                 </Tooltip>
-                {Math.floor(parseInt(ttRow.layover))}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
+                {Math.floor(ttRow.plannedStop)}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
             </span>
             <span className="flex">
                 {ttRow.platform && <>
@@ -36,6 +36,6 @@ type Props = {
 export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData, streamMode}) => {
     return <td className={tableCellCommonClassnames(streamMode)} ref={headerFifthColRef}>
         <PlatformData ttRow={ttRow} />
-        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.trainNumber + i}><hr /><PlatformData ttRow={spd} /></span>)}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.trainNoLocal + i}><hr /><PlatformData ttRow={spd} /></span>)}
     </td>
 };

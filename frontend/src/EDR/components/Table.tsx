@@ -69,7 +69,7 @@ export const EDRTable: React.FC<Props> = ({
 
     if (!trainsWithDetails || !post) return null;
     const postCfg = postConfig[post];
-    const showStopColumn = timetable.length > 0 && timetable.some((row) => row.platform || Math.ceil(parseInt(row.layover)) !== 0);
+    const showStopColumn = timetable.length > 0 && timetable.some((row) => row.platform || Math.ceil(row.plannedStop) !== 0);
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
@@ -103,11 +103,11 @@ export const EDRTable: React.FC<Props> = ({
                             // Remove empty values (if last char is separator, no filtering would occur due to empty string)
                             .filter(n => n)
                             // If any train numbers match up, filter for it
-                            .some((train_filter) => tt.trainNumber.startsWith(train_filter)) : true)
-                        .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.trainNumber] : true)
+                            .some((train_filter) => tt.trainNoLocal.startsWith(train_filter)) : true)
+                        .filter((tt) => filterConfig.onlyOnTrack ? !!trainsWithDetails[tt.trainNoLocal] : true)
                         .map(tr =>
                     <TableRow
-                        key={tr.trainNumber + "_" + tr.fromPost + "_" + tr.toPost}
+                        key={tr.trainNoLocal + "_" + tr.fromPost + "_" + tr.toPost}
                         ttRow={tr}
                         serverTzOffset={serverTzOffset}
                         firstColRef={ headerFirstColRef}
@@ -117,7 +117,7 @@ export const EDRTable: React.FC<Props> = ({
                         headerFifthColRef={headerFifthColRef}
                         headerSixthhColRef={headerSixthhColRef}
                         headerSeventhColRef={headerSeventhColRef}
-                        trainDetails={trainsWithDetails[tr.trainNumber]}
+                        trainDetails={trainsWithDetails[tr.trainNoLocal]}
                         playSoundNotification={playSoundNotification}
                         setModalTrainId={setMapModalTrainId}
                         setTimetableTrainId={setTimetableModalTrainId}

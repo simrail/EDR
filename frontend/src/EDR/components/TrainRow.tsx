@@ -53,15 +53,15 @@ const TableRow: React.FC<Props> = (
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
-    const departureExpectedHours = ttRow.departureTimeObject.getHours();
-    const departureExpectedMinutes = ttRow.departureTimeObject.getMinutes();
+    const departureExpectedHours = ttRow.scheduledDepartureObject.getHours();
+    const departureExpectedMinutes = ttRow.scheduledDepartureObject.getMinutes();
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
     const isDepartureNextDay = dateNow.getHours() >= 20 && departureExpectedHours < 12;  // TODO: less but still clunky
     const isDeparturePreviousDay = departureExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedDeparture = getDateWithHourAndMinutes(dateNow, departureExpectedHours, departureExpectedMinutes, isDepartureNextDay, isDeparturePreviousDay);
 
-    const arrivalExpectedHours = ttRow.arrivalTimeObject.getHours();
-    const arrivalExpectedMinutes = ttRow.arrivalTimeObject.getMinutes();
+    const arrivalExpectedHours = ttRow.scheduledArrivalObject.getHours();
+    const arrivalExpectedMinutes = ttRow.scheduledArrivalObject.getMinutes();
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
@@ -82,7 +82,7 @@ const TableRow: React.FC<Props> = (
         className={`
             dark:text-gray-100 light:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 
             ${trainHasPassedStation || !trainDetails ? 'opacity-50' : 'opacity-100'}
-        `} data-timeoffset={Math.abs(parseInt(format(dateNow, "HHmm")) - parseInt(format(ttRow.arrivalTimeObject, 'HHmm')))}
+        `} data-timeoffset={Math.abs(parseInt(format(dateNow, "HHmm")) - parseInt(format(ttRow.scheduledArrivalObject, 'HHmm')))}
     >
         <TrainInfoCell
             ttRow={ttRow}

@@ -21,26 +21,24 @@ export const getStationTimetable = async (stationId: string, trainList: IServerT
         }
 
         return {
-            trainNumber: train.trainNoLocal,
+            ..._.omit(train, 'timetable'),
             trainType: stationEntry.trainType,
             stopType: stationEntry.stopTypeNumber,
             track: stationEntry.track,
             platform: stationEntry.platform,
-            arrivalTimeObject: stationEntry.arrivalTime != null ? new Date(stationEntry.arrivalTime): new Date(0),
-            departureTimeObject: stationEntry.departureTime != null ? new Date(stationEntry.departureTime): new Date(3000, 12, 31),
-            typeSpeed: stationEntry.maxSpeed,
+            scheduledArrivalObject: stationEntry.arrivalTime != null ? new Date(stationEntry.arrivalTime): new Date(0),
+            scheduledDepartureObject: stationEntry.departureTime != null ? new Date(stationEntry.departureTime): new Date(3000, 12, 31),
+            maxSpeed: stationEntry.maxSpeed,
             fromPost: previousEntry?.nameForPerson,
             fromPostId: previousEntry?.pointId,
             toPost: nextEntry?.nameForPerson,
             toPostId: nextEntry?.pointId,
             line: stationEntry.line,
-            startStation: train.startStation,
-            terminusStation: train.endStation,
-            layover: stationEntry.plannedStop,
+            plannedStop: stationEntry.plannedStop,
             pointId: stationEntry.pointId,
             stationIndex: stationEntry.indexOfPoint
         };
     });
 
-    return _.sortBy(withDynamicData, 'arrivalTimeObject');
+    return _.sortBy(withDynamicData, 'scheduledArrivalObject');
 }

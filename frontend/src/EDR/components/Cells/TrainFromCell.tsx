@@ -11,10 +11,10 @@ type Props = {
 }
 export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secondaryPostData, streamMode}) => {
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
-    const isFromLeft = directions?.left?.includes(parseInt(ttRow.fromPostId));
-    const isFromRight = directions?.right?.includes(parseInt(ttRow.fromPostId));
-    const isFromUp = directions?.up?.includes(parseInt(ttRow.fromPostId));
-    const isFromDown = directions?.down?.includes(parseInt(ttRow.fromPostId));
+    const isFromLeft = ttRow.fromPostId ? directions?.left?.includes(parseInt(ttRow.fromPostId)) : false;
+    const isFromRight = ttRow.fromPostId ? directions?.right?.includes(parseInt(ttRow.fromPostId)) : false;
+    const isFromUp = ttRow.fromPostId ? directions?.up?.includes(parseInt(ttRow.fromPostId)) : false;
+    const isFromDown = ttRow.fromPostId ? directions?.down?.includes(parseInt(ttRow.fromPostId)) : false;
 
     return (<td className={tableCellCommonClassnames(streamMode)} ref={headerFourthColRef}>
         <div className="inline-flex">
@@ -29,12 +29,12 @@ export const TrainFromCell: React.FC<Props> = ({headerFourthColRef, ttRow, secon
         
         { secondaryPostData.map((spd: TimeTableRow, i: number) => {
             const directions = dispatchDirections[parseInt(spd.pointId)];
-            const isFromLeft = directions?.left?.includes(parseInt(spd.fromPostId));
-            const isFromRight = directions?.right?.includes(parseInt(spd.fromPostId));
-            const isFromUp = directions?.up?.includes(parseInt(spd.fromPostId));
-            const isFromDown = directions?.down?.includes(parseInt(spd.fromPostId));
+            const isFromLeft = spd.fromPostId ? directions?.left?.includes(parseInt(spd.fromPostId)) : false;
+            const isFromRight = spd.fromPostId ? directions?.right?.includes(parseInt(spd.fromPostId)) : false;
+            const isFromUp = spd.fromPostId ? directions?.up?.includes(parseInt(spd.fromPostId)) : false;
+            const isFromDown = spd.fromPostId ? directions?.down?.includes(parseInt(spd.fromPostId)) : false;
             
-            return (<span key={spd.trainNumber + i}><hr />
+            return (<span key={spd.trainNoLocal + i}><hr />
                 <div className="inline-flex">
                     <span className="pr-2">
                         { isFromLeft && <span className="font-bold text-teal-400">【🢂】</span>}

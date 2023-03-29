@@ -10,29 +10,29 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
     const secondaryPostsRows = allPostsResponse.slice(1);
 
-    const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'trainNumber'));
+    const keyedSecondaryPostsRows = secondaryPostsRows.map((secondaryPostRows) => _.keyBy(secondaryPostRows, 'trainNoLocal'));
 
     // Handle stations that have multiple posts, merge their data into a single entry
     const mergedPostsRows = primaryPostRows.reduce((acc, v) => [
         ...acc,
         {
             ...v,
-            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNumber])
+            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNoLocal])
         }
     ], new Array<IFrontendStationTrainRow>());
 
-    const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'trainNumber');
+    const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'trainNoLocal');
 
     // TODO: This has state, temporary fix
     secondaryPostsRows.map((secondary_post_trains) => {
         for (const train of secondary_post_trains) {
-            if (!keyedFirstPostTrains[train.trainNumber]) {
+            if (!keyedFirstPostTrains[train.trainNoLocal]) {
                 mergedPostsRows.push(train);
             }
         }
     });
 
-    return _.sortBy(mergedPostsRows, 'arrivalTimeObject');
+    return _.sortBy(mergedPostsRows, 'scheduledArrivalObject');
 }
 
 export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
