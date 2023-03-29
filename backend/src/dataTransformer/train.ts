@@ -31,16 +31,9 @@ export const getTrainTimetable = async (trainNumber: string, trainList: IServerT
                 : isTheTrainNorthbound ? speedLimit.axisStart < checkpoint.mileage && speedLimit.axisStart > nextStationData.mileage  :  speedLimit.axisStart > checkpoint.mileage && speedLimit.axisStart < nextStationData.mileage
         }) ?? [];
         return {
-            trainNumber: checkpoint.displayedTrainNumber,
+            ...checkpoint,
             scheduledArrivalObject: checkpoint.arrivalTime != null ? new Date(checkpoint.arrivalTime): new Date(0),
             scheduledDepartureObject: checkpoint.departureTime != null ? new Date(checkpoint.departureTime): new Date(3000, 12, 31),
-            station: checkpoint.nameForPerson,
-            layover: checkpoint.plannedStop,
-            km: checkpoint.mileage,
-            trainType: checkpoint.trainType,
-            line: checkpoint.line,
-            stopType: checkpoint.stopTypeNumber,
-            pointId: checkpoint.pointId,
             speedLimitsToNextStation: allSpeedLimitsBetweenStationAndNextStation
         };
     })

@@ -1,15 +1,8 @@
 import { ISpeedLimit } from "./ISpeedLimit";
+import { ITrainTimeTable } from "./ITrainTimeTable";
 
-export interface IFrontendTrainScheduleRow {
-    trainNumber: string,
+export interface IFrontendTrainScheduleRow extends ITrainTimeTable {
     scheduledArrivalObject: Date,
-    station: string,
-    layover: number,
-    km: number,
     scheduledDepartureObject: Date,
-    trainType: string,
-    line: number,
-    stopType: number,
-    pointId: string,
     speedLimitsToNextStation: ISpeedLimit[],
 }

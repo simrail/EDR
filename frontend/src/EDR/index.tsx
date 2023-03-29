@@ -4,7 +4,6 @@ import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
 import _map from "lodash/fp/map";
-import _groupBy from "lodash/fp/groupBy";
 import {useTranslation} from "react-i18next";
 import {console_log} from "../utils/Logger";
 import _difference from "lodash/difference";
@@ -14,12 +13,13 @@ import {DetailedTrain, getTrainDetails} from "./functions/trainDetails";
 import {postConfig} from "../config/stations";
 import { TimeTableServiceType } from "../config/trains";
 import { Station, Train } from "@simrail/types";
-import { Dictionary } from "lodash";
+import { Dictionary, flatMap, groupBy } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
 import { ISteamUser } from "../config/ISteamUser";
 import { format} from "date-fns";
+import { TrainTimeTableRow } from "../Sirius";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 export type TimeTableRow = {
@@ -84,7 +84,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<Dictionary<Station> | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
-    const [trainTimetables, setTrainTimetables] = React.useState<any | undefined>();
+    const [trainTimetables, setTrainTimetables] = React.useState<Dictionary<TrainTimeTableRow[]> | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
     const [tzOffset, setTzOffset] = React.useState<number | undefined>();
@@ -177,13 +177,14 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         if (!trains) return;
         // Filter for trains that have a checkpoint at the current station
         const allTrainIds = trains.map((t) => (timetable as TimeTableRow[])?.findIndex(entry => entry.trainNumber === t.TrainNoLocal) > -1 ? t.TrainNoLocal: null).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
-        const previousTrainIds = Object.keys(previousTrains?.current ?? []);
+        const previousTrainIds = Object.keys(trainTimetables ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
+        console.log(difference)
         Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
-            setTrainTimetables(_groupBy('trainNumber', [...Object.values(trainTimetables ?? {}), timetables.flat()]))
+            setTrainTimetables(groupBy(flatMap(timetables).concat(...Object.values(trainTimetables ?? {})), 'displayedTrainNumber'))
         });
-    }, [trains, trainTimetables, timetable])
+    }, [trains, timetable, trainTimetables])
 
     // Get new player info when someone takes over a train
     React.useEffect(() => {
@@ -242,6 +243,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 filterConfig={filterConfig}
                 setFilterConfig={setFilterConfig}
                 players={players}
+                trainTimetables={trainTimetables}
             />
             : null
         }

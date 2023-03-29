@@ -12,16 +12,31 @@ import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
 import { TimeTableServiceType } from "../config/trains";
 
 export type TrainTimeTableRow = {
-    trainNumber: string,
+    indexOfPoint: number,
+	nameForPerson: string,
+	pointId: string,
+	displayedTrainNumber: string,
+	arrivalTime: string | null,
+	actualArrivalTime: string | null,
+	departureTime: string | null,
+	actualDepartureTime: string | null,
+	isStoped: boolean,
+	stopDuration: number,
+	isActive: boolean,
+	isConfirmed: boolean,
+	confirmedBy: number,
+	plannedStop: number,
+	timetableType: number,
+    stopTypeNumber: number,
+	leftTrack: boolean,
+	line: number,
+	platform: string | null,
+	track: number | null,
+	trainType: TimeTableServiceType,
+	mileage: number,
+	maxSpeed: number,
     scheduledArrivalObject: Date,
     scheduledDepartureObject: Date,
-    station: string,
-    layover: string,
-    trainType: TimeTableServiceType,
-    line: string,
-    stopType: string,
-    km: number,
-    pointId: string,
     speedLimitsToNextStation: [{
         lineNo: string,
         axisStart: number,
@@ -131,7 +146,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     React.useEffect(() => {
         if (!trainTimetable) return;
         const allStationsInPath = trainTimetable
-            .map((ttRow) => ttRow.station)
+            .map((ttRow) => ttRow.nameForPerson)
             .map((stationName) => postToInternalIds[encodeURIComponent(stationName)])
             .filter((sc) => !!sc)
             .map((sc) => postConfig[sc.id])

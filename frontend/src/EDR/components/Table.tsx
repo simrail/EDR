@@ -11,6 +11,8 @@ import { DetailedTrain } from "../functions/trainDetails";
 import {TrainTimetableModal} from "./TrainTimetableModal";
 import classNames from "classnames";
 import { ISteamUser } from "../../config/ISteamUser";
+import { TrainTimeTableRow } from "../../Sirius";
+import { Dictionary } from "lodash";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;
@@ -35,11 +37,12 @@ type Props = {
     filterConfig: FilterConfig;
     setFilterConfig: (newFilterConfig: FilterConfig) => void;
     players: ISteamUser[] | undefined;
+    trainTimetables: Dictionary<TrainTimeTableRow[]>;
 }
 
 export const EDRTable: React.FC<Props> = ({
       playSoundNotification, timetable, trainsWithDetails, serverTzOffset,
-      post, serverCode, setGraphModalOpen, isWebpSupported, filterConfig, setFilterConfig, players
+      post, serverCode, setGraphModalOpen, isWebpSupported, filterConfig, setFilterConfig, players, trainTimetables
     }) => {
     const [filter, setFilter] = React.useState<string | undefined>();
     const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
@@ -70,7 +73,7 @@ export const EDRTable: React.FC<Props> = ({
 
     return <div>
         <SimRailMapModal serverCode={serverCode} trainId={mapModalTrainId} setModalTrainId={setMapModalTrainId} />
-        <TrainTimetableModal trainDetails={timetableModalTrainId ? trainsWithDetails[timetableModalTrainId] : undefined} setModalTrainId={setTimetableModalTrainId} />
+        <TrainTimetableModal trainDetails={timetableModalTrainId ? trainsWithDetails[timetableModalTrainId] : undefined} setModalTrainId={setTimetableModalTrainId} trainTimetable={timetableModalTrainId ? trainTimetables[timetableModalTrainId] : undefined}/>
         <Header
             serverTzOffset={serverTzOffset}
             serverCode={serverCode}

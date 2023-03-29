@@ -24,8 +24,8 @@ type Props = {
     isWebpSupported: boolean;
 }
 
-const stopTypeToLetters = (type: string | undefined) => {
-    const stopType = parseInt(type || "0");
+const stopTypeToLetters = (type: number | undefined) => {
+    const stopType = type;
     switch (stopType) {
         case 1:
             return 'ph';
@@ -59,7 +59,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
     })
 
     const nearestStation = _minBy(allStationsDistance, 'distance');
-    const closestStationIndex = trainTimetable.map((s) => s.station).findIndex((s) => s === nearestStation?.srId)
+    const closestStationIndex = trainTimetable.map((s) => s.nameForPerson).findIndex((s) => s === nearestStation?.srId)
 
     autoScroll && scrollToNearestStation(nearestStation?.id);
     return (
@@ -68,9 +68,9 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                 <Table.Body>
                     {
                         trainTimetable.map((ttRow, index: number) => {
-                            const internalId = postToInternalIds[encodeURIComponent(ttRow.station)]?.id
+                            const internalId = postToInternalIds[encodeURIComponent(ttRow.nameForPerson)]?.id
                             return (
-                                <React.Fragment key={`${ttRow.km}${ttRow.line}${ttRow.station}}`}>
+                                <React.Fragment key={`${ttRow.mileage}${ttRow.line}${ttRow.nameForPerson}}`}>
                                     <Table.Row
                                         className={classNames(
                                             "hover:bg-gray-200 dark:hover:bg-gray-600",
@@ -80,31 +80,37 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                     >
                                         <Table.Cell className="relative pl-8">
                                             <div className="flex flex-col">
-                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopType} />
+                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopTypeNumber} />
                                                 <div className="flex justify-between">
-                                                    <span>{ttRow.km ? `${(Math.round(ttRow.km * 100) / 100)} km` : ''}</span>
+                                                    <span>{ttRow.mileage ? `${(Math.round(ttRow.mileage * 100) / 100)} km` : ''}</span>
                                                     <span>L{ttRow.line}</span>
                                                 </div>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell>
                                             <div className="flex justify-between">
+                                            {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                                 <span>{format(ttRow.scheduledArrivalObject, 'HH:mm')}</span>
-                                                <span>{parseInt(ttRow.stopType || "0") > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopType)}`}</Badge>}</span>
+                                            )}
+                                                <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell className="pl-0">
-                                            {ttRow.station}
+                                            {ttRow.nameForPerson}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {format(ttRow.scheduledDepartureObject, 'HH:mm')}
+                                            {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
+                                                <>
+                                                    {format(ttRow.scheduledDepartureObject, 'HH:mm')}
+                                                </>
+                                            )}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {(Math.floor(parseInt(ttRow.layover)) > 0 || parseInt(ttRow.stopType) > 0) && <span className="flex">
+                                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex">
                                                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
                                                     <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                                                 </Tooltip>
-                                                {parseFloat(ttRow.layover)}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
+                                                {ttRow.plannedStop}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
                                             </span>}
                                         </Table.Cell>
                                     </Table.Row>

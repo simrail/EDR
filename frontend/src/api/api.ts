@@ -22,7 +22,12 @@ export const getTimetable = (post: string): Promise<TimeTableRow[]> =>
     }));
 
 export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]> =>
-    fetch(BASE_API_URL + "train/" + trainId).then((r) => r.json());
+    baseApiCall("train/" + trainId).then((data: TrainTimeTableRow[]) => data.map(tr => {
+        tr.scheduledArrivalObject = subHours(new Date(tr.scheduledArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
+        tr.scheduledDepartureObject = subHours(new Date(tr.scheduledDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
+
+        return tr;
+    }));
 
 export const getTrains = (server: string): Promise<Train[]> =>
     baseApiCall( "trains/" + server);

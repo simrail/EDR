@@ -4,13 +4,14 @@ import {useTranslation} from "react-i18next";
 import { TimeTableRow } from "..";
 import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
+import { TrainTimeTableRow } from "../../Sirius";
 
 type Props = {
     timetable: TimeTableRow[];
     trains: Train[] | undefined;
     stations: Dictionary<Station>;
     tzOffset?: number;
-    trainSchedules: any;
+    trainSchedules: Dictionary<TrainTimeTableRow[]> | undefined;
 }
 export const LoadingScreen: React.FC<Props> = ({timetable, trains, stations, tzOffset, trainSchedules}: Props) => {
     const {t} = useTranslation();

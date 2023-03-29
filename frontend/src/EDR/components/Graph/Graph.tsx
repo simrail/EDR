@@ -149,7 +149,6 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
     }, [post]);
 
     React.useEffect(() => {
-        console.log(onlyAnHourAround);
         if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;
         const gottenPostConfig = postConfig[post];
         if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;

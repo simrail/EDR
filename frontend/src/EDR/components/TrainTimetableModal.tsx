@@ -1,31 +1,43 @@
 import {Modal, Table} from "flowbite-react";
 import React from "react";
-import {getTrainTimetable} from "../../api/api";
 import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
 import { DetailedTrain } from "../functions/trainDetails";
 import TrainTimetableTimeline from "./TrainTimetableTimeline";
 import {frameHeight} from "./SimRailMapModal";
 import { TrainTimeTableRow } from "../../Sirius";
 import { format } from "date-fns";
+import Tooltip from "rc-tooltip";
+import { edrImagesMap } from "../../config";
+import { useTranslation } from "react-i18next";
 
 type Props = {
-    trainDetails?: DetailedTrain | undefined;
+    trainDetails?: DetailedTrain;
     setModalTrainId: (trainId: string | undefined) => void;
+    trainTimetable?: TrainTimeTableRow[];
 }
 
-const TrainTimetableBody: React.FC<{timetable?: TrainTimeTableRow[], closestStation?: string, lineTrace: any}> = ({timetable, closestStation, lineTrace}) => {
+type BodyProps = {
+    timetable?: TrainTimeTableRow[];
+    closestStation?: string;
+    closestStationId?: string;
+    lineTrace: any;
+}
+
+const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, closestStationId, lineTrace}) => {
+    const {t} = useTranslation();
     if (!timetable) return <Spinner />
-    if (timetable.length === 0) return <>&nbsp; Some trains may be missing during beta</>
+    if (timetable.length === 0) return <>&nbsp;</>
+    
 
     // TODO: Remove when closest station will include the inPath parameter
-    const closestStationInLineTrace = () => lineTrace.map((lts: any) => [lts.srId, lts]).filter(([stationName]: [string, any]) => !!timetable.find((ttRow) => ttRow.station === stationName))[0]?.[0];
-    const maybeClosestStationDirect = timetable.findIndex(ttRow => ttRow.station === closestStation);
+    const closestStationInLineTrace = () => lineTrace.map((lts: any) => [lts.srId, lts]).filter(([stationName]: [string, any]) => !!timetable.find((ttRow) => ttRow.nameForPerson === stationName))[0]?.[0];
+    const maybeClosestStationDirect = timetable.findIndex(ttRow => ttRow.nameForPerson === closestStation);
 
     // I use an IIFE here because calling the linetrace is expensive, so I make sur it is called only when fallback is needed
     const closestStationIndex = maybeClosestStationDirect === -1 ? function() {
         const closestStation = closestStationInLineTrace();
-        return timetable.findIndex(ttRow => ttRow.station === closestStation)
-    }() : maybeClosestStationDirect
+        return timetable.findIndex(ttRow => ttRow.nameForPerson === closestStation)
+    }() : maybeClosestStationDirect;
 
     return (
         <Table className={frameHeight} striped>
@@ -35,58 +47,57 @@ const TrainTimetableBody: React.FC<{timetable?: TrainTimeTableRow[], closestStat
                 <Table.HeadCell>Stop</Table.HeadCell>
             </Table.Head>
             <Table.Body>
-                {timetable.map((ttRow, index: number) => (
-                    <Table.Row 
+                {timetable.map((ttRow, index: number) => {
+                    return (<Table.Row 
                         className="hover:bg-gray-200 dark:hover:bg-gray-600"
-                        key={ttRow.station}
+                        key={ttRow.nameForPerson}
                     >
                         <Table.Cell className="relative">
                             <div className="flex flex-col">
-                                <TrainTimetableTimeline isAtTheStation={ttRow.station === closestStation} itemIndex={index} closestStationIndex={closestStationIndex} />
+                                <TrainTimetableTimeline isAtTheStation={ttRow.nameForPerson === closestStation} itemIndex={index} closestStationIndex={closestStationIndex} />
                                 {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                     <>
                                         {format(ttRow.scheduledArrivalObject, 'HH:mm')}
                                         <br />
                                     </>
                                 )}
-                                {format(ttRow.scheduledDepartureObject, 'HH:mm')}
+                                {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
+                                    <>
+                                        {format(ttRow.scheduledDepartureObject, 'HH:mm')}
+                                    </>
+                                )}
                             </div>
                         </Table.Cell>
                         <Table.Cell>
-                            {ttRow.station}
+                            {ttRow.nameForPerson}
                         </Table.Cell>
                         <Table.Cell>
-                            {ttRow.layover}&nbsp;{ttRow.stopType}
+                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex">
+                                <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
+                                    <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
+                                </Tooltip>
+                                {ttRow.plannedStop}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
+                            </span>}
                         </Table.Cell>
                     </Table.Row>
-                ))}
+                )})}
             </Table.Body>
         </Table>
     )
 }
 
-export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, setModalTrainId}) => {
-    const [trainTimetable, setTrainTimetable] = React.useState<TrainTimeTableRow[] | undefined>();
-
-    React.useEffect(() => {
-        if (trainDetails?.TrainNoLocal === undefined)  {
-            setTrainTimetable(undefined);
-            return;
-        }
-        getTrainTimetable(trainDetails.TrainNoLocal).then(setTrainTimetable);
-    }, [trainDetails]);
-
+export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, setModalTrainId, trainTimetable}) => {
     const lineTrace = trainDetails?.pfLineTrace;
 
     return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="top-center" style={{zIndex: 999999}}>
         <Modal.Header>
             <div className="flex justify-around">
-                <span>N° {trainDetails?.TrainNoLocal} (Beta)</span>
+                <span>N° {trainDetails?.TrainNoLocal}</span>
             </div>
         </Modal.Header>
         <Modal.Body>
             <div className="max-h-[700px] overflow-y-scroll child:px-2">
-                <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} lineTrace={lineTrace}/>
+                <TrainTimetableBody timetable={trainTimetable} closestStation={trainDetails.closestStation} closestStationId={trainDetails.closestStationId} lineTrace={lineTrace}/>
             </div>
         </Modal.Body>
     </Modal> : null;
