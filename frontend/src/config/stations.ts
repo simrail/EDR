@@ -232,7 +232,8 @@ export const postConfig: Dictionary<StationConfig> = {
             pre: ["LZ_LC", "DG", "T1_BZ"],
             post: ["KZ"],
             final: []
-        }
+        },
+        secondaryPosts: ["SG_R52"]
     },
     SG_R52: {
         id: "SG_R52",
@@ -250,7 +251,6 @@ export const postConfig: Dictionary<StationConfig> = {
             post: ["DG_WZ"],
             final: []
         },
-        secondaryPosts: ["SG_RS2"]
     },
     SG_DK: {
         id: "SG_DK",

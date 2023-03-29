@@ -14,6 +14,7 @@ import {TrainPlatformCell} from "./Cells/TrainPlatformCell";
 import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
 import { ISteamUser } from "../../config/ISteamUser";
+import { StationConfig } from "../../config/stations";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
@@ -36,20 +37,20 @@ type Props = {
     filterConfig: FilterConfig;
     serverCode: string;
     players: ISteamUser[] | undefined;
+    postCfg: StationConfig;
 }
 
 const TableRow: React.FC<Props> = (
     {setModalTrainId, ttRow, trainDetails, serverTzOffset,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig,
-        serverCode, players
+        serverCode, players, postCfg
     }: Props
 ) => {
     const dateNow = nowUTC(serverTzOffset);
 
     const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
     // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const previousDistance = trainDetails?.rawDistances?.reduce((acc: number, v: number) => acc + v, 0) / (trainDetails?.rawDistances?.length ?? 1); // Before the condition was wrong
     const distanceFromStation = Math.round(currentDistance * 100) / 100;
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
@@ -92,13 +93,12 @@ const TableRow: React.FC<Props> = (
             setTimetableTrainId={setTimetableTrainId}
             firstColRef={firstColRef}
             distanceFromStation={distanceFromStation}
-            currentDistance={currentDistance}
-            previousDistance={previousDistance}
             trainHasPassedStation={trainHasPassedStation}
             isWebpSupported={isWebpSupported}
             streamMode={streamMode}
             serverCode={serverCode}
             players={players}
+            postCfg={postCfg}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

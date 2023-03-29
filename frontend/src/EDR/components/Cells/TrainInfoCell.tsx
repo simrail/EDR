@@ -13,6 +13,8 @@ import TimetableIcon from "../../../images/icons/png/timetable.png";
 import ScheduleIcon from "../../../images/icons/png/schedule.png";
 import { Link } from "react-router-dom";
 import { ISteamUser } from "../../../config/ISteamUser";
+import { differenceInMinutes } from "date-fns";
+import { postConfig, StationConfig } from "../../../config/stations";
 
 type Props = {
     ttRow: TimeTableRow;
@@ -22,26 +24,31 @@ type Props = {
     setTimetableTrainId: (trainId: string | undefined) => void;
     firstColRef: any;
     distanceFromStation: number;
-    currentDistance: number;
-    previousDistance: number | undefined;
     trainHasPassedStation: boolean;
     isWebpSupported: boolean;
     streamMode: boolean;
     serverCode: string;
     players: ISteamUser[] | undefined;
+    postCfg: StationConfig;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, trainBadgeColor,
-       distanceFromStation, previousDistance, currentDistance, trainHasPassedStation,
-       setModalTrainId, firstColRef, isWebpSupported, streamMode, setTimetableTrainId, serverCode, players
+       distanceFromStation, trainHasPassedStation,
+       setModalTrainId, firstColRef, isWebpSupported,
+       streamMode, setTimetableTrainId, serverCode, players, postCfg
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
-    const ETA = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
+    const nextStation = trainDetails?.timetable?.find(entry => entry.indexOfPoint >= trainDetails?.TrainData?.VDDelayedTimetableIndex);
+    const previousStation = trainDetails?.timetable?.map(e => e)?.reverse()?.find(entry => entry.indexOfPoint < trainDetails?.TrainData?.VDDelayedTimetableIndex);
+    const nextStationName = nextStation?.nameForPerson || trainDetails?.closestStation;
+    const ETADynamic = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
+    const predictiveETA = Math.abs(differenceInMinutes(previousStation ? previousStation.scheduledDepartureObject : new Date(), ttRow.scheduledArrivalObject));
+    const ETA = ETADynamic ? (predictiveETA < ETADynamic ? predictiveETA : ETADynamic) : predictiveETA;
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
-    const nextStationName = trainDetails?.timetable?.find(entry => entry.indexOfPoint === trainDetails?.TrainData?.VDDelayedTimetableIndex)?.nameForPerson || trainDetails?.closestStation;
+    const isTrainApproaching = ((nextStationName === postCfg?.srId || postCfg.secondaryPosts?.some(post => postConfig[post]?.srId === nextStationName)) && distanceFromStation < 3);
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
@@ -88,7 +95,7 @@ export const TrainInfoCell: React.FC<Props> = ({
             </div>
             <div className="w-full flex flex-col md:flex-row">
                 {  distanceFromStation
-                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span>{nextStationName},&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span><span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>,&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
@@ -96,7 +103,7 @@ export const TrainInfoCell: React.FC<Props> = ({
                     distanceFromStation
                         ? trainHasPassedStation
                             ? <>({t("EDR_TRAINROW_train_away")})</>
-                            : ETA && Math.round(ETA) < 20
+                            : ETA && Math.round(ETA) <= 20 && distanceFromStation > 1
                                 ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
                                 : undefined
                         : undefined

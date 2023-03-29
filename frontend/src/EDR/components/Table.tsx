@@ -126,6 +126,7 @@ export const EDRTable: React.FC<Props> = ({
                         filterConfig={filterConfig}
                         serverCode={serverCode}
                         players={players}
+                        postCfg={postCfg}
                     />) : <div className="w-full text-center"><Spinner /></div>
                 }
             </Table.Body>
