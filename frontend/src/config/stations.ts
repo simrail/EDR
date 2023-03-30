@@ -49,6 +49,10 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         left: [StationId.Dabrowa_Gornicza, StationId.Dabrowa_Gornicza_Huta_Katowice_R7, StationId.Dabrowa_Gornicza_Huta_Katowice],
         right: [StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Lazy_Lc]
     },
+    [StationId.Lazy_La]: {
+        left: [StationId.Lazy],
+        right: [StationId.Zawiercie],
+    },
     [StationId.Lazy_Lc]: {
         left: [StationId.Lazy],
         right: [StationId.Dabrowa_Gornicza_Zabkowice, StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Przemiarki]
@@ -125,6 +129,7 @@ export const internalIdToPointId: {[k: string]: number} = {
     "T1_BZ": 124,
     "BZ": 124,
     "LZ_LC": 2375,
+    "LZ_LA": 2374,
     "SG_R52": 3991,
     "SG": 3993,
     "DG": 719,
@@ -137,6 +142,7 @@ export const internalIdToPointId: {[k: string]: number} = {
     "OP_PO": 2993,
     "ZA": 5262,
     "DG_WZ": 733,
+    "DG_ZA": 734,
     "SP": 4010,
     "IDZ": 1349,
     "KZ": 1655,
