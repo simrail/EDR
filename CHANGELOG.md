@@ -1,6 +1,25 @@
 # Simrail Community EDR Changelog
 
-## *2.0 - 2023.03.27*
+## *2.1 - Unreleased*
+
+### Changes and features
+
+- The train list now shows players driving
+- The driver view received a toggle which turns on/off the speed limits
+- The driver view now shows when a player is dispatching one of the stations
+- The EDR view now shows the next station for a train instead of guessing the nearest one
+- The EDR view now tries to predict when a train will arrive (for trains within ~20 mins) based on it's location, timetable and speed instead of only the speed - This should be much more accurate for most situations, but of course it's not perfect
+- The EDR view now shows a green indicator for trains approaching the station
+- Changed some train direction indicators on the EDR view for Knapówka & Włoszczowa Północ
+- The language selector has been alphabetically sorted and now uses native words for supported languages
+- Added support for 2 (probably) upcoming dispatch posts: Łazy Ła & Dąbrowa Górnicza Ząbkowice
+
+### Fixes
+
+- Some dispatch stations showed their timezone with a double negative sign
+- Fixed several situations where the EDR view could fail to load
+
+## *2.0 - 2023-03-27*
 
 ### Important changes
 
