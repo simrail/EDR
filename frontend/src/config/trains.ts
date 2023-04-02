@@ -116,14 +116,3 @@ export const configByType: {[k: string ]: {color: string, graphColor: string}} =
         graphColor: "orange",
     },
 }
-
-export type TimeTableServiceType =
-    "ECE" |
-    "EIJ" |
-    "LTE" |
-    "MOJ" |
-    "MPE" |
-    "ROJ" |
-    "RPJ" |
-    "TCE" |
-    "TME";

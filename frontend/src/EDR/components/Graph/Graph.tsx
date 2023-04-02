@@ -73,7 +73,7 @@ const CustomizedAxisTick = (data: any, displayMode: string, color: string) => (p
     const { x, y } = props;
 
     if (!props.value || props.index % 3 !== 0 || props.index === (displayMode === "vertical" ? data.length -1 : 0)) return <></>;
-    const maybeTrainNumber = Object.entries(data[props.index]).find((v, i) => v[1] === props.value);
+    const maybeTrainNumber = Object.entries(data[props.index]).find((v) => v[1] === props.value);
 
     return (
         <g transform={`translate(${x},${y})`}>
@@ -154,7 +154,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         if (!gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
 
         const postsToScan = [...gottenPostConfig.graphConfig!.pre, post, ...gottenPostConfig.graphConfig!.post];
-        const data = postsToScan.flatMap((postId, postIdx) => {
+        const data = postsToScan.flatMap((postId) => {
             const allTrainDepartures = Object.fromEntries(Object.values(onlyAnHourAround).map((t): [] | [string, number] => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNoLocal];
                 if (!targetTrain) return [];

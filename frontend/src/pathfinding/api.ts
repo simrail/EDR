@@ -1,10 +1,9 @@
-import {Node, pathFind_stackMap} from "./data";
+import {pathFind_stackMap} from "./data";
 import {haversine} from "../EDR/functions/vectors";
 import _uniq from "lodash/uniq";
-import _intersection from "lodash/intersection";
 import _minBy from "lodash/minBy";
 import {console_log} from "../utils/Logger";
-import {postConfig, postToInternalIds} from "../config/stations";
+import {postConfig} from "../config/stations";
 import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 
 
@@ -52,20 +51,20 @@ export const treeTraversal = (
     return foundViaPath?.[0] ?? _minBy([leftPath, rightPath, branchPathA, branchPathB], 'length');
 }
 
-export const findPath = (start: ExtendedStationConfig, finish: string, via?: string): PathFindingLineTrace => {
+export const findPath = (start: ExtendedStationConfig, finish: string): PathFindingLineTrace => {
     return treeTraversal(start, finish, []);
 }
 
 export const dbgTree = (start: string, finish: string, playerPost?: string) => {
     console.log("From " + start + " To : " + finish);
     const [pathFound, distance] = PathFinding_FindPathAndHaversineSum(start, finish, playerPost);
-    console.log(pathFound?.map?.((n?: Node) => n?.id).join(" -> "));
+    console.log(pathFound?.map?.((n?: ExtendedStationConfig) => n?.id).join(" -> "));
     console.assert(pathFound !== undefined && pathFound.filter((p) => p === undefined).length === 0);
     console.log("Distance : " + Math.round(distance) + "km" )
 }
 
 
-export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined, via?: string | undefined): [PathFindingLineTrace, number] => {
+export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined): [PathFindingLineTrace, number] => {
     const pathA = findPath(pathFind_stackMap[start], playerPost ?? finish);
     const pathB = playerPost ? findPath(pathFind_stackMap[playerPost], finish) : [];
     if (!pathA || !pathB) {
@@ -81,7 +80,7 @@ export const PathFinding_FindPathAndHaversineSum = (start: string, finish: strin
     }, 0)];
 }
 
-export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, directionVector: [number, number], trainPosVector: [number, number]): ExtendedStationConfig | undefined => {
+export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, trainPosVector: [number, number]): ExtendedStationConfig | undefined => {
     if (!pfLineTrace) return undefined;
     const indexOfClosestStationInPathInTrainDirection = pfLineTrace
         //.map((point) => point?.platformPosOverride ? {...point, dot: Vector_DotProduct(point.platformPosOverride, Victor.fromArray(directionVector))} : undefined)
@@ -93,38 +92,6 @@ export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTra
     console_log("Dot resukts : ", indexOfClosestStationInPathInTrainDirection);
 
     return indexOfClosestStationInPathInTrainDirection[0];
-}
-
-/**
- * If the "to" station is found in path, it means the train is going away
- */
-export const PathFinding_HasTrainPassedStation = (pfLineTrace: PathFindingLineTrace, playerPost: string, formStation: string, toStation: string, closestStationId: string, distanceToPost: number, debug: boolean = false) => {
-    if (!pfLineTrace) {
-        console.error("[Pathfinding] No PF station found");
-        return false;
-    }
-
-    // TODO: Add via method so it would always find the path VIA the post
-    debug && console.log({formStation, toStation, closestStationId});
-    const foundPost = postToInternalIds[encodeURIComponent(formStation)]?.id;
-    const foundToPost = postToInternalIds[encodeURIComponent(toStation)]?.id;
-    const ltIndex = pfLineTrace.findIndex((e) => e?.id && e?.id === foundPost);
-    debug && console.log("From index : ", {ltIndex, formStation, pfLineTrace});
-    debug && console.log("FTP", foundToPost);
-
-    const [intermediateLineTraceBetweenPostAndDestination] = PathFinding_FindPathAndHaversineSum(foundPost, playerPost)
-    const [intermediateLineTrace] = PathFinding_FindPathAndHaversineSum(foundToPost, closestStationId)
-    const toIndex = intermediateLineTrace?.findIndex((e) => e?.id && e?.id === foundToPost);
-    debug && console.log("TO in linetrace : ", {toIndex, formStation, intermediateLineTrace});
-
-    const intersect = _intersection(intermediateLineTrace, intermediateLineTraceBetweenPostAndDestination);
-    debug && console.log("Closest station id : ", closestStationId);
-    debug && console.log("Intersect : ", intersect);
-
-    return (ltIndex === -1 // From post not found
-             && toIndex !== -1 // To post is not found in intermediate line trace
-        && pfLineTrace[0]?.id !== playerPost // Train is not going into station
-        && intersect.length === 0) // Train is not in between from dispatch post and small stations in between
 }
 
 if (RUN_DATA_HEALTHCHECKS) {

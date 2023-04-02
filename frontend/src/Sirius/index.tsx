@@ -9,7 +9,6 @@ import {TrainTimetable} from "./TrainTimetable";
 import { TrainDetails } from "./TrainDetails";
 import { Train } from "@simrail/types";
 import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
-import { TimeTableServiceType } from "../config/trains";
 
 export type TrainTimeTableRow = {
     indexOfPoint: number,
@@ -32,7 +31,7 @@ export type TrainTimeTableRow = {
 	line: number,
 	platform: string | null,
 	track: number | null,
-	trainType: TimeTableServiceType,
+	trainType: string,
 	mileage: number,
 	maxSpeed: number,
     scheduledArrivalObject: Date,

@@ -11,7 +11,6 @@ import _difference from "lodash/difference";
 import {LoadingScreen} from "./components/LoadingScreen";
 import {DetailedTrain, getTrainDetails} from "./functions/trainDetails";
 import {postConfig} from "../config/stations";
-import { TimeTableServiceType } from "../config/trains";
 import { Station, Train } from "@simrail/types";
 import { Dictionary, flatMap, groupBy } from "lodash";
 import {redirect, useParams} from "react-router-dom";
@@ -38,7 +37,7 @@ export type TimeTableRow = {
     isHighRiskCargo: boolean,
     isDangerousCargo: boolean,
     carrierName: string,
-    trainType: TimeTableServiceType,
+    trainType: string,
     stopType: number,
     track: number | null,
     platform: string | null,

@@ -1,14 +1,6 @@
 import {postConfig} from "../config/stations";
 import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 
-export interface Node {
-    id: string;
-    platformPosOverride?: [number, number]
-    left?: string,
-    right?: string,
-    branchA?: string
-}
-
 /**
  * Pathfinding data.
  *
