@@ -82,6 +82,7 @@
   "DRIVER_DETAILS_service_type": "Service type",
   "DRIVER_DETAILS_train_model": "Train model",
   "DRIVER_DETAILS_auto_scroll": "Auto scroll",
-  "DRIVER_DETAILS_speed_limits": "Speed limits"
+  "DRIVER_DETAILS_speed_limits": "Speed limits",
+  "DRIVER_DETAILS_back_link": "Back to trains"
   
 }
