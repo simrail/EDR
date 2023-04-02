@@ -1,6 +1,6 @@
 import React from "react";
 import {Badge, Table} from "flowbite-react";
-import {Train} from "@simrail/types";
+import {Station, Train} from "@simrail/types";
 import {postToInternalIds, StationConfig} from "../config/stations";
 import {haversine} from "../EDR/functions/vectors";
 import _minBy from "lodash/minBy";
@@ -15,6 +15,10 @@ import Tooltip from "rc-tooltip";
 import { useTranslation } from "react-i18next";
 import { edrImagesMap } from "../config";
 import { format } from "date-fns";
+import { getPlayer, getStations } from "../api/api";
+import { ISteamUser } from "../config/ISteamUser";
+import { enqueueSnackbar } from "notistack";
+import _difference from "lodash/difference";
 
 type Props = {
     trainTimetable: TrainTimeTableRow[];
@@ -22,6 +26,8 @@ type Props = {
     allStationsInpath: StationConfig[];
     autoScroll: boolean;
     isWebpSupported: boolean;
+    serverCode: string | undefined;
+    showSpeedLimits: boolean;
 }
 
 const stopTypeToLetters = (type: number | undefined) => {
@@ -45,8 +51,9 @@ const scrollToNearestStation = (nearestStationId: string | undefined) => {
         })
     }
 }
-export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpath, train, autoScroll, isWebpSupported}) => {
-
+export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpath, train, autoScroll, isWebpSupported, serverCode, showSpeedLimits}) => {
+    const [posts, setPosts] = React.useState<Station[] | undefined>();
+    const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
     const {t} = useTranslation();
 
     const [trainLongitude, trainLatitude] = [train.TrainData.Longitute, train.TrainData.Latititute];
@@ -61,6 +68,44 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
     const nearestStation = _minBy(allStationsDistance, 'distance');
     const closestStationIndex = trainTimetable.map((s) => s.nameForPerson).findIndex((s) => s === nearestStation?.srId)
 
+    const previousPlayers = React.useRef<ISteamUser[] | undefined>(undefined);
+
+    React.useEffect(() => {
+        previousPlayers.current = players;
+    }, [players]);
+
+    React.useEffect(() => {
+        if (serverCode !== undefined) {
+            getStations(serverCode).then(postData => {
+                setPosts(postData);
+                const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);;
+                Promise.all(steamIds.map(getPlayer)).then(setPlayers);
+            });
+        }
+    }, [serverCode]);
+
+    React.useEffect(() => {
+        window.stationsRefreshWebWorkerId = window.setInterval(() => {
+            if (!serverCode) return;
+            getStations(serverCode).then(setPosts);
+        }, 20000);
+        if (!window.stationsRefreshWebWorkerId) {
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            return;
+        }
+        return () => window.clearInterval(window.stationsRefreshWebWorkerId);
+        // eslint-disable-next-line
+    }, [serverCode]);
+
+    React.useEffect(() => {
+        if (!posts) return;
+        const allPlayerIds = posts.map((t) => t.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);
+        const previousPlayerIds = previousPlayers?.current?.map(player => player.steamid) ?? [];
+        const difference = _difference(allPlayerIds, previousPlayerIds);
+        if (difference.length === 0) return;
+        Promise.all(difference.map(getPlayer)).then(data => setPlayers(players !== undefined ? players?.concat(data) : data));
+    }, [posts, players])
+    
     autoScroll && scrollToNearestStation(nearestStation?.id);
     return (
         <div className="h-full child:!rounded-none child:overflow-y-scroll child:h-full">
@@ -68,7 +113,8 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                 <Table.Body>
                     {
                         trainTimetable.map((ttRow, index: number) => {
-                            const internalId = postToInternalIds[encodeURIComponent(ttRow.nameForPerson)]?.id
+                            const internalId = postToInternalIds[encodeURIComponent(ttRow.nameForPerson)]?.id;
+                            const postDispatcher = players?.find(player => player.steamid === posts?.find(post => post.Name === ttRow.nameForPerson)?.DispatchedBy?.[0]?.SteamId);
                             return (
                                 <React.Fragment key={`${ttRow.mileage}${ttRow.line}${ttRow.nameForPerson}}`}>
                                     <Table.Row
@@ -95,8 +141,15 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell className="pl-0">
-                                            {ttRow.nameForPerson}
+                                        <Table.Cell className="pl-0 flex justify-between">
+                                            <span className="inline-block">{ttRow.nameForPerson}</span>
+                                            <span className="inline-block">
+                                                {
+                                                    postDispatcher?.personaname
+                                                        ? <span className="flex items-center"><span className="hidden md:inline">{postDispatcher?.personaname}</span><img className="mx-2" width={16} src={postDispatcher?.avatar} alt="avatar" /></span>
+                                                        : <></>
+                                                }
+                                            </span>
                                         </Table.Cell>
                                         <Table.Cell>
                                             {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
@@ -115,7 +168,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         </Table.Cell>
                                     </Table.Row>
                                 {
-                                    ttRow.speedLimitsToNextStation.map((sltn, _index: number) => {
+                                    showSpeedLimits && ttRow.speedLimitsToNextStation.map((sltn, _index: number) => {
                                         const vMaxHigh = parseInt(sltn.vMax) > 100;
                                         const vMaxMedium = parseInt(sltn.vMax) >= 70 && parseInt(sltn.vMax) <= 100;
                                         const vMaxLow = parseInt(sltn.vMax) < 70;

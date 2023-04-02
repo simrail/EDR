@@ -80,6 +80,8 @@
   "DRIVER_DETAILS_start_station": "Originating station",
   "DRIVER_DETAILS_end_station": "Destination station",
   "DRIVER_DETAILS_service_type": "Service type",
-  "DRIVER_DETAILS_train_model": "Train model"
+  "DRIVER_DETAILS_train_model": "Train model",
+  "DRIVER_DETAILS_auto_scroll": "Auto scroll",
+  "DRIVER_DETAILS_speed_limits": "Speed limits"
   
 }

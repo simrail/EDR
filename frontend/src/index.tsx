@@ -16,6 +16,7 @@ declare global {
     interface Window {
         timeRefreshWebWorkerId: number;
         trainsRefreshWebWorkerId: number;
+        stationsRefreshWebWorkerId: number;
     }
 }
 

@@ -126,6 +126,7 @@ type Props = {
 
 const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     const [autoScroll, setAutoScroll] = React.useState(true);
+    const [showSpeedLimits, setShowSpeedLimits] = React.useState(false);
     const [serverTzOffset, setServerTzOffset] = React.useState<number>();
     const [trainTimetable, setTrainTimetable] = React.useState<TrainTimeTableRow[] | undefined>();
     const [train, setTrain] = React.useState<Train | undefined>();
@@ -166,7 +167,15 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         const component = node.getId();
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {
             return (
-                <TrainTimetable autoScroll={autoScroll} trainTimetable={trainTimetable} train={train} allStationsInpath={allStationsInPath} isWebpSupported={isWebpSupported}/>
+                <TrainTimetable
+                    autoScroll={autoScroll}
+                    trainTimetable={trainTimetable}
+                    train={train}
+                    allStationsInpath={allStationsInPath}
+                    isWebpSupported={isWebpSupported}
+                    serverCode={serverCode}
+                    showSpeedLimits={showSpeedLimits}
+                />
             );
         }
         if (component === "train-details-layout" && train && trainTimetable) {
@@ -191,7 +200,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         )
         : (
             <div>
-                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
+                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} setShowSpeedLimits={setShowSpeedLimits} showSpeedLimits={showSpeedLimits} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
                 {model && (
                     <div className="relative h-[calc(100vh-40px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />

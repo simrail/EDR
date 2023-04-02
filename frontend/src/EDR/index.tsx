@@ -169,7 +169,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         }
         return () => window.clearInterval(window.trainsRefreshWebWorkerId);
         // eslint-disable-next-line
-    }, [serverCode, players]);
+    }, [serverCode]);
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {

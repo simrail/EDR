@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { countriesFlags } from "../config";
 import {DateTimeDisplay} from "../EDR/components/DateTimeDisplay";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     trainNumber: string;
@@ -11,12 +12,15 @@ type Props = {
     serverCode: string;
     serverTzOffset: number;
     autoScroll: boolean;
+    showSpeedLimits: boolean;
     setAutoScroll: (v: boolean) => void;
     resetLayout: () => void;
+    setShowSpeedLimits: (v: boolean) => void;
 }
-export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, setAutoScroll, resetLayout}) => {
+export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, showSpeedLimits, setAutoScroll, resetLayout, setShowSpeedLimits}) => {
+    const {t} = useTranslation();
     return (
-        <div className="sticky z-20 px-2 t-0 shadow-md w-full h-[40px] flex columns-3 items-center bg-white dark:bg-slate-800 overflow-x-auto">
+        <div className="sticky z-20 px-2 t-0 shadow-md w-full h-[40px] flex columns-3 items-center bg-white dark:bg-slate-800 overflow-x-auto justify-between">
             <div className="flex max-h-[28px] w-max-content">
                 <Link to={`/${serverCode}/trains`} className="flex underline hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
@@ -24,19 +28,22 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                     </svg>
                     Back to Trains
                 </Link>
-            </div>
-            <div className="grow flex justify-between">
                 <div className="w-full justify-start items-center hidden md:flex">
                     <span className="ml-2 mr-1 child:w-6 child:h-auto shadow-md" dangerouslySetInnerHTML={{ __html: countriesFlags[serverCode.slice(0, 2).toUpperCase()].toString() }} />
                         <span className="font-bold mr-2">{serverCode.toUpperCase()}
                     </span>
                     - {trainNumber} - {trainDetails.Vehicles[0]}
                 </div>
+            </div>
+            <div className="flex">
                 <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} hideDetails/>
             </div>
-            <div className="flex justify-end">
+            <div className="flex">
                 <div className="flex items-center mx-2">
-                    Auto&nbsp;scroll: <Button onClick={() => setAutoScroll(!autoScroll)} className="ml-1" size="xs">{autoScroll ? "On" : "Off"}</Button>
+                {t('DRIVER_DETAILS_auto_scroll')}: <Button onClick={() => setAutoScroll(!autoScroll)} color={autoScroll ? undefined : 'light'} className="ml-1" size="xs">{autoScroll ? "On" : "Off"}</Button>
+                </div>
+                <div className="flex items-center mx-2">
+                    {t('DRIVER_DETAILS_speed_limits')}: <Button onClick={() => setShowSpeedLimits(!showSpeedLimits)} color={showSpeedLimits ? undefined : 'light'} className="ml-1" size="xs">{showSpeedLimits ? "On" : "Off"}</Button>
                 </div>
                 <div className="flex items-center ml-0 mx-2">
                     <Button onClick={resetLayout} className="ml-1" color="light" size="xs">Reset Driver View</Button>
