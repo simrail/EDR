@@ -32,7 +32,6 @@ type Props = {
     playSoundNotification: (callback: () => void) => void;
     post: string;
     serverCode: string;
-    setGraphModalOpen: (isOpen: boolean) =>  void;
     isWebpSupported: boolean;
     filterConfig: FilterConfig;
     setFilterConfig: (newFilterConfig: FilterConfig) => void;
@@ -42,7 +41,7 @@ type Props = {
 
 export const EDRTable: React.FC<Props> = ({
       playSoundNotification, timetable, trainsWithDetails, serverTzOffset,
-      post, serverCode, setGraphModalOpen, isWebpSupported, filterConfig, setFilterConfig, players, trainTimetables
+      post, serverCode, isWebpSupported, filterConfig, setFilterConfig, players, trainTimetables
     }) => {
     const [filter, setFilter] = React.useState<string | undefined>();
     const [mapModalTrainId, setMapModalTrainId] = React.useState<string | undefined>();
@@ -81,7 +80,6 @@ export const EDRTable: React.FC<Props> = ({
             bounds={{...bounds, showStopColumn}}
             timetableLength={timetable.length}
             setFilter={setFilter}
-            setGraphModalOpen={setGraphModalOpen}
             streamMode={streamMode}
             setStreamMode={setStreamMode}
             filterConfig={filterConfig}

@@ -19,7 +19,6 @@ type Props = {
     timetableLength: number;
 
     setFilter: (value: string | undefined) => void;
-    setGraphModalOpen: (isOpen: boolean) =>  void;
     streamMode: boolean;
     setStreamMode: (v: boolean) => void;
     filterConfig: FilterConfig;
@@ -57,7 +56,7 @@ const getDisplayMode = (filterConfig: FilterConfig) => {
 
 export const Header: React.FC<Props> = ({
     serverTzOffset, serverCode, postCfg, bounds, timetableLength,
-    setFilter, setGraphModalOpen, streamMode, setStreamMode, filterConfig, setFilterConfig
+    setFilter, streamMode, setStreamMode, filterConfig, setFilterConfig
 }) => {
     const {t} = useTranslation();
 
@@ -85,7 +84,7 @@ export const Header: React.FC<Props> = ({
                 <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
                 <div className="flex items-center">
                     <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>Stream mode</Button>
-                    <Button size="xs" className="mr-2" onClick={() => setGraphModalOpen(true)}>📈 {t("EDR_GRAPH_rcs")}</Button>
+                    <Button size="xs" className="mr-2" onClick={() => window.open(document.URL + "?graphFullScreenMode=1", "_blank")}>📈 {t("EDR_GRAPH_rcs")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />
                 </div>

@@ -248,7 +248,6 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 trainsWithDetails={trainsWithDetails as { [k: string]: DetailedTrain }}
                 post={post!}
                 serverCode={serverCode!}
-                setGraphModalOpen={setGraphModalOpen}
                 isWebpSupported={isWebpSupported}
                 filterConfig={filterConfig}
                 setFilterConfig={setFilterConfig}
