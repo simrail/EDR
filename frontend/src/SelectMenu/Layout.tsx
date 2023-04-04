@@ -102,7 +102,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                 navNextItem={navNextItem}
             />
         )}
-        <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "cover"}} className="min-h-screen">
+        <div style={{backgroundImage: "url('"+background+"')", backgroundSize: "auto"}} className="bg-fixed min-h-screen">
             <div className="pl-4 pt-4 flex justify-center mr-0 flex-wrap lg:justify-end lg:mr-16 lg:flex-nowrap">
                 <Button size="xs" color="light" className="mx-2 my-2 lg:my-0" href="https://forum.simrail.eu/">
                     <span className="inline-flex items-center "><img src={SGCS} height={16} width={16} alt="Community logo"/>&nbsp;Simrail Official</span>
