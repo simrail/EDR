@@ -23,105 +23,105 @@ type StationNeighbours = {
 }
 
 export const dispatchDirections: NumericDictionary<StationNeighbours> = {
-    [StationId.Katowice_Zawodzie]: {
-        left: [StationId.Sosnowiec_Gl_pzs_R52],
-        right: [StationId.Katowice]
+    [StationId.katowice_zawodzie]: {
+        left: [StationId.sosnowiec_gl__pzs_r52],
+        right: [StationId.katowice]
     },
-    [StationId.Sosnowiec_Gl_pzs_R52]: {
-        down: [StationId.Sosnowiec_Poludniowy],
-        left: [StationId.Katowice_Zawodzie],
-        right: [StationId.Sosnowiec_Glowny]
+    [StationId.sosnowiec_gl__pzs_r52]: {
+        down: [StationId.sosnowiec_poludniowy],
+        left: [StationId.katowice_zawodzie],
+        right: [StationId.sosnowiec_glowny]
     },
-    [StationId.Sosnowiec_Glowny]: {
-        down: [StationId.Sosnowiec_Poludniowy],
-        left: [StationId.Sosnowiec_Gl_pzs_R52],
-        right: [StationId.Bedzin]
+    [StationId.sosnowiec_glowny]: {
+        down: [StationId.sosnowiec_poludniowy],
+        left: [StationId.sosnowiec_gl__pzs_r52],
+        right: [StationId.bedzin]
     },
-    [StationId.Bedzin]: {
-        left: [StationId.Sosnowiec_Glowny],
-        right: [StationId.Dabrowa_Gornicza]
+    [StationId.bedzin]: {
+        left: [StationId.sosnowiec_glowny],
+        right: [StationId.dabrowa_gornicza]
     },
-    [StationId.Dabrowa_Gornicza]: {
-        left: [StationId.Bedzin],
-        right: [StationId.Dabrowa_Gornicza_Zabkowice]
+    [StationId.dabrowa_gornicza]: {
+        left: [StationId.bedzin],
+        right: [StationId.dabrowa_gornicza_zabkowice]
     },
-    [StationId.Dabrowa_Gornicza_Zabkowice]: {
-        left: [StationId.Dabrowa_Gornicza, StationId.Dabrowa_Gornicza_Huta_Katowice_R7, StationId.Dabrowa_Gornicza_Huta_Katowice],
-        right: [StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Lazy_Lc]
+    [StationId.dabrowa_gornicza_zabkowice]: {
+        left: [StationId.dabrowa_gornicza, StationId.dabrowa_gornicza_huta_katowice_r7, StationId.dabrowa_gornicza_huta_katowice],
+        right: [StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.lazy_lc]
     },
-    [StationId.Lazy_La]: {
-        left: [StationId.Lazy],
-        right: [StationId.Zawiercie],
+    [StationId.lazy_la]: {
+        left: [StationId.lazy],
+        right: [StationId.zawiercie],
     },
-    [StationId.Lazy_Lc]: {
-        left: [StationId.Lazy],
-        right: [StationId.Dabrowa_Gornicza_Zabkowice, StationId.Dabrowa_Gornicza_Zabkowice_DZA, StationId.Dabrowa_Gornicza_Zabkowice_DZA_R4_7, StationId.Przemiarki]
+    [StationId.lazy_lc]: {
+        left: [StationId.lazy],
+        right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.przemiarki]
     },
-    [StationId.Zawiercie]: {
-        left: [StationId.Lazy_La],
-        right: [StationId.Myszkow, StationId.Gora_Wlodowska]
+    [StationId.zawiercie]: {
+        left: [StationId.lazy_la],
+        right: [StationId.myszkow, StationId.gora_wlodowska]
     },
-    [StationId.Gora_Wlodowska]: {
-        left: [StationId.Zawiercie],
-        right: [StationId.Psary]
+    [StationId.gora_wlodowska]: {
+        left: [StationId.zawiercie],
+        right: [StationId.psary]
     },
-    [StationId.Psary]: {
-        down: [StationId.Starzyny, StationId.Starzyny_R5],
-        left: [StationId.Gora_Wlodowska],
-        right: [StationId.Knapowka]
+    [StationId.psary]: {
+        down: [StationId.starzyny, StationId.starzyny_r5],
+        left: [StationId.gora_wlodowska],
+        right: [StationId.knapowka]
     },
-    [StationId.Knapowka]: {
-        down: [StationId.Czarnca, StationId.Czarnca_R19],
-        left: [StationId.Psary],
-        right: [StationId.Wloszczowa_Polnoc]
+    [StationId.knapowka]: {
+        down: [StationId.czarnca, StationId.czarnca_r19],
+        left: [StationId.psary],
+        right: [StationId.wloszczowa_polnoc]
     },
-    [StationId.Wloszczowa_Polnoc]: {
-        left: [StationId.Knapowka],
-        right: [StationId.Olszamowice],
-        up: [StationId.Zelislawice, StationId.Zelislawice_R6]
+    [StationId.wloszczowa_polnoc]: {
+        left: [StationId.knapowka],
+        right: [StationId.olszamowice],
+        up: [StationId.zelislawice]
     },
-    [StationId.Olszamowice]: {
-        left: [StationId.Pilichowice],
-        right: [StationId.Wloszczowa_Polnoc]
+    [StationId.olszamowice]: {
+        left: [StationId.pilichowice],
+        right: [StationId.wloszczowa_polnoc]
     },
-    [StationId.Pilichowice]: {
-        left: [StationId.Opoczno_Poludnie],
-        right: [StationId.Olszamowice]
+    [StationId.pilichowice]: {
+        left: [StationId.opoczno_poludnie],
+        right: [StationId.olszamowice]
     },
-    [StationId.Opoczno_Poludnie]: {
-        left: [StationId.Pilichowice],
-        right: [StationId.Idzikowice]
+    [StationId.opoczno_poludnie]: {
+        left: [StationId.pilichowice],
+        right: [StationId.idzikowice]
     },
-    [StationId.Idzikowice]: {
-        down: [StationId.Radzice_R12, StationId.Radzice],
-        left: [StationId.Opoczno_Poludnie],
-        right: [StationId.Strzalki],
-        up: [StationId.Radzice_pzs_R31],
+    [StationId.idzikowice]: {
+        down: [StationId.radzice],
+        left: [StationId.opoczno_poludnie],
+        right: [StationId.strzalki],
+        up: [StationId.radzice_pzs_r31],
     },
-    [StationId.Grodzisk_Mazowiecki]: {
-        left: [StationId.Pruszkow],
-        right: [StationId.Zyrardow, StationId.Korytow]
+    [StationId.grodzisk_mazowiecki]: {
+        left: [StationId.pruszkow],
+        right: [StationId.zyrardow, StationId.korytow]
     },
-    [StationId.Sosnowiec_Poludniowy]: {
-        left: [StationId.Sosnowiec_Glowny],
-        right: [StationId.Sosnowiec_Dandowka],
-        down: [StationId.Sosnowiec_Gl_pzs_R52]
+    [StationId.sosnowiec_poludniowy]: {
+        left: [StationId.sosnowiec_glowny],
+        right: [StationId.sosnowiec_dandowka],
+        down: [StationId.sosnowiec_gl__pzs_r52]
     },
-    [StationId.Dabrowa_Gornicza_Wschodnia]: {
-        left: [StationId.Dabrowa_Gornicza_Strzemieszyce_R75, StationId.Dabrowa_Gornicza_Strzemieszyce, StationId.Dorota],
-        right: [StationId.Slawkow, StationId.Koziol_R12, StationId.Koziol]
+    [StationId.dabrowa_gornicza_wschodnia]: {
+        left: [StationId.dabr_gor_strzem__r75, StationId.dabrowa_gornicza_strzemieszyce, StationId.dorota],
+        right: [StationId.slawkow, StationId.koziol_r12, StationId.koziol]
     },
-    [StationId.Dorota]: {
-        left: [StationId.Juliusz, StationId.Sosnowiec_Maczki],
-        right: [StationId.Dabrowa_Gornicza_Wschodnia, StationId.Dabrowa_Gornicza_Poludniowa]
+    [StationId.dorota]: {
+        left: [StationId.juliusz, StationId.sosnowiec_maczki],
+        right: [StationId.dabrowa_gornicza_wschodnia, StationId.dabrowa_gornicza_poludniowa]
     },
-    [StationId.Korytow]: {
-        left: [StationId.Szeligi],
-        right: [StationId.Grodzisk_Mazowiecki]
+    [StationId.korytow]: {
+        left: [StationId.szeligi],
+        right: [StationId.grodzisk_mazowiecki]
     },
-    [StationId.Szeligi]: {
-        left: [StationId.Biala_Rawska],
-        right: [StationId.Korytow]
+    [StationId.szeligi]: {
+        left: [StationId.biala_rawska],
+        right: [StationId.korytow]
     }
 }
 
