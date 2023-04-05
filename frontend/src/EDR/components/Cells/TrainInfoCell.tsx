@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { ISteamUser } from "../../../config/ISteamUser";
 import { differenceInMinutes } from "date-fns";
 import { postConfig, StationConfig } from "../../../config/stations";
+import { edrImagesMap, edrWebpImagesMap } from "../../../config";
 
 type Props = {
     ttRow: TimeTableRow;
@@ -47,6 +48,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const ETA = ETADynamic ? (predictiveETA < ETADynamic ? predictiveETA : ETADynamic) : predictiveETA;
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
+    const icons = isWebpSupported ? edrWebpImagesMap : edrImagesMap;
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
     const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srId || postCfg.secondaryPosts?.some(post => postConfig[post]?.srId === nextStationName)) && distanceFromStation < 3);
 
@@ -78,6 +80,36 @@ export const TrainInfoCell: React.FC<Props> = ({
                                 <Button size="xs" className="ml-1"><img src={ScheduleIcon} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show timetable"/></Button>
                             </Link>
                         </Tooltip>
+                        { (ttRow.isQualityTracked) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_quality_tracked")}</span>}>
+                                <span><img src={icons.QUALITY_TRACK} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
+                        { (ttRow.isOverGauge) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_over_gauge")}</span>}>
+                                <span><img src={icons.OVER_GAUGE} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
+                        { (ttRow.isOverWeight) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_over_weight")}</span>}>
+                                <span><img src={icons.OVER_WEIGHT} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
+                        { (ttRow.isHighRiskCargo) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_high_risk")}</span>}>
+                                <span><img src={icons.HIGH_RISK} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
+                        { (ttRow.isDangerousCargo) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_dangerous")}</span>}>
+                                <span><img src={icons.DANGEROUS} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
+                        { (ttRow.isOtherExceptional) &&
+                            <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_special_cargo")}</span>}>
+                                <span><img src={icons.SPECIAL_CARGO} height={streamMode ? 16 : 32} width={streamMode ? 16 : 32} alt="train-icon"/></span>
+                            </Tooltip>
+                        }
                     </span> }
                 </div>
                 <div className="flex md:inline">

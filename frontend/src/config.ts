@@ -4,11 +4,23 @@ import TRACK from './images/icons/png/track.png';
 import RIGHT_ARROW from './images/icons/png/right-chevron.png';
 import BELL from './images/icons/png/bell.png';
 import CHECK from './images/icons/png/check.png';
+import QUALITY_TRACK from './images/icons/png/quality.png';
+import OVER_GAUGE from './images/icons/png/overgauge.png';
+import OVER_WEIGHT from './images/icons/png/overweight.png';
+import HIGH_RISK from './images/icons/png/highrisk.png';
+import DANGEROUS from './images/icons/png/dangerous.png';
+import SPECIAL_CARGO from './images/icons/png/specialcargo.png';
 import LAYOVER_WEBP from "./images/icons/png/layover.png";
 import TRACK_WEBP from './images/icons/png/track.png';
 import RIGHT_ARROW_WEBP from './images/icons/png/right-chevron.png';
 import BELL_WEBP from './images/icons/png/bell.png';
 import CHECK_WEBP from './images/icons/png/check.png';
+import QUALITY_TRACK_WEBP from './images/icons/webp/quality.webp';
+import OVER_GAUGE_WEBP from './images/icons/webp/overgauge.webp';
+import OVER_WEIGHT_WEBP from './images/icons/webp/overweight.webp';
+import HIGH_RISK_WEBP from './images/icons/webp/highrisk.webp';
+import DANGEROUS_WEBP from './images/icons/webp/dangerous.webp';
+import SPECIAL_CARGO_WEBP from './images/icons/webp/specialcargo.webp';
 
 import BN from "./images/posts/jpg/Bedzin.jpg";
 import DG from "./images/posts/jpg/Dabrowa_Gornicza.jpg";
@@ -129,6 +141,12 @@ export const edrImagesMap : {[k: string]: string} = {
     RIGHT_ARROW,
     BELL,
     CHECK,
+    QUALITY_TRACK,
+    OVER_GAUGE,
+    OVER_WEIGHT,
+    HIGH_RISK,
+    DANGEROUS,
+    SPECIAL_CARGO
 }
 
 export const edrWebpImagesMap : {[k: string]: string} = {
@@ -137,6 +155,12 @@ export const edrWebpImagesMap : {[k: string]: string} = {
     RIGHT_ARROW: RIGHT_ARROW_WEBP,
     BELL: BELL_WEBP,
     CHECK: CHECK_WEBP,
+    QUALITY_TRACK: QUALITY_TRACK_WEBP,
+    OVER_GAUGE: OVER_GAUGE_WEBP,
+    OVER_WEIGHT: OVER_WEIGHT_WEBP,
+    HIGH_RISK: HIGH_RISK_WEBP,
+    DANGEROUS: DANGEROUS_WEBP,
+    SPECIAL_CARGO: SPECIAL_CARGO_WEBP
 }
 
 export const searchSeparator = ','
