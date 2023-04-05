@@ -11,16 +11,17 @@ const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
         <div className="flex items-center flex-col lg:flex-row align-center">
             <span className="flex">
                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
-                    <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
+                    <img id="layover_test" className="h-[13px] lg:h-[20px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                 </Tooltip>
                 {Math.floor(ttRow.plannedStop)}&nbsp;{t("EDR_TRAINROW_layover_minutes")}
             </span>
             <span className="flex">
                 {ttRow.platform && <>
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_platform")}</span>}>
-                        <img className="mx-2 pl-1 h-[13px] lg:h-[26px]" src={edrImagesMap.TRACK} alt="track"/>
+                        <img className="mx-2 pl-1 h-[13px] lg:h-[20px]" src={edrImagesMap.TRACK} alt="track"/>
                     </Tooltip>
-                    {ttRow.platform}&nbsp;/&nbsp;{ttRow.track}</>}
+                    {ttRow.platform}&nbsp;/&nbsp;{ttRow.track}</>
+                }
             </span>
         </div>
     ) : null;
@@ -36,6 +37,17 @@ type Props = {
 export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData, streamMode}) => {
     return <td className={tableCellCommonClassnames(streamMode)} ref={headerFifthColRef}>
         <PlatformData ttRow={ttRow} />
-        { secondaryPostData.map((spd: TimeTableRow, i: number) => <span key={spd.trainNoLocal + i}><hr /><PlatformData ttRow={spd} /></span>)}
+        { secondaryPostData.map((spd: TimeTableRow, i: number) => {
+            if (spd.platform) {
+                return (
+                    <span key={spd.trainNoLocal + i}>
+                        <hr />
+                        <PlatformData ttRow={spd} />
+                    </span>
+                )
+            } else {
+                return <span key={spd.trainNoLocal + i}></span>; 
+            }
+        })}
     </td>
 };
