@@ -13,11 +13,15 @@
 - Changed some train direction indicators on the EDR view for Knapówka & Włoszczowa Północ
 - The language selector has been alphabetically sorted and now uses native words for supported languages
 - Added support for 2 (probably) upcoming dispatch posts: Łazy Ła & Dąbrowa Górnicza Ząbkowice
+- Added support for upcoming train (service) types
 
 ### Fixes
 
 - Some dispatch stations showed their timezone with a double negative sign
+- The graph view now opens directly in a new window instead of the non-functional Modal (pop-up)
 - Fixed several situations where the EDR view could fail to load
+- Fixed background image stretching to infinity if the page is long enough
+- Fixed Stop column display for multi-timetable posts (Sosnowiec Główny)
 
 ## *2.0 - 2023-03-27*
 
