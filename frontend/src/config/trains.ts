@@ -75,19 +75,11 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF
 export const configByType: {[k: string ]: {color: string, graphColor: string}} = {
-    "ROJ": {
-        color: "success",
-        graphColor: "green",
-    },
-    "MPE": {
-        graphColor: "green",
+    "ECE": {
+        graphColor: "LawnGreen",
         color: "success"
     },
-    "MOJ": {
-        color: "success",
-        graphColor: "green",
-    },
-    "ECE": {
+    "EIE": {
         graphColor: "LawnGreen",
         color: "success"
     },
@@ -95,24 +87,68 @@ export const configByType: {[k: string ]: {color: string, graphColor: string}} =
         color: "success",
         graphColor: "red",
     },
-    "RPJ": {
-        color: "success",
-        graphColor: "green",
-    },
     "LTE": {
         color: "gray",
         graphColor: "gray",
     },
-    "TME": {
+    "MOJ": {
+        color: "success",
+        graphColor: "green",
+    },
+    "MPE": {
+        graphColor: "green",
+        color: "success"
+    },
+    "PWJ": {
+        graphColor: "green",
+        color: "gray"
+    },
+    "RAJ": {
+        color: "success",
+        graphColor: "green",
+    },
+    "ROJ": {
+        color: "success",
+        graphColor: "green",
+    },
+    "RPJ": {
+        color: "success",
+        graphColor: "green",
+    },
+    "TDE": {
         color: "warning",
         graphColor: "orange",
     },
-    "TCE": {
+    "TKE": {
         color: "warning",
         graphColor: "orange",
     },
     "TLE": {
         color: "warning",
         graphColor: "orange",
+    },
+    "TME": {
+        color: "warning",
+        graphColor: "orange",
+    },
+    "TNE": {
+        color: "warning",
+        graphColor: "orange",
+    },
+    "TRE": {
+        color: "warning",
+        graphColor: "orange",
+    },
+    "TSE": {
+        color: "warning",
+        graphColor: "orange",
+    },
+    "ZNE": {
+        color: "gray",
+        graphColor: "gray",
+    },
+    "ZXE": {
+        color: "gray",
+        graphColor: "gray",
     },
 }
