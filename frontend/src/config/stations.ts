@@ -125,34 +125,6 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     }
 }
 
-export const internalIdToPointId: {[k: string]: number} = {
-    "T1_BZ": 124,
-    "BZ": 124,
-    "LZ_LC": 2375,
-    "LZ_LA": 2374,
-    "SG_R52": 3991,
-    "SG": 3993,
-    "DG": 719,
-    "GW": 1193,
-    "PS": 3436,
-    "KN": 1772,
-    "WP": 4987,
-    "OZ": 2969,
-    "PI": 3200,
-    "OP_PO": 2993,
-    "ZA": 5262,
-    "DG_WZ": 733,
-    "DG_ZA": 734,
-    "SP": 4010,
-    "IDZ": 1349,
-    "KZ": 1655,
-    "SG_PO": 4010,
-    "GRO_MAZ": 1251,
-    "DOR": 835,
-    "KOR": 1852,
-    "SZE": 4338
-}
-
 export const postConfig: Dictionary<StationConfig> = {
     GW: {
         id: "GW",
