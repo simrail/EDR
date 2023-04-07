@@ -22,6 +22,7 @@
 - Fixed several situations where the EDR view could fail to load
 - Fixed background image stretching to infinity if the page is long enough
 - Fixed Stop column display for multi-timetable posts (Sosnowiec Główny)
+- Fixed missing pictures for some trains due to the game update on 2023-04-07
 
 ## *2.0 - 2023-03-27*
 

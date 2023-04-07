@@ -25,11 +25,13 @@ import SPECIAL_CARGO_WEBP from './images/icons/webp/specialcargo.webp';
 import BN from "./images/posts/jpg/Bedzin.jpg";
 import DG from "./images/posts/jpg/Dabrowa_Gornicza.jpg";
 import DGW from "./images/posts/jpg/Dabrowa_Gornicza_Wschodnia.jpg";
+import DOR from "./images/posts/jpg/Dorota.jpg";
 import GM from "./images/posts/jpg/Grodzisk_Mazowiecki.jpg";
 import GW from "./images/posts/jpg/Gora_Wlodowska.jpg";
 import IDZ from "./images/posts/jpg/Idzikowice.jpg";
-import KZ from "./images/posts/jpg/Katowice_Zawodzie.jpg";
 import KN from "./images/posts/jpg/Knapowka.jpg";
+import KOR from './images/posts/jpg/Korytow.jpg';
+import KZ from "./images/posts/jpg/Katowice_Zawodzie.jpg";
 import LC from "./images/posts/jpg/Lazy_Lc.jpg";
 import OL from "./images/posts/jpg/Olszamowice.jpg";
 import OP_PO from "./images/posts/jpg/Opoczno_Poludnie.jpg";
@@ -44,11 +46,13 @@ import ZA from "./images/posts/jpg/Zawiercie.jpg";
 import BN_WEBP from "./images/posts/webp/Bedzin.webp";
 import DG_WEBP from "./images/posts/webp/Dabrowa_Gornicza.webp";
 import DGW_WEBP from "./images/posts/webp/Dabrowa_Gornicza_Wschodnia.webp";
+import DOR_WEBP from "./images/posts/webp/Dorota.webp";
 import GM_WEBP from "./images/posts/webp/Grodzisk_Mazowiecki.webp";
 import GW_WEBP from "./images/posts/webp/Gora_Wlodowska.webp";
 import IDZ_WEBP from "./images/posts/webp/Idzikowice.webp";
-import KZ_WEBP from "./images/posts/webp/Katowice_Zawodzie.webp";
+import KOR_WEBP from './images/posts/webp/Korytow.webp';
 import KN_WEBP from "./images/posts/webp/Knapowka.webp";
+import KZ_WEBP from "./images/posts/webp/Katowice_Zawodzie.webp";
 import LC_WEBP from "./images/posts/webp/Lazy_Lc.webp";
 import OL_WEBP from "./images/posts/webp/Olszamowice.webp";
 import OP_PO_WEBP from "./images/posts/webp/Opoczno_Poludnie.webp";
@@ -98,11 +102,13 @@ export const internalConfigPostIds: {[k: string]: string} = {
 export const optimizedPostsImagesMap: {[k: string]: string} = {
     B: BN,
     DG,
+    DRA: DOR,
     DW: DGW,
     GR: GM,
     GW,
     ID: IDZ,
     KN,
+    KR: KOR,
     KZ,
     ŁC: LC,
     OL,
@@ -118,11 +124,13 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
 export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     B: BN_WEBP,
     DG: DG_WEBP,
+    DRA: DOR_WEBP,
     DW: DGW_WEBP,
     GR: GM_WEBP,
     GW: GW_WEBP,
     ID: IDZ_WEBP,
     KN: KN_WEBP,
+    KR: KOR_WEBP,
     KZ: KZ_WEBP,
     ŁC: LC_WEBP,
     OL: OL_WEBP,
