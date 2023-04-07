@@ -14,9 +14,9 @@ type Props = {
     trainMustDepart: boolean;
     playSoundNotification: (callBack: () => void) => void
     streamMode: boolean;
-
+    isTrainOffline: boolean;
 }
-export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNotification, ttRow, headerSixthhColRef, trainHasPassedStation, streamMode}) => {
+export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNotification, ttRow, headerSixthhColRef, trainHasPassedStation, streamMode, isTrainOffline}) => {
     const {t} = useTranslation();
     const [notificationEnabled, setNotificationEnabled] = React.useState(false);
 
@@ -32,7 +32,7 @@ export const TrainDepartureCell: React.FC<Props> = ({trainMustDepart,playSoundNo
                 {format(ttRow.scheduledDepartureObject, 'HH:mm')}
                 <div className="inline-flex items-center h-full pl-4 hidden lg:block">
                     {
-                        !trainHasPassedStation && (trainMustDepart ?
+                        !trainHasPassedStation && !isTrainOffline && (trainMustDepart ?
                                 <Badge className="animate-pulse duration-1000" color="warning">{t('EDR_TRAINROW_train_departing')}</Badge>
                                 :
                             <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_notify")}</span>}>

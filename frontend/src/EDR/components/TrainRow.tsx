@@ -131,6 +131,7 @@ const TableRow: React.FC<Props> = (
             trainMustDepart={trainMustDepart}
             playSoundNotification={playSoundNotification}
             streamMode={streamMode}
+            isTrainOffline={!trainDetails}
         />
         <TrainToCell ttRow={ttRow} headerSeventhColRef={headerSeventhColRef} secondaryPostData={secondaryPostData}
                      streamMode={streamMode}/>
