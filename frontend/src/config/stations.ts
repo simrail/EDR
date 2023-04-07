@@ -49,6 +49,10 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         left: [StationId.dabrowa_gornicza, StationId.dabrowa_gornicza_huta_katowice_r7, StationId.dabrowa_gornicza_huta_katowice],
         right: [StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.lazy_lc]
     },
+    [StationId.lazy]: {
+        left: [StationId.lazy_lc],
+        right: [StationId.lazy_la, StationId.lazy_r52]
+    },
     [StationId.lazy_la]: {
         left: [StationId.lazy],
         right: [StationId.zawiercie],
@@ -279,12 +283,6 @@ export const postConfig: Dictionary<StationConfig> = {
         srId:"Łazy",
         trainPosRange: 0.5,
         platformPosOverride: [19.3866133, 50.4284008]
-    },
-    LZ_LB: {
-        id: "LZ_LB",
-        srId: "Łazy ŁB",
-        trainPosRange: 0.5,
-        platformPosOverride: [19.3841013, 50.4311907]
     },
     LZ_LA : {
         id: "LZ_LA",
@@ -658,12 +656,6 @@ export const postConfig: Dictionary<StationConfig> = {
         srId: "Żyrardów",
         trainPosRange: 0.5,
         platformPosOverride: [20.448360, 52.052271]
-    },
-    KOZ_R12: {
-        id: "KOZ_R12",
-        srId: "Kozioł R12",
-        trainPosRange: 0.5,
-
     },
     PRZ: {
         id: "PRZ",

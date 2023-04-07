@@ -12,7 +12,7 @@
 - The EDR view now shows a green indicator for trains approaching the station
 - Changed some train direction indicators on the EDR view for Knapówka & Włoszczowa Północ
 - The language selector has been alphabetically sorted and now uses native words for supported languages
-- Added support for 2 (probably) upcoming dispatch posts: Łazy Ła & Dąbrowa Górnicza Ząbkowice
+- Added support for 3 (probably) upcoming dispatch posts: Łazy, Łazy Ła & Dąbrowa Górnicza Ząbkowice
 - Added support for upcoming train (service) types
 
 ### Fixes
