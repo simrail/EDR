@@ -147,7 +147,10 @@ export const internalIdToPointId: {[k: string]: number} = {
     "IDZ": 1349,
     "KZ": 1655,
     "SG_PO": 4010,
-    "GRO_MAZ": 1251
+    "GRO_MAZ": 1251,
+    "DOR": 835,
+    "KOR": 1852,
+    "SZE": 4338
 }
 
 export const postConfig: Dictionary<StationConfig> = {

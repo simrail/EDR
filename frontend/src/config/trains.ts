@@ -36,6 +36,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: E186_TRAXX,
         iconWebp: E186_TRAXX_WEBP
     },
+    "Traxx/Traxx:G": {
+        icon: E186_TRAXX,
+        iconWebp: E186_TRAXX_WEBP
+    },
     "Traxx/E186-134": {
         icon: E186_TRAXX,
         iconWebp: E186_TRAXX_WEBP
@@ -60,7 +64,15 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: EU07_CARGO,
         iconWebp: EU07_CARGO_WEBP
     },
+    "4E/4E:G": {
+        icon: EU07_CARGO,
+        iconWebp: EU07_CARGO_WEBP
+    },
     "Dragon2/ET25-002": {
+        icon: ET25_DRAGON,
+        iconWebp: ET25_DRAGON_WEBP
+    },
+    "Dragon2/ET25-002:G": {
         icon: ET25_DRAGON,
         iconWebp: ET25_DRAGON_WEBP
     },
