@@ -135,12 +135,12 @@ const WI = {
 const LZ_LC = {
     ...postConfig.LZ_LC,
     left: "WI",
-    right: "LZ",
+    right: "LZ_LB",
     branchA: "PRZ"
 };
 
 // Lazy
-const LZ = {
+const LZ_LB = {
     ...postConfig.LZ,
     left: "LZ_LC",
     right: "LZ_LA"
@@ -149,7 +149,7 @@ const LZ = {
 // Lazy LA
 const LZ_LA = {
     ...postConfig.LZ_LA,
-    left: "LZ",
+    left: "LZ_LB",
     right: "ZA"
 }
 
@@ -554,7 +554,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     CZ: CZ,
     WI: WI,
     LZ_LC: LZ_LC,
-    LZ: LZ,
+    LZ_LB,
     LZ_LA: LZ_LA,
     ZA: ZA,
     ZA_BO_PO: ZA_BO_PO,

@@ -116,11 +116,11 @@ if (RUN_DATA_HEALTHCHECKS) {
     });*/
 
     dbgTree("KO", "WC");
-    dbgTree("BK", "LZ");
+    dbgTree("BK", "LZ_LB");
 
     dbgTree("BK", "DG_SI");
     dbgTree("KO", "T1_BZ");
-    dbgTree("KO", "LZ");
+    dbgTree("KO", "LZ_LB");
     dbgTree("KO", "IDZ");
     dbgTree("KOZ", "WC");
     dbgTree("TN", "STZ");

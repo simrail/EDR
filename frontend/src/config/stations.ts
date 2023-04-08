@@ -278,8 +278,8 @@ export const postConfig: Dictionary<StationConfig> = {
             final: []
         }
     },
-    LZ: {
-        id: "LZ",
+    LZ_LB: {
+        id: "LZ_LB",
         srId:"Łazy",
         trainPosRange: 0.5,
         platformPosOverride: [19.3866133, 50.4284008]
