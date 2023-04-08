@@ -153,7 +153,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             )}
         </div>
         <div className="text-center p-4">
-            {t("FOOTER_version")} 2.0 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
+            {t("FOOTER_version")} 2.1 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
         </div>
     </div>;
 }
