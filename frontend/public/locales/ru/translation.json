@@ -36,12 +36,12 @@
   "EDR_TRAINROW_line": "Линия",
   "EDR_TRAINROW_peron": "Перон",
   "EDR_TRAINROW_platform": "Платформа",
-  "EDR_TRAINROW_position_at": "от вас в",
+  "EDR_TRAINROW_position_next": "Next",
   "EDR_TRAINROW_train_delayed": "отмененный",
   "EDR_TRAINROW_train_early": "ранний",
   "EDR_TRAINROW_train_offline": "Не в пути",
   "EDR_TRAINROW_train_stopped": "остановился",
-  "EDR_TRAINROW_train_away": "на удалении",
+  "EDR_TRAINROW_train_away": "left",
   "EDR_TRAINROW_train_minutes": "мин",
   "EDR_TRAINROW_train_eta": "ETA",
   "EDR_TRAINROW_train_departing": "отправляющийся",
@@ -80,6 +80,9 @@
   "DRIVER_DETAILS_start_station": "Originating station",
   "DRIVER_DETAILS_end_station": "Destination station",
   "DRIVER_DETAILS_service_type": "Service type",
-  "DRIVER_DETAILS_train_model": "Train model"
+  "DRIVER_DETAILS_train_model": "Train model",
+  "DRIVER_DETAILS_auto_scroll": "Auto scroll",
+  "DRIVER_DETAILS_speed_limits": "Speed limits",
+  "DRIVER_DETAILS_back_link": "Back to trains"
   
 }

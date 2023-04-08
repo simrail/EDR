@@ -36,7 +36,7 @@
   "EDR_TRAINROW_line": "Vonal",
   "EDR_TRAINROW_peron": "Peron",
   "EDR_TRAINROW_platform": "Vágány",
-  "EDR_TRAINROW_position_at": "Jelenlegi hely:",
+  "EDR_TRAINROW_position_next": "Következő",
   "EDR_TRAINROW_train_delayed": "Késés",
   "EDR_TRAINROW_train_early": "Korai",
   "EDR_TRAINROW_train_offline": "Nem közlekedik",
@@ -80,6 +80,9 @@
   "DRIVER_DETAILS_start_station": "Kiindulási állomás",
   "DRIVER_DETAILS_end_station": "Végállomás",
   "DRIVER_DETAILS_service_type": "Vonat kategória",
-  "DRIVER_DETAILS_train_model": "Mozdony típus"
+  "DRIVER_DETAILS_train_model": "Mozdony típus",
+  "DRIVER_DETAILS_auto_scroll": "Auto görgetés",
+  "DRIVER_DETAILS_speed_limits": "Sebességkorlátok",
+  "DRIVER_DETAILS_back_link": "Vonatválasztó"
   
 }

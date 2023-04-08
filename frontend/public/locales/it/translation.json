@@ -36,12 +36,12 @@
   "EDR_TRAINROW_line": "Linea",
   "EDR_TRAINROW_peron": "Piattaforma",
   "EDR_TRAINROW_platform": "Piattaforma",
-  "EDR_TRAINROW_position_at": "a",
+  "EDR_TRAINROW_position_next": "Next",
   "EDR_TRAINROW_train_delayed": "in ritardo",
   "EDR_TRAINROW_train_early": "anticipo",
   "EDR_TRAINROW_train_offline": "Non sulla linea",
   "EDR_TRAINROW_train_stopped": "fermo",
-  "EDR_TRAINROW_train_away": "allontanandosi",
+  "EDR_TRAINROW_train_away": "left",
   "EDR_TRAINROW_train_minutes": "min",
   "EDR_TRAINROW_train_eta": "ETA'",
   "EDR_TRAINROW_train_departing": "in partenza",
@@ -80,6 +80,9 @@
   "DRIVER_DETAILS_start_station": "Originating station",
   "DRIVER_DETAILS_end_station": "Destination station",
   "DRIVER_DETAILS_service_type": "Service type",
-  "DRIVER_DETAILS_train_model": "Train model"
+  "DRIVER_DETAILS_train_model": "Train model",
+  "DRIVER_DETAILS_auto_scroll": "Auto scroll",
+  "DRIVER_DETAILS_speed_limits": "Speed limits",
+  "DRIVER_DETAILS_back_link": "Back to trains"
   
 }

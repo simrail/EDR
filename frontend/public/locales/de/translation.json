@@ -36,12 +36,12 @@
   "EDR_TRAINROW_line": "Linie",
   "EDR_TRAINROW_peron": "Bahnsteig",
   "EDR_TRAINROW_platform": "Plattform",
-  "EDR_TRAINROW_position_at": "bei",
+  "EDR_TRAINROW_position_next": "Nächster",
   "EDR_TRAINROW_train_delayed": "verspätet",
   "EDR_TRAINROW_train_early": "verfrüht",
   "EDR_TRAINROW_train_offline": "Nicht in Betrieb",
   "EDR_TRAINROW_train_stopped": "steht",
-  "EDR_TRAINROW_train_away": "entfernt sich",
+  "EDR_TRAINROW_train_away": "verlassen",
   "EDR_TRAINROW_train_minutes": " min",
   "EDR_TRAINROW_train_eta": "vsl. Ankunft",
   "EDR_TRAINROW_train_departing": "abgefahren",
@@ -80,6 +80,9 @@
   "DRIVER_DETAILS_start_station": "Startbahnhof",
   "DRIVER_DETAILS_end_station": "Zielbahnhof",
   "DRIVER_DETAILS_service_type": "Dienstart",
-  "DRIVER_DETAILS_train_model": "Zugmodell"
+  "DRIVER_DETAILS_train_model": "Zugmodell",
+  "DRIVER_DETAILS_auto_scroll": "Automatisches Scrollen",
+  "DRIVER_DETAILS_speed_limits": "Geschwindigkeitsbegrenzungen",
+  "DRIVER_DETAILS_back_link": "Zurück zu den Zügen"
   
 }

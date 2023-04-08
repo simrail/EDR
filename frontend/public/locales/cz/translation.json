@@ -36,12 +36,12 @@
   "EDR_TRAINROW_line": "Trať",
   "EDR_TRAINROW_peron": "Perón",
   "EDR_TRAINROW_platform": "Nástupiště",
-  "EDR_TRAINROW_position_at": "vzd.",
+  "EDR_TRAINROW_position_next": "Next",
   "EDR_TRAINROW_train_delayed": "Zpožděný",
   "EDR_TRAINROW_train_early": "Přijíždí",
   "EDR_TRAINROW_train_offline": "Není na trati",
   "EDR_TRAINROW_train_stopped": "Stojí",
-  "EDR_TRAINROW_train_away": "Odjel",
+  "EDR_TRAINROW_train_away": "left",
   "EDR_TRAINROW_train_minutes": "min",
   "EDR_TRAINROW_train_eta": "ETA",
   "EDR_TRAINROW_train_departing": "Odjezd",
@@ -80,6 +80,9 @@
   "DRIVER_DETAILS_start_station": "Originating station",
   "DRIVER_DETAILS_end_station": "Destination station",
   "DRIVER_DETAILS_service_type": "Service type",
-  "DRIVER_DETAILS_train_model": "Train model"
+  "DRIVER_DETAILS_train_model": "Train model",
+  "DRIVER_DETAILS_auto_scroll": "Auto scroll",
+  "DRIVER_DETAILS_speed_limits": "Speed limits",
+  "DRIVER_DETAILS_back_link": "Back to trains"
   
 }
