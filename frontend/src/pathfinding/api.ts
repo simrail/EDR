@@ -47,8 +47,8 @@ export const treeTraversal = (
     // TODO: pathfinding lacks weight, wich is alright for now. (Rather good enough)
     // TODO: But it needs to take distance in count instead of number of stations
     // Else pendolino would take interesting routes lmao
-    const foundViaPath = [leftPath, rightPath, branchPathA, branchPathB].filter((p) => p?.find((e) => via && e?.id === via))
-    return foundViaPath?.[0] ?? _minBy([leftPath, rightPath, branchPathA, branchPathB], 'length');
+    const foundViaPath = [leftPath, rightPath, branchPathA, branchPathB].filter((p) => p?.find((e) => via && e?.id === via));
+    return foundViaPath?.[0] ?? _minBy([leftPath, rightPath, branchPathA, branchPathB], (p) => p?.length);
 }
 
 export const findPath = (start: ExtendedStationConfig, finish: string): PathFindingLineTrace => {
