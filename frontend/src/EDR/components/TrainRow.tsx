@@ -15,6 +15,7 @@ import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
 import { ISteamUser } from "../../config/ISteamUser";
 import { StationConfig } from "../../config/stations";
+import { getRouteInfo } from "../../api/api";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
@@ -47,11 +48,8 @@ const TableRow: React.FC<Props> = (
         serverCode, players, postCfg
     }: Props
 ) => {
+    const [distanceFromStation, setDistanceFromStation] = React.useState<number>(Number.POSITIVE_INFINITY);
     const dateNow = nowUTC(serverTzOffset);
-
-    const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
-    // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const distanceFromStation = Math.round(currentDistance * 100) / 100;
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
     const departureExpectedHours = ttRow.scheduledDepartureObject.getHours();
@@ -72,6 +70,25 @@ const TableRow: React.FC<Props> = (
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
+
+    React.useEffect(() => {
+        if (!trainDetails) {
+            setDistanceFromStation(Number.POSITIVE_INFINITY);
+        } else if (postCfg.platformPosOverride) {
+            getRouteInfo(
+                trainDetails.TrainData.Longitute,
+                trainDetails.TrainData.Latititute,
+                postCfg.platformPosOverride[0],
+                postCfg.platformPosOverride[1]
+            ).then(r => {
+                if (r === null) {
+                    setDistanceFromStation(Number.POSITIVE_INFINITY);
+                } else {
+                    setDistanceFromStation(Math.round(r.routes[0].distance / 10) / 100);
+                }
+            });
+        }
+    }, [postCfg.platformPosOverride, trainDetails]);
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
     if (filterConfig.maxRange && distanceFromStation > filterConfig.maxRange) return null;

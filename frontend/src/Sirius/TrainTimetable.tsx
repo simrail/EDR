@@ -66,7 +66,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
     })
 
     const nearestStation = _minBy(allStationsDistance, 'distance');
-    const closestStationIndex = trainTimetable.map((s) => s.nameForPerson).findIndex((s) => s === nearestStation?.srId)
+    const closestStationIndex = trainTimetable.map((s) => s.nameForPerson).findIndex((s) => s === nearestStation?.srName)
 
     const previousPlayers = React.useRef<ISteamUser[] | undefined>(undefined);
 

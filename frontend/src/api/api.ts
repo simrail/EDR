@@ -3,12 +3,21 @@ import { subHours } from "date-fns";
 import { ISteamUser } from "../config/ISteamUser";
 import { TimeTableRow } from "../EDR";
 import { TrainTimeTableRow } from "../Sirius";
+import { IRouteData } from "../config/IRouteData";
 
 export const BASE_API_URL = "http://example.com/";
+export const OSRM_API_URL = "http://example.com/"
 
 const baseApiCall = (URL: string) => {
     // TODO: Add error toast
     const outbound = BASE_API_URL + URL;
+    // console_log("Outbound URL: ", outbound)
+    return fetch(outbound).then(res => res.json());
+}
+
+const osrmApiCall = (URL: string) => {
+    // TODO: Add error toast
+    const outbound = OSRM_API_URL + URL;
     // console_log("Outbound URL: ", outbound)
     return fetch(outbound).then(res => res.json());
 }
@@ -30,7 +39,7 @@ export const getTrainTimetable = (trainId: string): Promise<TrainTimeTableRow[]>
     }));
 
 export const getTrains = (server: string): Promise<Train[]> =>
-    baseApiCall( "trains/" + server);
+    baseApiCall("trains/" + server);
 
 export const getStations = (server: string): Promise<Station[]> =>
     baseApiCall("stations/" + server);
@@ -43,3 +52,11 @@ export const getPlayer = (steamId: string): Promise<ISteamUser> =>
 
 export const getTzOffset = (serverId: string): Promise<any> =>
     baseApiCall("server/tz/" + serverId);
+
+export const getRouteInfo = (startLon: number, startLat: number, endLon: number, endLat: number): Promise<IRouteData | null> => {
+    if (startLat !== undefined && startLon !== undefined && endLon !== undefined && endLat !== undefined) {
+        return osrmApiCall(`route/v1/train/${Math.round(startLon * 1000000) / 1000000},${Math.round(startLat * 1000000) / 1000000};${endLon},${endLat}?overview=false`);
+    } else {
+        return new Promise(() => null);
+    }
+}

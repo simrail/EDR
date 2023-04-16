@@ -170,10 +170,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation || !trainTimetables) return;
+        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
         setTimeout(() => {
-            const keyedStations = _keyBy('Name', stations);
-            const addDetailsToTrains = getTrainDetails(previousTrains, post, currentStation, keyedStations, trainTimetables);
+            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables);
             const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
             setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));

@@ -27,5 +27,5 @@ export interface ITrainTimeTable {
 	mileage: number,
 	maxSpeed: number,
 	// This is not in the API, but we append it so the frontend doesn't have to query this info separately
-	speedLimitsToNextStation?: ISpeedLimit[]
+	speedLimitsToNextStation?: ISpeedLimit[],
 }
