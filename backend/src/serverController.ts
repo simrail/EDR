@@ -1,5 +1,5 @@
-import { simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
-import {BASE_AWS_API, BASE_SIMRAIL_API, internalIdToSrId} from "./config.js";
+import { simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
+import {BASE_AWS_API, BASE_SIMRAIL_API} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import { ISteamUser } from "./interfaces/ISteamUser.js";
@@ -22,12 +22,6 @@ export function getServerList(req: express.Request, res: express.Response) {
 
 export function getStationsList(req: express.Request, res: express.Response) {
     return simrailClient.get("stations-open?serverCode=" + req.params.serverCode)?.then((e) => {
-        if (e.data.count === 0) {
-            const fakedStations = Object.entries(internalIdToSrId).map(([k , n]) => ({Name: n, Prefix: k}));
-            return res
-                .setHeader("Cache-control", "public, max-age=60")
-                .send(fakedStations)
-        }
         return res
             .setHeader("Cache-control", 'public, max-age=60')
             .send((e.data as ApiResponse<Station>).data);
@@ -82,4 +76,8 @@ export function getPlayer(req: express.Request, res: express.Response) {
 // This endpoint has a very heavy rate limit (Absolute max. of 1 req./30s/server, ideally 1 req./min), hence the strict client
 export function getFullTimetable(serverCode: string) {
     return strictAwsSimrailClient.get("getEDRTimetables?serverCode=" + serverCode);
+}
+
+export function getSpeedLimitsFromSimkol() {
+    return simkolClient.get("speeds.json");
 }

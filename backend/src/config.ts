@@ -1,6 +1,6 @@
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
 export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
-export const BASE_SIMKOL_API = "https://webhost.simkol.pl";
+export const BASE_SIMKOL_API = "https://webhost.simkol.pl/";
 
 export const srHeaders = {
     "User-Agent": "Simrail.app EDR vDEV",
@@ -8,34 +8,6 @@ export const srHeaders = {
     "xx-maintainer": "CrypterEmerald",
     "xx-contact": "tally.github@gmail.com",
 };
-
-export const internalIdToSrId: {[k: string]: string} = {
-    "GW": "Góra Włodowska",
-    "PS": "Psary",
-    "KN": "Knapówka",
-    "WP" : "Włoszczowa Północ",
-    "OZ": "Olszamowice",
-    "PI": "Pilichowice",
-    "KZ": "Katowice_Zawodzie",
-    "SG": "Sosnowiec_Główny",
-    "SG_R52": "Sosnowiec_Główny R52", // TODO: Fake for staging
-    "DG": "Dąbrowa Górnicza",
-    "T1_BZ": "Będzin",
-    "BZ": "Będzin",
-    "LZ_LC": "Łazy Łc",
-    "LZ_LB": "Łazy",
-    "LZ_LA": "Łazy Ła",
-    "ZA": "Zawiercie",
-    "OP_PO": "Opoczno Południe",
-    "DG_WZ": "Dąbrowa Górnicza Wschodnia",
-    "DG_ZA": "Dąbrowa Górnicza Ząbkowice",
-    "SG_PO": "Sosnowiec Południowy",
-    "IDZ": "Idzikowice",
-    "GRO_MAZ": "Grodzisk Mazowiecki",
-    "DOR": "Dorota",
-    "KOR": "Korytów",
-    "SZE": "Szeligi"
-}
 
 export const newInternalIdToSrId: {[k: string]: string} = {
     "T1_BZ": "124",

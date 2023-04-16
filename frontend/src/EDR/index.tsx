@@ -21,8 +21,6 @@ import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
 const Graph = React.lazy(() => import("./components/Graph"));
 
-
-
 export type TimeTableRow = {
     trainNoLocal: string,
     trainName: string,
@@ -191,7 +189,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         const previousTrainIds = Object.keys(trainTimetables ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
-        Promise.all(difference.map(getTrainTimetable)).then((timetables) => {
+        Promise.all(difference.map(trainId => getTrainTimetable(trainId))).then((timetables) => {
             setTrainTimetables(groupBy(flatMap(timetables).concat(...Object.values(trainTimetables ?? {})), 'displayedTrainNumber'))
         });
     }, [trains, timetable, trainTimetables])

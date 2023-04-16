@@ -49,15 +49,16 @@ const _getOverridenStationPos = (keyedStations: Dictionary<Station>) => (postId:
     ?? [keyedStations[internalConfigPostIds[encodeURIComponent(postId)]].Longitude, keyedStations[postId].Latititude]
 
 export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, currentStation: StationConfig, keyedStations: Dictionary<Station>, trainTimetables: Dictionary<TrainTimeTableRow[]>) =>(t: Train) => {
+    const previousTrainData = previousTrains.current?.[t.TrainNoLocal as string];
     const getOverridenStationPos = _getOverridenStationPos(keyedStations);
     const inTimetableStations =  trainTimetables[t.TrainNoLocal]?.map((ttRow) => ttRow.nameForPerson) ?? Object.values(postConfig).map((p) => p.srId)
     const closestStation = getClosestStation(t, inTimetableStations);
     // TODO: Handle closestStation might be undefined
     const [pfLineTrace, distanceCompletePath] = PathFinding_FindPathAndHaversineSum((closestStation as ExtendedStationConfig).id, postConfig[post].id, post);
-    const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.directionVector : undefined;
-    const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.distanceToStation : undefined;
-    const previousPositions = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.positionsArray : undefined;
-    const previousGoingAwayFromStatn = t?.TrainNoLocal && previousTrains.current ? previousTrains.current?.[t.TrainNoLocal as string]?.goingAwayFromStation : undefined;
+    const previousDirectionVector = t?.TrainNoLocal && previousTrains.current ? previousTrainData?.directionVector : undefined;
+    const previousDistances = t?.TrainNoLocal && previousTrains.current ? previousTrainData?.distanceToStation : undefined;
+    const previousPositions = t?.TrainNoLocal && previousTrains.current ? previousTrainData?.positionsArray : undefined;
+    const previousGoingAwayFromStatn = t?.TrainNoLocal && previousTrains.current ? previousTrainData?.goingAwayFromStation : undefined;
     const trainPosVector: [number, number] = [t.TrainData.Longitute, t.TrainData.Latititute];
     const currentRawDistance = haversine(getOverridenStationPos(post), trainPosVector);
     const rawDistancesArray = _uniq<number>([...(previousDistances ?? []), currentRawDistance]);
@@ -81,7 +82,7 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
         directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
         dotProductForGoingAway: dotProductForGoingAway,
         goingAwayFromStation: dotProductForGoingAway === 0 ? previousGoingAwayFromStatn ? previousGoingAwayFromStatn  : false : dotProductForGoingAway < 0,
-        timetable: trainTimetables[t.TrainNoLocal]
+        timetable: trainTimetables[t.TrainNoLocal],
     } as DetailedTrain
 }
 

@@ -12,8 +12,9 @@
   "SELECTMENU_nav_current_server": "Current server",
   "SELECTMENU_nav_previous_server": "Previous server",
   "SELECTMENU_nav_next_server": "Next server",
+  "SELECTMENU_no_posts": "No dispatch posts available on this server",
 
-  "FOOTER_version": "version",
+  "FOOTER_version": "Version",
   "FOOTER_screenshots_by": "Screenshot by",
   "FOOTER_thanks": "Thank you to all beta testers!",
   "FOOTER_not_official": "This is not an official SimRail app!",
@@ -26,7 +27,7 @@
   "EDR_LOADING_schedules": "Schedules",
   "EDR_LOADING_stations": "Stations",
   "EDR_LOADING_trains": "Trains",
-  "EDR_LOADING_timezone": "TimeZone",
+  "EDR_LOADING_timezone": "Time zone",
   "EDR_LOADING_trains_schedules": "Train timetables",
 
   "EDR_TRAINROW_click_to_copy": "Click to copy",

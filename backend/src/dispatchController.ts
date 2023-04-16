@@ -1,4 +1,4 @@
-import {internalIdToSrId, newInternalIdToSrId, POSTS} from "./config.js";
+import {newInternalIdToSrId, POSTS} from "./config.js";
 import express from "express";
 import {getStationTimetable} from "./dataTransformer/stations.js";
 import {getTrainTimetable} from "./dataTransformer/train.js";
@@ -23,13 +23,12 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
 
     const keyedFirstPostTrains = _.keyBy(primaryPostRows, 'trainNoLocal');
 
-    // TODO: This has state, temporary fix
     secondaryPostsRows.map((secondary_post_trains) => {
-        for (const train of secondary_post_trains) {
+        secondary_post_trains.map(train => {
             if (!keyedFirstPostTrains[train.trainNoLocal]) {
                 mergedPostsRows.push(train);
             }
-        }
+        })
     });
 
     return _.sortBy(mergedPostsRows, 'scheduledArrivalObject');
@@ -43,11 +42,12 @@ export async function dispatchController(req: express.Request, res: express.Resp
         return res.sendStatus(500);
     }
 
-    if (!internalIdToSrId[post])
+    if (!newInternalIdToSrId[post]){
         return res.status(400).send({
             "error": "PEBKAC",
             "message": "Server or post is not supported"
         });
+    }
 
     try {
         const mergePosts = req.query.mergePosts === "true";
