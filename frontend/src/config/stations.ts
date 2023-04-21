@@ -681,6 +681,12 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.358590, 50.299019]
     },
+    JU: {
+        id: "JU",
+        srId: "Juliusz",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.225059, 50.272341]
+    },
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({

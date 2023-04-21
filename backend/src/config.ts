@@ -35,7 +35,8 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "GRO_MAZ": "1251",
     "DOR": "835",
     "KOR": "1852",
-    "SZE": "4338"
+    "SZE": "4338",
+    "JU": "1545",
 }
 
 export const POSTS: { [key: string]: string[] } = {
@@ -65,5 +66,6 @@ export const POSTS: { [key: string]: string[] } = {
     "GRO_MAZ": [newInternalIdToSrId["GRO_MAZ"]],
     "KOR": [newInternalIdToSrId["KOR"]],
     "DOR": [newInternalIdToSrId["DOR"]],
-    "SZE": [newInternalIdToSrId["SZE"]]
+    "SZE": [newInternalIdToSrId["SZE"]],
+    "JU": [newInternalIdToSrId["JU"]]
 };

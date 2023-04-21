@@ -127,6 +127,10 @@ export const configByType: {[k: string ]: {color: string, graphColor: string}} =
         color: "success",
         graphColor: "green",
     },
+    "TCE": {
+        color: "warning",
+        graphColor: "orange",
+    },
     "TDE": {
         color: "warning",
         graphColor: "orange",
