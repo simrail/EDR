@@ -41,7 +41,8 @@ import SG from "./images/posts/jpg/Sosnowiec_Glowny.jpg";
 import SG_PO from "./images/posts/jpg/Sosnowiec_Poludniowy.jpg";
 import WP from "./images/posts/jpg/Wloszczowa_Polnoc.jpg";
 import ZA from "./images/posts/jpg/Zawiercie.jpg";
-
+import SE from "./images/posts/jpg/Szeligi.jpg";
+import JU from "./images/posts/jpg/Juliusz.jpg";
 
 import BN_WEBP from "./images/posts/webp/Bedzin.webp";
 import DG_WEBP from "./images/posts/webp/Dabrowa_Gornicza.webp";
@@ -62,6 +63,8 @@ import SG_WEBP from "./images/posts/webp/Sosnowiec_Glowny.webp";
 import SG_PO_WEBP from "./images/posts/webp/Sosnowiec_Poludniowy.webp";
 import WP_WEBP from "./images/posts/webp/Wloszczowa_Polnoc.webp";
 import ZA_WEBP from "./images/posts/webp/Zawiercie.webp";
+import SE_WEBP from "./images/posts/webp/Szeligi.webp";
+import JU_WEBP from "./images/posts/webp/Juliusz.webp";
 
 import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL} from 'country-flag-icons/string/3x2'
 
@@ -107,6 +110,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     GR: GM,
     GW,
     ID: IDZ,
+    JU,
     KN,
     KR: KOR,
     KZ,
@@ -115,6 +119,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     OP: OP_PO,
     PI,
     PS,
+    SE,
     SG,
     SPŁ1: SG_PO,
     WP,
@@ -129,6 +134,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     GR: GM_WEBP,
     GW: GW_WEBP,
     ID: IDZ_WEBP,
+    JU: JU_WEBP,
     KN: KN_WEBP,
     KR: KOR_WEBP,
     KZ: KZ_WEBP,
@@ -137,6 +143,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     OP: OP_PO_WEBP,
     PI: PI_WEBP,
     PS: PS_WEBP,
+    SE: SE_WEBP,
     SG: SG_WEBP,
     SPŁ1: SG_PO_WEBP,
     WP: WP_WEBP,
