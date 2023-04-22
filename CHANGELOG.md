@@ -1,5 +1,17 @@
 # Simrail Community EDR Changelog
 
+## *2.2 - 2023-04-08*
+
+### Changes and features
+
+- Add support for Norwegian and Spanish languages
+- Add proper support for Juliusz & Szeligi
+
+### Fixes
+
+- TCE trains were listed as 'Other' instead of cargo
+- Optimizations and small fixes
+
 ## *2.1 - 2023-04-08*
 
 ### Changes and features

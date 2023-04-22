@@ -12,8 +12,9 @@
   "SELECTMENU_nav_current_server": "Текущий сервер",
   "SELECTMENU_nav_previous_server": "Предыдущий сервер",
   "SELECTMENU_nav_next_server": "Следующий сервер",
+  "SELECTMENU_no_posts": "No dispatch posts available on this server",
 
-  "FOOTER_version": "версия",
+  "FOOTER_version": "Version",
   "FOOTER_screenshots_by": "Скриншот от",
   "FOOTER_thanks": "Спасибо всем бета-тестерам!",
   "FOOTER_not_official": "Это не официальное приложение Sim Rail!",
@@ -26,7 +27,7 @@
   "EDR_LOADING_schedules": "Расписания",
   "EDR_LOADING_stations": "Станции",
   "EDR_LOADING_trains": "Поезда",
-  "EDR_LOADING_timezone": "TimeZone",
+  "EDR_LOADING_timezone": "Time zone",
   "EDR_LOADING_trains_schedules": "Train timetables",
 
   "EDR_TRAINROW_click_to_copy": "Нажмите, чтобы скопировать",
@@ -52,6 +53,12 @@
   "EDR_TRAINROW_show_on_map": "Показать на карте",
   "EDR_TRAINROW_show_timetable": "Показать расписание",
   "EDR_TRAINROW_switch_to_driver_view": "Switch to driver view",
+  "EDR_TRAINROW_quality_tracked": "Quality tracked",
+  "EDR_TRAINROW_over_gauge": "Oversized",
+  "EDR_TRAINROW_over_weight": "Overweight",
+  "EDR_TRAINROW_high_risk": "High risk cargo",
+  "EDR_TRAINROW_dangerous": "Dangerous cargo",
+  "EDR_TRAINROW_special_cargo": "Special trainset",
 
   "EDR_TRAINHEADER_train_number": "Поезд №",
   "EDR_TRAINHEADER_train_type": "Тип поезда",
