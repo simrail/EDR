@@ -67,8 +67,11 @@ const TableRow: React.FC<Props> = (
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
-    const arrivalTimeDelay = getTimeDelay(dateNow, expectedArrival);
-    const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
+    const actualArrivalHours = ttRow.actualArrivalObject.getHours();
+    const actualArrivalMinutes = ttRow.actualArrivalObject.getMinutes();
+    const actualArrival = ttRow.actualArrivalObject.getFullYear() > 1971 ? getDateWithHourAndMinutes(dateNow, actualArrivalHours, actualArrivalMinutes, isArrivalNextDay, isArrivalPreviousDay) : expectedArrival;
+    const arrivalTimeDelay = getTimeDelay(actualArrival, expectedArrival);
+    const departureTimeDelay = getTimeDelay(actualArrival, expectedDeparture);
 
     const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";

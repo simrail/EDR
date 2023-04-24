@@ -5,6 +5,8 @@ export interface IFrontendStationTrainRow extends Omit<IServerTrain, 'timetable'
     stopType: number,
     track: number | null,
     platform: string | null,
+    actualArrivalObject: Date,
+    actualDepartureObject: Date,
     scheduledArrivalObject: Date,
     scheduledDepartureObject: Date,
     maxSpeed: number,

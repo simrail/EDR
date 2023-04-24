@@ -1,5 +1,4 @@
 import React from "react";
-import {TimeTableRow} from "../../index";
 import {nowUTC} from "../../../utils/date";
 import {getTimetable} from "../../../api/api";
 import _keyBy from "lodash/keyBy";
@@ -24,11 +23,13 @@ import {LayoutType} from "recharts/types/util/types";
 import {Button} from "flowbite-react";
 import {useTranslation} from "react-i18next";
 import { Dictionary } from "lodash";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 export type GraphProps = {
     post: string;
     timetable: TimeTableRow[];
     serverTzOffset: number;
+    serverCode: string | undefined;
 }
 
 const dateFormatter = (date: Date) => {
@@ -44,8 +45,8 @@ const makeDate = (dateAry: string[], serverTzOffset: number) => {
     return date.getTime();
 }
 
-const getStationTimetable = (postId: string) => {
-    return getTimetable(postId).then((d) => {
+const getStationTimetable = (postId: string, serverCode: string) => {
+    return getTimetable(postId, serverCode).then((d) => {
         return [postId, _keyBy(d, "trainNoLocal")];
     });
 }
@@ -95,7 +96,7 @@ const CustomizedAxisTick = (data: any, displayMode: string, color: string) => (p
 
 
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
-const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) => {
+const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, serverCode}) => {
     const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
     const [zoom, setZoom] = React.useState<number>(1);
     const [dtNow, setDtNow] = React.useState(nowUTC(serverTzOffset));
@@ -119,7 +120,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
-        if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
+        if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post || !serverCode) return;
         const onScreenPosts = [...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post];
         const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post, ...gottenPostConfig.graphConfig.final];
         // Get all pathfinding possible paths between two stations (with intermediate stations not dispatched by players)
@@ -143,10 +144,16 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         setAllPathsOfPosts(allPaths);
 
         // Get timetable data
-        Promise.all(onScreenPosts.map(getStationTimetable))
-            .then(Object.fromEntries)
+        Promise.all(onScreenPosts.map(postId => getStationTimetable(postId, serverCode)))
+            .then(data => {
+                if (data !== null) {
+                    return Object.fromEntries(data);
+                } else {
+                    return;
+                }
+            })
             .then(setNeighboursTimetables)
-    }, [post]);
+    }, [post, serverCode]);
 
     React.useEffect(() => {
         if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;

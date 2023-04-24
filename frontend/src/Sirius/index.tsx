@@ -34,6 +34,8 @@ export type TrainTimeTableRow = {
 	trainType: string,
 	mileage: number,
 	maxSpeed: number,
+    actualArrivalObject: Date,
+    actualDepartureObject: Date,
     scheduledArrivalObject: Date,
     scheduledDepartureObject: Date,
     speedLimitsToNextStation: [{
@@ -134,7 +136,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     const {trainNumber, serverCode} = useParams();
     React.useEffect(() => {
         if (!trainNumber || !serverCode) return;
-        getTrainTimetable(trainNumber).then(setTrainTimetable);
+        getTrainTimetable(trainNumber, serverCode).then(setTrainTimetable);
         getTzOffset(serverCode).then(setServerTzOffset)
         fetchTrain(trainNumber, serverCode, setTrain);
         const intervalId = window.setInterval(() => {

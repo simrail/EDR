@@ -5,7 +5,7 @@ import { ISpeedLimitApi } from "./interfaces/ISpeedLimitApi.js";
 import { IServerTrain } from "./interfaces/IServerTrain.js";
 
 const rlClient = axiosRateLimit(axios.create(), {maxRPS: 2});
-const strictRlClient = axiosRateLimit(axios.create(), { perMilliseconds: 60000, maxRequests: 1 });
+const strictRlClient = axiosRateLimit(axios.create(), { perMilliseconds: 2000, maxRequests: 1 });
 
 export const simrailClient = {
     get: (url: string, base_url = BASE_SIMRAIL_API) => {

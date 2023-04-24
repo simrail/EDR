@@ -32,6 +32,8 @@ export const getTrainTimetable = async (trainNumber: string, trainList: IServerT
         }) ?? [];
         return {
             ...checkpoint,
+            actualArrivalObject: checkpoint.actualArrivalTime != null ? new Date(checkpoint.actualArrivalTime): new Date(0),
+            actualDepartureObject: checkpoint.actualDepartureTime != null ? new Date(checkpoint.actualDepartureTime): new Date(3000, 12, 31),
             scheduledArrivalObject: checkpoint.arrivalTime != null ? new Date(checkpoint.arrivalTime): new Date(0),
             scheduledDepartureObject: checkpoint.departureTime != null ? new Date(checkpoint.departureTime): new Date(3000, 12, 31),
             speedLimitsToNextStation: allSpeedLimitsBetweenStationAndNextStation

@@ -46,13 +46,13 @@ export const TrainArrivalCell: React.FC<Props> = ({
             </div>
             <div className="flex justify-center">
                 {
-                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0
+                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0 && distanceFromStation < 5
                         ? <Badge className="animate-pulse duration-1000"
                                  color="failure">{t('EDR_TRAINROW_train_delayed')}</Badge>
                         : undefined
                 }
                 {
-                    !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 && trainDetails
+                    !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 && trainDetails && distanceFromStation < 5
                         ? <Badge className="animate-pulse" color="info">{t('EDR_TRAINROW_train_early')}</Badge>
                         : undefined
                 }

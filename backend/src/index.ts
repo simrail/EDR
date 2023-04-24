@@ -7,22 +7,29 @@ import Cron from "cron";
 const app = express();
 const Logger = morgan('short');
 
-import {dispatchController, trainTimetableController} from "./dispatchController.js";
-import {getServerList, getStationsList, getTrainsList, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol} from "./serverController.js";
+import {dispatchController, getRealtimeDataForPost, trainTimetableController} from "./dispatchController.js";
+import {getServerList, getStationsList, getTrainsList, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList} from "./serverController.js";
 import helmet from "helmet";
-import { IServerTrain } from "./interfaces/IServerTrain.js";
 import { ISpeedLimitApi } from "./interfaces/ISpeedLimitApi.js";
 import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
 import { ConvertSpeedsApiToInternal } from "./helper/speedLimitHelper.js";
+import { ICompleteTrainList } from "./interfaces/ICompleteTrainList.js";
 
-let trainList: IServerTrain[];
+let completeTrainList: ICompleteTrainList = {};
 let speeds: ISpeedLimit[];
-const updateTimetable = (serverCode: string) => {
-    getFullTimetable(serverCode).then((response) => {
-        trainList = response.data as IServerTrain[];
+const updateTimetable = () => {
+    getServerCodeList().then(async serverList => {
+        serverList.map(serverCode => {
+            getFullTimetable(serverCode).then(response => {
+                completeTrainList[serverCode] = response.data;
+                console.log(`${serverCode} timetable updated!`);
+            }).catch((e) => {
+                console.log(`[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] Error while fetching server timetable (${serverCode}), skipping update!`);
+                console.log(e.message);
+            });
+        });
     }).catch(() => {
-        console.log("Error while requesting official timetable data from the API, falling back to the bundled version!")
-        trainList = JSON.parse(fs.readFileSync("official-edr-data_static.json", "utf8")) as IServerTrain[];
+        console.log("Cannot fetch server code list, skipping timetable update!");
     });
 }
 
@@ -34,15 +41,23 @@ const updateSpeedLimits = () => {
 }
 
 const cronTimetableUpdater = new Cron.CronJob(
+    '* * * * *',
+    () => { updateTimetable() },
+    null,
+    false,
+    'Europe/Warsaw'
+);
+
+const cronSpeedLimitUpdater = new Cron.CronJob(
     '0 4 * * *',
-    () => { updateTimetable("en1"); updateSpeedLimits()},
+    () => { updateSpeedLimits() },
     null,
     false,
     'Europe/Warsaw'
 );
 
 cronTimetableUpdater.start();
-updateTimetable('en1');
+cronSpeedLimitUpdater.start();
 updateSpeedLimits();
 
 const corsConfig: CorsOptions = {
@@ -60,8 +75,9 @@ app
     .get("/server/tz/:serverCode", getServerTz)
     .get("/stations/:serverCode", getStationsList)
     .get("/trains/:serverCode", getTrainsList)
-    .get("/dispatch/:post", (req: express.Request, res: express.Response) => dispatchController(req, res, trainList))
-    .get("/train/:trainNo", (req: express.Request, res: express.Response) => trainTimetableController(req, res, trainList))
+    .get("/dispatch/:serverCode/:post", (req: express.Request, res: express.Response) => dispatchController(req, res, completeTrainList[req.params.serverCode]))
+    .get("/train/:serverCode/:trainNo", (req: express.Request, res: express.Response) => trainTimetableController(req, res, completeTrainList[req.params.serverCode]))
+    .get("/realtime/:serverCode/:post", (req: express.Request, res: express.Response) => getRealtimeDataForPost(req, res, completeTrainList[req.params.serverCode]))
     .get("/steam/:steamId", getPlayer);
 app.listen(process.env.LISTEN_PORT);
 

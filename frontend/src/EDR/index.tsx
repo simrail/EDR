@@ -1,5 +1,5 @@
 import React from "react";
-import {getPlayer, getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
+import {getPlayer, getRealtimeData, getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
@@ -81,7 +81,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         if (!serverCode || !post) return;
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
-            getTimetable(post).then((data) => {
+            getTimetable(post, serverCode).then((data) => {
                 setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
@@ -136,6 +136,30 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         // eslint-disable-next-line
     }, [serverCode]);
 
+    React.useEffect(() => {
+        window.realtimeRefreshWebWorkerId = window.setInterval(() => {
+            if (!serverCode || !post || !timetable) return;
+            getRealtimeData(serverCode, post).then(data => {
+                setTimetable(timetable.map(tableRow => {
+                    const realtimeTrainData = data.find(realtimeTrain => realtimeTrain.trainNoLocal === tableRow.trainNoLocal);
+                    if (!realtimeTrainData) return { ...tableRow };
+
+                    return {
+                        ...tableRow,
+                        actualArrivalObject: realtimeTrainData.actualArrivalObject,
+                        actualDepartureObject: realtimeTrainData.actualDepartureObject,
+                    }
+                }));
+            });
+        }, 60000);
+        if (!window.realtimeRefreshWebWorkerId) {
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            return;
+        }
+        return () => window.clearInterval(window.realtimeRefreshWebWorkerId);
+        // eslint-disable-next-line
+    }, [serverCode, post, timetable]);
+
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
         if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !currentStation || !trainTimetables) return;
@@ -151,16 +175,16 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
     // Get missing train timetables when a new train spawns on the map
     React.useEffect(() => {
-        if (!trains) return;
+        if (!trains || !serverCode) return;
         // Filter for trains that have a checkpoint at the current station
         const allTrainIds = trains.map((t) => (timetable as TimeTableRow[])?.findIndex(entry => entry.trainNoLocal === t.TrainNoLocal) > -1 ? t.TrainNoLocal: null).filter((trainNumber): trainNumber is Exclude<typeof trainNumber, null> => trainNumber !== null);
         const previousTrainIds = Object.keys(trainTimetables ?? []);
         const difference = _difference(allTrainIds, previousTrainIds);
         if (difference.length === 0) return;
-        Promise.all(difference.map(trainId => getTrainTimetable(trainId))).then((timetables) => {
+        Promise.all(difference.map(trainId => getTrainTimetable(trainId, serverCode))).then((timetables) => {
             setTrainTimetables(groupBy(flatMap(timetables).concat(...Object.values(trainTimetables ?? {})), 'displayedTrainNumber'))
         });
-    }, [trains, timetable, trainTimetables])
+    }, [trains, timetable, trainTimetables, serverCode])
 
     // Get new player info when someone takes over a train
     React.useEffect(() => {
@@ -204,6 +228,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                     post={post} onClose={() =>
                     setGraphModalOpen(false)}
                     serverTzOffset={tzOffset}
+                    serverCode={serverCode}
                 />
                 : null
         }

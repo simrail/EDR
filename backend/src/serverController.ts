@@ -5,6 +5,16 @@ import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import { ISteamUser } from "./interfaces/ISteamUser.js";
 import axios from "axios";
 
+export async function getServerCodeList() {
+    const response = await simrailClient.get("servers-open", BASE_SIMRAIL_API);
+    return (response.data as ApiResponse<Server>).data?.map(server => server.ServerCode);
+}
+
+export async function getTrainNoList(serverCode: string) {
+    const trainList = await simrailClient.get(`trains-open?serverCode=${serverCode}`)
+    return (trainList.data as ApiResponse<Train>).data.map(train => train.TrainNoLocal);
+}
+
 export function getServerList(req: express.Request, res: express.Response) {
     return simrailClient.get("servers-open", BASE_SIMRAIL_API)?.then((e) => {
         const serverData = (e.data as ApiResponse<Server>).data;
