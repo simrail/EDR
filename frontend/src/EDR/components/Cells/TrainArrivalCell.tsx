@@ -1,10 +1,10 @@
 import React from "react";
 import {Badge} from "flowbite-react";
 import {tableCellCommonClassnames} from "../TrainRow";
-import {TimeTableRow} from "../../index";
 import {DetailedTrain} from "../../functions/trainDetails";
 import {useTranslation} from "react-i18next";
 import { format } from "date-fns";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     ttRow: TimeTableRow;

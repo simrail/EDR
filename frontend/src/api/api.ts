@@ -1,8 +1,8 @@
 import {Server, Station, Train} from "@simrail/types";
 import { subHours } from "date-fns";
 import { ISteamUser } from "../config/ISteamUser";
-import { TimeTableRow } from "../EDR";
 import { TrainTimeTableRow } from "../Sirius";
+import { TimeTableRow } from "../customTypes/TimeTableRow";
 
 export const BASE_API_URL = "http://example.com/";
 

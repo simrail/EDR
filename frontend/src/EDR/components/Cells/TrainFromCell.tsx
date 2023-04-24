@@ -1,7 +1,7 @@
 import React from "react";
 import { dispatchDirections } from "../../../config/stations";
-import {TimeTableRow} from "../../index";
 import {tableCellCommonClassnames} from "../TrainRow";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     headerFourthColRef: any;

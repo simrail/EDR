@@ -19,40 +19,8 @@ import {StringParam, useQueryParam} from "use-query-params";
 import { ISteamUser } from "../config/ISteamUser";
 import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
+import { TimeTableRow } from "../customTypes/TimeTableRow";
 const Graph = React.lazy(() => import("./components/Graph"));
-
-export type TimeTableRow = {
-    trainNoLocal: string,
-    trainName: string,
-    startStation: string,
-    endStation: string,
-    usageNotes: string | null,
-    ownNotes: string | null,
-    isQualityTracked: boolean,
-    isOverGauge: boolean,
-    isOverWeight: boolean,
-    isOtherExceptional: boolean,
-    isHighRiskCargo: boolean,
-    isDangerousCargo: boolean,
-    carrierName: string,
-    trainType: string,
-    stopType: number,
-    track: number | null,
-    platform: string | null,
-    scheduledArrivalObject: Date,
-    scheduledDepartureObject: Date,
-    maxSpeed: number,
-    fromPost: string | undefined,
-    fromPostId: string | undefined,
-    toPost: string | undefined,
-    toPostId: string | undefined,
-    line: number,
-    plannedStop: number,
-    pointId: string,
-    stationIndex: number,
-    secondaryPostsRows: TimeTableRow[]
-};
-
 
 type Props = {
     isWebpSupported: boolean,

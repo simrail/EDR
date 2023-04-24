@@ -1,10 +1,10 @@
 import React from "react";
 import {Spinner} from "flowbite-react";
 import {useTranslation} from "react-i18next";
-import { TimeTableRow } from "..";
 import { Station, Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import { TrainTimeTableRow } from "../../Sirius";
+import { TimeTableRow } from "../../customTypes/TimeTableRow";
 
 type Props = {
     timetable: TimeTableRow[];

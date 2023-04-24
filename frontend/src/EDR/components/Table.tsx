@@ -6,13 +6,14 @@ import useMeasure, {RectReadOnly} from "react-use-measure";
 import {SimRailMapModal} from "./SimRailMapModal";
 import {Header} from "./Header";
 import {postConfig} from "../../config/stations";
-import {FilterConfig, TimeTableRow} from "..";
+import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import {TrainTimetableModal} from "./TrainTimetableModal";
 import classNames from "classnames";
 import { ISteamUser } from "../../config/ISteamUser";
 import { TrainTimeTableRow } from "../../Sirius";
 import { Dictionary } from "lodash";
+import { TimeTableRow } from "../../customTypes/TimeTableRow";
 
 export type Bounds = {
     firstColBounds: RectReadOnly;

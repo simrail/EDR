@@ -349,8 +349,14 @@ const SG_DK = {
     ...postConfig.SG_DK,
     left: "SG_PO",
     right: "SG_POR",
-    branchA: "DOR"
+    branchA: "JU"
 };
+
+const JU = {
+    ...postConfig.JU,
+    left: "SG_DK",
+    right: "DOR"
+}
 
 const SG_POR = {
     ...postConfig.SG_POR,
@@ -382,7 +388,7 @@ const DG_ST = {
 const DOR = {
     ...postConfig.DOR,
     right: "DG_ST",
-    left: "SG_DK",
+    left: "JU",
     branchA: "DG_WZ"
 }
 
@@ -623,7 +629,8 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     PRZ,
     DG_T_R5,
     KOZI,
-    KOZI_R12
+    KOZI_R12,
+    JU,
 }
 
 

@@ -1,9 +1,9 @@
 import React from "react";
-import {TimeTableRow} from "../../index";
 import {tableCellCommonClassnames} from "../TrainRow";
 import {useTranslation} from "react-i18next";
 import {edrImagesMap} from "../../../config";
 import Tooltip from "rc-tooltip";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 const PlatformData: React.FC<{ttRow: TimeTableRow}> = ({ttRow}) => {
     const {t} = useTranslation();

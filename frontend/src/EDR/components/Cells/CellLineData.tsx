@@ -1,8 +1,8 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import { TimeTableRow } from "../../index";
 import {edrImagesMap} from "../../../config";
 import { dispatchDirections } from "../../../config/stations";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     ttRow: TimeTableRow;

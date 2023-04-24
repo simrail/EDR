@@ -1,8 +1,8 @@
 import React from "react";
 import {Badge} from "flowbite-react";
 import {tableCellCommonClassnames} from "../TrainRow";
-import {TimeTableRow} from "../../index";
 import {DetailedTrain} from "../../functions/trainDetails";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     secondColRef: any;

@@ -2,10 +2,10 @@ import React from "react";
 import {Badge, Button} from "flowbite-react";
 import {edrImagesMap} from "../../../config";
 import {tableCellCommonClassnames} from "../TrainRow";
-import {TimeTableRow} from "../../index";
 import {useTranslation} from "react-i18next";
 import Tooltip from "rc-tooltip";
 import { format } from "date-fns";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     headerSixthhColRef: any;

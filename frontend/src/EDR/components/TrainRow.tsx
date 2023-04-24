@@ -3,7 +3,7 @@ import {Table} from "flowbite-react";
 import {nowUTC} from "../../utils/date";
 import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
-import {FilterConfig, TimeTableRow} from "..";
+import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
 import { format, subMinutes } from "date-fns";
 import {TrainInfoCell} from "./Cells/TrainInfoCell";
@@ -15,6 +15,7 @@ import {TrainDepartureCell} from "./Cells/TrainDepartureCell";
 import {TrainToCell} from "./Cells/TrainToCell";
 import { ISteamUser } from "../../config/ISteamUser";
 import { StationConfig } from "../../config/stations";
+import { TimeTableRow } from "../../customTypes/TimeTableRow";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
