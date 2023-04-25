@@ -1,5 +1,4 @@
 import React from "react";
-import {TimeTableRow} from "../../index";
 import {nowUTC} from "../../../utils/date";
 import {getTimetable} from "../../../api/api";
 import _keyBy from "lodash/keyBy";
@@ -24,6 +23,7 @@ import {LayoutType} from "recharts/types/util/types";
 import {Button} from "flowbite-react";
 import {useTranslation} from "react-i18next";
 import { Dictionary } from "lodash";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 export type GraphProps = {
     post: string;

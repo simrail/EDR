@@ -4,7 +4,6 @@ import { useSnackbar } from "notistack";
 import World from "../../../sounds/world.svg";
 import {tableCellCommonClassnames} from "../TrainRow";
 import {useTranslation} from "react-i18next";
-import {TimeTableRow} from "../../index";
 import { DetailedTrain } from "../../functions/trainDetails";
 import {configByLoco} from "../../../config/trains";
 import Tooltip from "rc-tooltip";
@@ -16,6 +15,7 @@ import { ISteamUser } from "../../../config/ISteamUser";
 import { differenceInMinutes } from "date-fns";
 import { postConfig, StationConfig } from "../../../config/stations";
 import { edrImagesMap, edrWebpImagesMap } from "../../../config";
+import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
     ttRow: TimeTableRow;
