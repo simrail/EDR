@@ -404,7 +404,12 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "DOR",
         srId: "Dorota",
         trainPosRange: 0.5,
-        platformPosOverride: [19.282166, 50.285434]
+        platformPosOverride: [19.282166, 50.285434],
+        graphConfig: {
+            pre: ["SG_DK", "JU"],
+            post: ["DG_WZ", "BK"],
+            final: [],
+        }
     },
     DG_ST: {
         id: "DG_ST",
@@ -481,7 +486,12 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "GRO_MAZ",
         srId: "Grodzisk Mazowiecki",
         trainPosRange: 0.5,
-        platformPosOverride: [20.6231492, 52.1101932]
+        platformPosOverride: [20.6231492, 52.1101932],
+        graphConfig: {
+            pre: ["WW", "PRSZ"],
+            post: ["KOR", "SZE"],
+            final: []
+        }
     },
     MIL: {
         id: "MIL",
@@ -685,7 +695,12 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "JU",
         srId: "Juliusz",
         trainPosRange: 0.5,
-        platformPosOverride: [19.225059, 50.272341]
+        platformPosOverride: [19.225059, 50.272341],
+        graphConfig: {
+            pre: ["KZ", "SG_PO"],
+            post: ["DOR", "DG_WZ"],
+            final: [],
+        }
     },
 }
 

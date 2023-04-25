@@ -37,6 +37,8 @@ export const newInternalIdToSrId: {[k: string]: string} = {
     "KOR": "1852",
     "SZE": "4338",
     "JU": "1545",
+    "WW": "4811",
+    "PRSZ": "3384",
 }
 
 export const POSTS: { [key: string]: string[] } = {
@@ -67,5 +69,7 @@ export const POSTS: { [key: string]: string[] } = {
     "KOR": [newInternalIdToSrId["KOR"]],
     "DOR": [newInternalIdToSrId["DOR"]],
     "SZE": [newInternalIdToSrId["SZE"]],
-    "JU": [newInternalIdToSrId["JU"]]
+    "JU": [newInternalIdToSrId["JU"]],
+    "WW": [newInternalIdToSrId["WW"]],
+    "PRSZ": [newInternalIdToSrId["PRSZ"]],
 };
