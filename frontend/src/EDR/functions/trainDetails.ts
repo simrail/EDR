@@ -8,6 +8,7 @@ import {postConfig, postToInternalIds, StationConfig} from "../../config/station
 import { Dictionary } from "lodash";
 import { TrainTimeTableRow } from "../../Sirius";
 import { ExtendedTrain } from "../../customTypes/ExtendedTrain";
+import { differenceInMinutes } from "date-fns";
 
 type ExtraStationConfig = {
     distanceToStation?: number,
@@ -44,9 +45,9 @@ const getDirectionVector = (positionsArray: [number, number][]): Victor | undefi
     return Victor.fromArray(pointA).subtract(Victor.fromArray(pointB)).normalize();
 }
 
-export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, trainTimetables: Dictionary<TrainTimeTableRow[]>) =>(t: ExtendedTrain) => {
+export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, trainTimetables: Dictionary<TrainTimeTableRow[]>, dateNow: Date) =>(t: ExtendedTrain) => {
     const previousTrainData = previousTrains.current?.[t.TrainNoLocal as string];
-    const inTimetableStations =  trainTimetables[t.TrainNoLocal]?.map((ttRow) => ttRow.nameForPerson) ?? Object.values(postConfig).map((p) => p.srName)
+    const inTimetableStations = trainTimetables[t.TrainNoLocal]?.map((ttRow) => ttRow.nameForPerson) ?? Object.values(postConfig).map((p) => p.srName)
     const closestStation = getClosestStation(t, inTimetableStations);
     // TODO: Handle closestStation might be undefined
     const [pfLineTrace] = PathFinding_FindPathAndHaversineSum((closestStation as ExtendedStationConfig).id, postConfig[post].id, post);
@@ -56,6 +57,13 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
     const positionsArray = _uniq<[number, number]>([...(previousPositions ?? []), trainPosVector]);
     const directionVector = getDirectionVector(positionsArray);
     const pfClosestStation = directionVector && PathFinding_ClosestStationInPath(pfLineTrace, trainPosVector);
+    let lastDelay = previousTrainData?.lastDelay;
+    if (previousTrainData?.TrainData && previousTrainData?.TrainData.VDDelayedTimetableIndex < t.TrainData.VDDelayedTimetableIndex) {
+        const stationPassed = trainTimetables[t.TrainNoLocal]?.find(ttRow => ttRow.indexOfPoint === t.TrainData.VDDelayedTimetableIndex);
+        if (stationPassed && dateNow) {
+            lastDelay = differenceInMinutes(new Date(stationPassed.scheduledDepartureObject.getFullYear(), stationPassed.scheduledDepartureObject.getMonth(), stationPassed.scheduledDepartureObject.getDate(), dateNow.getHours(), dateNow.getMinutes()), stationPassed.scheduledDepartureObject);
+        }
+    }
 
     console_log("For train " + t?.TrainNoLocal, pfLineTrace);
 
@@ -67,6 +75,7 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
         positionsArray: positionsArray.length > 5 ? positionsArray.slice(2) : positionsArray,
         directionVector: directionVector && directionVector.x === 0 && directionVector.y === 0 ? previousDirectionVector ?? [0,0] : directionVector,
         timetable: trainTimetables[t.TrainNoLocal],
+        lastDelay,
     } as DetailedTrain
 }
 
@@ -77,6 +86,7 @@ type TrainDetails = {
     positionsArray: [number, number][],
     directionVector: Victor,
     timetable: TrainTimeTableRow[],
+    lastDelay?: number,
 }
 
 export type DetailedTrain = ExtendedTrain & TrainDetails;

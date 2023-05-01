@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "flowbite-react";
 import {nowUTC} from "../../utils/date";
-import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
+import { getDateWithHourAndMinutes } from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
 import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
@@ -63,11 +63,7 @@ const TableRow: React.FC<Props> = (
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
-    const actualArrivalHours = ttRow.actualArrivalObject.getHours();
-    const actualArrivalMinutes = ttRow.actualArrivalObject.getMinutes();
-    const actualArrival = ttRow.actualArrivalObject.getFullYear() > 1971 ? getDateWithHourAndMinutes(dateNow, actualArrivalHours, actualArrivalMinutes, isArrivalNextDay, isArrivalPreviousDay) : expectedArrival;
-    const arrivalTimeDelay = getTimeDelay(actualArrival, expectedArrival);
-    const departureTimeDelay = getTimeDelay(actualArrival, expectedDeparture);
+    const arrivalTimeDelay = trainDetails?.lastDelay ? trainDetails.lastDelay : 0;
 
     const trainMustDepart = !trainHasPassedStation && trainDetails?.distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
@@ -75,16 +71,11 @@ const TableRow: React.FC<Props> = (
 
     const previousStation = trainDetails?.timetable?.map(e => e)?.reverse()?.find(entry => entry.indexOfPoint < trainDetails?.TrainData?.VDDelayedTimetableIndex);
     const velocityETA = trainDetails?.TrainData?.Velocity ? Math.round((trainDetails.distanceFromStation / trainDetails.TrainData.Velocity) * 60) : undefined;
-    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`1: Velocity ETA: ${velocityETA}`);
     let predictiveETA = Math.abs(differenceInMinutes(previousStation ? previousStation.scheduledDepartureObject : ttRow.scheduledArrivalObject, ttRow.scheduledArrivalObject));
-    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`2: Timetable ETA: ${predictiveETA}`);
     if (velocityETA && velocityETA <= 30) {
         predictiveETA = (predictiveETA + velocityETA) / 2;
     }
-    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`3: Combined ETA: ${predictiveETA}`);
     const ETA = trainDetails ? (predictiveETA + trainDetails.lineEta) / 2 : 0;
-    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`4: Line speed ETA: ${trainDetails.lineEta}`);
-    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`5: Final linespeed corrected ETA: ${ETA}`);
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
     if (filterConfig.maxRange && trainDetails?.distanceFromStation > filterConfig.maxRange) return null;
@@ -130,7 +121,6 @@ const TableRow: React.FC<Props> = (
             thirdColRef={thirdColRef}
             streamMode={streamMode}
             arrivalTimeDelay={arrivalTimeDelay}
-            departureTimeDelay={departureTimeDelay}
         />
         <TrainFromCell headerFourthColRef={headerFourthColRef} ttRow={ttRow} secondaryPostData={secondaryPostData}
                        streamMode={streamMode} />

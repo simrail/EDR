@@ -21,6 +21,7 @@ import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
 import { ExtendedTrain } from "../customTypes/ExtendedTrain";
+import { nowUTC } from "../utils/date";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 type Props = {
@@ -141,7 +142,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     React.useEffect(() => {
         if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
         setTimeout(() => {
-            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables);
+            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables, nowUTC(tzOffset));
             const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
             setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
