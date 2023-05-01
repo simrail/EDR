@@ -73,7 +73,7 @@ export const Header: React.FC<Props> = ({
         <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800 overflow-y-scroll">
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
-                    <span>{postCfg.srId}</span>
+                    <span>{postCfg.srName}</span>
                     <Link to={`/${serverCode}`} className="underline flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />

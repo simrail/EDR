@@ -50,7 +50,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const icons = isWebpSupported ? edrWebpImagesMap : edrImagesMap;
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
-    const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srId || postCfg.secondaryPosts?.some(post => postConfig[post]?.srId === nextStationName)) && distanceFromStation < 3);
+    const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srName || postCfg.secondaryPosts?.some(post => postConfig[post]?.srName === nextStationName)) && distanceFromStation < 3);
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
@@ -126,13 +126,13 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
             </div>
             <div className="w-full flex flex-col md:flex-row">
-                {  distanceFromStation
-                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span><span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>,&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
+                {  distanceFromStation < Number.POSITIVE_INFINITY && trainDetails
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span><span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>,&nbsp;<div className="inline-flex">{distanceFromStation} km</div></div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
-                    distanceFromStation
+                    distanceFromStation < Number.POSITIVE_INFINITY
                         ? trainHasPassedStation
                             ? <>({t("EDR_TRAINROW_train_away")})</>
                             : ETA && Math.round(ETA) <= 20 && distanceFromStation > 1

@@ -4,12 +4,21 @@ import { ISteamUser } from "../config/ISteamUser";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
 import { IRealtimeData } from "../interface/IRealtimeData";
+import { IRouteData } from "../config/IRouteData";
 
 export const BASE_API_URL = "http://example.com/";
+export const OSRM_API_URL = "http://example.com/"
 
 const baseApiCall = (URL: string) => {
     // TODO: Add error toast
     const outbound = BASE_API_URL + URL;
+    // console_log("Outbound URL: ", outbound)
+    return fetch(outbound).then(res => res.json());
+}
+
+const osrmApiCall = (URL: string) => {
+    // TODO: Add error toast
+    const outbound = OSRM_API_URL + URL;
     // console_log("Outbound URL: ", outbound)
     return fetch(outbound).then(res => res.json());
 }
@@ -56,3 +65,11 @@ export const getRealtimeData = (serverCode: string, post: string): Promise<IReal
 
         return tr;
     }));
+
+export const getRouteInfo = (startLon: number, startLat: number, endLon: number, endLat: number): Promise<IRouteData | null> => {
+    if (startLat !== undefined && startLon !== undefined && endLon !== undefined && endLat !== undefined) {
+        return osrmApiCall(`route/v1/train/${Math.round(startLon * 1000000) / 1000000},${Math.round(startLat * 1000000) / 1000000};${endLon},${endLat}?overview=false`);
+    } else {
+        return new Promise(() => null);
+    }
+}
