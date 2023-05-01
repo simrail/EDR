@@ -393,7 +393,7 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "DG_WZ",
         srName: "Dąbrowa Górnicza Wschodnia",
         trainPosRange: 0.5,
-        platformPosOverride: [19.313849, 50.306421],
+        platformPosOverride: [19.310332, 50.303395],
         graphConfig: {
             pre: ["KZ", "SG"],
             post: ["LZ_LC"],
@@ -683,7 +683,7 @@ export const postConfig: Dictionary<StationConfig> = {
     },
     JU: {
         id: "JU",
-        srId: "Juliusz",
+        srName: "Juliusz",
         trainPosRange: 0.5,
         platformPosOverride: [19.225059, 50.272341]
     },

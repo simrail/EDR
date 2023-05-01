@@ -5,7 +5,6 @@ import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
 import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
 import { IServerTrain } from "./interfaces/IServerTrain.js";
-import { getTrainNoList } from "./serverController.js";
 
 const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
@@ -29,45 +28,14 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
             if (!keyedFirstPostTrains[train.trainNoLocal]) {
                 mergedPostsRows.push(train);
             }
-        })
+        });
     });
 
     return _.sortBy(mergedPostsRows, 'scheduledArrivalObject');
 }
 
-export async function getRealtimeDataForPost(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
-    const { serverCode, post } = req.params;
-
-    if (trainList === undefined || trainList === null) {
-        console.error("Timetable is empty, cannot process realtime request!")
-        return res.sendStatus(500);
-    }
-
-    if (!newInternalIdToSrId[post]){
-        return res.status(400).send({
-            "error": "PEBKAC",
-            "message": "Post is not supported"
-        });
-    }
-
-    let onlineTrainNolist: string[] = [];
-    try {
-        onlineTrainNolist = await getTrainNoList(serverCode);
-    } catch (e) {
-        console.log("Error while fetching online trains!")
-            return res.sendStatus(500);
-    }
-
-    const postsToFetch = POSTS[post];
-    const data = await Promise.all(postsToFetch.map(post => getStationTimetable(post, trainList.filter(train => onlineTrainNolist.includes(train.trainNoLocal)))));
-    const mergedPostsRealtimeData = mergePostRows(data).map(row => _.pick(row, ["actualArrivalObject", "actualDepartureObject", "trainNoLocal"]));
-    return res
-        .setHeader("Cache-control", 'public, max-age=60 stale-if-error=604800 must-revalidate')
-        .send(mergedPostsRealtimeData);
-}
-
 export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
-    const { post } = req.params;
+    const { serverCode, post } = req.params;
 
     if (trainList === undefined || trainList === null) {
         console.error("Timetable is empty, cannot process dispatch request!")

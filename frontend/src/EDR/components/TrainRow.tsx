@@ -5,7 +5,7 @@ import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
 import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
-import { format, subMinutes } from "date-fns";
+import { differenceInMinutes, format, subMinutes } from "date-fns";
 import {TrainInfoCell} from "./Cells/TrainInfoCell";
 import {TrainTypeCell} from "./Cells/TrainTypeCell";
 import {TrainArrivalCell} from "./Cells/TrainArrivalCell";
@@ -16,7 +16,6 @@ import {TrainToCell} from "./Cells/TrainToCell";
 import { ISteamUser } from "../../config/ISteamUser";
 import { StationConfig } from "../../config/stations";
 import { TimeTableRow } from "../../customTypes/TimeTableRow";
-import { getRouteInfo } from "../../api/api";
 
 
 export const tableCellCommonClassnames = (streamMode: boolean = false) => streamMode ? "p-2" : "p-4";
@@ -49,7 +48,6 @@ const TableRow: React.FC<Props> = (
         serverCode, players, postCfg
     }: Props
 ) => {
-    const [distanceFromStation, setDistanceFromStation] = React.useState<number>(Number.POSITIVE_INFINITY);
     const dateNow = nowUTC(serverTzOffset);
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
@@ -71,31 +69,25 @@ const TableRow: React.FC<Props> = (
     const arrivalTimeDelay = getTimeDelay(actualArrival, expectedArrival);
     const departureTimeDelay = getTimeDelay(actualArrival, expectedDeparture);
 
-    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
+    const trainMustDepart = !trainHasPassedStation && trainDetails?.distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
-    React.useEffect(() => {
-        if (!trainDetails) {
-            setDistanceFromStation(Number.POSITIVE_INFINITY);
-        } else if (postCfg.platformPosOverride) {
-            getRouteInfo(
-                trainDetails.TrainData.Longitute,
-                trainDetails.TrainData.Latititute,
-                postCfg.platformPosOverride[0],
-                postCfg.platformPosOverride[1]
-            ).then(r => {
-                if (r === null) {
-                    setDistanceFromStation(Number.POSITIVE_INFINITY);
-                } else {
-                    setDistanceFromStation(Math.round(r.routes[0].distance / 10) / 100);
-                }
-            });
-        }
-    }, [postCfg.platformPosOverride, trainDetails]);
+    const previousStation = trainDetails?.timetable?.map(e => e)?.reverse()?.find(entry => entry.indexOfPoint < trainDetails?.TrainData?.VDDelayedTimetableIndex);
+    const velocityETA = trainDetails?.TrainData?.Velocity ? Math.round((trainDetails.distanceFromStation / trainDetails.TrainData.Velocity) * 60) : undefined;
+    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`1: Velocity ETA: ${velocityETA}`);
+    let predictiveETA = Math.abs(differenceInMinutes(previousStation ? previousStation.scheduledDepartureObject : ttRow.scheduledArrivalObject, ttRow.scheduledArrivalObject));
+    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`2: Timetable ETA: ${predictiveETA}`);
+    if (velocityETA && velocityETA <= 30) {
+        predictiveETA = (predictiveETA + velocityETA) / 2;
+    }
+    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`3: Combined ETA: ${predictiveETA}`);
+    const ETA = trainDetails ? (predictiveETA + trainDetails.lineEta) / 2 : 0;
+    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`4: Line speed ETA: ${trainDetails.lineEta}`);
+    if (trainDetails && trainDetails.TrainNoLocal === "4128") console.log(`5: Final linespeed corrected ETA: ${ETA}`);
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
-    if (filterConfig.maxRange && distanceFromStation > filterConfig.maxRange) return null;
+    if (filterConfig.maxRange && trainDetails?.distanceFromStation > filterConfig.maxRange) return null;
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
@@ -113,13 +105,13 @@ const TableRow: React.FC<Props> = (
             setModalTrainId={setModalTrainId}
             setTimetableTrainId={setTimetableTrainId}
             firstColRef={firstColRef}
-            distanceFromStation={distanceFromStation}
             trainHasPassedStation={trainHasPassedStation}
             isWebpSupported={isWebpSupported}
             streamMode={streamMode}
             serverCode={serverCode}
             players={players}
             postCfg={postCfg}
+            ETA={ETA}
         />
         <TrainTypeCell
             secondColRef={secondColRef}
@@ -135,7 +127,6 @@ const TableRow: React.FC<Props> = (
             serverTzOffset={serverTzOffset}
             trainHasPassedStation={trainHasPassedStation}
             expectedDeparture={expectedDeparture}
-            distanceFromStation={distanceFromStation}
             thirdColRef={thirdColRef}
             streamMode={streamMode}
             arrivalTimeDelay={arrivalTimeDelay}

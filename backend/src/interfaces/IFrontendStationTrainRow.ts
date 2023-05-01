@@ -17,5 +17,5 @@ export interface IFrontendStationTrainRow extends Omit<IServerTrain, 'timetable'
     line: number,
     plannedStop: number,
     pointId: string,
-    stationIndex: number
+    stationIndex: number,
 }

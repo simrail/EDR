@@ -1,18 +1,14 @@
-import { simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
-import {BASE_AWS_API, BASE_SIMRAIL_API} from "./config.js";
+import { selfClient, simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
+import {BASE_AWS_API, BASE_SIMRAIL_API, newInternalIdToSrId, stationPositions} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import { ISteamUser } from "./interfaces/ISteamUser.js";
 import axios from "axios";
+import { IRouteData } from "./interfaces/IRouteData.js";
 
 export async function getServerCodeList() {
     const response = await simrailClient.get("servers-open", BASE_SIMRAIL_API);
     return (response.data as ApiResponse<Server>).data?.map(server => server.ServerCode);
-}
-
-export async function getTrainNoList(serverCode: string) {
-    const trainList = await simrailClient.get(`trains-open?serverCode=${serverCode}`)
-    return (trainList.data as ApiResponse<Train>).data.map(train => train.TrainNoLocal);
 }
 
 export function getServerList(req: express.Request, res: express.Response) {
@@ -48,6 +44,29 @@ export function getTrainsList(req: express.Request, res: express.Response) {
     }).catch(() => {
         return res.sendStatus(500);
     });
+}
+
+export async function getTrainsListForPost(req: express.Request, res: express.Response) {
+    try {
+        const { serverCode, post } = req.params;
+        const e = await simrailClient.get(`trains-open?serverCode=${serverCode}`);
+        const trainList = (e.data as ApiResponse<Train>).data;
+        return res
+            .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
+            .send(await Promise.all(trainList.map(async (train) => {
+                let osrmResult: IRouteData = {} as IRouteData;
+                const stationPosition = stationPositions[parseInt(newInternalIdToSrId[post])];
+                osrmResult = (await getOsrmDataFromSelfApi(train.TrainData.Longitute, train.TrainData.Latititute, stationPosition[0], stationPosition[1])).data;
+
+                return {
+                    ...train,
+                    distanceFromStation: osrmResult?.routes?.[0]?.distance !== undefined ? Math.round(osrmResult.routes[0].distance / 10) / 100 : 0,
+                    lineEta: osrmResult?.routes?.[0]?.duration !== undefined ? Math.round(osrmResult.routes[0].duration / 60) : 0,
+                };
+            })));
+    } catch {
+        return res.sendStatus(500);
+    }
 }
 
 export function getServerTz(req: express.Request, res: express.Response) {
@@ -90,4 +109,8 @@ export function getFullTimetable(serverCode: string) {
 
 export function getSpeedLimitsFromSimkol() {
     return simkolClient.get("speeds.json");
+}
+
+export function getOsrmDataFromSelfApi(startLon: number, startLat: number, endLon: number, endLat: number) {
+    return selfClient.get(`route/v1/train/${Math.round(startLon * 1000000) / 1000000},${Math.round(startLat * 1000000) / 1000000};${endLon},${endLat}?overview=false`);
 }

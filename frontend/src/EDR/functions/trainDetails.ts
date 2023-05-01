@@ -5,9 +5,9 @@ import Victor from "victor";
 import {PathFindingLineTrace, PathFinding_ClosestStationInPath, PathFinding_FindPathAndHaversineSum} from "../../pathfinding/api";
 import _uniq from "lodash/fp/uniq";
 import {postConfig, postToInternalIds, StationConfig} from "../../config/stations";
-import { Train } from "@simrail/types";
 import { Dictionary } from "lodash";
 import { TrainTimeTableRow } from "../../Sirius";
+import { ExtendedTrain } from "../../customTypes/ExtendedTrain";
 
 type ExtraStationConfig = {
     distanceToStation?: number,
@@ -20,7 +20,7 @@ type ExtraStationConfig = {
 
 export type ExtendedStationConfig = StationConfig & ExtraStationConfig;
 
-export const getClosestStation = (train: Train, stationsInPath: string[]) => {
+export const getClosestStation = (train: ExtendedTrain, stationsInPath: string[]) => {
     const allStationsAndDistance = stationsInPath
         .map((sn: string) => postToInternalIds[encodeURIComponent(sn)]?.id ? postConfig[postToInternalIds[encodeURIComponent(sn)].id] : undefined)
         .filter((sConfig): sConfig is Exclude<typeof sConfig, undefined> => sConfig !== undefined)
@@ -44,7 +44,7 @@ const getDirectionVector = (positionsArray: [number, number][]): Victor | undefi
     return Victor.fromArray(pointA).subtract(Victor.fromArray(pointB)).normalize();
 }
 
-export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, trainTimetables: Dictionary<TrainTimeTableRow[]>) =>(t: Train) => {
+export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: string]: DetailedTrain;} | null>, post: string, trainTimetables: Dictionary<TrainTimeTableRow[]>) =>(t: ExtendedTrain) => {
     const previousTrainData = previousTrains.current?.[t.TrainNoLocal as string];
     const inTimetableStations =  trainTimetables[t.TrainNoLocal]?.map((ttRow) => ttRow.nameForPerson) ?? Object.values(postConfig).map((p) => p.srName)
     const closestStation = getClosestStation(t, inTimetableStations);
@@ -79,4 +79,4 @@ type TrainDetails = {
     timetable: TrainTimeTableRow[],
 }
 
-export type DetailedTrain = Train & TrainDetails;
+export type DetailedTrain = ExtendedTrain & TrainDetails;

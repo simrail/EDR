@@ -3,22 +3,13 @@ import { subHours } from "date-fns";
 import { ISteamUser } from "../config/ISteamUser";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
-import { IRealtimeData } from "../interface/IRealtimeData";
-import { IRouteData } from "../config/IRouteData";
+import { ExtendedTrain } from "../customTypes/ExtendedTrain";
 
-export const BASE_API_URL = "http://example.com/";
-export const OSRM_API_URL = "http://example.com/"
+export const BASE_API_URL = "https://example.com/";
 
 const baseApiCall = (URL: string) => {
     // TODO: Add error toast
     const outbound = BASE_API_URL + URL;
-    // console_log("Outbound URL: ", outbound)
-    return fetch(outbound).then(res => res.json());
-}
-
-const osrmApiCall = (URL: string) => {
-    // TODO: Add error toast
-    const outbound = OSRM_API_URL + URL;
     // console_log("Outbound URL: ", outbound)
     return fetch(outbound).then(res => res.json());
 }
@@ -46,6 +37,9 @@ export const getTrainTimetable = (trainId: string, serverCode: string): Promise<
 export const getTrains = (serverCode: string): Promise<Train[]> =>
     baseApiCall(`trains/${serverCode}`);
 
+export const getTrainsForPost = (serverCode: string, post: string): Promise<ExtendedTrain[]> =>
+    baseApiCall(`trains/${serverCode}/${post}`);
+
 export const getStations = (serverCode: string): Promise<Station[]> =>
     baseApiCall(`stations/${serverCode}`);
 
@@ -57,19 +51,3 @@ export const getPlayer = (steamId: string): Promise<ISteamUser> =>
 
 export const getTzOffset = (serverCode: string): Promise<any> =>
     baseApiCall(`server/tz/${serverCode}`);
-
-export const getRealtimeData = (serverCode: string, post: string): Promise<IRealtimeData[]> =>
-    baseApiCall( `realtime/${serverCode}/${post}`).then((data: TimeTableRow[]) => data.map(tr => {
-        tr.actualArrivalObject = subHours(new Date(tr.actualArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.actualDepartureObject = subHours(new Date(tr.actualDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
-
-        return tr;
-    }));
-
-export const getRouteInfo = (startLon: number, startLat: number, endLon: number, endLat: number): Promise<IRouteData | null> => {
-    if (startLat !== undefined && startLon !== undefined && endLon !== undefined && endLat !== undefined) {
-        return osrmApiCall(`route/v1/train/${Math.round(startLon * 1000000) / 1000000},${Math.round(startLat * 1000000) / 1000000};${endLon},${endLat}?overview=false`);
-    } else {
-        return new Promise(() => null);
-    }
-}

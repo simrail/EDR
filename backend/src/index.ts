@@ -7,8 +7,8 @@ import Cron from "cron";
 const app = express();
 const Logger = morgan('short');
 
-import {dispatchController, getRealtimeDataForPost, trainTimetableController} from "./dispatchController.js";
-import {getServerList, getStationsList, getTrainsList, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList} from "./serverController.js";
+import {dispatchController, trainTimetableController} from "./dispatchController.js";
+import {getServerList, getStationsList, getTrainsListForPost, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList, getTrainsList} from "./serverController.js";
 import helmet from "helmet";
 import { ISpeedLimitApi } from "./interfaces/ISpeedLimitApi.js";
 import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
@@ -40,7 +40,7 @@ const updateSpeedLimits = () => {
 }
 
 const cronTimetableUpdater = new Cron.CronJob(
-    '* * * * *',
+    '30 0,8,16 * * *',
     () => { updateTimetable() },
     null,
     false,
@@ -58,6 +58,7 @@ const cronSpeedLimitUpdater = new Cron.CronJob(
 cronTimetableUpdater.start();
 cronSpeedLimitUpdater.start();
 updateSpeedLimits();
+updateTimetable();
 
 const corsConfig: CorsOptions = {
     allowedHeaders: "content-type",
@@ -74,9 +75,9 @@ app
     .get("/server/tz/:serverCode", getServerTz)
     .get("/stations/:serverCode", getStationsList)
     .get("/trains/:serverCode", getTrainsList)
+    .get("/trains/:serverCode/:post", getTrainsListForPost)
     .get("/dispatch/:serverCode/:post", (req: express.Request, res: express.Response) => dispatchController(req, res, completeTrainList[req.params.serverCode]))
     .get("/train/:serverCode/:trainNo", (req: express.Request, res: express.Response) => trainTimetableController(req, res, completeTrainList[req.params.serverCode]))
-    .get("/realtime/:serverCode/:post", (req: express.Request, res: express.Response) => getRealtimeDataForPost(req, res, completeTrainList[req.params.serverCode]))
     .get("/steam/:steamId", getPlayer);
 app.listen(process.env.LISTEN_PORT);
 

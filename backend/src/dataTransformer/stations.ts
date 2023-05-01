@@ -4,17 +4,18 @@ import { IFrontendStationTrainRow } from "../interfaces/IFrontendStationTrainRow
 
 export const getStationTimetable = async (stationId: string, trainList: IServerTrain[]) => {
     const trainsForStation = trainList.filter(train => train.timetable.some(checkpoint => checkpoint.pointId === stationId));
-    const withDynamicData: IFrontendStationTrainRow[] = trainsForStation.map((train) => {
+    const withDynamicData: Promise<IFrontendStationTrainRow>[] = trainsForStation.map(async (train) => {
         const stationEntry = train.timetable.find(checkpoint => checkpoint.pointId === stationId);
         if (stationEntry == undefined) {
             return {} as IFrontendStationTrainRow;
         }
-        
+
         const stationIndex = train.timetable.findIndex(checkpoint => checkpoint.pointId === stationId);
         let previousEntry = null;
         if (stationIndex > 0) {
             previousEntry = train.timetable[stationIndex - 1];
         }
+
         let nextEntry = null;
         if (stationIndex < train.timetable.length - 1) {
             nextEntry = train.timetable[stationIndex + 1];
@@ -38,9 +39,9 @@ export const getStationTimetable = async (stationId: string, trainList: IServerT
             line: stationEntry.line,
             plannedStop: stationEntry.plannedStop,
             pointId: stationEntry.pointId,
-            stationIndex: stationEntry.indexOfPoint
+            stationIndex: stationEntry.indexOfPoint,
         };
     });
 
-    return _.sortBy(withDynamicData, 'scheduledArrivalObject');
+    return Promise.all(withDynamicData).then(result => _.sortBy(result, 'scheduledArrivalObject'));
 }

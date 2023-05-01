@@ -13,7 +13,6 @@ type Props = {
     serverTzOffset: number;
     trainHasPassedStation: boolean;
     expectedDeparture: Date;
-    distanceFromStation: number;
     thirdColRef: any;
     streamMode: boolean;
     arrivalTimeDelay: number;
@@ -22,7 +21,7 @@ type Props = {
 
 export const TrainArrivalCell: React.FC<Props> = ({
     ttRow, trainDetails, trainHasPassedStation,
-    thirdColRef, distanceFromStation, streamMode, arrivalTimeDelay, departureTimeDelay
+    thirdColRef, streamMode, arrivalTimeDelay, departureTimeDelay
 }) => {
     const {t} = useTranslation();
     return (
@@ -46,13 +45,13 @@ export const TrainArrivalCell: React.FC<Props> = ({
             </div>
             <div className="flex justify-center">
                 {
-                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0 && distanceFromStation < 5
+                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0 && trainDetails?.distanceFromStation < 5
                         ? <Badge className="animate-pulse duration-1000"
                                  color="failure">{t('EDR_TRAINROW_train_delayed')}</Badge>
                         : undefined
                 }
                 {
-                    !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 && trainDetails && distanceFromStation < 5
+                    !trainHasPassedStation && arrivalTimeDelay < -5 && trainDetails?.distanceFromStation < 4 && trainDetails && trainDetails?.distanceFromStation < 5
                         ? <Badge className="animate-pulse" color="info">{t('EDR_TRAINROW_train_early')}</Badge>
                         : undefined
                 }

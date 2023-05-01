@@ -1,5 +1,5 @@
 import React from "react";
-import {getPlayer, getRealtimeData, getStations, getTimetable, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
+import {getPlayer, getStations, getTimetable, getTrainsForPost, getTrainTimetable, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
@@ -11,7 +11,7 @@ import _difference from "lodash/difference";
 import {LoadingScreen} from "./components/LoadingScreen";
 import {DetailedTrain, getTrainDetails} from "./functions/trainDetails";
 import {postConfig} from "../config/stations";
-import { Station, Train } from "@simrail/types";
+import { Station } from "@simrail/types";
 import { Dictionary, flatMap, groupBy } from "lodash";
 import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -20,6 +20,7 @@ import { ISteamUser } from "../config/ISteamUser";
 import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
+import { ExtendedTrain } from "../customTypes/ExtendedTrain";
 const Graph = React.lazy(() => import("./components/Graph"));
 
 type Props = {
@@ -60,7 +61,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
     const [loading, setLoading] = React.useState(true);
     const [stations, setStations] = React.useState<Dictionary<Station> | undefined>();
-    const [trains, setTrains] = React.useState<Train[] | undefined>();
+    const [trains, setTrains] = React.useState<ExtendedTrain[] | undefined>();
     const [trainTimetables, setTrainTimetables] = React.useState<Dictionary<TrainTimeTableRow[]> | undefined>();
     const [timetable, setTimetable] = React.useState<TimeTableRow[] | undefined>();
     const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
@@ -85,7 +86,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
-                    getTrains(serverCode).then((data) => {
+                    getTrainsForPost(serverCode, post).then((data) => {
                         setTrains(data);
                         setLoading(false);
                     }).catch(() => {
@@ -125,8 +126,8 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     // Refreshes the train positions every 10 seconds
     React.useEffect(() => {
         window.trainsRefreshWebWorkerId = window.setInterval(() => {
-            if (!serverCode) return;
-            getTrains(serverCode).then(setTrains);
+            if (!serverCode || !post) return;
+            getTrainsForPost(serverCode, post).then(setTrains);
         }, 10000);
         if (!window.trainsRefreshWebWorkerId) {
             enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
@@ -136,33 +137,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         // eslint-disable-next-line
     }, [serverCode]);
 
-    React.useEffect(() => {
-        window.realtimeRefreshWebWorkerId = window.setInterval(() => {
-            if (!serverCode || !post || !timetable) return;
-            getRealtimeData(serverCode, post).then(data => {
-                setTimetable(timetable.map(tableRow => {
-                    const realtimeTrainData = data.find(realtimeTrain => realtimeTrain.trainNoLocal === tableRow.trainNoLocal);
-                    if (!realtimeTrainData) return { ...tableRow };
-
-                    return {
-                        ...tableRow,
-                        actualArrivalObject: realtimeTrainData.actualArrivalObject,
-                        actualDepartureObject: realtimeTrainData.actualDepartureObject,
-                    }
-                }));
-            });
-        }, 60000);
-        if (!window.realtimeRefreshWebWorkerId) {
-            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
-            return;
-        }
-        return () => window.clearInterval(window.realtimeRefreshWebWorkerId);
-        // eslint-disable-next-line
-    }, [serverCode, post, timetable]);
-
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as Train[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
+        if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
         setTimeout(() => {
             const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables);
             const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
