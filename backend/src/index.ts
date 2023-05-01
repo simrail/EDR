@@ -22,7 +22,6 @@ const updateTimetable = () => {
         serverList.map(serverCode => {
             getFullTimetable(serverCode).then(response => {
                 completeTrainList[serverCode] = response.data;
-                console.log(`${serverCode} timetable updated!`);
             }).catch((e) => {
                 console.log(`[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] Error while fetching server timetable (${serverCode}), skipping update!`);
                 console.log(e.message);
