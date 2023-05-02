@@ -124,7 +124,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         )}
                                         data-internalid={internalId}
                                     >
-                                        <Table.Cell className="relative pl-8" width={340}>
+                                        <Table.Cell className="relative pl-8" width={350}>
                                             <div className="flex flex-col">
                                                 <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopTypeNumber} />
                                                 <div className="flex justify-between">
@@ -141,7 +141,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell className="pl-0 flex justify-between" width={210}>
+                                        <Table.Cell className="pl-0 flex justify-between" width={500}>
                                             <span className="inline-block">{ttRow.nameForPerson}</span>
                                             <span className="inline-block">
                                                 {
@@ -151,7 +151,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 }
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        <Table.Cell className="pa-0 flex-col" width={360}>
                                             {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
                                                 <>
                                                     {format(ttRow.scheduledDepartureObject, 'HH:mm')}

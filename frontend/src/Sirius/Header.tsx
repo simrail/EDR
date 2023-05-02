@@ -23,7 +23,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
 
     return (
         <div className="sticky z-20 px-2 t-0 shadow-md w-full flex columns-3 items-center bg-white dark:bg-slate-800 justify-between" style={{zIndex: 9999999}}>
-            <div className="flex grow w-max-content">
+            <div className="flex w-max-content">
                 <Link to={`/${serverCode}/trains`} className="flex underline hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
@@ -38,6 +38,10 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                 </div>
             </div>
             <div className="flex">
+                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} hideDetails/>
+            </div>
+            <div className="flex">
+                
                 <div className="flex">
                     <Dropdown label={<>{t("EDR_UI_map_select")}</>} size="sm">
                         <Dropdown.Item onClick={() => setMapLink(0)}>
@@ -58,9 +62,6 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                     <Button onClick={resetLayout} className="ml-1" color="light" size="xs">Reset Driver View</Button>
                 </div>
                 <DarkThemeToggle className="!p-0" />
-            </div>
-            <div className="flex">
-                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} hideDetails/>
             </div>
         </div>
     )
