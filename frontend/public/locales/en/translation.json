@@ -82,6 +82,17 @@
   "EDR_UI_filter_train_approaching": "Approaching",
   "EDR_UI_train_number": "Train N°",
   "EDR_UI_filter_custom": "Custom",
+  "EDR_UI_filter_customisation": "Filter customisation",
+  "EDR_UI_filter_hide_offline": "Hide offline trains",
+  "EDR_UI_filter_hide_left": "Hide trains that have already left",
+  "EDR_UI_filter_radius": "Filter by radius (km)",
+  "EDR_UI_reset_button": "Reset",
+  "EDR_UI_save_button": "Save",
+  "EDR_UI_timetable_times": "Times",
+  "EDR_UI_timetable_station": "Station",
+  "EDR_UI_timetable_layover": "Layover",
+  "EDR_UI_stream_mode": "Stream mode",
+  "EDR_UI_map_select": "Map provider",
 
   "DRIVER_DETAILS_train_number": "Train number",
   "DRIVER_DETAILS_start_station": "Originating station",
@@ -90,6 +101,10 @@
   "DRIVER_DETAILS_train_model": "Train model",
   "DRIVER_DETAILS_auto_scroll": "Auto scroll",
   "DRIVER_DETAILS_speed_limits": "Speed limits",
-  "DRIVER_DETAILS_back_link": "Back to trains"
-  
+  "DRIVER_DETAILS_back_link": "Back to trains",
+  "DRIVER_DETAILS_header_line": "Line",
+  "DRIVER_DETAILS_header_arrival": "Arrival",
+  "DRIVER_DETAILS_header_station": "Station",
+  "DRIVER_DETAILS_header_departure": "Departure",
+  "DRIVER_DETAILS_header_layover": "Layover"
 }

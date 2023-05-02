@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as FlexLayout from "flexlayout-react";
 import {useParams} from "react-router-dom";
 import {getTrains, getTrainTimetable, getTzOffset} from "../api/api";
@@ -9,6 +9,7 @@ import {TrainTimetable} from "./TrainTimetable";
 import { TrainDetails } from "./TrainDetails";
 import { Train } from "@simrail/types";
 import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
+import { useTranslation } from "react-i18next";
 
 export type TrainTimeTableRow = {
     indexOfPoint: number,
@@ -134,6 +135,17 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     const [model, setModel] = React.useState<FlexLayout.Model>();
     const [allStationsInPath, setAllStationsInPath] = React.useState<StationConfig[] | undefined>();
     const {trainNumber, serverCode} = useParams();
+    const { t } = useTranslation();
+    const [mapLink, setMapLink] = React.useState<number>(() => {
+        const saved = localStorage.getItem("map");
+        const initialValue = saved ? JSON.parse(saved) : undefined;
+        return initialValue || 0;
+    });
+    
+    useEffect(() => {
+        localStorage.setItem("map", JSON.stringify(mapLink));
+    }, [mapLink]);
+
     React.useEffect(() => {
         if (!trainNumber || !serverCode) return;
         getTrainTimetable(trainNumber, serverCode).then(setTrainTimetable);
@@ -168,15 +180,36 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         const component = node.getId();
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {
             return (
-                <TrainTimetable
-                    autoScroll={autoScroll}
-                    trainTimetable={trainTimetable}
-                    train={train}
-                    allStationsInpath={allStationsInPath}
-                    isWebpSupported={isWebpSupported}
-                    serverCode={serverCode}
-                    showSpeedLimits={showSpeedLimits}
-                />
+                <>
+                    <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full py-2 bg-gray-200 shadow-md dark:bg-slate-600">
+                        <div className="flex items-center justify-between px-4 max-w-screen">
+                            <div className="flex flex-col">
+                                <span>{t('DRIVER_DETAILS_header_line')}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span>{t('DRIVER_DETAILS_header_arrival')}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span>{t('DRIVER_DETAILS_header_station')}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span>{t('DRIVER_DETAILS_header_departure')}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span>{t('DRIVER_DETAILS_header_layover')}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <TrainTimetable
+                        autoScroll={autoScroll}
+                        trainTimetable={trainTimetable}
+                        train={train}
+                        allStationsInpath={allStationsInPath}
+                        isWebpSupported={isWebpSupported}
+                        serverCode={serverCode}
+                        showSpeedLimits={showSpeedLimits}
+                    />
+                </>
             );
         }
         if (component === "train-details-layout" && train && trainTimetable) {
@@ -187,9 +220,8 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
             );
         }
         if (component === "map-layout") {
-            return (
-                <iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainNumber}`} title="Simrail FR map embedded" className={"transition-all h-full w-full"} />
-            );
+            if (mapLink === 0) return (<iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainNumber}`} title="Simrail FR map embedded" className={"transition-all h-full w-full"} />);
+            if (mapLink === 1) return (<iframe src={`https://simrail.me/?embed&sid=${serverCode}&tid=${trainNumber}&showDetails=false`} title="simrail.me map embedded" className={"transition-all h-full w-full"}/>);
         }
     };
 
@@ -201,7 +233,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         )
         : (
             <div>
-                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} setShowSpeedLimits={setShowSpeedLimits} showSpeedLimits={showSpeedLimits} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} />
+                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} setShowSpeedLimits={setShowSpeedLimits} showSpeedLimits={showSpeedLimits} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} setMapLink={setMapLink} />
                 {model && (
                     <div className="relative h-[calc(100vh-40px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />

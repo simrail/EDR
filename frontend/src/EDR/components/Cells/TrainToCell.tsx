@@ -10,7 +10,7 @@ type Props = {
     streamMode: boolean;
 }
 export const TrainToCell: React.FC<Props> = ({headerSeventhColRef, ttRow, secondaryPostData, streamMode}) => (
-    <td className={tableCellCommonClassnames(streamMode)} ref={headerSeventhColRef}>
+    <td className={tableCellCommonClassnames(streamMode)} ref={headerSeventhColRef} width="450">
         <div className="inline-flex">
             <CellLineData ttRow={ttRow} />
         </div>

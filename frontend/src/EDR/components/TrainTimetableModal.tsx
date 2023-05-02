@@ -41,9 +41,9 @@ const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, lin
     return (
         <Table className={frameHeight} striped>
             <Table.Head>
-                <Table.HeadCell>Times</Table.HeadCell>
-                <Table.HeadCell>Station</Table.HeadCell>
-                <Table.HeadCell>Stop</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_times')}</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_station')}</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_layover')}</Table.HeadCell>
             </Table.Head>
             <Table.Body>
                 {timetable.map((ttRow, index: number) => {

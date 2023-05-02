@@ -24,7 +24,7 @@ export const TrainArrivalCell: React.FC<Props> = ({
 }) => {
     const {t} = useTranslation();
     return (
-        <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} width="150" ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
                 {format(ttRow.scheduledArrivalObject, 'HH:mm')}&nbsp;
                 {

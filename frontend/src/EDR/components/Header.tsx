@@ -70,7 +70,7 @@ export const Header: React.FC<Props> = ({
     const displayMode = getDisplayMode(filterConfig);
 
     return (
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800 overflow-y-scroll">
+        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
                     <span>{postCfg.srName}</span>
@@ -83,7 +83,7 @@ export const Header: React.FC<Props> = ({
                 </div>
                 <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
                 <div className="flex items-center">
-                    <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>Stream mode</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>{t("EDR_UI_stream_mode")}</Button>
                     <Button size="xs" className="mr-2" onClick={() => window.open(document.URL + "?graphFullScreenMode=1", "_blank")}>📈 {t("EDR_GRAPH_rcs")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />

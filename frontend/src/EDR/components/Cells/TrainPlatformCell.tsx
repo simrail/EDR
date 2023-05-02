@@ -35,7 +35,7 @@ type Props = {
 };
 
 export const TrainPlatformCell: React.FC<Props> = ({headerFifthColRef, ttRow, secondaryPostData, streamMode}) => {
-    return <td className={tableCellCommonClassnames(streamMode)} ref={headerFifthColRef}>
+    return <td className={tableCellCommonClassnames(streamMode)} ref={headerFifthColRef} width="170">
         <PlatformData ttRow={ttRow} />
         { secondaryPostData.map((spd: TimeTableRow, i: number) => {
             if (spd.platform) {

@@ -108,7 +108,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
     
     autoScroll && scrollToNearestStation(nearestStation?.id);
     return (
-        <div className="h-full child:!rounded-none child:overflow-y-scroll child:h-full">
+        <div>
             <Table striped={true}>
                 <Table.Body>
                     {
@@ -124,7 +124,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         )}
                                         data-internalid={internalId}
                                     >
-                                        <Table.Cell className="relative pl-8">
+                                        <Table.Cell className="relative pl-8" width={340}>
                                             <div className="flex flex-col">
                                                 <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopTypeNumber} />
                                                 <div className="flex justify-between">
@@ -133,7 +133,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 </div>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        <Table.Cell width={200}>
                                             <div className="flex justify-between">
                                             {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                                 <span>{format(ttRow.scheduledArrivalObject, 'HH:mm')}</span>
@@ -141,7 +141,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell className="pl-0 flex justify-between">
+                                        <Table.Cell className="pl-0 flex justify-between" width={210}>
                                             <span className="inline-block">{ttRow.nameForPerson}</span>
                                             <span className="inline-block">
                                                 {
@@ -159,7 +159,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             )}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex">
+                                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex justify-end">
                                                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
                                                     <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                                                 </Tooltip>

@@ -53,7 +53,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     }
 
     return (
-        <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef} width="550">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
