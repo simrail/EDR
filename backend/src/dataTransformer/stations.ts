@@ -2,15 +2,15 @@ import _ from "lodash";
 import { IServerTrain } from "../interfaces/IServerTrain.js";
 import { IFrontendStationTrainRow } from "../interfaces/IFrontendStationTrainRow.js";
 
-export const getStationTimetable = async (stationId: string, trainList: IServerTrain[]) => {
-    const trainsForStation = trainList.filter(train => train.timetable.some(checkpoint => checkpoint.pointId === stationId));
+export const getStationTimetable = async (stationId: number, trainList: IServerTrain[]) => {
+    const trainsForStation = trainList.filter(train => train.timetable.some(checkpoint => parseInt(checkpoint.pointId) === stationId));
     const withDynamicData: Promise<IFrontendStationTrainRow>[] = trainsForStation.map(async (train) => {
-        const stationEntry = train.timetable.find(checkpoint => checkpoint.pointId === stationId);
+        const stationEntry = train.timetable.find(checkpoint => parseInt(checkpoint.pointId) === stationId);
         if (stationEntry == undefined) {
             return {} as IFrontendStationTrainRow;
         }
 
-        const stationIndex = train.timetable.findIndex(checkpoint => checkpoint.pointId === stationId);
+        const stationIndex = train.timetable.findIndex(checkpoint => parseInt(checkpoint.pointId) === stationId);
         let previousEntry = null;
         if (stationIndex > 0) {
             previousEntry = train.timetable[stationIndex - 1];

@@ -5,6 +5,7 @@ import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
 import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
 import { IServerTrain } from "./interfaces/IServerTrain.js";
+import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
 
 const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
@@ -35,7 +36,7 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
 }
 
 export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
-    const { serverCode, post } = req.params;
+    const { post } = req.params;
 
     if (trainList === undefined || trainList === null) {
         console.error("Timetable is empty, cannot process dispatch request!")
@@ -63,7 +64,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
     }
 }
 
-export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
+export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IServerTrain[], speedLimits: ISpeedLimit[]) {
     const {trainNo} = req.params;
 
     if (trainList === undefined || trainList === null) {
@@ -72,7 +73,7 @@ export async function trainTimetableController(req: express.Request, res: expres
     }
 
     try {
-        const data = await getTrainTimetable(trainNo, trainList);
+        const data = await getTrainTimetable(trainNo, trainList, speedLimits);
         res
             .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
             .send(data);

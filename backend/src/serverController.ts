@@ -1,10 +1,11 @@
 import { selfClient, simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
-import {BASE_AWS_API, BASE_SIMRAIL_API, newInternalIdToSrId, stationPositions} from "./config.js";
+import {BASE_AWS_API, BASE_SIMRAIL_API, POSTS, stationPositions} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import { ISteamUser } from "./interfaces/ISteamUser.js";
 import axios from "axios";
 import { IRouteData } from "./interfaces/IRouteData.js";
+import { IServerTrain } from "./interfaces/IServerTrain.js";
 
 export async function getServerCodeList() {
     const response = await simrailClient.get("servers-open", BASE_SIMRAIL_API);
@@ -37,7 +38,7 @@ export function getStationsList(req: express.Request, res: express.Response) {
 }
 
 export function getTrainsList(req: express.Request, res: express.Response) {
-    return simrailClient.get("trains-open?serverCode=" + req.params.serverCode)?.then((e) => {
+    return simrailClient.get(`trains-open?serverCode=${req.params.serverCode}`)?.then((e) => {
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send((e.data as ApiResponse<Train>).data);
@@ -46,24 +47,44 @@ export function getTrainsList(req: express.Request, res: express.Response) {
     });
 }
 
-export async function getTrainsListForPost(req: express.Request, res: express.Response) {
+export async function getTrainsListForPost(req: express.Request, res: express.Response, trainTimetables: IServerTrain[]) {
     try {
         const { serverCode, post } = req.params;
-        const e = await simrailClient.get(`trains-open?serverCode=${serverCode}`);
-        const trainList = (e.data as ApiResponse<Train>).data;
+        const e = await selfClient.get(`trains/${serverCode}`);
+        const trainList = (e.data as Train[]);
         return res
             .setHeader("Cache-control", 'public, max-age=10, must-revalidate, stale-if-error=30')
             .send(await Promise.all(trainList.map(async (train) => {
                 let osrmResult: IRouteData = {} as IRouteData;
-                const stationPosition = stationPositions[parseInt(newInternalIdToSrId[post])];
-                osrmResult = (await getOsrmDataFromSelfApi(train.TrainData.Longitute, train.TrainData.Latititute, stationPosition[0], stationPosition[1])).data;
-
-                return {
-                    ...train,
-                    distanceFromStation: osrmResult?.routes?.[0]?.distance !== undefined ? Math.round(osrmResult.routes[0].distance / 10) / 100 : 0,
-                    lineEta: osrmResult?.routes?.[0]?.duration !== undefined ? Math.round(osrmResult.routes[0].duration / 60) : 0,
-                };
-            })));
+                const trainTimetable = trainTimetables.find(timetable => timetable.trainNoLocal === train.TrainNoLocal);
+                if (trainTimetable !== undefined) {
+                    // TODO: This needs refactoring when new stations get lumped together like Glowny
+                    const internalIds = POSTS[post];
+                    const postsInTimetable = trainTimetable.timetable.filter(checkpoint => internalIds.includes(parseInt(checkpoint.pointId)));
+                    const hasTrainLeftThePost = postsInTimetable !== undefined && postsInTimetable.length > 0 ? train?.TrainData.VDDelayedTimetableIndex > postsInTimetable[postsInTimetable.length - 1].indexOfPoint : true;
+                    if (train.TrainNoLocal === "40131") console.log(`Train: ${train.TrainNoLocal}, postId: ${internalIds}, checkpointIndex: ${postsInTimetable?.[0]?.indexOfPoint}, trainLeft: ${hasTrainLeftThePost}`);
+                    if (hasTrainLeftThePost) {
+                        return {
+                            ...train,
+                            distanceFromStation: null,
+                        };
+                    } else {
+                        const stationPosition = stationPositions[internalIds[0]];
+                        osrmResult = (await getOsrmDataFromSelfApi(train.TrainData.Longitute, train.TrainData.Latititute, stationPosition[0], stationPosition[1])).data;
+                        if (train.TrainNoLocal === "40131") console.log(`OSRM for train ${train.TrainNoLocal}: Distance: ${osrmResult.routes[0].distance}, ETA: ${osrmResult.routes[0].duration}`);
+                        return {
+                            ...train,
+                            distanceFromStation: osrmResult?.routes?.[0]?.distance !== undefined ? Math.round(osrmResult.routes[0].distance / 10) / 100 : 0,
+                        };
+                    }
+                } else {
+                    return {
+                        ...train,
+                        distanceFromStation: null,
+                    };
+                }
+                
+            })).catch(reason => console.log(reason)));
     } catch {
         return res.sendStatus(500);
     }
@@ -112,5 +133,5 @@ export function getSpeedLimitsFromSimkol() {
 }
 
 export function getOsrmDataFromSelfApi(startLon: number, startLat: number, endLon: number, endLat: number) {
-    return selfClient.get(`route/v1/train/${Math.round(startLon * 1000000) / 1000000},${Math.round(startLat * 1000000) / 1000000};${endLon},${endLat}?overview=false`);
+    return selfClient.get(`route/v1/train/${Math.round(startLon * 100000) / 100000},${Math.round(startLat * 100000) / 100000};${Math.round(endLon * 100000) / 100000},${Math.round(endLat * 100000) / 100000}?overview=false&continue_straight=true`);
 }

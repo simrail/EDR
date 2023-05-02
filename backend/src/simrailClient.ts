@@ -6,7 +6,7 @@ import { IServerTrain } from "./interfaces/IServerTrain.js";
 
 const rlClient = axiosRateLimit(axios.create(), {maxRPS: 2});
 const strictRlClient = axiosRateLimit(axios.create(), { perMilliseconds: 3000, maxRequests: 1 });
-const selfRlClient = axiosRateLimit(axios.create(), {maxRPS: 50});
+const selfRlClient = axiosRateLimit(axios.create(), {maxRPS: 100});
 
 export const simrailClient = {
     get: (url: string, base_url = BASE_SIMRAIL_API) => {

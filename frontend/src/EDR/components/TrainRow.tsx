@@ -5,7 +5,7 @@ import { getDateWithHourAndMinutes } from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
 import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
-import { differenceInMinutes, format, subMinutes } from "date-fns";
+import { format, subMinutes } from "date-fns";
 import {TrainInfoCell} from "./Cells/TrainInfoCell";
 import {TrainTypeCell} from "./Cells/TrainTypeCell";
 import {TrainArrivalCell} from "./Cells/TrainArrivalCell";
@@ -50,7 +50,7 @@ const TableRow: React.FC<Props> = (
 ) => {
     const dateNow = nowUTC(serverTzOffset);
 
-    const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
+    const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > Math.max(ttRow.stationIndex, ...(ttRow.secondaryPostsRows || []).map(row => row.stationIndex));
     const departureExpectedHours = ttRow.scheduledDepartureObject.getHours();
     const departureExpectedMinutes = ttRow.scheduledDepartureObject.getMinutes();
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
@@ -68,14 +68,6 @@ const TableRow: React.FC<Props> = (
     const trainMustDepart = !trainHasPassedStation && trainDetails?.distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
-
-    const previousStation = trainDetails?.timetable?.map(e => e)?.reverse()?.find(entry => entry.indexOfPoint < trainDetails?.TrainData?.VDDelayedTimetableIndex);
-    const velocityETA = trainDetails?.TrainData?.Velocity ? Math.round((trainDetails.distanceFromStation / trainDetails.TrainData.Velocity) * 60) : undefined;
-    let predictiveETA = Math.abs(differenceInMinutes(previousStation ? previousStation.scheduledDepartureObject : ttRow.scheduledArrivalObject, ttRow.scheduledArrivalObject));
-    if (velocityETA && velocityETA <= 30) {
-        predictiveETA = (predictiveETA + velocityETA) / 2;
-    }
-    const ETA = trainDetails ? (predictiveETA + trainDetails.lineEta) / 2 : 0;
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
     if (filterConfig.maxRange && trainDetails?.distanceFromStation > filterConfig.maxRange) return null;
@@ -102,7 +94,6 @@ const TableRow: React.FC<Props> = (
             serverCode={serverCode}
             players={players}
             postCfg={postCfg}
-            ETA={ETA}
         />
         <TrainTypeCell
             secondColRef={secondColRef}

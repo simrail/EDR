@@ -75,9 +75,9 @@ app
     .get("/server/tz/:serverCode", getServerTz)
     .get("/stations/:serverCode", getStationsList)
     .get("/trains/:serverCode", getTrainsList)
-    .get("/trains/:serverCode/:post", getTrainsListForPost)
+    .get("/trains/:serverCode/:post", (req: express.Request, res: express.Response) => getTrainsListForPost(req, res, completeTrainList[req.params.serverCode]))
     .get("/dispatch/:serverCode/:post", (req: express.Request, res: express.Response) => dispatchController(req, res, completeTrainList[req.params.serverCode]))
-    .get("/train/:serverCode/:trainNo", (req: express.Request, res: express.Response) => trainTimetableController(req, res, completeTrainList[req.params.serverCode]))
+    .get("/train/:serverCode/:trainNo", (req: express.Request, res: express.Response) => trainTimetableController(req, res, completeTrainList[req.params.serverCode], speeds))
     .get("/steam/:steamId", getPlayer);
 app.listen(process.env.LISTEN_PORT);
 

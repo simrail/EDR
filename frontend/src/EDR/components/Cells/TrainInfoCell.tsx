@@ -29,13 +29,12 @@ type Props = {
     serverCode: string;
     players: ISteamUser[] | undefined;
     postCfg: StationConfig;
-    ETA: number;
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, trainBadgeColor,
        trainHasPassedStation,
        setModalTrainId, firstColRef, isWebpSupported,
-       streamMode, setTimetableTrainId, serverCode, players, postCfg, ETA
+       streamMode, setTimetableTrainId, serverCode, players, postCfg
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -121,19 +120,28 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
             </div>
             <div className="w-full flex flex-col md:flex-row">
-                {  trainDetails?.distanceFromStation < Number.POSITIVE_INFINITY && trainDetails
-                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span><span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>,&nbsp;<div className="inline-flex">{trainDetails.distanceFromStation} km</div></div>
+                {  trainDetails
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden">
+                        <span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span>
+                        <span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>
+                        { trainDetails.distanceFromStation && <span>,&nbsp;
+                            <div className="inline-flex">
+                                {trainDetails.distanceFromStation > 0.5 && <span>
+                                    {trainDetails.distanceFromStation} km
+                                </span>}
+                                {trainDetails.distanceFromStation <= 0.5 && <span>
+                                    {`< 0.5 km`}
+                                </span>}
+                            </div>
+                        </span>}
+                    </div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
-                    trainDetails?.distanceFromStation < Number.POSITIVE_INFINITY
-                        ? trainHasPassedStation
-                            ? <>({t("EDR_TRAINROW_train_away")})</>
-                            : ETA && Math.round(ETA) <= 20 && trainDetails?.distanceFromStation > 1
-                                ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
-                                : undefined
-                        : undefined
+                    trainHasPassedStation
+                    ? <>({t("EDR_TRAINROW_train_away")})</>
+                    : ''
                 }
             </div>
         </td>
