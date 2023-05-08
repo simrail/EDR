@@ -15,6 +15,7 @@ import "./pathfinding/data";
 declare global {
     interface Window {
       timeRefreshWebWorkerId: number;
+      serverTimeRefreshWebWorkerId: number;
       trainsRefreshWebWorkerId: number;
       stationsRefreshWebWorkerId: number;
       realtimeRefreshWebWorkerId: number;

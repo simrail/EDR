@@ -1,5 +1,5 @@
 import React from "react";
-import {getPlayer, getStations, getTimetable, getTrainsForPost, getTrainTimetable, getTzOffset} from "../api/api";
+import {getPlayer, getServerTime, getStations, getTimetable, getTrainsForPost, getTrainTimetable, getTzOffset} from "../api/api";
 import {Alert} from "flowbite-react";
 import {EDRTable} from "./components/Table";
 import _keyBy from "lodash/fp/keyBy";
@@ -69,7 +69,8 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     const [tzOffset, setTzOffset] = React.useState<number | undefined>();
     const [trainsWithDetails, setTrainsWithDetails] = React.useState<{ [k: string]: DetailedTrain } | undefined>();
     const [isGraphModalOpen, setGraphModalOpen] = React.useState<boolean>(false);
-    const [filterConfig, setFilterConfig] = React.useState<FilterConfig>(presetFilterConfig.default)
+    const [filterConfig, setFilterConfig] = React.useState<FilterConfig>(presetFilterConfig.default);
+    const [serverTime, setServerTime] = React.useState<number | undefined>();
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -77,12 +78,12 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     const previousPlayers = React.useRef<ISteamUser[] | undefined>(undefined);
     const graphFullScreenMode = !!useQueryParam("graphFullScreenMode", StringParam)[0];
 
-
     // Gets raw simrail data
     const fetchAllData = () => {
         if (!serverCode || !post) return;
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
+            getServerTime(serverCode).then(setServerTime);
             getTimetable(post, serverCode).then((data) => {
                 setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {
@@ -138,17 +139,31 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         // eslint-disable-next-line
     }, [serverCode]);
 
+    // Refreshes server time every 2 minutes
+    React.useEffect(() => {
+        window.serverTimeRefreshWebWorkerId = window.setInterval(() => {
+            if (!serverCode) return;
+            getServerTime(serverCode).then(setServerTime);
+        }, 120000);
+        if (!window.serverTimeRefreshWebWorkerId) {
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            return;
+        }
+        return () => window.clearInterval(window.serverTimeRefreshWebWorkerId);
+        // eslint-disable-next-line
+    }, [serverCode]);
+
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
+        if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables || tzOffset === undefined) return;
         setTimeout(() => {
-            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables, nowUTC(tzOffset));
+            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables, nowUTC(serverTime, tzOffset));
             const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
             setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
         }, 1);
         // eslint-disable-next-line
-    }, [stations, JSON.stringify(trains), JSON.stringify(previousTrains.current), JSON.stringify(timetable), JSON.stringify(trainTimetables)]);
+    }, [stations, JSON.stringify(trains), JSON.stringify(previousTrains.current), JSON.stringify(timetable), JSON.stringify(trainTimetables), serverTime]);
 
     // Get missing train timetables when a new train spawns on the map
     React.useEffect(() => {
@@ -205,6 +220,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                     post={post} onClose={() =>
                     setGraphModalOpen(false)}
                     serverTzOffset={tzOffset}
+                    serverTime={serverTime}
                     serverCode={serverCode}
                 />
                 : null
@@ -221,6 +237,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                 setFilterConfig={setFilterConfig}
                 players={players}
                 trainTimetables={trainTimetables}
+                serverTime={serverTime}
             />
             : null
         }

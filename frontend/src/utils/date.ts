@@ -1,5 +1,5 @@
-import utcToZonedTime from 'date-fns-tz/utcToZonedTime'
-import  {addHours} from "date-fns";
+import { addHours } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 export const timeOptions: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
@@ -7,11 +7,17 @@ export const timeOptions: Intl.DateTimeFormatOptions = {
     second: '2-digit',
     hour12: false
 };
- // TODO: Take UTC offset from API now. And then shift the hours by the UTC offset value instead of taking TZ
-export const nowUTC = (serverTzOffset: number = 0, addDelay?: number) => {
-    const now = new Date();
-    return addHours(utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
-        addDelay ? now.getUTCHours() - addDelay : now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT"), serverTzOffset)
+
+export const nowUTC = (serverTime: number | undefined, serverTzOffset: number) => {
+    let now: Date;
+    if (serverTime === undefined) {
+        now = new Date();
+    } else {
+        now = new Date(serverTime);
+    }
+
+    return addHours(utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+            now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT"), serverTzOffset);
 }
 
 // We don't care about the date, only time

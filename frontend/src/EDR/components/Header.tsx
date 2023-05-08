@@ -12,6 +12,7 @@ import {FilterConfig, presetFilterConfig} from "../index";
 
 type Props = {
     serverTzOffset: number;
+    serverTime: number | undefined;
     serverCode: string;
     postCfg: StationConfig;
 
@@ -55,13 +56,11 @@ const getDisplayMode = (filterConfig: FilterConfig) => {
 }
 
 export const Header: React.FC<Props> = ({
-    serverTzOffset, serverCode, postCfg, bounds, timetableLength,
+    serverTzOffset, serverCode, postCfg, bounds, timetableLength, serverTime,
     setFilter, streamMode, setStreamMode, filterConfig, setFilterConfig
 }) => {
     const {t} = useTranslation();
-
     const [configModalOpen, setConfigModaOpen] = React.useState(false);
-
 
     React.useEffect(() =>
         scrollToNearestTrain(timetableLength)
@@ -81,7 +80,7 @@ export const Header: React.FC<Props> = ({
                         {!streamMode ? t('EDR_UI_back') : ''}
                     </Link>
                 </div>
-                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
+                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} serverTime={serverTime}/>
                 <div className="flex items-center">
                     <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>{t("EDR_UI_stream_mode")}</Button>
                     <Button size="xs" className="mr-2" onClick={() => window.open(document.URL + "?graphFullScreenMode=1", "_blank")}>📈 {t("EDR_GRAPH_rcs")}</Button>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as FlexLayout from "flexlayout-react";
 import {useParams} from "react-router-dom";
-import {getTrains, getTrainTimetable, getTzOffset} from "../api/api";
+import {getServerTime, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {SiriusHeader} from "./Header";
 import _keyBy from "lodash/keyBy";
@@ -10,6 +10,7 @@ import { TrainDetails } from "./TrainDetails";
 import { Train } from "@simrail/types";
 import {postConfig, postToInternalIds, StationConfig} from "../config/stations";
 import { useTranslation } from "react-i18next";
+import { enqueueSnackbar } from "notistack";
 
 export type TrainTimeTableRow = {
     indexOfPoint: number,
@@ -134,6 +135,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     const [train, setTrain] = React.useState<Train | undefined>();
     const [model, setModel] = React.useState<FlexLayout.Model>();
     const [allStationsInPath, setAllStationsInPath] = React.useState<StationConfig[] | undefined>();
+    const [serverTime, setServerTime] = React.useState<number | undefined>();
     const {trainNumber, serverCode} = useParams();
     const { t } = useTranslation();
     const [mapLink, setMapLink] = React.useState<number>(() => {
@@ -149,13 +151,28 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
     React.useEffect(() => {
         if (!trainNumber || !serverCode) return;
         getTrainTimetable(trainNumber, serverCode).then(setTrainTimetable);
-        getTzOffset(serverCode).then(setServerTzOffset)
+        getTzOffset(serverCode).then(setServerTzOffset);
+        getServerTime(serverCode).then(setServerTime);
         fetchTrain(trainNumber, serverCode, setTrain);
         const intervalId = window.setInterval(() => {
             fetchTrain(trainNumber, serverCode, setTrain);
         }, 10000);
         return () => window.clearInterval(intervalId);
     }, [trainNumber, serverCode]);
+
+    // Refreshes server time every 2 minutes
+    React.useEffect(() => {
+        window.serverTimeRefreshWebWorkerId = window.setInterval(() => {
+            if (!serverCode) return;
+            getServerTime(serverCode).then(setServerTime);
+        }, 120000);
+        if (!window.serverTimeRefreshWebWorkerId) {
+            enqueueSnackbar(t('APP_fatal_error'), { preventDuplicate: true, variant: 'error', autoHideDuration: 10000 });
+            return;
+        }
+        return () => window.clearInterval(window.serverTimeRefreshWebWorkerId);
+        // eslint-disable-next-line
+    }, [serverCode]);
 
     React.useEffect(() => {
         if (!trainTimetable) return;
@@ -233,7 +250,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         )
         : (
             <div>
-                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} setShowSpeedLimits={setShowSpeedLimits} showSpeedLimits={showSpeedLimits} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} setMapLink={setMapLink} />
+                <SiriusHeader resetLayout={resetLayout} autoScroll={autoScroll} setAutoScroll={setAutoScroll} setShowSpeedLimits={setShowSpeedLimits} showSpeedLimits={showSpeedLimits} serverCode={serverCode} trainNumber={trainNumber} trainDetails={train} serverTzOffset={serverTzOffset} serverTime={serverTime} setMapLink={setMapLink} />
                 {model && (
                     <div className="relative h-[calc(100vh-40px)]">
                         <FlexLayout.Layout model={model} factory={factory} realtimeResize={true} />

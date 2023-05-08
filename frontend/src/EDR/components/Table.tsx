@@ -38,10 +38,11 @@ type Props = {
     setFilterConfig: (newFilterConfig: FilterConfig) => void;
     players: ISteamUser[] | undefined;
     trainTimetables: Dictionary<TrainTimeTableRow[]>;
+    serverTime: number | undefined;
 }
 
 export const EDRTable: React.FC<Props> = ({
-      playSoundNotification, timetable, trainsWithDetails, serverTzOffset,
+      playSoundNotification, timetable, trainsWithDetails, serverTzOffset, serverTime,
       post, serverCode, isWebpSupported, filterConfig, setFilterConfig, players, trainTimetables
     }) => {
     const [filter, setFilter] = React.useState<string | undefined>();
@@ -76,6 +77,7 @@ export const EDRTable: React.FC<Props> = ({
         <TrainTimetableModal trainDetails={timetableModalTrainId ? trainsWithDetails[timetableModalTrainId] : undefined} setModalTrainId={setTimetableModalTrainId} trainTimetable={timetableModalTrainId ? trainTimetables[timetableModalTrainId] : undefined}/>
         <Header
             serverTzOffset={serverTzOffset}
+            serverTime={serverTime}
             serverCode={serverCode}
             postCfg={postCfg}
             bounds={{...bounds, showStopColumn}}
@@ -109,6 +111,7 @@ export const EDRTable: React.FC<Props> = ({
                         key={tr.trainNoLocal + "_" + tr.fromPost + "_" + tr.toPost}
                         ttRow={tr}
                         serverTzOffset={serverTzOffset}
+                        serverTime={serverTime}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}
                         thirdColRef={headerThirdColRef}

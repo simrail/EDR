@@ -7,6 +7,17 @@ import axios from "axios";
 import { IRouteData } from "./interfaces/IRouteData.js";
 import { IServerTrain } from "./interfaces/IServerTrain.js";
 
+// For every server we store the number of seconds since the last update & the current time on that server
+const timeList: {[x: string]: [number, number]} = {};
+setInterval(() => {
+    Object.keys(timeList).map(key => {
+        // Increment seconds since last update from API
+        timeList[key][0] = timeList[key][0] + 1;
+        // Increment time on server by 1 second
+        timeList[key][1] = timeList[key][1] + 1000;
+    });
+}, 1000);
+
 export async function getServerCodeList() {
     const response = await simrailClient.get("servers-open", BASE_SIMRAIL_API);
     return (response.data as ApiResponse<Server>).data?.map(server => server.ServerCode);
@@ -91,13 +102,37 @@ export async function getTrainsListForPost(req: express.Request, res: express.Re
 }
 
 export function getServerTz(req: express.Request, res: express.Response) {
-    return simrailClient.get("getTimeZone?serverCode=" + req.params['serverCode'], BASE_AWS_API)?.then((e) => {
+    return simrailClient.get(`getTimeZone?serverCode=${req.params['serverCode']}`, BASE_AWS_API)?.then((e) => {
         return res
             .setHeader("Cache-control", 'public, max-age=3060, must-revalidate')
             .send(`${e.data}`);
     }).catch(() => {
         return res.sendStatus(500);
     });
+}
+
+export function getServerTime(req: express.Request, res: express.Response) {
+    const { serverCode } = req.params;
+    const cachedTimeData = timeList[serverCode];
+    if (cachedTimeData === undefined || cachedTimeData[0] >= 120) {
+        return simrailClient.get(`gettime?serverCode=${req.params['serverCode']}`, BASE_AWS_API)?.then((e) => {
+            if (timeList[serverCode] === undefined) {
+                timeList[serverCode] = [0, 0];
+            }
+
+            timeList[serverCode][0] = 0;
+            timeList[serverCode][1] = e.data;
+            return res
+                .setHeader("Cache-control", 'public, max-age=1, must-revalidate')
+                .send(`${e.data}`);
+        }).catch(() => {
+            return res.sendStatus(500);
+        });
+    } else {
+        return res
+            .setHeader("Cache-control", 'public, max-age=1, must-revalidate')
+            .send(`${cachedTimeData[1]}`);
+    }
 }
 
 const STEAM_API_KEY = process.env.STEAM_API_KEY;

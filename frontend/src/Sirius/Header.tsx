@@ -11,6 +11,7 @@ type Props = {
     trainDetails: Train;
     serverCode: string;
     serverTzOffset: number;
+    serverTime: number | undefined;
     autoScroll: boolean;
     showSpeedLimits: boolean;
     setAutoScroll: (v: boolean) => void;
@@ -18,7 +19,7 @@ type Props = {
     setShowSpeedLimits: (v: boolean) => void;
     setMapLink: (v: number) => void;
 }
-export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, autoScroll, showSpeedLimits, setAutoScroll, resetLayout, setShowSpeedLimits, setMapLink}) => {
+export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, serverTime, autoScroll, showSpeedLimits, setAutoScroll, resetLayout, setShowSpeedLimits, setMapLink}) => {
     const { t } = useTranslation();
 
     return (
@@ -38,7 +39,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                 </div>
             </div>
             <div className="flex">
-                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} hideDetails/>
+                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} serverTime={serverTime} hideDetails/>
             </div>
             <div className="flex">
                 

@@ -8,7 +8,7 @@ const app = express();
 const Logger = morgan('short');
 
 import {dispatchController, trainTimetableController} from "./dispatchController.js";
-import {getServerList, getStationsList, getTrainsListForPost, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList, getTrainsList} from "./serverController.js";
+import {getServerList, getStationsList, getTrainsListForPost, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList, getTrainsList, getServerTime} from "./serverController.js";
 import helmet from "helmet";
 import { ISpeedLimitApi } from "./interfaces/ISpeedLimitApi.js";
 import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
@@ -72,6 +72,7 @@ app
     .options('*', cors(corsConfig))
     .get("/", (req: express.Request, res: express.Response) => res.send("Simrail Community EDR"))
     .get("/servers", getServerList)
+    .get("/server/time/:serverCode", getServerTime)
     .get("/server/tz/:serverCode", getServerTz)
     .get("/stations/:serverCode", getStationsList)
     .get("/trains/:serverCode", getTrainsList)

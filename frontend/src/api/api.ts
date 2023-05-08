@@ -49,5 +49,8 @@ export const getServers = (): Promise<Server[]> =>
 export const getPlayer = (steamId: string): Promise<ISteamUser> =>
     baseApiCall(`steam/${steamId}`);
 
-export const getTzOffset = (serverCode: string): Promise<any> =>
+export const getTzOffset = (serverCode: string): Promise<number> =>
     baseApiCall(`server/tz/${serverCode}`);
+
+export const getServerTime = (serverCode: string): Promise<number> =>
+    baseApiCall(`server/time/${serverCode}`);

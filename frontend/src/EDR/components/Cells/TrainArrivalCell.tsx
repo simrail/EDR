@@ -9,10 +9,7 @@ import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 type Props = {
     ttRow: TimeTableRow;
     trainDetails: DetailedTrain;
-    dateNow: Date;
-    serverTzOffset: number;
     trainHasPassedStation: boolean;
-    expectedDeparture: Date;
     thirdColRef: any;
     streamMode: boolean;
     arrivalTimeDelay: number;

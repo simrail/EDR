@@ -25,6 +25,7 @@ type Props = {
     ttRow: TimeTableRow,
     trainDetails: DetailedTrain,
     serverTzOffset: number,
+    serverTime: number | undefined,
     firstColRef: any,
     secondColRef: any,
     thirdColRef: any,
@@ -42,13 +43,13 @@ type Props = {
 }
 
 const TableRow: React.FC<Props> = (
-    {setModalTrainId, ttRow, trainDetails, serverTzOffset,
+    {setModalTrainId, ttRow, trainDetails, serverTime, serverTzOffset,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig,
         serverCode, players, postCfg
     }: Props
 ) => {
-    const dateNow = nowUTC(serverTzOffset);
+    const dateNow = nowUTC(serverTime, serverTzOffset);
 
     const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > Math.max(ttRow.stationIndex, ...(ttRow.secondaryPostsRows || []).map(row => row.stationIndex));
     const departureExpectedHours = ttRow.scheduledDepartureObject.getHours();
@@ -105,10 +106,7 @@ const TableRow: React.FC<Props> = (
         <TrainArrivalCell
             ttRow={ttRow}
             trainDetails={trainDetails}
-            dateNow={dateNow}
-            serverTzOffset={serverTzOffset}
             trainHasPassedStation={trainHasPassedStation}
-            expectedDeparture={expectedDeparture}
             thirdColRef={thirdColRef}
             streamMode={streamMode}
             arrivalTimeDelay={arrivalTimeDelay}
