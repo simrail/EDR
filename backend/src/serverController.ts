@@ -5,7 +5,7 @@ import { ApiResponse, Server, Station, Train } from "@simrail/types";
 import { ISteamUser } from "./interfaces/ISteamUser.js";
 import axios from "axios";
 import { IRouteData } from "./interfaces/IRouteData.js";
-import { IServerTrain } from "./interfaces/IServerTrain.js";
+import { IEdrServerTrain } from "./interfaces/IEdrServerTrain.js";
 
 // For every server we store the number of seconds since the last update & the current time on that server
 const timeList: {[x: string]: [number, number]} = {};
@@ -58,7 +58,7 @@ export function getTrainsList(req: express.Request, res: express.Response) {
     });
 }
 
-export async function getTrainsListForPost(req: express.Request, res: express.Response, trainTimetables: IServerTrain[]) {
+export async function getTrainsListForPost(req: express.Request, res: express.Response, trainTimetables: IEdrServerTrain[]) {
     try {
         const { serverCode, post } = req.params;
         const e = await selfClient.get(`trains/${serverCode}`);

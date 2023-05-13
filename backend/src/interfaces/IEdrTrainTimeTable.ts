@@ -1,6 +1,6 @@
 import { ISpeedLimit } from "./ISpeedLimit.js";
 
-export interface ITrainTimeTable {
+export interface IEdrTrainTimeTable {
 	indexOfPoint: number,
 	nameForPerson: string,
 	pointId: string,

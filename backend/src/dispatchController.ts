@@ -4,7 +4,7 @@ import {getStationTimetable} from "./dataTransformer/stations.js";
 import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
 import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
-import { IServerTrain } from "./interfaces/IServerTrain.js";
+import { IEdrServerTrain } from "./interfaces/IEdrServerTrain.js";
 import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
 
 const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
@@ -35,7 +35,7 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     return _.sortBy(mergedPostsRows, 'scheduledArrivalObject');
 }
 
-export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
+export async function dispatchController(req: express.Request, res: express.Response, trainList: IEdrServerTrain[]) {
     const { post } = req.params;
 
     if (trainList === undefined || trainList === null) {
@@ -64,7 +64,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
     }
 }
 
-export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IServerTrain[], speedLimits: ISpeedLimit[]) {
+export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IEdrServerTrain[], speedLimits: ISpeedLimit[]) {
     const {trainNo} = req.params;
 
     if (trainList === undefined || trainList === null) {

@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { IServerTrain } from "../interfaces/IServerTrain.js";
+import { IEdrServerTrain } from "../interfaces/IEdrServerTrain.js";
 import { IFrontendStationTrainRow } from "../interfaces/IFrontendStationTrainRow.js";
 
-export const getStationTimetable = async (stationId: number, trainList: IServerTrain[]) => {
+export const getStationTimetable = async (stationId: number, trainList: IEdrServerTrain[]) => {
     const trainsForStation = trainList.filter(train => train.timetable.some(checkpoint => parseInt(checkpoint.pointId) === stationId));
     const withDynamicData: Promise<IFrontendStationTrainRow>[] = trainsForStation.map(async (train) => {
         const stationEntry = train.timetable.find(checkpoint => parseInt(checkpoint.pointId) === stationId);

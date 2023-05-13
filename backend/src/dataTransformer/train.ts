@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { ISpeedLimit } from "../interfaces/ISpeedLimit.js";
-import { IServerTrain } from "../interfaces/IServerTrain.js";
+import { IEdrServerTrain } from "../interfaces/IEdrServerTrain.js";
 import { IFrontendTrainScheduleRow } from "../interfaces/IFrontendTrainScheduleRow.js";
 
-export const getTrainTimetable = async (trainNumber: string, trainList: IServerTrain[], speedLimits: ISpeedLimit[]) => {
+export const getTrainTimetable = async (trainNumber: string, trainList: IEdrServerTrain[], speedLimits: ISpeedLimit[]) => {
     // Group limits by line number to make searches easier
     const allSpeeds = _.groupBy(speedLimits, "lineNo");
     let trainTimeTable = trainList.find(trainData => trainData.trainNoLocal === trainNumber)?.timetable;

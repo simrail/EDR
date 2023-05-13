@@ -1,5 +1,5 @@
-import { IServerTrain } from "./IServerTrain";
+import { IEdrServerTrain } from "./IEdrServerTrain";
 
 export interface ICompleteTrainList {
-    [x: string]: IServerTrain[],
+    [x: string]: IEdrServerTrain[],
 }

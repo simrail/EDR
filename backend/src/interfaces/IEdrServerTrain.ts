@@ -1,6 +1,6 @@
-import { ITrainTimeTable } from "./ITrainTimeTable.js";
+import { IEdrTrainTimeTable } from "./IEdrTrainTimeTable.js";
 
-export interface IServerTrain {
+export interface IEdrServerTrain {
     trainNoLocal: string,
     trainName: string,
     startStation: string,
@@ -14,5 +14,5 @@ export interface IServerTrain {
     isHighRiskCargo: boolean,
     isDangerousCargo: boolean,
     carrierName: string,
-    timetable: ITrainTimeTable[]
+    timetable: IEdrTrainTimeTable[]
 }
