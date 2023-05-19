@@ -72,7 +72,7 @@ import ST_WEBP from "./images/posts/webp/Strzalki.webp";
 import KO_WEBP from "./images/posts/webp/Katowice.webp";
 import BR_WEBP from "./images/posts/webp/Biala_Rawska.webp";
 
-import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL} from 'country-flag-icons/string/3x2'
+import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL, EU} from 'country-flag-icons/string/3x2'
 
 export const LOGGING = false;
 
@@ -89,6 +89,7 @@ export const countriesFlags: {[k: string]: string} = {
     PL,
     PT,
     UA,
+    EU,
 }
 
 

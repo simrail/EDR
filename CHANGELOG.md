@@ -23,6 +23,7 @@
 - Pathfinding fixed for several stations
 - Graph load errors fixed for several dispatch stations
 - Lots of optimizations and fixes
+- Add missing EU flag on server select screen
 
 ## *2.2 - 2023-04-08*
 
