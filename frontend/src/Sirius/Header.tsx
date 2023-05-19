@@ -32,7 +32,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                     {t("DRIVER_DETAILS_back_link")}
                 </Link>
                 <div className="w-content items-center hidden md:flex">
-                    <span className="ml-2 mr-1 child:w-6 child:h-auto shadow-md" dangerouslySetInnerHTML={{ __html: countriesFlags[serverCode.slice(0, 2).toUpperCase()].toString() }} />
+                    <span className="ml-2 mr-1 child:w-6 child:h-auto shadow-md" dangerouslySetInnerHTML={{ __html: countriesFlags[serverCode.slice(0, 2).toUpperCase()]?.toString() }} />
                         <span className="font-bold mr-2">{serverCode.toUpperCase()}
                     </span>
                     - {trainNumber} - {trainDetails.Vehicles[0]}

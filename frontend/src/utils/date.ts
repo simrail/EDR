@@ -1,4 +1,3 @@
-import { addHours } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
 export const timeOptions: Intl.DateTimeFormatOptions = {
@@ -8,7 +7,7 @@ export const timeOptions: Intl.DateTimeFormatOptions = {
     hour12: false
 };
 
-export const nowUTC = (serverTime: number | undefined, serverTzOffset: number) => {
+export const nowUTC = (serverTime: number | undefined) => {
     let now: Date;
     if (serverTime === undefined) {
         now = new Date();
@@ -16,8 +15,8 @@ export const nowUTC = (serverTime: number | undefined, serverTzOffset: number) =
         now = new Date(serverTime);
     }
 
-    return addHours(utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
-            now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT"), serverTzOffset);
+    return utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+            now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT");
 }
 
 // We don't care about the date, only time

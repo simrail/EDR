@@ -28,7 +28,6 @@ import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 export type GraphProps = {
     post: string;
     timetable: TimeTableRow[];
-    serverTzOffset: number;
     serverTime: number | undefined;
     serverCode: string | undefined;
 }
@@ -36,8 +35,8 @@ export type GraphProps = {
 const dateFormatter = (date: Date) => {
     return format(date, "HH:mm");
 };
-const makeDate = (dateAry: string[], serverTzOffset: number, serverTime: number | undefined) => {
-    const dateNow = nowUTC(serverTime, serverTzOffset);
+const makeDate = (dateAry: string[], serverTime: number | undefined) => {
+    const dateNow = nowUTC(serverTime);
     const hours = Number.parseInt(dateAry[0]);
     const minutes = Number.parseInt(dateAry[1]);
     const isDepartureNextDay = dateNow.getHours() >= 20 && Number.parseInt(dateAry[0]) < 12;  // TODO: less but still clunky
@@ -97,10 +96,10 @@ const CustomizedAxisTick = (data: any, displayMode: string, color: string) => (p
 
 
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
-const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, serverTime, serverCode}) => {
+const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTime, serverCode}) => {
     const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
     const [zoom, setZoom] = React.useState<number>(1);
-    const [dtNow, setDtNow] = React.useState(nowUTC(serverTime, serverTzOffset));
+    const [dtNow, setDtNow] = React.useState(nowUTC(serverTime));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<Dictionary<Dictionary<TimeTableRow>>>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
@@ -113,11 +112,11 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, se
 
     React.useEffect(() => {
         const intervalId = window.setInterval(() => {
-            setDtNow(nowUTC(serverTime, serverTzOffset));
+            setDtNow(nowUTC(serverTime));
         }, 10000);
 
         return () => window.clearInterval(intervalId);
-    }, [serverTzOffset, serverTime])
+    }, [serverTime])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
@@ -170,7 +169,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, se
                 if (!nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledDepartureObject) : dateFormatter(targetTrain?.scheduledArrivalObject);
-                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset, serverTime)]
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTime)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNoLocal];
@@ -179,7 +178,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, se
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledArrivalObject) : dateFormatter(targetTrain?.scheduledDepartureObject);
-                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset, serverTime)]
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTime)]
             }))
             return [{
                 name: postId,
@@ -191,7 +190,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset, se
         });
 
         setData(data);
-    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTzOffset, allPathsOfPosts, serverTime])
+    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, allPathsOfPosts, serverTime])
 
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;

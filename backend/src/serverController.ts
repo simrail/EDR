@@ -160,6 +160,11 @@ export function getPlayer(req: express.Request, res: express.Response) {
 
 // This endpoint has a very heavy rate limit (Absolute max. of 1 req./30s/server, ideally 1 req./min), hence the strict client
 export function getFullTimetable(serverCode: string) {
+    return strictAwsSimrailClient.get("getAllTimetables?serverCode=" + serverCode);
+}
+
+// This endpoint has a very heavy rate limit (Absolute max. of 1 req./30s/server, ideally 1 req./min), hence the strict client
+export function getEdrTimetable(serverCode: string) {
     return strictAwsSimrailClient.get("getEDRTimetables?serverCode=" + serverCode);
 }
 

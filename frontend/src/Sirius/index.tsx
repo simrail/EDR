@@ -152,7 +152,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         if (!trainNumber || !serverCode) return;
         getTrainTimetable(trainNumber, serverCode).then(setTrainTimetable);
         getTzOffset(serverCode).then(setServerTzOffset);
-        getServerTime(serverCode).then(setServerTime);
+        setTimeout(() => getServerTime(serverCode).then(setServerTime), 1000);
         fetchTrain(trainNumber, serverCode, setTrain);
         const intervalId = window.setInterval(() => {
             fetchTrain(trainNumber, serverCode, setTrain);

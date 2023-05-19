@@ -110,7 +110,6 @@ export const EDRTable: React.FC<Props> = ({
                     <TableRow
                         key={tr.trainNoLocal + "_" + tr.fromPost + "_" + tr.toPost}
                         ttRow={tr}
-                        serverTzOffset={serverTzOffset}
                         serverTime={serverTime}
                         firstColRef={ headerFirstColRef}
                         secondColRef={headerSecondColRef}

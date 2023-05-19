@@ -1,4 +1,4 @@
-import { IEdrTrainTimeTable } from "./IEdrTrainTimeTable.js";
+import { IAllTrainTimeTable } from "./IAllTrainTimeTable.js";
 
 export interface IAllServerTrain {
     trainNoLocal: string,
@@ -12,5 +12,5 @@ export interface IAllServerTrain {
     trainLength: number,
     trainWeight: number,
     continuesAs: string,
-    timetable: IEdrTrainTimeTable[]
+    timetable: IAllTrainTimeTable[]
 }

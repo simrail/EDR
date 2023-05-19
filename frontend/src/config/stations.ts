@@ -24,7 +24,7 @@ type StationNeighbours = {
 
 export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.katowice_zawodzie]: {
-        left: [StationId.sosnowiec_gl__pzs_r52],
+        left: [StationId.sosnowiec_gl__pzs_r52, StationId.szabelnia],
         right: [StationId.katowice]
     },
     [StationId.sosnowiec_gl__pzs_r52]: {
@@ -62,8 +62,8 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.przemiarki]
     },
     [StationId.zawiercie]: {
-        left: [StationId.lazy_la],
-        right: [StationId.myszkow, StationId.gora_wlodowska]
+        left: [StationId.lazy_la, StationId.zawiercie_gt],
+        right: [StationId.myszkow, StationId.myszkow_gt, StationId.gora_wlodowska, StationId.zawiercie_borowe_pole]
     },
     [StationId.gora_wlodowska]: {
         left: [StationId.zawiercie],
@@ -80,9 +80,9 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.wloszczowa_polnoc]
     },
     [StationId.wloszczowa_polnoc]: {
-        left: [StationId.knapowka],
+        left: [StationId.knapowka, StationId.knapowka_r2],
         right: [StationId.olszamowice],
-        up: [StationId.zelislawice]
+        up: [StationId.zelislawice, StationId.zelislawice_r_6]
     },
     [StationId.olszamowice]: {
         left: [StationId.pilichowice],
@@ -126,6 +126,22 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.szeligi]: {
         left: [StationId.biala_rawska],
         right: [StationId.korytow]
+    },
+    [StationId.biala_rawska]: {
+        left: [StationId.strzalki],
+        right: [StationId.szeligi]
+    },
+    [StationId.strzalki]: {
+        left: [StationId.idzikowice, StationId.idzikowice_roz_12],
+        right: [StationId.biala_rawska]
+    },
+    [StationId.juliusz]: {
+        left: [StationId.sosnowiec_dandowka],
+        right: [StationId.dorota]
+    },
+    [StationId.katowice]: {
+        left: [StationId.brynow, StationId.katowice_tow__ktc, StationId.katowice_zaleze],
+        right: [StationId.katowice_zawodzie]
     }
 }
 
@@ -194,7 +210,7 @@ export const postConfig: Dictionary<StationConfig> = {
         graphConfig: {
             pre: ["KN", "WP", "OZ"],
             post: ["OP_PO", "IDZ"],
-            final: ["STR"]
+            final: ["ST"]
         }
     },
     KZ: {
@@ -298,7 +314,7 @@ export const postConfig: Dictionary<StationConfig> = {
         graphConfig: {
             pre: ["WP", "OZ", "PI"],
             post: ["IDZ"],
-            final: ["STR"]
+            final: ["ST"]
         }
     },
     MY: {
@@ -451,36 +467,42 @@ export const postConfig: Dictionary<StationConfig> = {
     IDZ: {
         id: "IDZ",
         srName: "Idzikowice",
-        trainPosRange: 0.5,
+        trainPosRange: 1,
         platformPosOverride: [20.316125, 51.449722],
         graphConfig: {
             pre: ["WP", "OZ", "PI", "OP_PO"],
             post: [],
-            final: ["STR"]
+            final: ["ST"]
         }
     },
-    STR: {
-        id: "STR",
+    ST: {
+        id: "ST",
         srName: "Strzałki",
-        trainPosRange: 0.5,
+        trainPosRange: 1,
         platformPosOverride: [20.406687, 51.642870]
+    },
+    BR: {
+        id: "BR",
+        srName: "Biała Rawska",
+        trainPosRange: 1,
+        platformPosOverride: [20.439459, 51.794781]
     },
     SZE: {
         id: "SZE",
         srName: "Szeligi",
-        trainPosRange: 0.5,
+        trainPosRange: 1,
         platformPosOverride: [20.457199, 51.942969]
     },
     JKT: {
         id: "JKT",
         srName: "Jaktorów",
-        trainPosRange: 0.5,
+        trainPosRange: 1,
         platformPosOverride: [20.552015, 52.086808]
     },
     GRO_MAZ: {
         id: "GRO_MAZ",
         srName: "Grodzisk Mazowiecki",
-        trainPosRange: 0.5,
+        trainPosRange: 1,
         platformPosOverride: [20.623149, 52.110193]
     },
     MIL: {
@@ -687,6 +709,18 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.225059, 50.272341]
     },
+    SZA: {
+        id: "SZA",
+        srName: "Szabelnia",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.110300, 50.259170]
+    },
+    SM: {
+        id: "SM",
+        srName: "Sosnowiec Maczki",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.270203, 50.261328]
+    }
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({

@@ -8,7 +8,12 @@ type Props = {serverTzOffset: number, serverTime: number | undefined, serverCode
 
 export const DateTimeDisplay: React.FC<Props> = ({serverTzOffset, serverTime, serverCode, hideDetails = false}) => {
     const {i18n} = useTranslation();
-    const [dt, setDt] = React.useState(nowUTC(serverTime, serverTzOffset));
+    const [dt, setDt] = React.useState(nowUTC(serverTime));
+
+    React.useEffect(() => {
+        setDt(nowUTC(serverTime));
+    }, [serverTime]);
+
     React.useEffect(() => {
         window.timeRefreshWebWorkerId = window.setInterval(() => {
             setDt(addSeconds(dt, 1));

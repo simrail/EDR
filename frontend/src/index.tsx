@@ -18,7 +18,6 @@ declare global {
       serverTimeRefreshWebWorkerId: number;
       trainsRefreshWebWorkerId: number;
       stationsRefreshWebWorkerId: number;
-      realtimeRefreshWebWorkerId: number;
     }
 }
 

@@ -83,7 +83,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
         if (!serverCode || !post) return;
         getTzOffset(serverCode).then((v) => {
             setTzOffset(v);
-            getServerTime(serverCode).then(setServerTime);
+            setTimeout(() => getServerTime(serverCode).then(setServerTime), 1000);
             getTimetable(post, serverCode).then((data) => {
                 setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {
@@ -155,9 +155,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
 
     // Adds all the calculated infos for online trains. Such as distance or closest station for example
     React.useEffect(() => {
-        if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables || tzOffset === undefined) return;
+        if (loading || (trains as ExtendedTrain[]).length === 0 || !previousTrains || !post || !trainTimetables) return;
         setTimeout(() => {
-            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables, nowUTC(serverTime, tzOffset));
+            const addDetailsToTrains = getTrainDetails(previousTrains, post, trainTimetables, nowUTC(serverTime));
             const onlineTrainsWithDetails = _map(addDetailsToTrains, trains);
 
             setTrainsWithDetails(_keyBy('TrainNoLocal', onlineTrainsWithDetails));
@@ -219,7 +219,6 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
                     timetable={timetable}
                     post={post} onClose={() =>
                     setGraphModalOpen(false)}
-                    serverTzOffset={tzOffset}
                     serverTime={serverTime}
                     serverCode={serverCode}
                 />

@@ -62,9 +62,11 @@ export const Header: React.FC<Props> = ({
     const {t} = useTranslation();
     const [configModalOpen, setConfigModaOpen] = React.useState(false);
 
-    React.useEffect(() =>
-        scrollToNearestTrain(timetableLength)
-    , [timetableLength])
+    React.useEffect(() => {
+        if (serverTime !== undefined) {
+            scrollToNearestTrain(timetableLength)
+        }
+    }, [timetableLength, serverTime])
 
     const displayMode = getDisplayMode(filterConfig);
 

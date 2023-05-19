@@ -1,18 +1,18 @@
 import { IEdrTrainTimeTable } from "./IEdrTrainTimeTable.js";
 
 export interface IEdrServerTrain {
-    trainNoLocal: string,
-    trainName: string,
-    startStation: string,
+    carrierName: string,
     endStation: string,
-    usageNotes: string | null,
-    ownNotes: string | null,
-    isQualityTracked: boolean,
+    isDangerousCargo: boolean,
+    isHighRiskCargo: boolean,
+    isOtherExceptional: boolean,
     isOverGauge: boolean,
     isOverWeight: boolean,
-    isOtherExceptional: boolean,
-    isHighRiskCargo: boolean,
-    isDangerousCargo: boolean,
-    carrierName: string,
+    isQualityTracked: boolean,
+    ownNotes: string | null,
+    startStation: string,
     timetable: IEdrTrainTimeTable[]
+    trainName: string,
+    trainNoLocal: string,
+    usageNotes: string | null,
 }
