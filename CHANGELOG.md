@@ -4,6 +4,7 @@
 
 ### Important changes
 
+- Support for the latest Simrail update released on 2023.05.17 (timetable & new dispatch posts)
 - The ETA estimation that was beside the next station for a train has been removed as it was severely inaccurate and therefore completely useless
 - The arrival time column has been changed so that it no longer shows the minutes left (in real time) until scheduled arrival. Instead it now shows actual live delay / earliness of the train. This is very similar to how real-world timetables work. The current implementation uses local logic for calculations which means that this data will be empty on page load and will get gradually updated as trains progress through their timetable. It is not dependent on the official EDR data.
 - The backend has been upgraded to use a much more accurate distance calculation method. For those curious, this uses a modified OSRM server that serves as a train route calculator. Unfortunately ETA calculations are currently all over the place (which is why they were removed from the UI and will not be displayed for the forseeable future)
@@ -11,13 +12,15 @@
 
 ### Changes and features
 
+- The realtime clock on the top is now synchronized with the game server
 - The driver view got a table header for the timetable part so it's easier to understand the information presented
 
 ### Fixes
 
 - The EDR view has been changed to use better spacing so it shouldn't jump around so much anymore
 - The driver view also got better spacing
-- Pathfinding fixed for Juliusz
+- The driver view now shows all checkpoints and stops instead of only major stations
+- Pathfinding fixed for several stations
 - Graph load errors fixed for several dispatch stations
 - Lots of optimizations and fixes
 
