@@ -1,6 +1,6 @@
 # Simrail Community EDR Changelog
 
-## *2.3 - Unreleased*
+## *2.3 - 2023-05-21*
 
 ### Important changes
 
@@ -27,7 +27,8 @@
 
 ### Known issues
 
-- The graph view is a mess. Unfortunately the graph view is in a very sorry state and it needs a complete rewrite in order for it to function properly again. Contributions are welcome!
+- Unfortunately the graph view is in a very sorry state and it needs a complete rewrite in order for it to function properly again. Contributions are welcome!
+- The driver view doesn't display line speed limits even if it's toggled on
 
 ## *2.2 - 2023-04-08*
 

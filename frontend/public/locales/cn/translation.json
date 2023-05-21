@@ -3,6 +3,7 @@
   "APP_no_trains": "当前没有列车！服务器可能正在重启。",
   "APP_no_timetable": "致命错误：无法获取时刻表，服务器可能正在重启。",
   "APP_station_not_found": "致命错误：无法找到车站！",
+  "APP_loading": "Loading...",
 
   "NAVBAR_bugs": "报告Bug",
   "NAVBAR_language": "Language",
@@ -82,6 +83,17 @@
   "EDR_UI_filter_train_approaching": "接近列车",
   "EDR_UI_train_number": "列车车次",
   "EDR_UI_filter_custom": "Custom",
+  "EDR_UI_filter_customisation": "Filter customisation",
+  "EDR_UI_filter_hide_offline": "Hide offline trains",
+  "EDR_UI_filter_hide_left": "Hide trains that have already left",
+  "EDR_UI_filter_radius": "Filter by radius (km)",
+  "EDR_UI_reset_button": "Reset",
+  "EDR_UI_save_button": "Save",
+  "EDR_UI_timetable_times": "Times",
+  "EDR_UI_timetable_station": "Station",
+  "EDR_UI_timetable_layover": "停车时间",
+  "EDR_UI_stream_mode": "Stream mode",
+  "EDR_UI_map_select": "Map provider",
 
   "DRIVER_DETAILS_train_number": "Train number",
   "DRIVER_DETAILS_start_station": "Originating station",
@@ -90,6 +102,10 @@
   "DRIVER_DETAILS_train_model": "Train model",
   "DRIVER_DETAILS_auto_scroll": "Auto scroll",
   "DRIVER_DETAILS_speed_limits": "Speed limits",
-  "DRIVER_DETAILS_back_link": "Back to trains"
-  
+  "DRIVER_DETAILS_back_link": "Back to trains",
+  "DRIVER_DETAILS_header_line": "线路号",
+  "DRIVER_DETAILS_header_arrival": "Arrival",
+  "DRIVER_DETAILS_header_station": "Station",
+  "DRIVER_DETAILS_header_departure": "Departure",
+  "DRIVER_DETAILS_header_layover": "停车时间"
 }

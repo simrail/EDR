@@ -3,6 +3,7 @@
   "APP_no_trains": "Il n'y a pas de train ! Le serveur est probablement en train de redémarrer",
   "APP_no_timetable": "Erreur fatale : impossible de récupérer l'horaire. Le serveur Simrail est probablement en train de redémarrer",
   "APP_station_not_found": "Erreur fatale : station actuelle introuvable.",
+  "APP_loading": "Loading...",
 
   "NAVBAR_bugs": "Rapport d'erreurs",
   "NAVBAR_language": "Langue",
@@ -82,6 +83,17 @@
   "EDR_UI_filter_train_approaching": "En approche",
   "EDR_UI_train_number": "N° de train",
   "EDR_UI_filter_custom": "Personnalisé",
+  "EDR_UI_filter_customisation": "Filter customisation",
+  "EDR_UI_filter_hide_offline": "Hide offline trains",
+  "EDR_UI_filter_hide_left": "Hide trains that have already left",
+  "EDR_UI_filter_radius": "Filter by radius (km)",
+  "EDR_UI_reset_button": "Reset",
+  "EDR_UI_save_button": "Save",
+  "EDR_UI_timetable_times": "Times",
+  "EDR_UI_timetable_station": "Station",
+  "EDR_UI_timetable_layover": "Halte",
+  "EDR_UI_stream_mode": "Stream mode",
+  "EDR_UI_map_select": "Map provider",
 
   "DRIVER_DETAILS_train_number": "Numéro de train",
   "DRIVER_DETAILS_start_station": "Gare d'origine",
@@ -90,6 +102,10 @@
   "DRIVER_DETAILS_train_model": "Modèle du train",
   "DRIVER_DETAILS_auto_scroll": "Défilement automatique",
   "DRIVER_DETAILS_speed_limits": "Limitations de vitesse",
-  "DRIVER_DETAILS_back_link": "Retour aux trains"
-  
+  "DRIVER_DETAILS_back_link": "Retour aux trains",
+  "DRIVER_DETAILS_header_line": "Ligne",
+  "DRIVER_DETAILS_header_arrival": "Arrival",
+  "DRIVER_DETAILS_header_station": "Station",
+  "DRIVER_DETAILS_header_departure": "Departure",
+  "DRIVER_DETAILS_header_layover": "Halte"
 }

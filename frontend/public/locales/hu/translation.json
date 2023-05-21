@@ -3,6 +3,7 @@
   "APP_no_trains": "Nincsenek vonatok! A szerver valószínűleg éppen újraindul",
   "APP_no_timetable": "Végzetes hiba: A menetrend nem elérhető. A szerver valószínűleg éppen újraindul",
   "APP_station_not_found": "Végzetes hiba: A kiválasztott állomás nem elérhető.",
+  "APP_loading": "Betöltés...",
 
   "NAVBAR_bugs": "Hibajelentés",
   "NAVBAR_language": "Nyelv",
@@ -61,7 +62,7 @@
   "EDR_TRAINROW_special_cargo": "Különleges összeállítás",
 
   "EDR_TRAINHEADER_train_number": "Vonat száma, jelenlegi helye",
-  "EDR_TRAINHEADER_train_type": "Típus / Sebesség",
+  "EDR_TRAINHEADER_train_type": "Típus",
   "EDR_TRAINHEADER_train_arrival_time": "Érkezés ideje",
   "EDR_TRAINHEADER_train_from": "Érkezik",
   "EDR_TRAINHEADER_train_stop": "Megálló részletek",
@@ -82,6 +83,17 @@
   "EDR_UI_filter_train_approaching": "Érkezik",
   "EDR_UI_train_number": "Vonat szám keresés",
   "EDR_UI_filter_custom": "Egyéni",
+  "EDR_UI_filter_customisation": "Szűrők testreszabása",
+  "EDR_UI_filter_hide_offline": "Offline vonatok elrejtése",
+  "EDR_UI_filter_hide_left": "Korábbi vonatok elrejtése",
+  "EDR_UI_filter_radius": "Adott távolság szűrése (km)",
+  "EDR_UI_reset_button": "Alaphelyzet",
+  "EDR_UI_save_button": "Mentés",
+  "EDR_UI_timetable_times": "Időpontok",
+  "EDR_UI_timetable_station": "Állomás",
+  "EDR_UI_timetable_layover": "Várakozás",
+  "EDR_UI_stream_mode": "Stream mód",
+  "EDR_UI_map_select": "Térkép szolgáltató",
 
   "DRIVER_DETAILS_train_number": "Vonat száma",
   "DRIVER_DETAILS_start_station": "Kiindulási állomás",
@@ -90,6 +102,10 @@
   "DRIVER_DETAILS_train_model": "Mozdony típus",
   "DRIVER_DETAILS_auto_scroll": "Auto görgetés",
   "DRIVER_DETAILS_speed_limits": "Sebességkorlátok",
-  "DRIVER_DETAILS_back_link": "Vonatválasztó"
-  
+  "DRIVER_DETAILS_back_link": "Vonatválasztó",
+  "DRIVER_DETAILS_header_line": "Vonal",
+  "DRIVER_DETAILS_header_arrival": "Érkezés",
+  "DRIVER_DETAILS_header_station": "Állomás",
+  "DRIVER_DETAILS_header_departure": "Indulás",
+  "DRIVER_DETAILS_header_layover": "Várakozás"
 }
