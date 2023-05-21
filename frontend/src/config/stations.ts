@@ -24,26 +24,26 @@ type StationNeighbours = {
 
 export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.katowice_zawodzie]: {
-        left: [StationId.sosnowiec_gl__pzs_r52, StationId.szabelnia],
+        left: [StationId.sosnowiec_gl__pzs_r52, StationId.szabelnia, StationId.katowice_szopienice_poludniowe],
         right: [StationId.katowice]
     },
     [StationId.sosnowiec_gl__pzs_r52]: {
         down: [StationId.sosnowiec_poludniowy],
-        left: [StationId.katowice_zawodzie],
+        left: [StationId.katowice_zawodzie, StationId.katowice_szopienice_poludniowe],
         right: [StationId.sosnowiec_glowny]
     },
     [StationId.sosnowiec_glowny]: {
         down: [StationId.sosnowiec_poludniowy],
-        left: [StationId.sosnowiec_gl__pzs_r52],
+        left: [StationId.sosnowiec_gl__pzs_r52, StationId.katowice_szopienice_poludniowe],
         right: [StationId.bedzin]
     },
     [StationId.bedzin]: {
         left: [StationId.sosnowiec_glowny],
-        right: [StationId.dabrowa_gornicza]
+        right: [StationId.dabrowa_gornicza, StationId.bedzin_miasto]
     },
     [StationId.dabrowa_gornicza]: {
-        left: [StationId.bedzin],
-        right: [StationId.dabrowa_gornicza_zabkowice]
+        left: [StationId.bedzin, StationId.bedzin_ksawera],
+        right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_golonog]
     },
     [StationId.dabrowa_gornicza_zabkowice]: {
         left: [StationId.dabrowa_gornicza, StationId.dabrowa_gornicza_huta_katowice_r7, StationId.dabrowa_gornicza_huta_katowice],
@@ -59,7 +59,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     },
     [StationId.lazy_lc]: {
         left: [StationId.lazy],
-        right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.przemiarki]
+        right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.przemiarki, StationId.wiesiolka]
     },
     [StationId.zawiercie]: {
         left: [StationId.lazy_la, StationId.zawiercie_gt],
@@ -70,12 +70,12 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.psary]
     },
     [StationId.psary]: {
-        down: [StationId.starzyny, StationId.starzyny_r5],
+        down: [StationId.starzyny, StationId.starzyny_r5, StationId.psary_roz_40],
         left: [StationId.gora_wlodowska],
         right: [StationId.knapowka]
     },
     [StationId.knapowka]: {
-        down: [StationId.czarnca, StationId.czarnca_r19],
+        down: [StationId.czarnca, StationId.czarnca_r19, StationId.knapowka_r2],
         left: [StationId.psary],
         right: [StationId.wloszczowa_polnoc]
     },
@@ -99,12 +99,12 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.idzikowice]: {
         down: [StationId.radzice],
         left: [StationId.opoczno_poludnie],
-        right: [StationId.strzalki],
+        right: [StationId.strzalki, StationId.idzikowice_roz_18],
         up: [StationId.radzice_pzs_r31],
     },
     [StationId.grodzisk_mazowiecki]: {
-        left: [StationId.pruszkow],
-        right: [StationId.zyrardow, StationId.korytow]
+        left: [StationId.pruszkow, StationId.milanowek, StationId.grodzisk_maz__r58],
+        right: [StationId.zyrardow, StationId.korytow, StationId.grodzisk_mazowiecki_r64]
     },
     [StationId.sosnowiec_poludniowy]: {
         left: [StationId.sosnowiec_glowny],
@@ -121,7 +121,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     },
     [StationId.korytow]: {
         left: [StationId.szeligi],
-        right: [StationId.grodzisk_mazowiecki]
+        right: [StationId.grodzisk_mazowiecki, StationId.grodzisk_maz__r58]
     },
     [StationId.szeligi]: {
         left: [StationId.biala_rawska],

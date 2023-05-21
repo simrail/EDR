@@ -68,7 +68,7 @@ export const EDRTable: React.FC<Props> = ({
         seventhColBounds
     }
 
-    if (!trainsWithDetails || !post) return null;
+    if (!trainsWithDetails || !post || !serverTime) return null;
     const postCfg = postConfig[post];
     const showStopColumn = timetable.length > 0 && timetable.some((row) => row.platform || Math.ceil(row.plannedStop) !== 0);
 

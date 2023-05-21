@@ -81,9 +81,9 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
     // Gets raw simrail data
     const fetchAllData = () => {
         if (!serverCode || !post) return;
-        getTzOffset(serverCode).then((v) => {
-            setTzOffset(v);
-            setTimeout(() => getServerTime(serverCode).then(setServerTime), 1000);
+        Promise.all([getTzOffset(serverCode), getServerTime(serverCode)]).then((v) => {
+            setTzOffset(v[0]);
+            setServerTime(v[1]);
             getTimetable(post, serverCode).then((data) => {
                 setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
                 getStations(serverCode).then((data) => {

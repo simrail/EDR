@@ -3,6 +3,7 @@
   "APP_no_trains": "No trains available! Server is probably restarting.",
   "APP_no_timetable": "Fatal error: Unable to fetch timetable. server is probably restarting.",
   "APP_station_not_found": "Fatal error: Station couldn't be found!",
+  "APP_loading": "Loading...",
 
   "NAVBAR_bugs": "Report bugs",
   "NAVBAR_language": "Language",

@@ -28,7 +28,7 @@ type Props = {
 
 
 const scrollToNearestTrain = (targetLn: number) => {
-    let interval = setInterval(() => {
+    let interval = setTimeout(() => {
         const allTrainRows = [...Array.from(document.querySelectorAll('[data-timeoffset]').values())];
         // console_log(allTrainRows.length);
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
