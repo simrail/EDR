@@ -4,7 +4,7 @@ import { BASE_AWS_API, BASE_SELF_API, BASE_SIMKOL_API, BASE_SIMRAIL_API, srHeade
 import { ISpeedLimitApi } from "./interfaces/ISpeedLimitApi.js";
 
 const rlClient = axiosRateLimit(axios.create(), {maxRPS: 2});
-const strictRlClient = axiosRateLimit(axios.create(), { perMilliseconds: 2000, maxRequests: 1 });
+const strictRlClient = axiosRateLimit(axios.create(), { perMilliseconds: 2500, maxRequests: 1 });
 const selfRlClient = axiosRateLimit(axios.create(), {maxRPS: 100});
 
 export const simrailClient = {

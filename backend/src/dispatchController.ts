@@ -18,7 +18,7 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
         ...acc,
         {
             ...v,
-            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNoLocal])
+            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNoLocal]).filter((row): row is Exclude<typeof row, undefined> => row !== undefined)
         }
     ], new Array<IFrontendStationTrainRow>());
 

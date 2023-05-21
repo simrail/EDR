@@ -66,7 +66,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScro
         if (serverCode !== undefined) {
             getStations(serverCode).then(postData => {
                 setPosts(postData);
-                const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);;
+                const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);
                 Promise.all(steamIds.map(getPlayer)).then(setPlayers);
             });
         }
