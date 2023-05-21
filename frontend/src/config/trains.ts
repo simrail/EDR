@@ -8,6 +8,10 @@ import EP07_135 from '../images/trains/png/EP07-135.png';
 import EU07_CARGO from "../images/trains/png/EU07_CARGO.png";
 import ET25_DRAGON from "../images/trains/png/ET25-Dragon.png";
 import EP08_001 from "../images/trains/png/EP08.png";
+import E6ACTa_005 from "../images/trains/png/E6ACTa-005.png";
+import E6ACTa_014 from "../images/trains/png/E6ACTa-014.png";
+import E6ACTa_027 from "../images/trains/png/E6ACTa-027.png";
+
 import ED250_PENDOLINO_WEBP from "../images/trains/webp/ED250-Pendolino.webp";
 import EU07_IC_WEBP from "../images/trains/webp/EU07_IC.webp";
 import E186_TRAXX_WEBP from "../images/trains/webp/E186-TRAXX.webp";
@@ -18,6 +22,9 @@ import EP07_135_WEBP from '../images/trains/webp/EP07-135.webp';
 import EU07_CARGO_WEBP from "../images/trains/webp/EU07_CARGO.webp";
 import ET25_DRAGON_WEBP from "../images/trains/webp/ET25-Dragon.webp";
 import EP08_001_WEBP from "../images/trains/webp/EP08.webp";
+import E6ACTa_005_WEBP from "../images/trains/webp/E6ACTa-005.webp";
+import E6ACTa_014_WEBP from "../images/trains/webp/E6ACTa-014.webp";
+import E6ACTa_027_WEBP from "../images/trains/webp/E6ACTa-027.webp";
 
 export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "Pendolino/ED250-018 Variant": {
@@ -33,10 +40,6 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         iconWebp: EP07_135_WEBP
     },
     "Traxx/Traxx": {
-        icon: E186_TRAXX,
-        iconWebp: E186_TRAXX_WEBP
-    },
-    "Traxx/Traxx:G": {
         icon: E186_TRAXX,
         iconWebp: E186_TRAXX_WEBP
     },
@@ -64,21 +67,25 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: EU07_CARGO,
         iconWebp: EU07_CARGO_WEBP
     },
-    "4E/4E:G": {
-        icon: EU07_CARGO,
-        iconWebp: EU07_CARGO_WEBP
-    },
     "Dragon2/ET25-002": {
-        icon: ET25_DRAGON,
-        iconWebp: ET25_DRAGON_WEBP
-    },
-    "Dragon2/ET25-002:G": {
         icon: ET25_DRAGON,
         iconWebp: ET25_DRAGON_WEBP
     },
     "Dragon2/E6ACTad": {
         icon: ET25_DRAGON,
         iconWebp: ET25_DRAGON_WEBP
+    },
+    "Dragon2/E6ACTa-005": {
+        icon: E6ACTa_005,
+        iconWebp: E6ACTa_005_WEBP
+    },
+    "Dragon2/E6ACTa-014": {
+        icon: E6ACTa_014,
+        iconWebp: E6ACTa_014_WEBP
+    },
+    "Dragon2/E6ACTadb-027": {
+        icon: E6ACTa_027,
+        iconWebp: E6ACTa_027_WEBP
     },
     "4E/EP08-001": {
         icon: EP08_001,
