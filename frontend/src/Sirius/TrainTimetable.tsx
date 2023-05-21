@@ -1,9 +1,7 @@
 import React from "react";
 import {Badge, Table} from "flowbite-react";
 import {Station, Train} from "@simrail/types";
-import {postToInternalIds, StationConfig} from "../config/stations";
-import {haversine} from "../EDR/functions/vectors";
-import _minBy from "lodash/minBy";
+import {StationConfig} from "../config/stations";
 import classNames from "classnames";
 import TrainTimetableTimeline from "../EDR/components/TrainTimetableTimeline";
 import INFO from "../images/icons/png/information.png";
@@ -42,31 +40,21 @@ const stopTypeToLetters = (type: number | undefined) => {
     }
 }
 
-const scrollToNearestStation = (nearestStationId: string | undefined) => {
+const scrollToNearestStation = (nearestStationId: number | undefined) => {
     const allTrainRows = [...Array.from(document.querySelectorAll('[data-internalId]').values())];
-    const nearestStationRow = allTrainRows.find((e) => e.getAttribute("data-internalid") === nearestStationId)
+    const nearestStationRow = allTrainRows.find((e) => e.getAttribute("data-internalid") === nearestStationId?.toString())
     if (nearestStationRow) {
         nearestStationRow.scrollIntoView({
             block: "center"
         })
     }
 }
-export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpath, train, autoScroll, isWebpSupported, serverCode, showSpeedLimits}) => {
+export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScroll, isWebpSupported, serverCode, showSpeedLimits}) => {
     const [posts, setPosts] = React.useState<Station[] | undefined>();
     const [players, setPlayers] = React.useState<ISteamUser[] | undefined>();
     const {t} = useTranslation();
 
-    const [trainLongitude, trainLatitude] = [train.TrainData.Longitute, train.TrainData.Latititute];
-    const allStationsDistance = allStationsInpath.map((station) => {
-
-        return {
-            ...station,
-            distance: haversine([trainLongitude, trainLatitude], station.platformPosOverride!)
-        }
-    })
-
-    const nearestStation = _minBy(allStationsDistance, 'distance');
-    const closestStationIndex = trainTimetable.map((s) => s.nameForPerson).findIndex((s) => s === nearestStation?.srId)
+    const nearestStationIndex = train?.TrainData?.VDDelayedTimetableIndex;
 
     const previousPlayers = React.useRef<ISteamUser[] | undefined>(undefined);
 
@@ -78,7 +66,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
         if (serverCode !== undefined) {
             getStations(serverCode).then(postData => {
                 setPosts(postData);
-                const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);;
+                const steamIds = postData.map(post => post.DispatchedBy?.[0]?.SteamId).filter((steamId): steamId is Exclude<typeof steamId, undefined> => steamId !== undefined);
                 Promise.all(steamIds.map(getPlayer)).then(setPlayers);
             });
         }
@@ -106,34 +94,33 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
         Promise.all(difference.map(getPlayer)).then(data => setPlayers(players !== undefined ? players?.concat(data) : data));
     }, [posts, players])
     
-    autoScroll && scrollToNearestStation(nearestStation?.id);
+    autoScroll && scrollToNearestStation(nearestStationIndex);
     return (
-        <div className="h-full child:!rounded-none child:overflow-y-scroll child:h-full">
+        <div>
             <Table striped={true}>
                 <Table.Body>
                     {
                         trainTimetable.map((ttRow, index: number) => {
-                            const internalId = postToInternalIds[encodeURIComponent(ttRow.nameForPerson)]?.id;
+                            const internalId = ttRow.indexOfPoint;
                             const postDispatcher = players?.find(player => player.steamid === posts?.find(post => post.Name === ttRow.nameForPerson)?.DispatchedBy?.[0]?.SteamId);
                             return (
-                                <React.Fragment key={`${ttRow.mileage}${ttRow.line}${ttRow.nameForPerson}}`}>
+                                <React.Fragment key={ttRow.indexOfPoint}>
                                     <Table.Row
                                         className={classNames(
                                             "hover:bg-gray-200 dark:hover:bg-gray-600",
-                                        {"!bg-amber-200 !text-gray-600 hover:!bg-amber-300": internalId === nearestStation?.id}
+                                        {"!bg-amber-200 !text-gray-600 hover:!bg-amber-300": internalId === nearestStationIndex}
                                         )}
                                         data-internalid={internalId}
                                     >
-                                        <Table.Cell className="relative pl-8">
+                                        <Table.Cell className="relative pl-8" width={350}>
                                             <div className="flex flex-col">
-                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} stopType={ttRow.stopTypeNumber} />
-                                                <div className="flex justify-between">
+                                                <TrainTimetableTimeline itemIndex={index} closestStationIndex={nearestStationIndex} isAtTheStation={index === nearestStationIndex} stopType={ttRow.stopTypeNumber} />                                                <div className="flex justify-between">
                                                     <span>{ttRow.mileage ? `${(Math.round(ttRow.mileage * 100) / 100)} km` : ''}</span>
                                                     <span>L{ttRow.line}</span>
                                                 </div>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        <Table.Cell width={200}>
                                             <div className="flex justify-between">
                                             {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                                 <span>{format(ttRow.scheduledArrivalObject, 'HH:mm')}</span>
@@ -141,7 +128,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell className="pl-0 flex justify-between">
+                                        <Table.Cell className="pl-0 flex justify-between" width={500}>
                                             <span className="inline-block">{ttRow.nameForPerson}</span>
                                             <span className="inline-block">
                                                 {
@@ -151,7 +138,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                                 }
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        <Table.Cell className="pa-0 flex-col" width={360}>
                                             {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
                                                 <>
                                                     {format(ttRow.scheduledDepartureObject, 'HH:mm')}
@@ -159,7 +146,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                             )}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex">
+                                            {(Math.floor(ttRow.plannedStop) > 0 || ttRow.stopTypeNumber > 0) && <span className="flex justify-end">
                                                 <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_layover")}</span>}>
                                                     <img id="layover_test" className="h-[13px] lg:h-[26px] mx-2" src={edrImagesMap.LAYOVER} alt="layover" />
                                                 </Tooltip>
@@ -178,7 +165,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, allStationsInpa
                                         return (
                                             <Table.Row key={`${_index}-line-${sltn.lineNo}-track-${sltn.track}`} className={` ma-0`}>
                                                 <Table.Cell className="relative pl-8">
-                                                    <TrainTimetableTimeline renderOnlyLine itemIndex={index} closestStationIndex={closestStationIndex} isAtTheStation={index === closestStationIndex} />
+                                                    <TrainTimetableTimeline renderOnlyLine itemIndex={index} closestStationIndex={nearestStationIndex} isAtTheStation={index === nearestStationIndex} />
                                                     <div className="flex ">
                                                         <span>{Math.round(sltn.axisStart * 10) / 10} km</span>
                                                     </div>

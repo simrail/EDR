@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "flowbite-react";
 import {nowUTC} from "../../utils/date";
-import {getDateWithHourAndMinutes, getTimeDelay} from "../functions/timeUtils";
+import { getDateWithHourAndMinutes } from "../functions/timeUtils";
 import {configByType} from "../../config/trains";
 import {FilterConfig} from "..";
 import { DetailedTrain } from "../functions/trainDetails";
@@ -24,7 +24,7 @@ type Props = {
     setTimetableTrainId: React.Dispatch<React.SetStateAction<string | undefined>>,
     ttRow: TimeTableRow,
     trainDetails: DetailedTrain,
-    serverTzOffset: number,
+    serverTime: number | undefined,
     firstColRef: any,
     secondColRef: any,
     thirdColRef: any,
@@ -42,19 +42,15 @@ type Props = {
 }
 
 const TableRow: React.FC<Props> = (
-    {setModalTrainId, ttRow, trainDetails, serverTzOffset,
+    {setModalTrainId, ttRow, trainDetails, serverTime,
         firstColRef, secondColRef, thirdColRef, headerFourthColRef, headerFifthColRef, headerSixthhColRef, headerSeventhColRef,
         playSoundNotification, isWebpSupported, streamMode, setTimetableTrainId, filterConfig,
         serverCode, players, postCfg
     }: Props
 ) => {
-    const dateNow = nowUTC(serverTzOffset);
+    const dateNow = nowUTC(serverTime);
 
-    const currentDistance = trainDetails?.rawDistances.slice(-1)[0];
-    // This allows to check on the path, if the train is already far from station we can mark it already has passed without waiting for direction vector
-    const distanceFromStation = Math.round(currentDistance * 100) / 100;
-
-    const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > ttRow.stationIndex;
+    const trainHasPassedStation = trainDetails?.TrainData.VDDelayedTimetableIndex > Math.max(ttRow.stationIndex, ...(ttRow.secondaryPostsRows || []).map(row => row.stationIndex));
     const departureExpectedHours = ttRow.scheduledDepartureObject.getHours();
     const departureExpectedMinutes = ttRow.scheduledDepartureObject.getMinutes();
     // console_log("Is next day ? " + ttRow.train_number, isNextDay);
@@ -67,15 +63,14 @@ const TableRow: React.FC<Props> = (
     const isArrivalNextDay = dateNow.getHours() >= 20 && arrivalExpectedHours < 12;  // TODO: less but still clunky
     const isArrivalPreviousDay = arrivalExpectedHours >= 20 && dateNow.getHours() < 12; // TODO: less but still Clunky
     const expectedArrival = getDateWithHourAndMinutes(dateNow, arrivalExpectedHours, arrivalExpectedMinutes, isArrivalNextDay, isArrivalPreviousDay);
-    const arrivalTimeDelay = getTimeDelay(dateNow, expectedArrival);
-    const departureTimeDelay = getTimeDelay(dateNow, expectedDeparture);
+    const arrivalTimeDelay = trainDetails?.lastDelay ? trainDetails.lastDelay : 0;
 
-    const trainMustDepart = !trainHasPassedStation && distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
+    const trainMustDepart = !trainHasPassedStation && trainDetails?.distanceFromStation < 1.5 && (subMinutes(expectedDeparture, 1) <= dateNow); // 1.5 for temporary zawierce freight fix
     const trainBadgeColor = configByType[ttRow.trainType]?.color ?? "purple";
     const secondaryPostData = ttRow?.secondaryPostsRows ?? [];
 
     if (filterConfig.onlyApproaching && (trainHasPassedStation || !trainDetails)) return null;
-    if (filterConfig.maxRange && distanceFromStation > filterConfig.maxRange) return null;
+    if (filterConfig.maxRange && trainDetails?.distanceFromStation > filterConfig.maxRange) return null;
     const expectedArrivalIninutes = (expectedArrival.getHours() * 60 + expectedArrival.getMinutes()) - (dateNow.getHours() * 60 + dateNow.getMinutes());
     if (filterConfig.maxTime && Math.abs(expectedArrivalIninutes) > filterConfig.maxTime) return null;
 
@@ -93,7 +88,6 @@ const TableRow: React.FC<Props> = (
             setModalTrainId={setModalTrainId}
             setTimetableTrainId={setTimetableTrainId}
             firstColRef={firstColRef}
-            distanceFromStation={distanceFromStation}
             trainHasPassedStation={trainHasPassedStation}
             isWebpSupported={isWebpSupported}
             streamMode={streamMode}
@@ -111,15 +105,10 @@ const TableRow: React.FC<Props> = (
         <TrainArrivalCell
             ttRow={ttRow}
             trainDetails={trainDetails}
-            dateNow={dateNow}
-            serverTzOffset={serverTzOffset}
             trainHasPassedStation={trainHasPassedStation}
-            expectedDeparture={expectedDeparture}
-            distanceFromStation={distanceFromStation}
             thirdColRef={thirdColRef}
             streamMode={streamMode}
             arrivalTimeDelay={arrivalTimeDelay}
-            departureTimeDelay={departureTimeDelay}
         />
         <TrainFromCell headerFourthColRef={headerFourthColRef} ttRow={ttRow} secondaryPostData={secondaryPostData}
                        streamMode={streamMode} />

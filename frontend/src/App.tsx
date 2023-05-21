@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { SupportsWebp } from './EDR/functions/webp';
 import ServerSelect from './SelectMenu/ServerSelect';
+import { useTranslation } from 'react-i18next';
 const TrainSelect = React.lazy(() => import("./SelectMenu/TrainSelect"));
 const Sirius = React.lazy(() => import("./Sirius"));
 const PostSelect = React.lazy(() => import("./SelectMenu/PostSelect"));
@@ -15,6 +16,7 @@ const EDR = React.lazy(() => import("./EDR"));
 function App() {
     const [SoundNotification, playSoundNotification] = useSoundNotification();
     let [isWebpSupported, setIsWebpSupported] = React.useState(false);
+    const { t } = useTranslation();
     React.useEffect(() => {
         SupportsWebp().then(result => setIsWebpSupported(result));
     }, [isWebpSupported]);
@@ -25,7 +27,7 @@ function App() {
             <div className="min-h-screen dark:bg-slate-800 text-black dark:text-white">
                 <BrowserRouter>
                     <Fragment>
-                        <Suspense fallback={<div className="flex items-center justify-around w-full"><div><Spinner /> Loading javascript chunk</div></div>}>
+                        <Suspense fallback={<div className="flex items-center justify-around w-full"><div><Spinner /> {t("APP_loading")}</div></div>}>
                         <Routes>
                             <Route path="/" element={<ServerSelect isWebpSupported={isWebpSupported} />} />
                             <Route path="/:serverCode" element={<PostSelect isWebpSupported={isWebpSupported}/>} />

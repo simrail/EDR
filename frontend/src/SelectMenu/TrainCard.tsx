@@ -2,8 +2,8 @@ import React from "react";
 import { Card } from "flowbite-react/lib/esm/components/Card";
 import { configByLoco } from "../config/trains";
 import { useNavigate, useParams } from "react-router-dom";
-import { Train } from "@simrail/types";
 import { ISteamUser } from "../config/ISteamUser";
+import { Train } from "@simrail/types";
 
 type Props = {
     train: Train;

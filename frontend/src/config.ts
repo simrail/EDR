@@ -43,6 +43,9 @@ import WP from "./images/posts/jpg/Wloszczowa_Polnoc.jpg";
 import ZA from "./images/posts/jpg/Zawiercie.jpg";
 import SE from "./images/posts/jpg/Szeligi.jpg";
 import JU from "./images/posts/jpg/Juliusz.jpg";
+import ST from "./images/posts/jpg/Strzalki.jpg";
+import KO from "./images/posts/jpg/Katowice.jpg";
+import BR from "./images/posts/jpg/Biala_Rawska.jpg";
 
 import BN_WEBP from "./images/posts/webp/Bedzin.webp";
 import DG_WEBP from "./images/posts/webp/Dabrowa_Gornicza.webp";
@@ -65,8 +68,11 @@ import WP_WEBP from "./images/posts/webp/Wloszczowa_Polnoc.webp";
 import ZA_WEBP from "./images/posts/webp/Zawiercie.webp";
 import SE_WEBP from "./images/posts/webp/Szeligi.webp";
 import JU_WEBP from "./images/posts/webp/Juliusz.webp";
+import ST_WEBP from "./images/posts/webp/Strzalki.webp";
+import KO_WEBP from "./images/posts/webp/Katowice.webp";
+import BR_WEBP from "./images/posts/webp/Biala_Rawska.webp";
 
-import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL} from 'country-flag-icons/string/3x2'
+import { GB, FR, PL, CZ, ES, DE, UA, IT, CN, PT, HU, NL, EU} from 'country-flag-icons/string/3x2'
 
 export const LOGGING = false;
 
@@ -83,6 +89,7 @@ export const countriesFlags: {[k: string]: string} = {
     PL,
     PT,
     UA,
+    EU,
 }
 
 
@@ -104,6 +111,7 @@ export const internalConfigPostIds: {[k: string]: string} = {
 
 export const optimizedPostsImagesMap: {[k: string]: string} = {
     B: BN,
+    BR,
     DG,
     DRA: DOR,
     DW: DGW,
@@ -111,6 +119,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     GW,
     ID: IDZ,
     JU,
+    KO,
     KN,
     KR: KOR,
     KZ,
@@ -122,12 +131,14 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     SE,
     SG,
     SPŁ1: SG_PO,
+    ST,
     WP,
     ZW: ZA,
 }
 
 export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     B: BN_WEBP,
+    BR: BR_WEBP,
     DG: DG_WEBP,
     DRA: DOR_WEBP,
     DW: DGW_WEBP,
@@ -135,6 +146,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     GW: GW_WEBP,
     ID: IDZ_WEBP,
     JU: JU_WEBP,
+    KO: KO_WEBP,
     KN: KN_WEBP,
     KR: KOR_WEBP,
     KZ: KZ_WEBP,
@@ -146,6 +158,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     SE: SE_WEBP,
     SG: SG_WEBP,
     SPŁ1: SG_PO_WEBP,
+    ST: ST_WEBP,
     WP: WP_WEBP,
     ZW: ZA_WEBP,
 }

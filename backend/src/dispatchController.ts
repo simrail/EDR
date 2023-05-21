@@ -4,7 +4,8 @@ import {getStationTimetable} from "./dataTransformer/stations.js";
 import {getTrainTimetable} from "./dataTransformer/train.js";
 import _ from "lodash";
 import { IFrontendStationTrainRow } from "./interfaces/IFrontendStationTrainRow.js";
-import { IServerTrain } from "./interfaces/IServerTrain.js";
+import { IEdrServerTrain } from "./interfaces/IEdrServerTrain.js";
+import { ISpeedLimit } from "./interfaces/ISpeedLimit.js";
 
 const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
     const primaryPostRows = allPostsResponse[0];
@@ -17,7 +18,7 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
         ...acc,
         {
             ...v,
-            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNoLocal])
+            secondaryPostsRows: keyedSecondaryPostsRows.map((kspr) => kspr[v.trainNoLocal]).filter((row): row is Exclude<typeof row, undefined> => row !== undefined)
         }
     ], new Array<IFrontendStationTrainRow>());
 
@@ -28,13 +29,13 @@ const mergePostRows = (allPostsResponse: IFrontendStationTrainRow[][]) => {
             if (!keyedFirstPostTrains[train.trainNoLocal]) {
                 mergedPostsRows.push(train);
             }
-        })
+        });
     });
 
     return _.sortBy(mergedPostsRows, 'scheduledArrivalObject');
 }
 
-export async function dispatchController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
+export async function dispatchController(req: express.Request, res: express.Response, trainList: IEdrServerTrain[]) {
     const { post } = req.params;
 
     if (trainList === undefined || trainList === null) {
@@ -63,7 +64,7 @@ export async function dispatchController(req: express.Request, res: express.Resp
     }
 }
 
-export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IServerTrain[]) {
+export async function trainTimetableController(req: express.Request, res: express.Response, trainList: IEdrServerTrain[], speedLimits: ISpeedLimit[]) {
     const {trainNo} = req.params;
 
     if (trainList === undefined || trainList === null) {
@@ -72,7 +73,7 @@ export async function trainTimetableController(req: express.Request, res: expres
     }
 
     try {
-        const data = await getTrainTimetable(trainNo, trainList);
+        const data = await getTrainTimetable(trainNo, trainList, speedLimits);
         res
             .setHeader("Cache-control", 'public, max-age=28800 stale-if-error=604800 must-revalidate')
             .send(data);

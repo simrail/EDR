@@ -1,14 +1,15 @@
 import React from "react";
 import {Spinner} from "flowbite-react";
 import {useTranslation} from "react-i18next";
-import { Station, Train } from "@simrail/types";
+import { Station } from "@simrail/types";
 import { Dictionary } from "lodash";
 import { TrainTimeTableRow } from "../../Sirius";
 import { TimeTableRow } from "../../customTypes/TimeTableRow";
+import { ExtendedTrain } from "../../customTypes/ExtendedTrain";
 
 type Props = {
     timetable: TimeTableRow[];
-    trains: Train[] | undefined;
+    trains: ExtendedTrain[] | undefined;
     stations: Dictionary<Station>;
     tzOffset?: number;
     trainSchedules: Dictionary<TrainTimeTableRow[]> | undefined;

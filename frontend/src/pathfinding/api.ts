@@ -1,5 +1,4 @@
 import {pathFind_stackMap} from "./data";
-import {haversine} from "../EDR/functions/vectors";
 import _uniq from "lodash/uniq";
 import _minBy from "lodash/minBy";
 import {console_log} from "../utils/Logger";
@@ -57,41 +56,22 @@ export const findPath = (start: ExtendedStationConfig, finish: string): PathFind
 
 export const dbgTree = (start: string, finish: string, playerPost?: string) => {
     console.log("From " + start + " To : " + finish);
-    const [pathFound, distance] = PathFinding_FindPathAndHaversineSum(start, finish, playerPost);
+    const [pathFound] = PathFinding_FindPathAndHaversineSum(start, finish, playerPost);
     console.log(pathFound?.map?.((n?: ExtendedStationConfig) => n?.id).join(" -> "));
     console.assert(pathFound !== undefined && pathFound.filter((p) => p === undefined).length === 0);
-    console.log("Distance : " + Math.round(distance) + "km" )
 }
 
 
-export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined): [PathFindingLineTrace, number] => {
+export const PathFinding_FindPathAndHaversineSum = (start: string, finish: string, playerPost?: string | undefined): [PathFindingLineTrace] => {
     const pathA = findPath(pathFind_stackMap[start], playerPost ?? finish);
     const pathB = playerPost ? findPath(pathFind_stackMap[playerPost], finish) : [];
     if (!pathA || !pathB) {
         console.error("Pathfinding error ! ", {start, finish});
-        return [undefined, 0];
+        return [undefined];
     }
     const lineTrace = _uniq([...pathA, ...pathB])
-    const filteredAllPosPoints: ([number, number])[] =  lineTrace?.map?.((node) =>  node?.platformPosOverride)
-        ?.filter((v) => v && !!v[0] && !!v[1]) as [number, number][];
 
-    return [lineTrace, filteredAllPosPoints.reduce((acc, coords, index, array) => {
-        return acc + (array[index - 1] ? haversine(array[index - 1], coords) : 0);
-    }, 0)];
-}
-
-export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, trainPosVector: [number, number]): ExtendedStationConfig | undefined => {
-    if (!pfLineTrace) return undefined;
-    const indexOfClosestStationInPathInTrainDirection = pfLineTrace
-        //.map((point) => point?.platformPosOverride ? {...point, dot: Vector_DotProduct(point.platformPosOverride, Victor.fromArray(directionVector))} : undefined)
-        //.filter((dotCalc) => dotCalc && dotCalc.dot && dotCalc.dot > 0 && dotCalc.platformPosOverride)
-        .filter((dotCalc) => dotCalc && dotCalc.platformPosOverride)
-        .map((point) => ({...(point as ExtendedStationConfig), distance: haversine(point!.platformPosOverride!, trainPosVector)}))
-        .sort((a, b) => a.distance < b.distance? -1 : 1)
-
-    console_log("Dot resukts : ", indexOfClosestStationInPathInTrainDirection);
-
-    return indexOfClosestStationInPathInTrainDirection[0];
+    return [lineTrace];
 }
 
 if (RUN_DATA_HEALTHCHECKS) {

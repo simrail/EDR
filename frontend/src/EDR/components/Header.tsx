@@ -12,6 +12,7 @@ import {FilterConfig, presetFilterConfig} from "../index";
 
 type Props = {
     serverTzOffset: number;
+    serverTime: number | undefined;
     serverCode: string;
     postCfg: StationConfig;
 
@@ -27,7 +28,7 @@ type Props = {
 
 
 const scrollToNearestTrain = (targetLn: number) => {
-    let interval = setInterval(() => {
+    let interval = setTimeout(() => {
         const allTrainRows = [...Array.from(document.querySelectorAll('[data-timeoffset]').values())];
         // console_log(allTrainRows.length);
         if (allTrainRows.length === 0 && allTrainRows.length === targetLn)
@@ -55,25 +56,25 @@ const getDisplayMode = (filterConfig: FilterConfig) => {
 }
 
 export const Header: React.FC<Props> = ({
-    serverTzOffset, serverCode, postCfg, bounds, timetableLength,
+    serverTzOffset, serverCode, postCfg, bounds, timetableLength, serverTime,
     setFilter, streamMode, setStreamMode, filterConfig, setFilterConfig
 }) => {
     const {t} = useTranslation();
-
     const [configModalOpen, setConfigModaOpen] = React.useState(false);
 
-
-    React.useEffect(() =>
-        scrollToNearestTrain(timetableLength)
-    , [timetableLength])
+    React.useEffect(() => {
+        if (serverTime !== undefined) {
+            scrollToNearestTrain(timetableLength)
+        }
+    }, [timetableLength, serverTime])
 
     const displayMode = getDisplayMode(filterConfig);
 
     return (
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800 overflow-y-scroll">
+        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
-                    <span>{postCfg.srId}</span>
+                    <span>{postCfg.srName}</span>
                     <Link to={`/${serverCode}`} className="underline flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
@@ -81,9 +82,9 @@ export const Header: React.FC<Props> = ({
                         {!streamMode ? t('EDR_UI_back') : ''}
                     </Link>
                 </div>
-                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} />
+                <DateTimeDisplay serverTzOffset={serverTzOffset} serverCode={serverCode} serverTime={serverTime}/>
                 <div className="flex items-center">
-                    <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>Stream mode</Button>
+                    <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>{t("EDR_UI_stream_mode")}</Button>
                     <Button size="xs" className="mr-2" onClick={() => window.open(document.URL + "?graphFullScreenMode=1", "_blank")}>📈 {t("EDR_GRAPH_rcs")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
                     <DarkThemeToggle />

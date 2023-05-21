@@ -28,14 +28,15 @@ import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 export type GraphProps = {
     post: string;
     timetable: TimeTableRow[];
-    serverTzOffset: number;
+    serverTime: number | undefined;
+    serverCode: string | undefined;
 }
 
 const dateFormatter = (date: Date) => {
     return format(date, "HH:mm");
 };
-const makeDate = (dateAry: string[], serverTzOffset: number) => {
-    const dateNow = nowUTC(serverTzOffset);
+const makeDate = (dateAry: string[], serverTime: number | undefined) => {
+    const dateNow = nowUTC(serverTime);
     const hours = Number.parseInt(dateAry[0]);
     const minutes = Number.parseInt(dateAry[1]);
     const isDepartureNextDay = dateNow.getHours() >= 20 && Number.parseInt(dateAry[0]) < 12;  // TODO: less but still clunky
@@ -44,8 +45,8 @@ const makeDate = (dateAry: string[], serverTzOffset: number) => {
     return date.getTime();
 }
 
-const getStationTimetable = (postId: string) => {
-    return getTimetable(postId).then((d) => {
+const getStationTimetable = (postId: string, serverCode: string) => {
+    return getTimetable(postId, serverCode).then((d) => {
         return [postId, _keyBy(d, "trainNoLocal")];
     });
 }
@@ -95,10 +96,10 @@ const CustomizedAxisTick = (data: any, displayMode: string, color: string) => (p
 
 
 // TODO: This code is WET and have been written in an envening. Neeeeds refactoring of course ! (so it can be DRY :D)
-const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) => {
+const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTime, serverCode}) => {
     const [displayMode, setDisplayMode] = React.useState<LayoutType>("vertical");
     const [zoom, setZoom] = React.useState<number>(1);
-    const [dtNow, setDtNow] = React.useState(nowUTC(serverTzOffset));
+    const [dtNow, setDtNow] = React.useState(nowUTC(serverTime));
     const currentHourSort = Number.parseInt(format(dtNow, "HHmm"));
     const [neighboursTimetables, setNeighboursTimetables] = React.useState<Dictionary<Dictionary<TimeTableRow>>>();
     const [allPathsOfPosts, setAllPathsOfPosts] = React.useState<{[postId: string]: {prev?: PathFindingLineTrace, next?: PathFindingLineTrace}}>();
@@ -111,15 +112,15 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
 
     React.useEffect(() => {
         const intervalId = window.setInterval(() => {
-            setDtNow(nowUTC(serverTzOffset));
+            setDtNow(nowUTC(serverTime));
         }, 10000);
 
         return () => window.clearInterval(intervalId);
-    }, [serverTzOffset])
+    }, [serverTime])
 
     React.useEffect(() => {
         const gottenPostConfig = postConfig[post];
-        if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post) return;
+        if (!post || !gottenPostConfig.graphConfig?.pre || !gottenPostConfig.graphConfig?.post || !serverCode) return;
         const onScreenPosts = [...gottenPostConfig.graphConfig?.pre, ...gottenPostConfig.graphConfig.post];
         const toCalculatePathPosts = [...gottenPostConfig.graphConfig?.pre, post, ...gottenPostConfig.graphConfig.post, ...gottenPostConfig.graphConfig.final];
         // Get all pathfinding possible paths between two stations (with intermediate stations not dispatched by players)
@@ -143,10 +144,16 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         setAllPathsOfPosts(allPaths);
 
         // Get timetable data
-        Promise.all(onScreenPosts.map(getStationTimetable))
-            .then(Object.fromEntries)
+        Promise.all(onScreenPosts.map(postId => getStationTimetable(postId, serverCode)))
+            .then(data => {
+                if (data !== null) {
+                    return Object.fromEntries(data);
+                } else {
+                    return;
+                }
+            })
             .then(setNeighboursTimetables)
-    }, [post]);
+    }, [post, serverCode]);
 
     React.useEffect(() => {
         if (!neighboursTimetables || !onlyAnHourAround || !allPathsOfPosts) return;
@@ -162,7 +169,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                 if (!nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledDepartureObject) : dateFormatter(targetTrain?.scheduledArrivalObject);
-                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset)]
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTime)]
             }))
             const allTrainArrivals = Object.fromEntries(Object.values(onlyAnHourAround).map((t) => {
                 const targetTrain = postId === post ? t : neighboursTimetables[postId]?.[t.trainNoLocal];
@@ -171,7 +178,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
                 if (!targetTrain || !nextPost) return [];
                 const isTrainGoingToKatowice = !!allPathsOfPosts[postId]?.next?.find((station) => station && station?.id === nextPost)
                 const targetValue = isTrainGoingToKatowice ? dateFormatter(targetTrain?.scheduledArrivalObject) : dateFormatter(targetTrain?.scheduledDepartureObject);
-                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTzOffset)]
+                return [targetTrain.trainNoLocal, makeDate(targetValue.split(":"), serverTime)]
             }))
             return [{
                 name: postId,
@@ -183,7 +190,7 @@ const GraphContent: React.FC<GraphProps> = ({timetable, post, serverTzOffset}) =
         });
 
         setData(data);
-    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, serverTzOffset, allPathsOfPosts])
+    }, [neighboursTimetables, onlyAnHourAround, currentHourSort, post, allPathsOfPosts, serverTime])
 
     const TimeComponent = displayMode === "vertical" ? XAxis : YAxis;
     const PostComponent = displayMode === "vertical" ? YAxis : XAxis;

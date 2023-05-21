@@ -19,31 +19,20 @@ type Props = {
 type BodyProps = {
     timetable?: TrainTimeTableRow[];
     closestStation?: string;
-    lineTrace: any;
+    closestStationIndex?: number | undefined;
 }
 
-const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, lineTrace}) => {
+const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, closestStationIndex}) => {
     const {t} = useTranslation();
     if (!timetable) return <Spinner />
     if (timetable.length === 0) return <>&nbsp;</>
-    
-
-    // TODO: Remove when closest station will include the inPath parameter
-    const closestStationInLineTrace = () => lineTrace.map((lts: any) => [lts.srId, lts]).filter(([stationName]: [string, any]) => !!timetable.find((ttRow) => ttRow.nameForPerson === stationName))[0]?.[0];
-    const maybeClosestStationDirect = timetable.findIndex(ttRow => ttRow.nameForPerson === closestStation);
-
-    // I use an IIFE here because calling the linetrace is expensive, so I make sur it is called only when fallback is needed
-    const closestStationIndex = maybeClosestStationDirect === -1 ? function() {
-        const closestStation = closestStationInLineTrace();
-        return timetable.findIndex(ttRow => ttRow.nameForPerson === closestStation)
-    }() : maybeClosestStationDirect;
 
     return (
         <Table className={frameHeight} striped>
             <Table.Head>
-                <Table.HeadCell>Times</Table.HeadCell>
-                <Table.HeadCell>Station</Table.HeadCell>
-                <Table.HeadCell>Stop</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_times')}</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_station')}</Table.HeadCell>
+                <Table.HeadCell>{t('EDR_UI_timetable_layover')}</Table.HeadCell>
             </Table.Head>
             <Table.Body>
                 {timetable.map((ttRow, index: number) => {
@@ -53,7 +42,7 @@ const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, lin
                     >
                         <Table.Cell className="relative">
                             <div className="flex flex-col">
-                                <TrainTimetableTimeline isAtTheStation={ttRow.nameForPerson === closestStation} itemIndex={index} closestStationIndex={closestStationIndex} />
+                                <TrainTimetableTimeline isAtTheStation={ttRow.nameForPerson === closestStation} itemIndex={index} closestStationIndex={closestStationIndex ?? 0} />
                                 {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                     <>
                                         {format(ttRow.scheduledArrivalObject, 'HH:mm')}
@@ -86,9 +75,7 @@ const TrainTimetableBody: React.FC<BodyProps> = ({timetable, closestStation, lin
 }
 
 export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, setModalTrainId, trainTimetable}) => {
-    const lineTrace = trainDetails?.pfLineTrace;
-
-    const nextStationName = trainDetails?.timetable?.find(entry => entry.indexOfPoint === trainDetails?.TrainData?.VDDelayedTimetableIndex)?.nameForPerson || trainDetails?.closestStation;
+    const nextStation = trainDetails?.timetable?.find(entry => entry.indexOfPoint === trainDetails?.TrainData?.VDDelayedTimetableIndex);
 
     return trainDetails?.TrainNoLocal ? <Modal className="z-20" show={!!trainDetails?.TrainNoLocal} size="7xl" onClose={() => setModalTrainId(undefined)} position="top-center" style={{zIndex: 999999}}>
         <Modal.Header>
@@ -98,7 +85,7 @@ export const TrainTimetableModal: React.FC<Props> = React.memo(({trainDetails, s
         </Modal.Header>
         <Modal.Body>
             <div className="max-h-[700px] overflow-y-scroll child:px-2">
-                <TrainTimetableBody timetable={trainTimetable} closestStation={nextStationName} lineTrace={lineTrace}/>
+                <TrainTimetableBody timetable={trainTimetable} closestStation={nextStation?.nameForPerson} closestStationIndex={nextStation?.indexOfPoint}/>
             </div>
         </Modal.Body>
     </Modal> : null;

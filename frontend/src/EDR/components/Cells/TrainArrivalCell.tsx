@@ -9,35 +9,30 @@ import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 type Props = {
     ttRow: TimeTableRow;
     trainDetails: DetailedTrain;
-    dateNow: Date;
-    serverTzOffset: number;
     trainHasPassedStation: boolean;
-    expectedDeparture: Date;
-    distanceFromStation: number;
     thirdColRef: any;
     streamMode: boolean;
     arrivalTimeDelay: number;
-    departureTimeDelay: number;
 }
 
 export const TrainArrivalCell: React.FC<Props> = ({
     ttRow, trainDetails, trainHasPassedStation,
-    thirdColRef, distanceFromStation, streamMode, arrivalTimeDelay, departureTimeDelay
+    thirdColRef, streamMode, arrivalTimeDelay
 }) => {
     const {t} = useTranslation();
     return (
-        <td className={tableCellCommonClassnames(streamMode)} ref={thirdColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} width="150" ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
                 {format(ttRow.scheduledArrivalObject, 'HH:mm')}&nbsp;
                 {
-                    !trainHasPassedStation && arrivalTimeDelay > 0 && trainDetails && departureTimeDelay > 0
+                    !trainHasPassedStation && arrivalTimeDelay > 0
                         ? <span
                             className="text-red-600 font-bold">{t("EDR_TRAINROW_train_late_sign")}{arrivalTimeDelay}</span>
                         : undefined
                 }
 
                 {
-                    !trainHasPassedStation && arrivalTimeDelay < 0 && trainDetails
+                    !trainHasPassedStation && arrivalTimeDelay < 0
                         ? <span
                             className="text-green-600 font-bold">{t("EDR_TRAINROW_train_early_sign")}{Math.abs(arrivalTimeDelay)}</span>
                         : undefined
@@ -46,13 +41,13 @@ export const TrainArrivalCell: React.FC<Props> = ({
             </div>
             <div className="flex justify-center">
                 {
-                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails && departureTimeDelay > 0
+                    !trainHasPassedStation && arrivalTimeDelay > 5 && trainDetails?.distanceFromStation < 5
                         ? <Badge className="animate-pulse duration-1000"
                                  color="failure">{t('EDR_TRAINROW_train_delayed')}</Badge>
                         : undefined
                 }
                 {
-                    !trainHasPassedStation && arrivalTimeDelay < -5 && distanceFromStation < 4 && trainDetails
+                    !trainHasPassedStation && arrivalTimeDelay < -5 && trainDetails?.distanceFromStation < 5
                         ? <Badge className="animate-pulse" color="info">{t('EDR_TRAINROW_train_early')}</Badge>
                         : undefined
                 }

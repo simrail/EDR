@@ -4,11 +4,12 @@ import GraphContent, {GraphProps} from "./Graph";
 
 type Props = {
     fullScreenMode: boolean;
+    serverCode: string | undefined;
 } & Omit<GraphModalProps & GraphProps, 'children'>
 const Graph: React.FC<Props> = (props) => {
-    const {serverTzOffset, timetable, post} = props;
+    const {serverTime, timetable, post, serverCode} = props;
     const {isOpen, onClose} = props;
-    const graphBody = <GraphContent serverTzOffset={serverTzOffset} timetable={timetable} post={post}/>
+    const graphBody = <GraphContent serverTime={serverTime} timetable={timetable} post={post} serverCode={serverCode}/>
 
     return props.fullScreenMode ? <div className="h-screen w-screen">{graphBody}</div> : <GraphModal isOpen={isOpen} onClose={onClose}>{graphBody}</GraphModal>
 }

@@ -12,7 +12,6 @@ import TimetableIcon from "../../../images/icons/png/timetable.png";
 import ScheduleIcon from "../../../images/icons/png/schedule.png";
 import { Link } from "react-router-dom";
 import { ISteamUser } from "../../../config/ISteamUser";
-import { differenceInMinutes } from "date-fns";
 import { postConfig, StationConfig } from "../../../config/stations";
 import { edrImagesMap, edrWebpImagesMap } from "../../../config";
 import { TimeTableRow } from "../../../customTypes/TimeTableRow";
@@ -24,7 +23,6 @@ type Props = {
     setModalTrainId: (trainId: string | undefined) => void;
     setTimetableTrainId: (trainId: string | undefined) => void;
     firstColRef: any;
-    distanceFromStation: number;
     trainHasPassedStation: boolean;
     isWebpSupported: boolean;
     streamMode: boolean;
@@ -34,23 +32,19 @@ type Props = {
 }
 export const TrainInfoCell: React.FC<Props> = ({
        ttRow, trainDetails, trainBadgeColor,
-       distanceFromStation, trainHasPassedStation,
+       trainHasPassedStation,
        setModalTrainId, firstColRef, isWebpSupported,
        streamMode, setTimetableTrainId, serverCode, players, postCfg
 }) => {
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
     const nextStation = trainDetails?.timetable?.find(entry => entry.indexOfPoint >= trainDetails?.TrainData?.VDDelayedTimetableIndex);
-    const previousStation = trainDetails?.timetable?.map(e => e)?.reverse()?.find(entry => entry.indexOfPoint < trainDetails?.TrainData?.VDDelayedTimetableIndex);
-    const nextStationName = nextStation?.nameForPerson || trainDetails?.closestStation;
-    const ETADynamic = trainDetails?.TrainData?.Velocity ? (distanceFromStation / trainDetails.TrainData.Velocity) * 60 : undefined;
-    const predictiveETA = Math.abs(differenceInMinutes(previousStation ? previousStation.scheduledDepartureObject : new Date(), ttRow.scheduledArrivalObject));
-    const ETA = ETADynamic ? (predictiveETA < ETADynamic ? predictiveETA : ETADynamic) : predictiveETA;
+    const nextStationName = nextStation?.nameForPerson;
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const icons = isWebpSupported ? edrWebpImagesMap : edrImagesMap;
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
-    const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srId || postCfg.secondaryPosts?.some(post => postConfig[post]?.srId === nextStationName)) && distanceFromStation < 3);
+    const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srName || postCfg.secondaryPosts?.some(post => postConfig[post]?.srName === nextStationName)) && trainDetails.distanceFromStation < 3);
 
     const CopyToClipboard = (stringToCopy: string) => {
         navigator.clipboard.writeText(stringToCopy);
@@ -58,7 +52,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     }
 
     return (
-        <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef}>
+        <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef} width="550">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
@@ -126,19 +120,28 @@ export const TrainInfoCell: React.FC<Props> = ({
                 </div>
             </div>
             <div className="w-full flex flex-col md:flex-row">
-                {  distanceFromStation
-                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden"><span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span><span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>,&nbsp;<div className="inline-flex">{distanceFromStation}km</div></div>
+                {  trainDetails
+                    ? <div className="max-w-[70px] md:max-w-full max-h-[1.3rem] overflow-hidden">
+                        <span className="hidden md:inline">{t("EDR_TRAINROW_position_next")}:&nbsp;</span>
+                        <span className={isTrainApproaching ? 'px-1 rounded bg-green-200 dark:bg-green-600 animate-pulse' : ''}>{nextStationName}</span>
+                        { trainDetails.distanceFromStation && <span>,&nbsp;
+                            <div className="inline-flex">
+                                {trainDetails.distanceFromStation > 0.5 && <span>
+                                    {trainDetails.distanceFromStation} km
+                                </span>}
+                                {trainDetails.distanceFromStation <= 0.5 && <span>
+                                    {`< 0.5 km`}
+                                </span>}
+                            </div>
+                        </span>}
+                    </div>
                     : <>{t('EDR_TRAINROW_train_offline')}</>
                 }
                 &nbsp;
                 {
-                    distanceFromStation
-                        ? trainHasPassedStation
-                            ? <>({t("EDR_TRAINROW_train_away")})</>
-                            : ETA && Math.round(ETA) <= 20 && distanceFromStation > 1
-                                ? <>~ {Math.round(ETA)} {t("EDR_TRAINROW_train_minutes")}</>
-                                : undefined
-                        : undefined
+                    trainHasPassedStation
+                    ? <>({t("EDR_TRAINROW_train_away")})</>
+                    : ''
                 }
             </div>
         </td>

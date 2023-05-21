@@ -15,7 +15,8 @@ import { ExtendedStationConfig } from "../EDR/functions/trainDetails";
 const KZ = {
     ...postConfig.KZ,
     left: "KO",
-    right: "KSP"
+    right: "KSP",
+    branchA: "SZA"
 }
 
 // kato central
@@ -225,22 +226,22 @@ const OP_PO = {
 const IDZ = {
     ...postConfig.IDZ,
     left: "OP_PO",
-    right: "STR",
+    right: "ST",
     branchA: "RDZ_R12",
     branchB: "RDZ_P31"
 }
 
 // Strzałki
-const STR = {
-    ...postConfig.STR,
+const ST = {
+    ...postConfig.ST,
     left: "IDZ",
-    right: "SZE"
+    right: "BR"
 }
 
 // Szeligi
 const SZE = {
     ...postConfig.SZE,
-    left: "STR",
+    left: "BR",
     right: "KOR"
 }
 
@@ -335,6 +336,7 @@ const MY_MR = {
 
 const MY = {
     ...postConfig.MY,
+    left: "SZA",
     right: "MY_MR"
 }
 
@@ -389,7 +391,8 @@ const DOR = {
     ...postConfig.DOR,
     right: "DG_ST",
     left: "JU",
-    branchA: "DG_WZ"
+    branchA: "DG_WZ",
+    branchB: "SM"
 }
 
 const SLK = {
@@ -537,6 +540,23 @@ const KOZI_R12 = {
     right: "DG_WZ"
 }
 
+const BR = {
+    ...postConfig.BR,
+    left: "ST",
+    right: "SZE"
+}
+
+const SZA = {
+    ...postConfig.SZA,
+    left: "MY",
+    right: "KZ"
+}
+
+const SM = {
+    ...postConfig.SM,
+    right: "DOR"
+}
+
 
 // The stackmap is used as a drop in replacement because JS has no pointers (well quircky ones)
 // So its better to use a hashmap since its still O(1) access
@@ -572,7 +592,8 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     PI: PI,
     OP_PO: OP_PO,
     IDZ: IDZ,
-    STR,
+    ST,
+    BR,
     SZE,
     KOR,
     JKT,
@@ -631,6 +652,8 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     KOZI,
     KOZI_R12,
     JU,
+    SZA,
+    SM,
 }
 
 

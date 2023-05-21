@@ -1,10 +1,12 @@
-import { IServerTrain } from "./IServerTrain";
+import { IEdrServerTrain } from "./IEdrServerTrain";
 
-export interface IFrontendStationTrainRow extends Omit<IServerTrain, 'timetable'> {
+export interface IFrontendStationTrainRow extends Omit<IEdrServerTrain, 'timetable'> {
     trainType: string,
     stopType: number,
     track: number | null,
     platform: string | null,
+    actualArrivalObject: Date,
+    actualDepartureObject: Date,
     scheduledArrivalObject: Date,
     scheduledDepartureObject: Date,
     maxSpeed: number,
@@ -15,5 +17,5 @@ export interface IFrontendStationTrainRow extends Omit<IServerTrain, 'timetable'
     line: number,
     plannedStop: number,
     pointId: string,
-    stationIndex: number
+    stationIndex: number,
 }
