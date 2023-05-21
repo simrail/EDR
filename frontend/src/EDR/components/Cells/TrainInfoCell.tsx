@@ -39,7 +39,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const {t} = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
     const nextStation = trainDetails?.timetable?.find(entry => entry.indexOfPoint >= trainDetails?.TrainData?.VDDelayedTimetableIndex);
-    const nextStationName = nextStation?.nameForPerson || trainDetails?.closestStation;
+    const nextStationName = nextStation?.nameForPerson;
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
     const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
     const icons = isWebpSupported ? edrWebpImagesMap : edrImagesMap;
