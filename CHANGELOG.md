@@ -25,6 +25,10 @@
 - Lots of optimizations and fixes
 - Add missing EU flag on server select screen
 
+### Known issues
+
+- The graph view is a mess. Unfortunately the graph view is in a very sorry state and it needs a complete rewrite in order for it to function properly again. Contributions are welcome!
+
 ## *2.2 - 2023-04-08*
 
 ### Changes and features

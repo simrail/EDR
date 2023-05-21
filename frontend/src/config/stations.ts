@@ -257,7 +257,12 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "SG_DK",
         srName: "Sosnowiec Dańdówka",
         trainPosRange: 0.5,
-        platformPosOverride: [19.177154, 50.266830]
+        platformPosOverride: [19.177154, 50.266830],
+        graphConfig: {
+            pre: ["KZ", "SG_PO"],
+            post: ["JU", "DOR"],
+            final: []
+        }
     },
     SG_POR: {
         id: "SG_POR",
@@ -411,8 +416,8 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.310332, 50.303395],
         graphConfig: {
-            pre: ["KZ", "SG"],
-            post: ["LZ_LC"],
+            pre: ["JU", "DOR"],
+            post: ["BK", "OK"],
             final: []
         }
     },
@@ -475,28 +480,43 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 1,
         platformPosOverride: [20.316125, 51.449722],
         graphConfig: {
-            pre: ["WP", "OZ", "PI", "OP_PO"],
-            post: [],
-            final: ["ST"]
+            pre: ["PI", "OP_PO"],
+            post: ["ST", "BR"],
+            final: []
         }
     },
     ST: {
         id: "ST",
         srName: "Strzałki",
         trainPosRange: 1,
-        platformPosOverride: [20.406687, 51.642870]
+        platformPosOverride: [20.406687, 51.642870],
+        graphConfig: {
+            pre: ["OP_PO", "IDZ"],
+            post: ["BR", "SZE"],
+            final: []
+        }
     },
     BR: {
         id: "BR",
         srName: "Biała Rawska",
         trainPosRange: 1,
-        platformPosOverride: [20.439459, 51.794781]
+        platformPosOverride: [20.439459, 51.794781],
+        graphConfig: {
+            pre: ["IDZ", "ST"],
+            post: ["SZE", "KOR"],
+            final: [],
+        }
     },
     SZE: {
         id: "SZE",
         srName: "Szeligi",
         trainPosRange: 1,
-        platformPosOverride: [20.457199, 51.942969]
+        platformPosOverride: [20.457199, 51.942969],
+        graphConfig: {
+            pre: ["ST", "BR"],
+            post: ["KOR", "GRO_MAZ"],
+            final: []
+        }
     },
     JKT: {
         id: "JKT",
@@ -510,8 +530,8 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [20.6231492, 52.1101932],
         graphConfig: {
-            pre: ["WW", "PRSZ"],
-            post: ["KOR", "SZE"],
+            pre: ["SZE", "KOR"],
+            post: ["PRSZ", "WW"],
             final: []
         }
     },
@@ -537,13 +557,23 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "KOR",
         srName: "Korytów",
         trainPosRange: 0.5,
-        platformPosOverride: [20.495777, 52.022659]
+        platformPosOverride: [20.495777, 52.022659],
+        graphConfig: {
+            pre: ["BR", "SZE"],
+            post: ["GRO_MAZ", "PRSZ"],
+            final: []
+        }
     },
     PRSZ: {
         id: "PRSZ",
         srName: "Pruszków",
         trainPosRange: 0.5,
-        platformPosOverride: [20.797801, 52.168125,]
+        platformPosOverride: [20.797801, 52.168125,],
+        graphConfig: {
+            pre: ["KOR", "GRO_MAZ"],
+            post: [],
+            final: ["WW"]
+        }
     },
     PIA: {
         id: "PIA",
@@ -735,7 +765,7 @@ export const postConfig: Dictionary<StationConfig> = {
         srName: "Sosnowiec Maczki",
         trainPosRange: 0.5,
         platformPosOverride: [19.270203, 50.261328]
-    }
+    },
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({
