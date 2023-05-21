@@ -1,5 +1,4 @@
 import {pathFind_stackMap} from "./data";
-import {haversine} from "../EDR/functions/vectors";
 import _uniq from "lodash/uniq";
 import _minBy from "lodash/minBy";
 import {console_log} from "../utils/Logger";
@@ -73,20 +72,6 @@ export const PathFinding_FindPathAndHaversineSum = (start: string, finish: strin
     const lineTrace = _uniq([...pathA, ...pathB])
 
     return [lineTrace];
-}
-
-export const PathFinding_ClosestStationInPath = (pfLineTrace: PathFindingLineTrace, trainPosVector: [number, number]): ExtendedStationConfig | undefined => {
-    if (!pfLineTrace) return undefined;
-    const indexOfClosestStationInPathInTrainDirection = pfLineTrace
-        //.map((point) => point?.platformPosOverride ? {...point, dot: Vector_DotProduct(point.platformPosOverride, Victor.fromArray(directionVector))} : undefined)
-        //.filter((dotCalc) => dotCalc && dotCalc.dot && dotCalc.dot > 0 && dotCalc.platformPosOverride)
-        .filter((dotCalc) => dotCalc && dotCalc.platformPosOverride)
-        .map((point) => ({...(point as ExtendedStationConfig), distance: haversine(point!.platformPosOverride!, trainPosVector)}))
-        .sort((a, b) => a.distance < b.distance? -1 : 1)
-
-    console_log("Dot resukts : ", indexOfClosestStationInPathInTrainDirection);
-
-    return indexOfClosestStationInPathInTrainDirection[0];
 }
 
 if (RUN_DATA_HEALTHCHECKS) {
