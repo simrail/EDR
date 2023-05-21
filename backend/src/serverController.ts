@@ -73,7 +73,6 @@ export async function getTrainsListForPost(req: express.Request, res: express.Re
                     const internalIds = POSTS[post];
                     const postsInTimetable = trainTimetable.timetable.filter(checkpoint => internalIds.includes(parseInt(checkpoint.pointId)));
                     const hasTrainLeftThePost = postsInTimetable !== undefined && postsInTimetable.length > 0 ? train?.TrainData.VDDelayedTimetableIndex > postsInTimetable[postsInTimetable.length - 1].indexOfPoint : true;
-                    if (train.TrainNoLocal === "40131") console.log(`Train: ${train.TrainNoLocal}, postId: ${internalIds}, checkpointIndex: ${postsInTimetable?.[0]?.indexOfPoint}, trainLeft: ${hasTrainLeftThePost}`);
                     if (hasTrainLeftThePost) {
                         return {
                             ...train,
@@ -82,7 +81,6 @@ export async function getTrainsListForPost(req: express.Request, res: express.Re
                     } else {
                         const stationPosition = stationPositions[internalIds[0]];
                         osrmResult = (await getOsrmDataFromSelfApi(train.TrainData.Longitute, train.TrainData.Latititute, stationPosition[0], stationPosition[1])).data;
-                        if (train.TrainNoLocal === "40131") console.log(`OSRM for train ${train.TrainNoLocal}: Distance: ${osrmResult.routes[0].distance}, ETA: ${osrmResult.routes[0].duration}`);
                         return {
                             ...train,
                             distanceFromStation: osrmResult?.routes?.[0]?.distance !== undefined ? Math.round(osrmResult.routes[0].distance / 10) / 100 : 0,

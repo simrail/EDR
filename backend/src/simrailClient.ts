@@ -47,7 +47,6 @@ export const simkolClient = {
 export const selfClient = {
     get: (url: string, base_url = BASE_SELF_API) => {
         const URL = `${base_url}${url}`;
-        console.info("Outbound request ", URL);
         // TODO: If this fails for any reason, the return value will be undefined which causes type-insecurity
         // Maybe handle exceptions one level above?
         return selfRlClient.get(URL, {
