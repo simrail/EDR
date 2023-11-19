@@ -85,9 +85,9 @@ const updateTimetable = () => {
 }
 
 const updateSpeedLimits = () => {
-    getSpeedLimitsFromSimkol().then((result) => ConvertSpeedsApiToInternal(result.data)).catch(() => {
+    getSpeedLimitsFromSimkol().then((result) => speeds = ConvertSpeedsApiToInternal(result.data)).catch(() => {
         console.log("Error while fetching speed limits from the API, falling back to the bundled version!");
-        speeds = ConvertSpeedsApiToInternal(JSON.parse(fs.readFileSync("speeds.json", "utf8")) as ISpeedLimitApi[]);
+        speeds = ConvertSpeedsApiToInternal(JSON.parse(fs.readFileSync("../speeds.json", "utf8")) as ISpeedLimitApi[]);
     });
 }
 

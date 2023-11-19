@@ -4636,13 +4636,27 @@
   {
     "lineNo": "154",
     "axisStart": "-1177",
-    "axisEnd": "15182",
-    "vMax": "60",
+    "axisEnd": "200",
+    "vMax": "40",
     "track": "P"
   },
   {
     "lineNo": "154",
-    "axisStart": "15182",
+    "axisStart": "200",
+    "axisEnd": "7750",
+    "vMax": "80",
+    "track": "P"
+  }, 
+  {
+    "lineNo": "154",
+    "axisStart": "7750",
+    "axisEnd": "15982",
+    "vMax": "60",
+    "track": "P"
+  },   
+  {
+    "lineNo": "154",
+    "axisStart": "15982",
     "axisEnd": "20050",
     "vMax": "80",
     "track": "P"
@@ -4742,7 +4756,7 @@
     "lineNo": "171",
     "axisStart": "4190",
     "axisEnd": "5240",
-    "vMax": "90",
+    "vMax": "100",
     "track": "N"
   },
   {
@@ -4755,10 +4769,24 @@
   {
     "lineNo": "171",
     "axisStart": "9300",
+    "axisEnd": "11850",
+    "vMax": "100",
+    "track": "N"
+  },
+  {
+    "lineNo": "171",
+    "axisStart": "11850",
+    "axisEnd": "13250",
+    "vMax": "70",
+    "track": "N"
+  },
+  {
+    "lineNo": "171",
+    "axisStart": "13250",
     "axisEnd": "16350",
     "vMax": "80",
     "track": "N"
-  },
+  },  
   {
     "lineNo": "171",
     "axisStart": "16350",
@@ -4791,7 +4819,7 @@
     "lineNo": "171",
     "axisStart": "3907",
     "axisEnd": "4260",
-    "vMax": "80",
+    "vMax": "100",
     "track": "P"
   },
   {
@@ -4804,10 +4832,24 @@
   {
     "lineNo": "171",
     "axisStart": "6970",
+    "axisEnd": "11850",
+    "vMax": "100",
+    "track": "P"
+  },
+  {
+    "lineNo": "171",
+    "axisStart": "11850",
+    "axisEnd": "13250",
+    "vMax": "70",
+    "track": "P"
+  },  
+  {
+    "lineNo": "171",
+    "axisStart": "13250",
     "axisEnd": "15024",
     "vMax": "80",
     "track": "P"
-  },
+  },  
   {
     "lineNo": "171",
     "axisStart": "15024",
