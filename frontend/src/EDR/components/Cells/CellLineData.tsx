@@ -3,11 +3,13 @@ import {useTranslation} from "react-i18next";
 import {edrImagesMap} from "../../../config";
 import { dispatchDirections } from "../../../config/stations";
 import { TimeTableRow } from "../../../customTypes/TimeTableRow";
+import { DetailedTrain } from "../../functions/trainDetails";
 
 type Props = {
     ttRow: TimeTableRow;
+    trainDetails: DetailedTrain;
 }
-export const CellLineData: React.FC<Props> = ({ttRow}) => {
+export const CellLineData: React.FC<Props> = ({ttRow, trainDetails}) => {
     const {t} = useTranslation();
     const directions = dispatchDirections[parseInt(ttRow.pointId)];
     const isHeadingLeft = ttRow.toPostId ? directions?.left?.includes(parseInt(ttRow.toPostId)) : false;
@@ -24,6 +26,6 @@ export const CellLineData: React.FC<Props> = ({ttRow}) => {
         </span>
         {ttRow.toPost}
         <img className="inline-block pl-1 pb-1" src={edrImagesMap.RIGHT_ARROW} height={18} width={18} alt="r_arrow"/>️
-        <b><span className="hidden lg:inline">&nbsp;{t("EDR_TRAINROW_line")}:&nbsp;</span>{ttRow.line}</b>
+        <b><span className="hidden lg:inline">&nbsp;{t("EDR_TRAINROW_line")}:&nbsp;</span>{trainDetails?.timetable?.[trainDetails?.timetable?.findIndex(entry => entry.pointId === ttRow.pointId) + 1]?.line ?? ttRow.line}</b>
     </>
 }

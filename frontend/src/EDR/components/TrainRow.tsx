@@ -124,7 +124,7 @@ const TableRow: React.FC<Props> = (
             isTrainOffline={!trainDetails}
         />
         <TrainToCell ttRow={ttRow} headerSeventhColRef={headerSeventhColRef} secondaryPostData={secondaryPostData}
-                     streamMode={streamMode}/>
+                     streamMode={streamMode} trainDetails={trainDetails}/>
     </Table.Row>
 }
 
