@@ -1,4 +1,4 @@
-import { selfClient, simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
+import { osrmClient, selfClient, simkolClient, simrailClient, strictAwsSimrailClient } from "./simrailClient.js";
 import {BASE_AWS_API, BASE_SIMRAIL_API, POSTS, stationPositions} from "./config.js";
 import express from "express";
 import { ApiResponse, Server, Station, Train } from "@simrail/types";
@@ -171,5 +171,5 @@ export function getSpeedLimitsFromSimkol() {
 }
 
 export function getOsrmDataFromSelfApi(startLon: number, startLat: number, endLon: number, endLat: number) {
-    return selfClient.get(`route/v1/train/${Math.round(startLon * 100000) / 100000},${Math.round(startLat * 100000) / 100000};${Math.round(endLon * 100000) / 100000},${Math.round(endLat * 100000) / 100000}?overview=false&continue_straight=true`);
+    return osrmClient.get(`route/v1/train/${Math.round(startLon * 100000) / 100000},${Math.round(startLat * 100000) / 100000};${Math.round(endLon * 100000) / 100000},${Math.round(endLat * 100000) / 100000}?overview=false&continue_straight=true`);
 }

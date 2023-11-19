@@ -19,7 +19,7 @@ export const getTrainDetails = (previousTrains: React.MutableRefObject<{[k: stri
     const previousTrainData = previousTrains.current?.[t.TrainNoLocal as string];
     let lastDelay = previousTrainData?.lastDelay;
     if (previousTrainData?.TrainData && previousTrainData?.TrainData.VDDelayedTimetableIndex < t.TrainData.VDDelayedTimetableIndex) {
-        const stationPassed = trainTimetables[t.TrainNoLocal]?.find(ttRow => ttRow.indexOfPoint === t.TrainData.VDDelayedTimetableIndex);
+        const stationPassed = trainTimetables[t.TrainNoLocal]?.find(ttRow => ttRow.indexOfPoint === (t.TrainData.VDDelayedTimetableIndex - 1));
         if (stationPassed && dateNow) {
             lastDelay = differenceInMinutes(new Date(stationPassed.scheduledDepartureObject.getFullYear(), stationPassed.scheduledDepartureObject.getMonth(), stationPassed.scheduledDepartureObject.getDate(), dateNow.getHours(), dateNow.getMinutes()), stationPassed.scheduledDepartureObject);
         }

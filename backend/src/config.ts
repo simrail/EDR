@@ -3,7 +3,8 @@ import { StationId } from "./enum/stationId.js";
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
 export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
 export const BASE_SIMKOL_API = "https://webhost.simkol.pl/";
-export const BASE_SELF_API = "https://example.com/";
+export const BASE_SELF_API = "http://localhost:8080/";
+export const BASE_OSRM_API = "http://localhost:5000/";
 
 export const srHeaders = {
     "User-Agent": "Simrail.app EDR vDEV",

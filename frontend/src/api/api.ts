@@ -5,7 +5,7 @@ import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
 import { ExtendedTrain } from "../customTypes/ExtendedTrain";
 
-export const BASE_API_URL = "https://example.com/";
+export const BASE_API_URL = "http://127.0.0.1/";
 
 const baseApiCall = (URL: string) => {
     // TODO: Add error toast

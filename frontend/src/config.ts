@@ -92,23 +92,6 @@ export const countriesFlags: {[k: string]: string} = {
     EU,
 }
 
-
-// Polish characters are not allowed as map keys
-// TODO: Is this still really usefull ? If yes, calc automatically
-export const internalConfigPostIds: {[k: string]: string} = {
-    "GW": encodeURIComponent("Góra Włodowska"),
-    "PS": encodeURIComponent("Psary"),
-    "KN": encodeURIComponent("Knapówka"),
-    "WP": encodeURIComponent("Włoszczowa Północ"),
-    "OZ": encodeURIComponent("Olszamowice"),
-    "PI": encodeURIComponent("Pilichowice"),
-    "KZ": encodeURIComponent("Katowice_Zawodzie"),
-    "SG": encodeURIComponent("Sosnowiec Główny"),
-    "DG": encodeURIComponent("Dąbrowa Górnicza"),
-    "T1_BZ": encodeURIComponent("Będzin"),
-    "LZ_LC": encodeURIComponent("Łazy Łc")
-};
-
 export const optimizedPostsImagesMap: {[k: string]: string} = {
     B: BN,
     BR,
