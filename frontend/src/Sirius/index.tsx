@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as FlexLayout from "flexlayout-react";
-import {useParams} from "react-router-dom";
+import {NavigateFunction, useNavigate, useParams} from "react-router-dom";
 import {getServerTime, getTrains, getTrainTimetable, getTzOffset} from "../api/api";
 import {Spinner} from "flowbite-react";
 import {SiriusHeader} from "./Header";
@@ -49,8 +49,12 @@ export type TrainTimeTableRow = {
     }]
 };
 
-const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: Train) => void) => getTrains(serverCode).then((trains) => {
+const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: Train) => void, navigate: NavigateFunction) => getTrains(serverCode).then((trains) => {
     const keyedTrains = _keyBy(trains, 'TrainNoLocal');
+    console.log(keyedTrains[trainNumber]);
+    if (keyedTrains[trainNumber] === undefined) {
+        navigate(`/${serverCode}/trains/`);
+    }
     setTrain(keyedTrains[trainNumber]);
 });
 
@@ -143,6 +147,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         const initialValue = saved ? JSON.parse(saved) : undefined;
         return initialValue || 0;
     });
+    const navigate = useNavigate();
     
     useEffect(() => {
         localStorage.setItem("map", JSON.stringify(mapLink));
@@ -153,12 +158,12 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         getTrainTimetable(trainNumber, serverCode).then(setTrainTimetable);
         getTzOffset(serverCode).then(setServerTzOffset);
         setTimeout(() => getServerTime(serverCode).then(setServerTime), 1000);
-        fetchTrain(trainNumber, serverCode, setTrain);
+        fetchTrain(trainNumber, serverCode, setTrain, navigate);
         const intervalId = window.setInterval(() => {
-            fetchTrain(trainNumber, serverCode, setTrain);
+            fetchTrain(trainNumber, serverCode, setTrain, navigate);
         }, 10000);
         return () => window.clearInterval(intervalId);
-    }, [trainNumber, serverCode]);
+    }, [trainNumber, serverCode, navigate]);
 
     // Refreshes server time every 2 minutes
     React.useEffect(() => {
