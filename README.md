@@ -47,7 +47,12 @@ Translations are happening via [Transifex](https://explore.transifex.com/simrail
 
 ## Self Hosting
 
-Self hosting documentation is planned. The software needs a few adjustements to make it work easilly, but if you know your way around the code you can already do so! :)
+This is a very basic guide, more details may be added later if needed.
+
+1. Clone this repo
+2. Download and install Docker Desktop (or equivalent for your OS)
+3. Edit config and API files and replace URLs to match your system (backend, frontend, nginx)
+4. Create and run docker images (backend, nginx, osrm), remember to forward ports specified in Dockerfiles and add envvars to backend when running (LISTEN_PORT, STEAM_API_KEY)
 
 ## Thank you
 
