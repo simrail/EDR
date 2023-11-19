@@ -87,7 +87,7 @@ export const TrainSelect = () => {
                                 ))}
                             </div>
                             <div className="flex flex-wrap justify-center pt-4">
-                                {trainFilter && trainFilter.filter(t => (t.Vehicles[0].toLowerCase().includes('4e/') && (parseInt(t.TrainNoLocal) >=10000 && parseInt(t.TrainNoLocal) < 100000)) || (parseInt(t.TrainNoLocal) < 10000 && t.Vehicles[0].toLowerCase().includes('4e/'))).map((t) => (
+                                {trainFilter && trainFilter.filter(t => ((t.Vehicles[0].toLowerCase().includes('4e/') || t.Vehicles[0].toLowerCase().includes("traxx")) && parseInt(t.TrainNoLocal) < 100000)).map((t) => (
                                     <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
                                 ))}
                             </div>
