@@ -16,20 +16,20 @@ const baseApiCall = (URL: string) => {
 
 export const getTimetable = (post: string, serverCode: string): Promise<TimeTableRow[]> =>
     baseApiCall(`dispatch/${serverCode}/${post}?mergePosts=true`).then((data: TimeTableRow[]) => data.map(tr => {
-        tr.actualArrivalObject = subHours(new Date(tr.actualArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.actualDepartureObject = subHours(new Date(tr.actualDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.scheduledArrivalObject = subHours(new Date(tr.scheduledArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.scheduledDepartureObject = subHours(new Date(tr.scheduledDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
+        tr.actualArrivalObject = subHours(new Date(tr.actualArrivalObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.actualDepartureObject = subHours(new Date(tr.actualDepartureObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.scheduledArrivalObject = subHours(new Date(tr.scheduledArrivalObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.scheduledDepartureObject = subHours(new Date(tr.scheduledDepartureObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
 
         return tr;
     }));
 
 export const getTrainTimetable = (trainId: string, serverCode: string): Promise<TrainTimeTableRow[]> =>
     baseApiCall(`train/${serverCode}/${trainId}`).then((data: TrainTimeTableRow[]) => data.map(tr => {
-        tr.actualArrivalObject = subHours(new Date(tr.actualArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.actualDepartureObject = subHours(new Date(tr.actualDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.scheduledArrivalObject = subHours(new Date(tr.scheduledArrivalObject), (new Date().getTimezoneOffset() * -1) / 60);
-        tr.scheduledDepartureObject = subHours(new Date(tr.scheduledDepartureObject), (new Date().getTimezoneOffset() * -1) / 60);
+        tr.actualArrivalObject = subHours(new Date(tr.actualArrivalObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.actualDepartureObject = subHours(new Date(tr.actualDepartureObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.scheduledArrivalObject = subHours(new Date(tr.scheduledArrivalObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
+        tr.scheduledDepartureObject = subHours(new Date(tr.scheduledDepartureObject), (new Date(tr.actualArrivalObject).getTimezoneOffset() * -1) / 60);
 
         return tr;
     }));
