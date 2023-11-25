@@ -46,7 +46,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_golonog]
     },
     [StationId.dabrowa_gornicza_zabkowice]: {
-        left: [StationId.dabrowa_gornicza, StationId.dabrowa_gornicza_huta_katowice_r7, StationId.dabrowa_gornicza_huta_katowice],
+        left: [StationId.dabrowa_gornicza, StationId.dabrowa_gornicza_huta_katowice_r7, StationId.dabrowa_gornicza_huta_katowice, StationId.dabrowa_gornicza_golonog, StationId.dabrowa_gornicza_zabkowice_gtb, StationId.dabrowa_gornicza_pogoria],
         right: [StationId.dabrowa_gornicza_zabkowice_dza, StationId.dabrowa_gorn__zabkowice_dza_r_47, StationId.lazy_lc]
     },
     [StationId.lazy]: {
@@ -54,8 +54,8 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.lazy_la, StationId.lazy_r52]
     },
     [StationId.lazy_la]: {
-        left: [StationId.lazy],
-        right: [StationId.zawiercie],
+        left: [StationId.lazy, StationId.lazy_r52],
+        right: [StationId.zawiercie, StationId.zawiercie_gt],
     },
     [StationId.lazy_lc]: {
         left: [StationId.lazy],
@@ -142,6 +142,10 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.katowice]: {
         left: [StationId.brynow, StationId.katowice_tow__ktc, StationId.katowice_zaleze],
         right: [StationId.katowice_zawodzie]
+    },
+    [StationId.slawkow]: {
+        left: [StationId.bukowno, StationId.bukowno_przymiarki],
+        right: [StationId.dabrowa_gornicza_wschodnia]
     }
 }
 

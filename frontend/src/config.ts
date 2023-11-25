@@ -25,6 +25,7 @@ import SPECIAL_CARGO_WEBP from './images/icons/webp/specialcargo.webp';
 import BN from "./images/posts/jpg/Bedzin.jpg";
 import DG from "./images/posts/jpg/Dabrowa_Gornicza.jpg";
 import DGW from "./images/posts/jpg/Dabrowa_Gornicza_Wschodnia.jpg";
+import DGZ from "./images/posts/jpg/Dabrowa_Gornicza_Zabkowice.jpg";
 import DOR from "./images/posts/jpg/Dorota.jpg";
 import GM from "./images/posts/jpg/Grodzisk_Mazowiecki.jpg";
 import GW from "./images/posts/jpg/Gora_Wlodowska.jpg";
@@ -32,6 +33,7 @@ import IDZ from "./images/posts/jpg/Idzikowice.jpg";
 import KN from "./images/posts/jpg/Knapowka.jpg";
 import KOR from './images/posts/jpg/Korytow.jpg';
 import KZ from "./images/posts/jpg/Katowice_Zawodzie.jpg";
+import LA from "./images/posts/jpg/Lazy_La.jpg";
 import LC from "./images/posts/jpg/Lazy_Lc.jpg";
 import OL from "./images/posts/jpg/Olszamowice.jpg";
 import OP_PO from "./images/posts/jpg/Opoczno_Poludnie.jpg";
@@ -39,6 +41,7 @@ import PI from "./images/posts/jpg/Pilichowice.jpg";
 import PS from "./images/posts/jpg/Psary.jpg";
 import SG from "./images/posts/jpg/Sosnowiec_Glowny.jpg";
 import SG_PO from "./images/posts/jpg/Sosnowiec_Poludniowy.jpg";
+import SL from "./images/posts/jpg/Slawkow.jpg";
 import WP from "./images/posts/jpg/Wloszczowa_Polnoc.jpg";
 import ZA from "./images/posts/jpg/Zawiercie.jpg";
 import SE from "./images/posts/jpg/Szeligi.jpg";
@@ -50,6 +53,7 @@ import BR from "./images/posts/jpg/Biala_Rawska.jpg";
 import BN_WEBP from "./images/posts/webp/Bedzin.webp";
 import DG_WEBP from "./images/posts/webp/Dabrowa_Gornicza.webp";
 import DGW_WEBP from "./images/posts/webp/Dabrowa_Gornicza_Wschodnia.webp";
+import DGZ_WEBP from "./images/posts/webp/Dabrowa_Gornicza_Zabkowice.webp";
 import DOR_WEBP from "./images/posts/webp/Dorota.webp";
 import GM_WEBP from "./images/posts/webp/Grodzisk_Mazowiecki.webp";
 import GW_WEBP from "./images/posts/webp/Gora_Wlodowska.webp";
@@ -57,6 +61,7 @@ import IDZ_WEBP from "./images/posts/webp/Idzikowice.webp";
 import KOR_WEBP from './images/posts/webp/Korytow.webp';
 import KN_WEBP from "./images/posts/webp/Knapowka.webp";
 import KZ_WEBP from "./images/posts/webp/Katowice_Zawodzie.webp";
+import LA_WEBP from "./images/posts/webp/Lazy_La.webp";
 import LC_WEBP from "./images/posts/webp/Lazy_Lc.webp";
 import OL_WEBP from "./images/posts/webp/Olszamowice.webp";
 import OP_PO_WEBP from "./images/posts/webp/Opoczno_Poludnie.webp";
@@ -64,6 +69,7 @@ import PI_WEBP from "./images/posts/webp/Pilichowice.webp";
 import PS_WEBP from "./images/posts/webp/Psary.webp";
 import SG_WEBP from "./images/posts/webp/Sosnowiec_Glowny.webp";
 import SG_PO_WEBP from "./images/posts/webp/Sosnowiec_Poludniowy.webp";
+import SL_WEBP from "./images/posts/webp/Slawkow.webp";
 import WP_WEBP from "./images/posts/webp/Wloszczowa_Polnoc.webp";
 import ZA_WEBP from "./images/posts/webp/Zawiercie.webp";
 import SE_WEBP from "./images/posts/webp/Szeligi.webp";
@@ -98,6 +104,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     DG,
     DRA: DOR,
     DW: DGW,
+    DZ: DGZ,
     GR: GM,
     GW,
     ID: IDZ,
@@ -106,6 +113,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     KN,
     KR: KOR,
     KZ,
+    ŁA: LA,
     ŁC: LC,
     OL,
     OP: OP_PO,
@@ -113,6 +121,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     PS,
     SE,
     SG,
+    SL,
     SPŁ1: SG_PO,
     ST,
     WP,
@@ -125,6 +134,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     DG: DG_WEBP,
     DRA: DOR_WEBP,
     DW: DGW_WEBP,
+    DZ: DGZ_WEBP,
     GR: GM_WEBP,
     GW: GW_WEBP,
     ID: IDZ_WEBP,
@@ -133,6 +143,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     KN: KN_WEBP,
     KR: KOR_WEBP,
     KZ: KZ_WEBP,
+    ŁA: LA_WEBP,
     ŁC: LC_WEBP,
     OL: OL_WEBP,
     OP: OP_PO_WEBP,
@@ -140,6 +151,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     PS: PS_WEBP,
     SE: SE_WEBP,
     SG: SG_WEBP,
+    SL: SL_WEBP,
     SPŁ1: SG_PO_WEBP,
     ST: ST_WEBP,
     WP: WP_WEBP,

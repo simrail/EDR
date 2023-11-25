@@ -1,5 +1,26 @@
 # Simrail Community EDR Changelog
 
+## *2.4 - Unreleased*
+
+### Changes and features
+
+- Added support for Sławków, Łazy Ła, Dąbrowa Górnicza Ząbkowice dispatch stations (thanks for your help Matejzon)
+
+### Fixes
+
+- Fixed infinite loading when driver view is selected on an offline train
+- Fixed speed restrictions missing on driver view (please remember that these only contain line speeds and not include temporary limits)
+- Fixed 'To line' sometimes displaying wrong line number on EDR view
+- Fixed background image for resolutions > FullHD
+- Fixed rare timezone issue when server time is not in the same daylight savings date as the browser
+- Fixed some trains missing from dirver view select (Thanks @FrozenTux !)
+
+### Other
+
+- Reverted FR Discord link to the previous link
+- Added very simple guide for self-hosting intended for people with some programming knowledge
+- Added OSRM server to the repo
+
 ## *2.3 - 2023-05-21*
 
 ### Important changes
