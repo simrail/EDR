@@ -112,7 +112,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScro
                                         )}
                                         data-internalid={internalId}
                                     >
-                                        <Table.Cell className="relative pl-8" width={350}>
+                                        <Table.Cell className="relative pl-8">
                                             <div className="flex flex-col">
                                                 <TrainTimetableTimeline itemIndex={index} closestStationIndex={nearestStationIndex} isAtTheStation={index === nearestStationIndex} stopType={ttRow.stopTypeNumber} />                                                <div className="flex justify-between">
                                                     <span>{ttRow.mileage ? `${(Math.round(ttRow.mileage * 100) / 100)} km` : ''}</span>
@@ -120,7 +120,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScro
                                                 </div>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell width={200}>
+                                        <Table.Cell>
                                             <div className="flex justify-between">
                                             {ttRow.scheduledArrivalObject.getFullYear() > 1970 && (
                                                 <span>{format(ttRow.scheduledArrivalObject, 'HH:mm')}</span>
@@ -128,7 +128,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScro
                                                 <span>{ttRow.stopTypeNumber > 0 && <Badge>{`${stopTypeToLetters(ttRow.stopTypeNumber)}`}</Badge>}</span>
                                             </div>
                                         </Table.Cell>
-                                        <Table.Cell className="pl-0 flex justify-between" width={500}>
+                                        <Table.Cell className="pl-0 flex justify-between">
                                             <span className="inline-block">{ttRow.nameForPerson}</span>
                                             <span className="inline-block">
                                                 {
@@ -138,7 +138,7 @@ export const TrainTimetable: React.FC<Props> = ({trainTimetable, train, autoScro
                                                 }
                                             </span>
                                         </Table.Cell>
-                                        <Table.Cell className="pa-0 flex-col" width={360}>
+                                        <Table.Cell className="pa-0 flex-col">
                                             {ttRow.scheduledDepartureObject.getFullYear() < 3000 && (
                                                 <>
                                                     {format(ttRow.scheduledDepartureObject, 'HH:mm')}

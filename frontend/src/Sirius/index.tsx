@@ -78,20 +78,6 @@ const driverViewLayout: FlexLayout.IJsonModel = {
                         children: [
                             {
                                 type: "tabset",
-                                id: "#4c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
-                                weight: 15,
-                                children: [
-                                    {
-                                        type: "tab",
-                                        id: "train-details-layout",
-                                        name: "Train Details",
-                                        component: "grid",
-                                        enableClose: true,
-                                    },
-                                ],
-                            },
-                            {
-                                type: "tabset",
                                 id: "#5c934ab9-7fb6-44fc-aa7c-9b72a2b73402",
                                 weight: 85,
                                 children: [
@@ -101,6 +87,13 @@ const driverViewLayout: FlexLayout.IJsonModel = {
                                         name: "Timeline",
                                         component: "grid",
                                         enableClose: false,
+                                    },
+                                    {
+                                        type: "tab",
+                                        id: "train-details-layout",
+                                        name: "Train Details",
+                                        component: "grid",
+                                        enableClose: true,
                                     },
                                 ],
                             },
@@ -116,7 +109,7 @@ const driverViewLayout: FlexLayout.IJsonModel = {
                                 id: "map-layout",
                                 name: "Map",
                                 component: "grid",
-                                enableClose: false,
+                                enableClose: true,
                             },
                         ],
                     },
