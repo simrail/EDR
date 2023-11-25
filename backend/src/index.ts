@@ -5,7 +5,7 @@ import compression from "compression";
 import fs from "fs";
 import Cron from "cron";
 const app = express();
-const Logger = morgan('short');
+const Logger = morgan('tiny');
 
 import {dispatchController, trainTimetableController} from "./dispatchController.js";
 import {getServerList, getStationsList, getTrainsListForPost, getServerTz, getPlayer, getFullTimetable, getSpeedLimitsFromSimkol, getServerCodeList, getTrainsList, getServerTime, getEdrTimetable} from "./serverController.js";
