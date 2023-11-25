@@ -196,6 +196,10 @@ export const configByType: {[k: string ]: {color: string, graphColor: string}} =
         color: "gray",
         graphColor: "gray",
     },
+    "MHE": {
+        color: "success",
+        graphColor: "orange"
+    },
     "MOJ": {
         color: "success",
         graphColor: "green",
