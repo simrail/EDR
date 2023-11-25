@@ -67,7 +67,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     },
     [StationId.gora_wlodowska]: {
         left: [StationId.zawiercie],
-        right: [StationId.psary]
+        right: [StationId.psary, StationId.psary_roz_40]
     },
     [StationId.psary]: {
         down: [StationId.starzyny, StationId.starzyny_r5, StationId.psary_roz_40],
