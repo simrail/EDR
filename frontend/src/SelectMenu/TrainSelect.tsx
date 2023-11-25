@@ -9,9 +9,11 @@ import { getPreviousAndNextServer } from "../EDR/functions/subNavigation";
 import { Server, Train } from "@simrail/types";
 import { useTranslation } from "react-i18next";
 import { ISteamUser } from "../config/ISteamUser";
+import _groupBy from "lodash/groupBy";
+import { Dictionary } from "lodash";
 
 export const TrainSelect = () => {
-    const [trainFilter, setTrainFilter] = React.useState<Train[] | undefined>();
+    const [trainFilter, setTrainFilter] = React.useState<Dictionary<Train[]> | undefined>();
     const [searchTrainInput, setSearchTrainInput] = React.useState('');
     const [servers, setServers] = React.useState<Server[] | undefined>();
     const [trains, setTrains] = React.useState<Train[] | undefined>();
@@ -28,9 +30,9 @@ export const TrainSelect = () => {
 
     React.useEffect(() => {
         if (searchTrainInput) {
-            setTrainFilter(trains?.filter((train) => train.TrainNoLocal.includes(searchTrainInput)));
+            setTrainFilter(_groupBy(trains?.filter((train) => train.TrainNoLocal.includes(searchTrainInput)), "TrainName"));
         } else {
-            setTrainFilter(trains);
+            setTrainFilter(_groupBy(trains, (t) => t.Vehicles[0].split('/')[0]));
         }
     }, [trains, searchTrainInput]);
 
@@ -76,26 +78,18 @@ export const TrainSelect = () => {
                                     <input value={searchTrainInput} onChange={(e) => setSearchTrainInput(e.target.value)} type="search" id="search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for train number..." required />
                                 </div>
                             </div>
-                            <div className="flex flex-wrap justify-center pt-4">
-                                {trainFilter && trainFilter.filter(t => parseInt(t.TrainNoLocal) < 10000 && t.Vehicles[0].toLowerCase().includes('pendolino')).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
-                                ))}
-                            </div>
-                            <div className="flex flex-wrap justify-center pt-4">
-                                {trainFilter && trainFilter.filter(t => (t.Vehicles[0].toLowerCase().includes('en76') || t.Vehicles[0].toLowerCase().includes('en96')) && (parseInt(t.TrainNoLocal) >=10000 && parseInt(t.TrainNoLocal) < 100000)).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
-                                ))}
-                            </div>
-                            <div className="flex flex-wrap justify-center pt-4">
-                                {trainFilter && trainFilter.filter(t => ((t.Vehicles[0].toLowerCase().includes('4e/') || t.Vehicles[0].toLowerCase().includes("traxx")) && parseInt(t.TrainNoLocal) < 100000)).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
-                                ))}
-                            </div>
-                            <div className="flex flex-wrap justify-center pt-4">
-                                {trainFilter && trainFilter.filter(t => parseInt(t.TrainNoLocal) >= 100000).map((t) => (
-                                    <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
-                                ))}
-                            </div>
+                            {trainFilter && Object.keys(trainFilter).map((t) => (
+                                <div className="flex flex-wrap justify-center pt-4">
+                                    <div style={{position: "sticky", top: 0}} className="w-full py-2 bg-gray-200 shadow-md dark:bg-slate-600 items-center">
+                                        <div className="flex place-content-center px-4 max-w-screen">
+                                            {t}
+                                        </div>
+                                    </div>
+                                    {trainFilter[t].map((t) => (
+                                        <TrainCard key={t.TrainNoLocal} train={t} player={players?.find(player => player.steamid === t.TrainData.ControlledBySteamID)} />
+                                    ))}
+                                </div>
+                            ))}
                         </div>
                     )
             }

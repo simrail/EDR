@@ -5,6 +5,8 @@
 ### Changes and features
 
 - Added support for Sławków, Łazy Ła, Dąbrowa Górnicza Ząbkowice dispatch stations (thanks for your help Matejzon)
+- Added support for new trains & liveries
+- The train list for driver view is now a little bit easier to understand
 
 ### Fixes
 
@@ -13,7 +15,7 @@
 - Fixed 'To line' sometimes displaying wrong line number on EDR view
 - Fixed background image for resolutions > FullHD
 - Fixed rare timezone issue when server time is not in the same daylight savings date as the browser
-- Fixed some trains missing from dirver view select (Thanks @FrozenTux !)
+- Fixed some trains missing from driver view select (Thanks @FrozenTux !)
 
 ### Other
 

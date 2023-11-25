@@ -51,7 +51,6 @@ export type TrainTimeTableRow = {
 
 const fetchTrain = (trainNumber: string, serverCode: string, setTrain: (t: Train) => void, navigate: NavigateFunction) => getTrains(serverCode).then((trains) => {
     const keyedTrains = _keyBy(trains, 'TrainNoLocal');
-    console.log(keyedTrains[trainNumber]);
     if (keyedTrains[trainNumber] === undefined) {
         navigate(`/${serverCode}/trains/`);
     }
