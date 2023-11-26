@@ -71,7 +71,7 @@ export const Header: React.FC<Props> = ({
     const displayMode = getDisplayMode(filterConfig);
 
     return (
-        <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
+        <div style={{overflow: 'auto', position: "sticky", top: 0, zIndex: 99999}} className="w-full bg-white shadow-md dark:bg-slate-800">
             <div className="flex items-center justify-between px-4  max-w-screen">
                 <div className="flex flex-col">
                     <span>{postCfg.srName}</span>
