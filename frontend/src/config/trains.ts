@@ -23,6 +23,7 @@ import EN57_1000 from "../images/trains/png/EN57-1000.png";
 import EN57_1051 from "../images/trains/png/EN57-1051.png";
 import EN57_1219 from "../images/trains/png/EN57-1219.png";
 import EN57_1316 from "../images/trains/png/EN57-1316.png";
+import EN57_1752 from "../images/trains/png/EN57-1752.png";
 import EN57_1796 from "../images/trains/png/EN57-1796.png";
 import EN71_005 from "../images/trains/png/EN71-005.png";
 import EN71_011 from "../images/trains/png/EN71-011.png";
@@ -52,6 +53,7 @@ import EN57_1000_WEBP from "../images/trains/webp/EN57-1000.webp";
 import EN57_1051_WEBP from "../images/trains/webp/EN57-1051.webp";
 import EN57_1219_WEBP from "../images/trains/webp/EN57-1219.webp";
 import EN57_1316_WEBP from "../images/trains/webp/EN57-1316.webp";
+import EN57_1752_WEBP from "../images/trains/webp/EN57-1752.webp";
 import EN57_1796_WEBP from "../images/trains/webp/EN57-1796.webp";
 import EN71_005_WEBP from "../images/trains/webp/EN71-005.webp";
 import EN71_011_WEBP from "../images/trains/webp/EN71-011.webp";
@@ -164,6 +166,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "EN57/EN57-1316": {
         icon: EN57_1316,
         iconWebp: EN57_1316_WEBP
+    },
+    "EN57/EN57-1752": {
+        icon: EN57_1752,
+        iconWebp: EN57_1752_WEBP
     },
     "EN57/EN57-1796": {
         icon: EN57_1796,
