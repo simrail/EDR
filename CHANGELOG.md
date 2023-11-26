@@ -1,12 +1,13 @@
 # Simrail Community EDR Changelog
 
-## *2.4 - Unreleased*
+## *2.4 - 2023-11-26*
 
 ### Changes and features
 
 - Added support for Sławków, Łazy Ła, Dąbrowa Górnicza Ząbkowice dispatch stations (thanks for your help Matejzon)
 - Added support for new trains & liveries
 - The train list for driver view is now a little bit easier to understand
+- Small changes to driver view for a more mobile-friendly interface (train details are now on a new tab beside the timeline)
 
 ### Fixes
 
