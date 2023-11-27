@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { SupportsWebp } from './EDR/functions/webp';
 import ServerSelect from './SelectMenu/ServerSelect';
+import { useDarkMode } from "usehooks-ts";
 import { useTranslation } from 'react-i18next';
 const TrainSelect = React.lazy(() => import("./SelectMenu/TrainSelect"));
 const Sirius = React.lazy(() => import("./Sirius"));
@@ -17,12 +18,13 @@ function App() {
     const [SoundNotification, playSoundNotification] = useSoundNotification();
     let [isWebpSupported, setIsWebpSupported] = React.useState(false);
     const { t } = useTranslation();
+    const { isDarkMode } = useDarkMode();
     React.useEffect(() => {
         SupportsWebp().then(result => setIsWebpSupported(result));
     }, [isWebpSupported]);
 
     return <SnackbarProvider autoHideDuration={3000} maxSnack={3}>
-        <Flowbite>
+        <Flowbite theme={{ dark: isDarkMode }}>
             <SoundNotification />
             <div className="min-h-screen dark:bg-slate-800 text-black dark:text-white">
                 <BrowserRouter>

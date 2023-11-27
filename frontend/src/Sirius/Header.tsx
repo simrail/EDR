@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { countriesFlags } from "../config";
 import {DateTimeDisplay} from "../EDR/components/DateTimeDisplay";
 import { useTranslation } from "react-i18next";
+import { useDarkMode } from "usehooks-ts";
 
 type Props = {
     trainNumber: string;
@@ -21,6 +22,7 @@ type Props = {
 }
 export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, serverCode, serverTzOffset, serverTime, autoScroll, showSpeedLimits, setAutoScroll, resetLayout, setShowSpeedLimits, setMapLink}) => {
     const { t } = useTranslation();
+    const { toggle } = useDarkMode();
 
     return (
         <div className="sticky z-20 px-2 t-0 shadow-md w-full flex columns-3 items-center bg-white dark:bg-slate-800 justify-between" style={{overflow: 'auto', zIndex: 9999999}}>
@@ -62,7 +64,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
                 <div className="flex items-center ml-0 mx-2">
                     <Button onClick={resetLayout} className="ml-1" color="light" size="xs">Reset Driver View</Button>
                 </div>
-                <DarkThemeToggle className="!p-0" />
+                <DarkThemeToggle className="!p-0" onClick={() => toggle()}/>
             </div>
         </div>
     )
