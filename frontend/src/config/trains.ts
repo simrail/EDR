@@ -1,32 +1,39 @@
-import ED250_018 from "../images/trains/png/ED250-018.png";
-import EU07_005 from "../images/trains/png/EU07-005.png";
-import EU07_068 from "../images/trains/png/EU07-068.png";
-import EU07_085 from "../images/trains/png/EU07-085.png";
-import EU07_092 from "../images/trains/png/EU07-092.png";
-import EU07_096 from "../images/trains/png/EU07-096.png";
-import EU07_241 from "../images/trains/png/EU07-241.png";
-import EP07_135 from "../images/trains/png/EP07-135.png";
-import EP07_174 from "../images/trains/png/EP07-174.png"; 
-import EP08_001 from "../images/trains/png/EP08-001.png";
-import E186_134 from "../images/trains/png/E186-134.png";
-import E186_929 from "../images/trains/png/E186-929.png";
-import EN76_006 from "../images/trains/png/EN76-006.png";
-import EN76_022 from "../images/trains/png/EN76-022.png";
-import EN96_001 from "../images/trains/png/EN96-001.png";
-import ET25_002 from "../images/trains/png/ET25-002.png";
-import E6ACTa_005 from "../images/trains/png/E6ACTa-005.png";
-import E6ACTa_014 from "../images/trains/png/E6ACTa-014.png";
-import E6ACTa_016 from "../images/trains/png/E6ACTa-016.png";
-import E6ACTa_027 from "../images/trains/png/E6ACTa-027.png";
-import EN57_009 from "../images/trains/png/EN57-009.png";
-import EN57_1000 from "../images/trains/png/EN57-1000.png";
-import EN57_1051 from "../images/trains/png/EN57-1051.png";
-import EN57_1219 from "../images/trains/png/EN57-1219.png";
-import EN57_1316 from "../images/trains/png/EN57-1316.png";
-import EN57_1752 from "../images/trains/png/EN57-1752.png";
-import EN57_1796 from "../images/trains/png/EN57-1796.png";
-import EN71_005 from "../images/trains/png/EN71-005.png";
-import EN71_011 from "../images/trains/png/EN71-011.png";
+import ED250_018 from "../images/trains/jpg/ED250-018.jpg";
+import EU07_005 from "../images/trains/jpg/EU07-005.jpg";
+import EU07_068 from "../images/trains/jpg/EU07-068.jpg";
+import EU07_085 from "../images/trains/jpg/EU07-085.jpg";
+import EU07_092 from "../images/trains/jpg/EU07-092.jpg";
+import EU07_096 from "../images/trains/jpg/EU07-096.jpg";
+import EU07_241 from "../images/trains/jpg/EU07-241.jpg";
+import EP07_135 from "../images/trains/jpg/EP07-135.jpg";
+import EP07_174 from "../images/trains/jpg/EP07-174.jpg"; 
+import EP08_001 from "../images/trains/jpg/EP08-001.jpg";
+import EP08_013 from "../images/trains/jpg/EP08-013.jpg";
+import E186_134 from "../images/trains/jpg/E186-134.jpg";
+import E186_929 from "../images/trains/jpg/E186-929.jpg";
+import EN76_006 from "../images/trains/jpg/EN76-006.jpg";
+import EN76_022 from "../images/trains/jpg/EN76-022.jpg";
+import EN96_001 from "../images/trains/jpg/EN96-001.jpg";
+import ET22_243 from "../images/trains/jpg/ET22-243.jpg";
+import ET22_256 from "../images/trains/jpg/ET22-256.jpg";
+import ET22_644 from "../images/trains/jpg/ET22-644.jpg";
+import ET22_836 from "../images/trains/jpg/ET22-836.jpg";
+import ET22_911 from "../images/trains/jpg/ET22-911.jpg";
+import ET22_1163 from "../images/trains/jpg/ET22-1163.jpg";
+import ET25_002 from "../images/trains/jpg/ET25-002.jpg";
+import E6ACTa_014 from "../images/trains/jpg/E6ACTa-014.jpg";
+import E6ACTa_016 from "../images/trains/jpg/E6ACTa-016.jpg";
+import E6ACTadb_027 from "../images/trains/jpg/E6ACTadb-027.jpg";
+import EN57_009 from "../images/trains/jpg/EN57-009.jpg";
+import EN57_1000 from "../images/trains/jpg/EN57-1000.jpg";
+import EN57_1003 from "../images/trains/jpg/EN57-1003.jpg";
+import EN57_1051 from "../images/trains/jpg/EN57-1051.jpg";
+import EN57_1219 from "../images/trains/jpg/EN57-1219.jpg";
+import EN57_1316 from "../images/trains/jpg/EN57-1316.jpg";
+import EN57_1752 from "../images/trains/jpg/EN57-1752.jpg";
+import EN57_1796 from "../images/trains/jpg/EN57-1796.jpg";
+import EN71_005 from "../images/trains/jpg/EN71-005.jpg";
+import EN71_011 from "../images/trains/jpg/EN71-011.jpg";
 
 import ED250_018_WEBP from "../images/trains/webp/ED250-018.webp";
 import EU07_005_WEBP from "../images/trains/webp/EU07-005.webp";
@@ -38,18 +45,25 @@ import EU07_241_WEBP from "../images/trains/webp/EU07-241.webp";
 import EP07_135_WEBP from "../images/trains/webp/EP07-135.webp";
 import EP07_174_WEBP from "../images/trains/webp/EP07-174.webp";
 import EP08_001_WEBP from "../images/trains/webp/EP08-001.webp";
+import EP08_013_WEBP from "../images/trains/webp/EP08-013.webp";
 import E186_134_WEBP from "../images/trains/webp/E186-134.webp";
 import E186_929_WEBP from "../images/trains/webp/E186-929.webp";
 import EN76_006_WEBP from "../images/trains/webp/EN76-006.webp";
 import EN76_022_WEBP from "../images/trains/webp/EN76-022.webp";
 import EN96_001_WEBP from "../images/trains/webp/EN96-001.webp";
+import ET22_243_WEBP from "../images/trains/webp/ET22-243.webp";
+import ET22_256_WEBP from "../images/trains/webp/ET22-256.webp";
+import ET22_644_WEBP from "../images/trains/webp/ET22-644.webp";
+import ET22_836_WEBP from "../images/trains/webp/ET22-836.webp";
+import ET22_911_WEBP from "../images/trains/webp/ET22-911.webp";
+import ET22_1163_WEBP from "../images/trains/webp/ET22-1163.webp";
 import ET25_002_WEBP from "../images/trains/webp/ET25-002.webp";
-import E6ACTa_005_WEBP from "../images/trains/webp/E6ACTa-005.webp";
 import E6ACTa_014_WEBP from "../images/trains/webp/E6ACTa-014.webp";
 import E6ACTa_016_WEBP from "../images/trains/webp/E6ACTa-016.webp";
-import E6ACTa_027_WEBP from "../images/trains/webp/E6ACTa-027.webp";
+import E6ACTadb_027_WEBP from "../images/trains/webp/E6ACTadb-027.webp";
 import EN57_009_WEBP from "../images/trains/webp/EN57-009.webp";
 import EN57_1000_WEBP from "../images/trains/webp/EN57-1000.webp";
+import EN57_1003_WEBP from "../images/trains/webp/EN57-1003.webp";
 import EN57_1051_WEBP from "../images/trains/webp/EN57-1051.webp";
 import EN57_1219_WEBP from "../images/trains/webp/EN57-1219.webp";
 import EN57_1316_WEBP from "../images/trains/webp/EN57-1316.webp";
@@ -99,6 +113,34 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: EP08_001,
         iconWebp: EP08_001_WEBP
     },
+    "4E/EP08-013": {
+        icon: EP08_013,
+        iconWebp: EP08_013_WEBP
+    },
+    "201E/ET22-243": {
+        icon: ET22_243,
+        iconWebp: ET22_243_WEBP
+    },
+    "201E/ET22-256": {
+        icon: ET22_256,
+        iconWebp: ET22_256_WEBP
+    },
+    "201E/ET22-644": {
+        icon: ET22_644,
+        iconWebp: ET22_644_WEBP
+    },
+    "201E/ET22-836": {
+        icon: ET22_836,
+        iconWebp: ET22_836_WEBP
+    },
+    "201E/ET22-911": {
+        icon: ET22_911,
+        iconWebp: ET22_911_WEBP
+    },
+    "201E/ET22-1163": {
+        icon: ET22_1163,
+        iconWebp: ET22_1163_WEBP
+    },
     "Traxx/Traxx": {
         icon: E186_134,
         iconWebp: E186_134_WEBP
@@ -131,10 +173,6 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: ET25_002,
         iconWebp: ET25_002_WEBP
     },
-    "Dragon2/E6ACTa-005": {
-        icon: E6ACTa_005,
-        iconWebp: E6ACTa_005_WEBP
-    },
     "Dragon2/E6ACTa-014": {
         icon: E6ACTa_014,
         iconWebp: E6ACTa_014_WEBP
@@ -144,8 +182,8 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         iconWebp: E6ACTa_016_WEBP
     },
     "Dragon2/E6ACTadb-027": {
-        icon: E6ACTa_027,
-        iconWebp: E6ACTa_027_WEBP
+        icon: E6ACTadb_027,
+        iconWebp: E6ACTadb_027_WEBP
     },
     "EN57/EN57-009": {
         icon: EN57_009,
@@ -154,6 +192,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "EN57/EN57-1000": {
         icon: EN57_1000,
         iconWebp: EN57_1000_WEBP
+    },
+    "EN57/EN57-1003": {
+        icon: EN57_1003,
+        iconWebp: EN57_1003_WEBP
     },
     "EN57/EN57-1051": {
         icon: EN57_1051,

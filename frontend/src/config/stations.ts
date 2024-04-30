@@ -51,7 +51,7 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     },
     [StationId.lazy]: {
         left: [StationId.lazy_lc],
-        right: [StationId.lazy_la, StationId.lazy_r52]
+        right: [StationId.lazy_la, StationId.lazy_r52, StationId.lazy_grupa_weglarkowa_lgw]
     },
     [StationId.lazy_la]: {
         left: [StationId.lazy, StationId.lazy_r52],
@@ -75,14 +75,14 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         right: [StationId.knapowka]
     },
     [StationId.knapowka]: {
-        down: [StationId.czarnca, StationId.czarnca_r19, StationId.knapowka_r2],
+        down: [StationId.czarnca, StationId.czarnca_, StationId.knapowka_r2],
         left: [StationId.psary],
         right: [StationId.wloszczowa_polnoc]
     },
     [StationId.wloszczowa_polnoc]: {
         left: [StationId.knapowka, StationId.knapowka_r2],
         right: [StationId.olszamowice],
-        up: [StationId.zelislawice, StationId.zelislawice_r_6]
+        up: [StationId.zelislawice]
     },
     [StationId.olszamowice]: {
         left: [StationId.pilichowice],
@@ -146,6 +146,30 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.slawkow]: {
         left: [StationId.bukowno, StationId.bukowno_przymiarki],
         right: [StationId.dabrowa_gornicza_wschodnia]
+    },
+    [StationId.dabrowa_gornicza_huta_katowice]: {
+        left: [StationId.dabrowa_gornicza_strzemieszyce, StationId.dabrowa_gornicza_poludniowa, StationId.dabr_gor_strzem__r75],
+        right: [StationId.dabrowa_gornicza_zabkowice, StationId.dabrowa_gornicza_zabkowice_gtb, StationId.dabrowa_gornicza_huta_katowice_r7],
+    },
+    [StationId.sosnowiec_kazimierz]: {
+        left: [StationId.dabrowa_gornicza_strzemieszyce, StationId.dabr_gor_strzem__r75],
+        right: [StationId.sosnowiec_maczki, StationId.sosnowiec_dandowka, StationId.sosnowiec_kazimierz_pzs_skz1, StationId.sosnowiec_kazimierz_pzs_skz2],
+    },
+    [StationId.bukowno]: {
+        left: [StationId.slawkow, StationId.bukowno_przymiarki],
+        right: [StationId.olkusz],
+    },
+    [StationId.tunel]: {
+        left: [StationId.kozlow],
+        right: [StationId.miechow, StationId.charsznica, StationId.tunel_r13],
+    },
+    [StationId.kozlow]: {
+        left: [StationId.tunel, StationId.tunel_r13],
+        right: [StationId.sprowa, StationId.sedziszow, StationId.klimontow],
+    },
+    [StationId.pruszkow]: {
+        left: [StationId.warszawa_wlochy, StationId.jozefinow, StationId.jozefinow_roz_2, StationId.piastow],
+        right: [StationId.grodzisk_mazowiecki, StationId.parzniew],
     }
 }
 
@@ -174,7 +198,7 @@ export const postConfig: Dictionary<StationConfig> = {
     },
     KN: {
         id: "KN",
-        srName: "Knapówka", // TODO: Missing data
+        srName: "Knapówka",
         trainPosRange: 0.5,
         platformPosOverride: [19.904915, 50.800141],
         graphConfig: {
@@ -272,14 +296,19 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "SG_POR",
         srName: "Sosnowiec Porąbka",
         trainPosRange: 0.5,
-        platformPosOverride: [19.226053, 50.277019]
+        platformPosOverride: [19.226053, 50.277019],
 
     },
     SG_KAZ: {
         id: "SG_KAZ",
         srName: "Sosnowiec Kazimierz",
         trainPosRange: 0.5,
-        platformPosOverride: [19.226053, 50.277019]
+        platformPosOverride: [19.231430, 50.288483],
+        graphConfig: {
+            pre: ["DG_ST"],
+            post: ["DOR"],
+            final: []
+        }
     },
     T1_BZ: {
         id: "T1_BZ",
@@ -307,13 +336,23 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "LZ_LB",
         srName:"Łazy",
         trainPosRange: 0.5,
-        platformPosOverride: [19.386613, 50.428400]
+        platformPosOverride: [19.391998, 50.430172],
+        graphConfig: {
+            pre: ["LZ_LC"],
+            post: ["LZ_LA"],
+            final: [],
+        },
     },
     LZ_LA : {
         id: "LZ_LA",
         srName: "Łazy Ła",
         trainPosRange: 0.5,
-        platformPosOverride: [19.420255, 50.453892]
+        platformPosOverride: [19.420255, 50.453892],
+        graphConfig: {
+            pre: ["LZ_LB"],
+            post: ["ZA"],
+            final: [],
+        },
     },
     OP_PO: {
         id: "OP_PO",
@@ -572,7 +611,7 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "PRSZ",
         srName: "Pruszków",
         trainPosRange: 0.5,
-        platformPosOverride: [20.797801, 52.168125,],
+        platformPosOverride: [20.798650, 52.168203],
         graphConfig: {
             pre: ["KOR", "GRO_MAZ"],
             post: [],
@@ -625,7 +664,12 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "BK",
         srName: "Bukowno",
         trainPosRange: 0.5,
-        platformPosOverride: [19.449322, 50.268088]
+        platformPosOverride: [19.458295, 50.263935],
+        graphConfig: {
+            pre: ["SLK"],
+            post: ["OK"],
+            final: []
+        }
     },
     OK: {
         id: "OK",
@@ -663,7 +707,7 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.873404, 50.400362]
     },
-    CH: { // Missing ?
+    CH: {
         id: "CH",
         srName: "Charsznica",
         trainPosRange: 0.5,
@@ -673,13 +717,23 @@ export const postConfig: Dictionary<StationConfig> = {
         id: "TN",
         srName: "Tunel",
         trainPosRange: 0.5,
-        platformPosOverride: [19.992372, 50.433771]
+        platformPosOverride: [19.991247, 50.433672],
+        graphConfig: {
+            pre: ["KOZ"],
+            post: ["CH"],
+            final: []
+        },
     },
     KOZ: {
         id: "KOZ",
         srName: "Kozłów",
         trainPosRange: 0.5,
-        platformPosOverride: [20.013627, 50.473377]
+        platformPosOverride: [20.012298, 50.474814],
+        graphConfig: {
+            pre: ["TN"],
+            post: ["SDZ"],
+            final: []
+        }
     },
     KLI: {
         id: "KLI",
@@ -770,6 +824,17 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.270203, 50.261328]
     },
+    DGHK: {
+        id: "DGHK",
+        srName: "Dąbrowa Górnicza Huta Katowice",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.259529, 50.335830],
+        graphConfig: {
+            pre: ["DG_ST"],
+            post: ["SM"],
+            final: [],
+        }
+    }
 }
 
 export const postToInternalIds =  _keyBy(Object.values(postConfig).map((pc) => ({

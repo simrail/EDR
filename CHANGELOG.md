@@ -2,11 +2,21 @@
 
 ## *2.5 - Unreleased*
 
+### Changes and features
+
+- Added EDR support for Łazy ŁB (Łazy), Dąbrowa Górnicza Huta Katowice, Sosnowiec Kazimierz, Bukowno, Tunel, Kozłów, Pruszków (thanks for your help Matejzon)
+- Added support for the new ET22 locomotive as well as some missing liveries for existing trains
+
+### Fixes
+
+- Fixed™ the timezone issue, hopefully for real this time
+
 ### Other
 
 - Simrail.me was removed from map provider list as it no longer exists
 - Technical dependencies were upgraded (housekeeping)
 - SimrailFR link was changed (again) to the original Discord invite
+- Some thumbnail pictures were replaced, vehicle pictures are now JPEGs too (smaller and faster loading) - thanks Matejzon
 
 ## *2.4 - 2023-11-26*
 

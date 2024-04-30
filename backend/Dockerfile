@@ -1,4 +1,4 @@
-FROM node:current-alpine3.16
+FROM node:current-alpine3.19
 WORKDIR /usr/api
 COPY . .
 RUN npm ci
