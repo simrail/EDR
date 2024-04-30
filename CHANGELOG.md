@@ -6,6 +6,7 @@
 
 - Simrail.me was removed from map provider list as it no longer exists
 - Technical dependencies were upgraded (housekeeping)
+- SimrailFR link was changed (again) to the original Discord invite
 
 ## *2.4 - 2023-11-26*
 
