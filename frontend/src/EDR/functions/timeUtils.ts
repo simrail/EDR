@@ -1,5 +1,5 @@
 import { addDays, differenceInMinutes, subDays } from "date-fns";
-import set from "date-fns/set";
+import {set} from "date-fns";
 
 export const getDateWithHourAndMinutes = (dateNow: Date, expectedHours: number, expectedMinutes: number, isArrivalNextDay: boolean, isArrivalPreviousDay: boolean) => {
     if (isArrivalNextDay) {

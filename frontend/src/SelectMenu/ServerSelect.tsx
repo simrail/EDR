@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SelectMenuLayout } from "./Layout";
 import { getServers } from "../api/api";
-import { Spinner } from "flowbite-react/lib/esm/components/Spinner";
+import { Spinner } from "flowbite-react";
 import { ServerCard } from "./ServerCard";
 import { useTranslation } from "react-i18next";
 import _sortBy from "lodash/sortBy";

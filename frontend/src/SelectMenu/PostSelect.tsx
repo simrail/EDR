@@ -1,7 +1,7 @@
 import React from "react";
 import {SelectMenuLayout} from "./Layout";
 import {getPlayer, getServers, getStations} from "../api/api";
-import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
+import {Spinner} from "flowbite-react";
 import {PostCard} from "./PostCard";
 import {useTranslation} from "react-i18next";
 import { Server, Station } from "@simrail/types";

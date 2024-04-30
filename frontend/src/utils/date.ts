@@ -1,4 +1,4 @@
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 export const timeOptions: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
@@ -15,7 +15,7 @@ export const nowUTC = (serverTime: number | undefined) => {
         now = new Date(serverTime);
     }
 
-    return utcToZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
+    return toZonedTime(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate(),
             now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()), "GMT");
 }
 

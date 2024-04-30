@@ -1,7 +1,7 @@
 import _isEmpty from "lodash/isEmpty";
 import React from "react";
-import {Navbar} from "flowbite-react/lib/esm/components/Navbar";
-import {Dropdown} from "flowbite-react/lib/esm/components/Dropdown";
+import {Navbar} from "flowbite-react";
+import {Dropdown} from "flowbite-react";
 import AppLogo from "../images/logo.png";
 import AppLogoWebp from "../images/logo.webp";
 import Background from "../images/background.jpg";
@@ -161,7 +161,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
             )}
         </div>
         <div className="text-center p-4">
-            {t("FOOTER_version")} 2.4 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
+            {t("FOOTER_version")} 2.5 - {t("FOOTER_screenshots_by")} MilanSVK - {t("FOOTER_thanks")} ❤️ - {t("FOOTER_not_official")}
         </div>
     </div>;
 }

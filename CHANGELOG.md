@@ -1,5 +1,12 @@
 # Simrail Community EDR Changelog
 
+## *2.5 - Unreleased*
+
+### Other
+
+- Simrail.me was removed from map provider list as it no longer exists
+- Technical dependencies were upgraded (housekeeping)
+
 ## *2.4 - 2023-11-26*
 
 ### Changes and features

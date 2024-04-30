@@ -1,6 +1,6 @@
 import {Modal, Table} from "flowbite-react";
 import React from "react";
-import {Spinner} from "flowbite-react/lib/esm/components/Spinner";
+import {Spinner} from "flowbite-react";
 import { DetailedTrain } from "../functions/trainDetails";
 import TrainTimetableTimeline from "./TrainTimetableTimeline";
 import {frameHeight} from "./SimRailMapModal";

@@ -79,7 +79,7 @@ export const TrainSelect = () => {
                                 </div>
                             </div>
                             {trainFilter && Object.keys(trainFilter).map((t) => (
-                                <div className="flex flex-wrap justify-center pt-4">
+                                <div key={t} className="flex flex-wrap justify-center pt-4">
                                     <div style={{position: "sticky", top: 0}} className="w-full py-2 bg-gray-200 shadow-md dark:bg-slate-600 items-center">
                                         <div className="flex place-content-center px-4 max-w-screen">
                                             {t}

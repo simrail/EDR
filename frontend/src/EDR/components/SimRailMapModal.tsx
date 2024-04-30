@@ -33,9 +33,6 @@ export const SimRailMapModal: React.FC<Props> = ({trainId, setModalTrainId, serv
                         <Dropdown.Item onClick={() => setMapLink(0)}>
                             map.simrail.app
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => setMapLink(1)}>
-                            simrail.me
-                        </Dropdown.Item>
                     </Dropdown>
                 </div>
             </div>
@@ -43,7 +40,6 @@ export const SimRailMapModal: React.FC<Props> = ({trainId, setModalTrainId, serv
         <Modal.Body>
             <div className="min-h-[700px]">
                 { (mapLink === 0) && <iframe src={`https://map.simrail.app/server/${serverCode}?trainId=${trainId}`} title="Simrail FR map embedded" className={frameHeight}/>}
-                { (mapLink === 1) && <iframe src={`https://simrail.me/?embed&sid=${serverCode}&tid=${trainId}&showDetails=false`} title="simrail.me map embedded" className={frameHeight}/>}
             </div>
         </Modal.Body>
     </Modal>
