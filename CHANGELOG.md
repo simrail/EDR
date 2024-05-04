@@ -17,6 +17,7 @@
 - Technical dependencies were upgraded (housekeeping)
 - SimrailFR link was changed (again) to the original Discord invite
 - Some thumbnail pictures were replaced, vehicle pictures are now JPEGs too (smaller and faster loading) - thanks Matejzon
+- German, Italian and Norwegian translations were updated - thanks to the contributors!
 
 ## *2.4 - 2023-11-26*
 
