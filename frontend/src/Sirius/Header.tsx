@@ -25,7 +25,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
     const { toggle } = useDarkMode();
 
     return (
-        <div className="sticky z-20 px-2 t-0 shadow-md w-full flex columns-3 items-center bg-white dark:bg-slate-800 justify-between" style={{overflow: 'auto'}}>
+        <div className="sticky z-20 px-2 t-0 shadow-md w-full flex columns-3 items-center bg-white dark:bg-slate-800 justify-between">
             <div className="flex w-max-content">
                 <Link to={`/${serverCode}/trains`} className="flex underline hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
@@ -45,7 +45,7 @@ export const SiriusHeader: React.FC<Props> = ({trainNumber, trainDetails, server
             </div>
             <div className="flex">
                 <div className="flex">
-                    <Dropdown label={<>{t("EDR_UI_map_select")}</>} size="sm">
+                    <Dropdown label={<>{t("EDR_UI_map_select")}</>} size="sm" className="z-50">
                         <Dropdown.Item onClick={() => setMapLink(0)}>
                             map.simrail.app
                         </Dropdown.Item>

@@ -195,7 +195,7 @@ const Sirius: React.FC<Props> = ({isWebpSupported}) => {
         if (component === "timeline-layout" && trainTimetable && train && allStationsInPath) {
             return (
                 <>
-                    <div style={{position: "sticky", top: 0, zIndex: 99999}} className="w-full py-2 bg-gray-200 shadow-md dark:bg-slate-600">
+                    <div style={{position: "sticky", top: 0}} className="w-full py-2 bg-gray-200 shadow-md dark:bg-slate-600 z-10">
                         <div className="flex items-center justify-between px-4 max-w-screen">
                             <div className="flex flex-col">
                                 <span>{t('DRIVER_DETAILS_header_line')}</span>
