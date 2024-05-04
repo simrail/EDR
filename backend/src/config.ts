@@ -1,7 +1,7 @@
 import { StationId } from "./enum/stationId.js";
 
 export const BASE_SIMRAIL_API = "https://panel.simrail.eu:8084/";
-export const BASE_AWS_API = "https://api1.aws.simrail.eu:8082/api/"
+export const BASE_AWS_API = "https://api.simrail.eu:8082/api/"
 export const BASE_SIMKOL_API = "https://webhost.simkol.pl/";
 export const BASE_SELF_API = `http://localhost:${process.env.LISTEN_PORT}/`;
 export const BASE_OSRM_API = "http://localhost:5000/";
@@ -46,7 +46,7 @@ export const newInternalIdToSrId: {[k: string]: number} = {
     "SLK": StationId.slawkow,
     "ST": StationId.strzalki,
     "SZE": StationId.szeligi,
-    "T1_BZ": StationId.bedzin,
+    "B": StationId.bedzin,
     "TN": StationId.tunel,
     "WP": StationId.wloszczowa_polnoc,
     "ZA": StationId.zawiercie,
@@ -87,7 +87,7 @@ export const POSTS: { [key: string]: number[] } = {
     "SLK": [newInternalIdToSrId["SLK"]],
     "ST": [newInternalIdToSrId["ST"]],
     "SZE": [newInternalIdToSrId["SZE"]],
-    "T1_BZ": [newInternalIdToSrId["BZ"]],
+    "B": [newInternalIdToSrId["B"]],
     "TN": [newInternalIdToSrId["TN"]],
     "WP": [newInternalIdToSrId["WP"]],
     "ZA": [newInternalIdToSrId["ZA"]],

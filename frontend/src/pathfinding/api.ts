@@ -99,7 +99,7 @@ if (RUN_DATA_HEALTHCHECKS) {
     dbgTree("BK", "LZ_LB");
 
     dbgTree("BK", "DG_SI");
-    dbgTree("KO", "T1_BZ");
+    dbgTree("KO", "B");
     dbgTree("KO", "LZ_LB");
     dbgTree("KO", "IDZ");
     dbgTree("KOZ", "WC");

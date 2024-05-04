@@ -43,12 +43,12 @@ const SG_R52 = {
 const SG = {
     ...postConfig.SG,
     left: "SG_R52",
-    right: "T1_BZ",
+    right: "B",
 };
 
 // Bedzin
-const T1_BZ = {
-    ...postConfig.T1_BZ,
+const B = {
+    ...postConfig.B,
     left: "SG",
     right: "BZ_MI"
 };
@@ -56,7 +56,7 @@ const T1_BZ = {
 // Bedzin miasto
 const BZ_MI = {
     ...postConfig.BZ_MI,
-    left: "T1_BZ",
+    left: "B",
     right: "BZ_KS"
 }
 
@@ -567,7 +567,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     KSP: KSP,
     SG_R52: SG_R52,
     SG: SG,
-    T1_BZ: T1_BZ,
+    B,
     BZ_MI: BZ_MI,
     BZ_KS: BZ_KS,
     DG: DG,

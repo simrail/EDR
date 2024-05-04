@@ -248,7 +248,7 @@ export const postConfig: Dictionary<StationConfig> = {
         platformPosOverride: [19.057551, 50.257280],
         graphConfig: {
             post: [],
-            pre: ["DG", "T1_BZ", "SG"],
+            pre: ["DG", "B", "SG"],
             final: ["KO"]
         }
     },
@@ -258,7 +258,7 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 1,
         platformPosOverride: [19.127083, 50.279388],
         graphConfig: {
-            pre: ["LZ_LC", "DG", "T1_BZ"],
+            pre: ["LZ_LC", "DG", "B"],
             post: ["KZ"],
             final: []
         },
@@ -310,8 +310,8 @@ export const postConfig: Dictionary<StationConfig> = {
             final: []
         }
     },
-    T1_BZ: {
-        id: "T1_BZ",
+    B: {
+        id: "B",
         srName: "Będzin",
         trainPosRange: 0.5,
         platformPosOverride: [19.141858, 50.308533],
@@ -328,7 +328,7 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         graphConfig: {
             pre: ["GW", "ZA"],
-            post: ["DG", "T1_BZ"],
+            post: ["DG", "B"],
             final: []
         }
     },
@@ -391,7 +391,7 @@ export const postConfig: Dictionary<StationConfig> = {
         graphConfig: {
             pre: ["PS", "GW"],
             post: ["LZ_LC","DG" ],
-            final: ["T1_BZ"]
+            final: ["B"]
         }
     },
     WI: {
@@ -413,7 +413,7 @@ export const postConfig: Dictionary<StationConfig> = {
         platformPosOverride: [19.184696, 50.330386],
         graphConfig: {
             pre: ["ZA", "LZ_LC"],
-            post: ["T1_BZ", "SG"],
+            post: ["B", "SG"],
             final: ["KZ"]
         }
     },

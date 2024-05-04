@@ -10,6 +10,7 @@
 ### Fixes
 
 - Fixed™ the timezone issue, hopefully for real this time
+- The map provider selector is no longer covered by the timeline on the driver view
 
 ### Other
 
