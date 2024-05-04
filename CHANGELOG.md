@@ -6,6 +6,7 @@
 
 - Added EDR support for Łazy ŁB (Łazy), Dąbrowa Górnicza Huta Katowice, Sosnowiec Kazimierz, Bukowno, Tunel, Kozłów, Pruszków (thanks for your help Matejzon)
 - Added support for the new ET22 locomotive as well as some missing liveries for existing trains
+- Removed the graph button from the EDR view, since the feature is basically broken. It's still accessible via URL query parameter (?graphFullScreenMode=1), but most stations won't work at all.
 
 ### Fixes
 
