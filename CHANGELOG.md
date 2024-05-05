@@ -1,6 +1,6 @@
 # Simrail Community EDR Changelog
 
-## *2.5 - Unreleased*
+## *2.5 - 2024-05-05*
 
 ### Changes and features
 
