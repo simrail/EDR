@@ -4,14 +4,19 @@ import { ISteamUser } from "../config/ISteamUser";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
 import { ExtendedTrain } from "../customTypes/ExtendedTrain";
+import { configByLoco } from "../config/trains"
 
 export const BASE_API_URL = process.env.PUBLIC_URL || "http://127.0.0.1:8080/";
 
-const baseApiCall = (URL: string) => {
+const baseApiCall = async (URL: string) => {
     // TODO: Add error toast
     const outbound = BASE_API_URL + URL;
     // console_log("Outbound URL: ", outbound)
-    return fetch(outbound).then(res => res.json());
+    const result = await fetch(outbound)
+    if (result.ok) {
+        return result.json()
+    }
+    throw new Error(`Failed to fetch ${outbound}, got status code ${result.status}`)
 }
 
 export const getTimetable = (post: string, serverCode: string): Promise<TimeTableRow[]> =>
@@ -46,11 +51,25 @@ export const getStations = (serverCode: string): Promise<Station[]> =>
 export const getServers = (): Promise<Server[]> =>
     baseApiCall("servers");
 
-export const getPlayer = (steamId: string): Promise<ISteamUser> =>
-    baseApiCall(`steam/${steamId}`);
+export const getPlayer = async (steamId: string): Promise<ISteamUser> => {
+    try {
+        return await baseApiCall(`steam/${steamId}`);
+    } catch {
+        return {
+            steamid: steamId,
+            communityvisibilitystate: 1,
+            profilestate: 1,
+            personaname: 'NoSteamApiKeyGuy',
+            profileurl: 'https://example.com',
+            avatar: configByLoco["4E/EU07-096"].icon,
+            avatarfull: configByLoco["4E/EU07-096"].icon,
+            avatarmedium: configByLoco["4E/EU07-096"].icon
+        }
+    }
+}
 
 export const getTzOffset = (serverCode: string): Promise<number> =>
     baseApiCall(`server/tz/${serverCode}`);
 
-export const getServerTime = (serverCode: string): Promise<number> =>
+export const getServerTime = (serverCode: string): Promise<number> => 
     baseApiCall(`server/time/${serverCode}`);
