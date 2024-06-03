@@ -45,6 +45,17 @@ Of course, we will not send lawyers to your house if you don't follow these rule
 
 Translations are happening via [Transifex](https://explore.transifex.com/simrail-community/edr/). If you wish to participate, we ask that you first contact [@Tallyrald](https://github.com/Tallyrald) via email or on the [Simrail forums](https://forum.simrail.eu/profile/782-crypter-emerald/).
 
+## Developing
+
+Requirements:
+- `docker-compose`
+- `node` and `npm`
+
+Instructions:
+1. Clone or fork this repo
+2. Run `docker-compose up --build` to start the backend
+3. `cd ./frontend`, `npm install` and `npm run start` to start the frontend in development mode
+
 ## Self Hosting
 
 This is a very basic guide, more details may be added later if needed.
