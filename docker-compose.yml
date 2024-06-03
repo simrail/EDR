@@ -1,0 +1,12 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment: 
+      LISTEN_PORT: 8080
+      OSRM_HOST: 'osrm'
+  osrm:
+    build:
+      context: ./osrm
