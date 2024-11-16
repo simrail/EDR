@@ -3,7 +3,7 @@ import {Badge} from "flowbite-react";
 import {tableCellCommonClassnames} from "../TrainRow";
 import {DetailedTrain} from "../../functions/trainDetails";
 import {useTranslation} from "react-i18next";
-import { format } from "date-fns";
+import { format, isTomorrow } from "date-fns";
 import { TimeTableRow } from "../../../customTypes/TimeTableRow";
 
 type Props = {
@@ -20,10 +20,13 @@ export const TrainArrivalCell: React.FC<Props> = ({
     thirdColRef, streamMode, arrivalTimeDelay
 }) => {
     const {t} = useTranslation();
+    const isTheTrainTommorow = isTomorrow(ttRow.scheduledArrivalObject) 
     return (
         <td className={tableCellCommonClassnames(streamMode)} width="150" ref={thirdColRef}>
             <div className="flex items-center justify-center h-full">
-                {format(ttRow.scheduledArrivalObject, 'HH:mm')}&nbsp;
+                {format(ttRow.scheduledArrivalObject, 'HH:mm')}
+                {isTheTrainTommorow && <sup>+1</sup>}
+                &nbsp;
                 {
                     !trainHasPassedStation && arrivalTimeDelay > 0
                         ? <span
