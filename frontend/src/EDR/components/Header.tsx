@@ -9,7 +9,6 @@ import {Link} from "react-router-dom";
 import _minBy from "lodash/fp/minBy";
 import {ColumnFilterModal} from "./CustomFilterModal";
 import {FilterConfig, presetFilterConfig} from "../index";
-import { useDarkMode } from "usehooks-ts";
 
 type Props = {
     serverTzOffset: number;
@@ -62,7 +61,6 @@ export const Header: React.FC<Props> = ({
 }) => {
     const {t} = useTranslation();
     const [configModalOpen, setConfigModaOpen] = React.useState(false);
-    const { toggle } = useDarkMode();
 
     React.useEffect(() => {
         if (serverTime !== undefined) {
@@ -88,7 +86,7 @@ export const Header: React.FC<Props> = ({
                 <div className="flex items-center">
                     <Button size="xs" className="mr-2" onClick={() => setStreamMode(!streamMode)}>{t("EDR_UI_stream_mode")}</Button>
                     <>{t('EDR_UI_dark_light_mode_switch') ?? ''} :&nbsp;</>
-                    <DarkThemeToggle onClick={() => toggle()} />
+                    <DarkThemeToggle />
                 </div>
             </div>
             <div className="flex items-center justify-between w-full px-4 mt-2">

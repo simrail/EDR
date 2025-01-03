@@ -55,13 +55,13 @@ export const TrainInfoCell: React.FC<Props> = ({
         <td className={tableCellCommonClassnames(streamMode)} ref={firstColRef} width="550">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                    <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
-                        <Badge color={trainBadgeColor} size={streamMode ? "xs" : "sm"}>
+                    <Badge color={trainBadgeColor} size={streamMode ? "xs" : "sm"}>
+                        <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_click_to_copy")}</span>}>
                             <span className={classNames("!font-bold cursor-pointer", streamMode ? "text-base" : "text-lg")} onClick={() => CopyToClipboard(ttRow.trainNoLocal)}>
                                 {ttRow.trainNoLocal}
                             </span>
-                        </Badge>
-                    </Tooltip>
+                        </Tooltip>
+                    </Badge>
                     { trainDetails && <span className="ml-1 flex">
                         <Tooltip placement="top" overlay={<span>{t("EDR_TRAINROW_show_on_map")}</span>}>
                             <Button size="xs" onClick={() => !!trainDetails && setModalTrainId(ttRow.trainNoLocal)}><img src={World} height={streamMode ? 8 : 16} width={streamMode ? 8 : 16} alt="Show on map"/></Button>

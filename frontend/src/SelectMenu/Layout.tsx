@@ -18,7 +18,6 @@ import OFPMafia from "../images/communities/ofpmafia.webp";
 import {Button, DarkThemeToggle} from "flowbite-react";
 import SubNavigation, { SubNavigationProps } from "../EDR/components/SubNavigation";
 import { Link } from "react-router-dom";
-import { useDarkMode } from "usehooks-ts";
 
 const DropdownFlagIcon: React.FC<any> = ({children}) =>
     <span className="h-4 w-4 mr-4">
@@ -37,7 +36,6 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
     const background = isWebpSupported ? BackgroundWebp : Background;
     const appLogo = isWebpSupported ? AppLogoWebp : AppLogo;
     const isOnTrainsWindow = window.location.pathname.includes('trains');
-    const { toggle } = useDarkMode();
 
     return <div className="text-primary">
         <Navbar fluid={true} className="sticky top-0 bg-slate-300 h-20 z-20">
@@ -97,7 +95,7 @@ export const SelectMenuLayout: React.FC<Props & SubNavigationProps> = ({children
                     </Navbar.Link>
                 </div>
                 <Navbar.Link>
-                    <DarkThemeToggle onClick={() => toggle()}/>
+                    <DarkThemeToggle />
                 </Navbar.Link>
 
             </Navbar.Collapse>
