@@ -170,7 +170,39 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
     [StationId.pruszkow]: {
         left: [StationId.warszawa_wlochy, StationId.jozefinow, StationId.jozefinow_roz_2, StationId.piastow],
         right: [StationId.grodzisk_mazowiecki, StationId.parzniew],
-    }
+    },
+    [StationId.krakow_batowice]: {
+        left: [StationId.dlubnia, StationId.raciborowice],
+        right: [StationId.krakow_mydlniki, StationId.krakow_przedmiescie],
+    },
+    [StationId.krakow_przedmiescie]: {
+        left: [StationId.krakow_batowice],
+        right: [StationId.krakow_przedmiescie_r3, StationId.krakow_olsza, StationId.krakow_glowny, StationId.krakow_glowny_kga],
+    },
+    [StationId.miechow]: {
+        left: [StationId.slomniki, StationId.kamienczyce],
+        right: [StationId.tunel, StationId.dziadowki],
+    },
+    [StationId.niedzwiedz]: {
+        left: [StationId.slomniki, StationId.slomniki_miasto],
+        right: [StationId.zastow, StationId.goszcza],
+    },
+    [StationId.raciborowice]: {
+        left: [StationId.zastow],
+        right: [StationId.krakow_batowice, StationId.dlubnia, StationId.dlubnia_r2],
+    },
+    [StationId.slomniki]: {
+        left: [StationId.niedzwiedz, StationId.slomniki_miasto],
+        right: [StationId.miechow, StationId.smrokow],
+    },
+    [StationId.zastow]: {
+        left: [StationId.niedzwiedz, StationId.baranowka],
+        right: [StationId.raciborowice],
+    },
+    [StationId.starzyny]: {
+        left: [StationId.kozlow, StationId.starzyny_r5, StationId.sprowa],
+        right: [StationId.koniecpol, StationId.psary, StationId.psary_roz_40],
+    },
 }
 
 export const postConfig: Dictionary<StationConfig> = {
@@ -834,6 +866,54 @@ export const postConfig: Dictionary<StationConfig> = {
             post: ["SM"],
             final: [],
         }
+    },
+    BT: {
+        id: "BT",
+        srName: "Kraków Batowice",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.995512, 50.107583]
+    },
+    KPM: {
+        id: "KPM",
+        srName: "Kraków Przedmieście",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.950491, 50.085835]
+    },
+    MI: {
+        id: "MI",
+        srName: "Miechów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.010915, 50.354104]
+    },
+    ND: {
+        id: "ND",
+        srName: "Niedźwiedź",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.080913, 50.204321]
+    },
+    RC: {
+        id: "RC",
+        srName: "Raciborowice",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.028362, 50.110835]
+    },
+    SMN: {
+        id: "SMN",
+        srName: "Słomniki",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.064118, 50.248487]
+    },
+    ZS: {
+        id: "ZS",
+        srName: "Zastów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.068938, 50.123658]
+    },
+    STR: {
+        id: "STR",
+        srName: "Starzyny",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.808223, 50.699062]
     }
 }
 
