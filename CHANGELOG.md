@@ -10,6 +10,7 @@
 ### Other
 
 - Please note that dispatch posts that control multiple points on the map currently only show their own timetable (e.g. Olszamowice)
+- FR translation was updated
 
 ## *2.5 - 2024-05-05*
 
