@@ -17,7 +17,6 @@ import {redirect, useParams} from "react-router-dom";
 import { useSnackbar } from "notistack";
 import {StringParam, useQueryParam} from "use-query-params";
 import { ISteamUser } from "../config/ISteamUser";
-import { format} from "date-fns";
 import { TrainTimeTableRow } from "../Sirius";
 import { TimeTableRow } from "../customTypes/TimeTableRow";
 import { ExtendedTrain } from "../customTypes/ExtendedTrain";
@@ -85,7 +84,7 @@ export const EDR: React.FC<Props> = ({playSoundNotification, isWebpSupported}) =
             setTzOffset(v[0]);
             setServerTime(v[1]);
             getTimetable(post, serverCode).then((data) => {
-                setTimetable(data.sort((row1, row2) => parseInt(format(row1.scheduledArrivalObject, 'HHmm')) - parseInt(format(row2.scheduledArrivalObject, 'HHmm'))));
+                setTimetable(data.sort((row1, row2) => row1.scheduledArrivalObject.valueOf() - row2.scheduledArrivalObject.valueOf()));
                 getStations(serverCode).then((data) => {
                     setStations(_keyBy('Name', data));
                     getTrainsForPost(serverCode, post).then((data) => {
