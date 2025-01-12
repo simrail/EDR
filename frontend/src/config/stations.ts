@@ -850,8 +850,8 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.110300, 50.259170]
     },
-    SM: {
-        id: "SM",
+    SOM: {
+        id: "SOM",
         srName: "Sosnowiec Maczki",
         trainPosRange: 0.5,
         platformPosOverride: [19.270203, 50.261328]
@@ -863,7 +863,7 @@ export const postConfig: Dictionary<StationConfig> = {
         platformPosOverride: [19.259529, 50.335830],
         graphConfig: {
             pre: ["DG_ST"],
-            post: ["SM"],
+            post: ["SOM"],
             final: [],
         }
     },
@@ -897,8 +897,8 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [20.028362, 50.110835]
     },
-    SMN: {
-        id: "SMN",
+    SM: {
+        id: "SM",
         srName: "Słomniki",
         trainPosRange: 0.5,
         platformPosOverride: [20.064118, 50.248487]

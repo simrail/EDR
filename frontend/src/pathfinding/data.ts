@@ -392,7 +392,7 @@ const DOR = {
     right: "DG_ST",
     left: "JU",
     branchA: "DG_WZ",
-    branchB: "SM"
+    branchB: "SOM"
 }
 
 const SLK = {
@@ -552,8 +552,8 @@ const SZA = {
     right: "KZ"
 }
 
-const SM = {
-    ...postConfig.SM,
+const SOM = {
+    ...postConfig.SOM,
     right: "DOR"
 }
 
@@ -653,7 +653,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     KOZI_R12,
     JU,
     SZA,
-    SM,
+    SOM,
 }
 
 
