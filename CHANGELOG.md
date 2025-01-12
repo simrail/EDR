@@ -1,5 +1,16 @@
 # Simrail Community EDR Changelog
 
+## *2.6 - 2025-01-12*
+
+### Changes and features
+
+- Added EDR support for Kraków Batowice, Kraków Przedmieście, Miechów, Niedźwiedź, Raciborowice, Słomniki, Zastów, Starzyny (thanks for your help Matejzon)
+- Added image support for new train variants as well as the new dispatch posts
+
+### Other
+
+- Please note that dispatch posts that control multiple points on the map currently only show their own timetable (e.g. Olszamowice)
+
 ## *2.5 - 2024-05-05*
 
 ### Changes and features
