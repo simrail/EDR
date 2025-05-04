@@ -914,6 +914,54 @@ export const postConfig: Dictionary<StationConfig> = {
         srName: "Starzyny",
         trainPosRange: 0.5,
         platformPosOverride: [19.808223, 50.699062]
+    },
+    ZR: {
+        id: "ZR",
+        srName: "Żyrardów",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.449687, 52.052713]
+    },
+    SK: {
+        id: "SK",
+        srName: "Skierniewice",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.151522, 51.967741]
+    },
+    PL: {
+        id: "PL",
+        srName: "Płyćwia",
+        trainPosRange: 0.5,
+        platformPosOverride: [20.002163, 51.916689]
+    },
+    RG: {
+        id: "RG",
+        srName: "Rogów",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.886288, 51.818258]
+    },
+    KOL: {
+        id: "KOL",
+        srName: "Koluszki",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.818625, 51.743419]
+    },
+    ZP: {
+        id: "ZP",
+        srName: "Żakowice Południowe",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.789771, 51.729455]
+    },
+    G: {
+        id: "G",
+        srName: "Gałkówek",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.731778, 51.729788]
+    },
+    LW: {
+        id: "LW",
+        srName: "Łódź Widzew",
+        trainPosRange: 0.5,
+        platformPosOverride: [19.543928, 51.763177]
     }
 }
 

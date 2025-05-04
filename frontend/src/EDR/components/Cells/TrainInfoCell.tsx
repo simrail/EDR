@@ -41,7 +41,7 @@ export const TrainInfoCell: React.FC<Props> = ({
     const nextStation = trainDetails?.timetable?.find(entry => entry.indexOfPoint >= trainDetails?.TrainData?.VDDelayedTimetableIndex);
     const nextStationName = nextStation?.nameForPerson;
     const controllingPlayer = players?.find(player => player.steamid === trainDetails?.TrainData?.ControlledBySteamID);
-    const trainConfig = configByLoco[trainDetails?.Vehicles[0]];
+    const trainConfig = configByLoco[trainDetails?.Vehicles[0].split(':')[0]];
     const icons = isWebpSupported ? edrWebpImagesMap : edrImagesMap;
     const trainIcon = isWebpSupported ? trainConfig?.iconWebp : trainConfig?.icon;
     const isTrainApproaching = !trainHasPassedStation && ((nextStationName === postCfg?.srName || postCfg.secondaryPosts?.some(post => postConfig[post]?.srName === nextStationName)) && trainDetails.distanceFromStation < 3);

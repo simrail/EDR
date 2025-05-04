@@ -11,6 +11,7 @@ import EU07_241 from "../images/trains/jpg/EU07-241.jpg";
 import EP07_135 from "../images/trains/jpg/EP07-135.jpg";
 import EP07_174 from "../images/trains/jpg/EP07-174.jpg"; 
 import EP08_001 from "../images/trains/jpg/EP08-001.jpg";
+import EP08_008 from "../images/trains/jpg/EP08-008.jpg";
 import EP08_013 from "../images/trains/jpg/EP08-013.jpg";
 import E186_134 from "../images/trains/jpg/E186-134.jpg";
 import E186_929 from "../images/trains/jpg/E186-929.jpg";
@@ -30,6 +31,10 @@ import E6ACTadb_027 from "../images/trains/jpg/E6ACTadb-027.jpg";
 import EN57_009 from "../images/trains/jpg/EN57-009.jpg";
 import EN57_038 from "../images/trains/jpg/EN57-038.jpg";
 import EN57_047 from "../images/trains/jpg/EN57-047.jpg";
+import EN57_206 from "../images/trains/jpg/EN57-206.jpg";
+import EN57_612 from "../images/trains/jpg/EN57-612.jpg";
+import EN57_650 from "../images/trains/jpg/EN57-650.jpg";
+import EN57_919 from "../images/trains/jpg/EN57-919.jpg";
 import EN57_1000 from "../images/trains/jpg/EN57-1000.jpg";
 import EN57_1003 from "../images/trains/jpg/EN57-1003.jpg";
 import EN57_1051 from "../images/trains/jpg/EN57-1051.jpg";
@@ -39,8 +44,11 @@ import EN57_1316 from "../images/trains/jpg/EN57-1316.jpg";
 import EN57_1331 from "../images/trains/jpg/EN57-1331.jpg";
 import EN57_1752 from "../images/trains/jpg/EN57-1752.jpg";
 import EN57_1796 from "../images/trains/jpg/EN57-1796.jpg";
+import EN71_002 from "../images/trains/jpg/EN71-002.jpg";
+import EN71_004 from "../images/trains/jpg/EN71-004.jpg";
 import EN71_005 from "../images/trains/jpg/EN71-005.jpg";
 import EN71_011 from "../images/trains/jpg/EN71-011.jpg";
+import EN71_015 from "../images/trains/jpg/EN71-015.jpg";
 
 import ED250_018_WEBP from "../images/trains/webp/ED250-018.webp";
 import EU07_005_WEBP from "../images/trains/webp/EU07-005.webp";
@@ -55,6 +63,7 @@ import EU07_241_WEBP from "../images/trains/webp/EU07-241.webp";
 import EP07_135_WEBP from "../images/trains/webp/EP07-135.webp";
 import EP07_174_WEBP from "../images/trains/webp/EP07-174.webp";
 import EP08_001_WEBP from "../images/trains/webp/EP08-001.webp";
+import EP08_008_WEBP from "../images/trains/webp/EP08-008.webp";
 import EP08_013_WEBP from "../images/trains/webp/EP08-013.webp";
 import E186_134_WEBP from "../images/trains/webp/E186-134.webp";
 import E186_929_WEBP from "../images/trains/webp/E186-929.webp";
@@ -74,6 +83,10 @@ import E6ACTadb_027_WEBP from "../images/trains/webp/E6ACTadb-027.webp";
 import EN57_009_WEBP from "../images/trains/webp/EN57-009.webp";
 import EN57_038_WEBP from "../images/trains/webp/EN57-038.webp";
 import EN57_047_WEBP from "../images/trains/webp/EN57-047.webp";
+import EN57_206_WEBP from "../images/trains/webp/EN57-206.webp";
+import EN57_612_WEBP from "../images/trains/webp/EN57-612.webp";
+import EN57_650_WEBP from "../images/trains/webp/EN57-650.webp";
+import EN57_919_WEBP from "../images/trains/webp/EN57-919.webp";
 import EN57_1000_WEBP from "../images/trains/webp/EN57-1000.webp";
 import EN57_1003_WEBP from "../images/trains/webp/EN57-1003.webp";
 import EN57_1051_WEBP from "../images/trains/webp/EN57-1051.webp";
@@ -83,8 +96,11 @@ import EN57_1316_WEBP from "../images/trains/webp/EN57-1316.webp";
 import EN57_1331_WEBP from "../images/trains/webp/EN57-1331.webp";
 import EN57_1752_WEBP from "../images/trains/webp/EN57-1752.webp";
 import EN57_1796_WEBP from "../images/trains/webp/EN57-1796.webp";
+import EN71_002_WEBP from "../images/trains/webp/EN71-002.webp";
+import EN71_004_WEBP from "../images/trains/webp/EN71-004.webp";
 import EN71_005_WEBP from "../images/trains/webp/EN71-005.webp";
 import EN71_011_WEBP from "../images/trains/webp/EN71-011.webp";
+import EN71_015_WEBP from "../images/trains/webp/EN71-015.webp";
 
 export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "Pendolino/ED250-018 Variant": {
@@ -150,6 +166,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "4E/EP08-001": {
         icon: EP08_001,
         iconWebp: EP08_001_WEBP
+    },
+    "4E/EP08-008": {
+        icon: EP08_008,
+        iconWebp: EP08_008_WEBP
     },
     "4E/EP08-013": {
         icon: EP08_013,
@@ -235,6 +255,22 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: EN57_047,
         iconWebp: EN57_047_WEBP
     },
+    "EN57/EN57-206": {
+        icon: EN57_206,
+        iconWebp: EN57_206_WEBP
+    },
+    "EN57/EN57-612": {
+        icon: EN57_612,
+        iconWebp: EN57_612_WEBP
+    },
+    "EN57/EN57-650": {
+        icon: EN57_650,
+        iconWebp: EN57_650_WEBP
+    },
+    "EN57/EN57-919": {
+        icon: EN57_919,
+        iconWebp: EN57_919_WEBP
+    },
     "EN57/EN57-1000": {
         icon: EN57_1000,
         iconWebp: EN57_1000_WEBP
@@ -271,6 +307,14 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
         icon: EN57_1796,
         iconWebp: EN57_1796_WEBP
     },
+    "EN57/EN71-002": {
+        icon: EN71_002,
+        iconWebp: EN71_002_WEBP,
+    },
+    "EN57/EN71-004": {
+        icon: EN71_004,
+        iconWebp: EN71_004_WEBP,
+    },
     "EN57/EN71-005": {
         icon: EN71_005,
         iconWebp: EN71_005_WEBP
@@ -278,6 +322,10 @@ export const configByLoco: {[k: string]: {icon: string, iconWebp: string}} = {
     "EN57/EN71-011": {
         icon: EN71_011,
         iconWebp: EN71_011_WEBP
+    },
+    "EN57/EN71-015": {
+        icon: EN71_015,
+        iconWebp: EN71_015_WEBP
     }
 }
 // Service types: https://en.plk-sa.pl/files/public/user_upload/pdf/Reg_przydzielania_tras/Regulamin_sieci_2021_2022/25.02.2022/zal_6.3_Reg21_22_v22_ANG_KOLOR.PDF

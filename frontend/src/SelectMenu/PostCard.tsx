@@ -20,7 +20,7 @@ export const PostCard: React.FC<Props> = ({post, isWebpSupported, controllingPla
 
     return (
         <Link to={postCardPath} className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition duration-150 ease-out hover:scale-105 active:scale-95 hover:shadow-xl dark:hover:bg-gray-700 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-100 m-4 w-[250px] cursor-pointer ${realId ? 'opacity-100' : 'opacity-30'}`}>
-            <span className="h-[110px] w-full bg-gray-300 bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${postImages[post.Prefix.toUpperCase() as string]})`}}>
+            <span className="h-[110px] w-full bg-gray-300 bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${postImages[post.Name === 'Koluszki' ? 'KOL' : post.Prefix.toUpperCase() as string]})`}}>
             <div className="flex justify-center bg-white dark:bg-gray-800">
                 {
                     controllingPlayer?.personaname

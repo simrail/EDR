@@ -13,7 +13,7 @@ export const TrainCard: React.FC<Props> = ({ train, player }) => {
     const { serverCode } = useParams();
 
     const navigate = useNavigate();
-    const trainConfig = configByLoco[train?.Vehicles[0]];
+    const trainConfig = configByLoco[train?.Vehicles[0].split(':')[0]];
     return (
         <Card className="max-w-[170px] max-h-[175px] flex items-center m-1 p-1 cursor-pointer transition duration-150 ease-out hover:scale-105 active:scale-95 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={() => {
             if (!train.TrainNoLocal || !serverCode) return;
