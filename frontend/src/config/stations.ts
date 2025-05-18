@@ -203,6 +203,43 @@ export const dispatchDirections: NumericDictionary<StationNeighbours> = {
         left: [StationId.kozlow, StationId.starzyny_r5, StationId.sprowa],
         right: [StationId.koniecpol, StationId.psary, StationId.psary_roz_40],
     },
+    [StationId.galkowek]: {
+        left: [StationId.koluszki_pzs_r145, StationId.zakowice, StationId.zakowice_poludniowe],
+        right: [StationId.lodz_olechow_loc, StationId.justynow, StationId.lodz_andrzejow]
+    },
+    [StationId.koluszki]: {
+        left: [StationId.koluszki_r59, StationId.rogow],
+        right: [StationId.koluszki_r121, StationId.koluszki_pzs_r145, StationId.koluszki_pzs_r154]
+    },
+    [StationId.lodz_widzew]: {
+        left: [StationId.lodz_widzew_r9, StationId.lodz_widzew_pzs_r3],
+        right: [StationId.lodz_andrzejow]
+    },
+    [StationId.plycwia]: {
+        left: [StationId.skierniewice_p_pzs, StationId.makow],
+        right: [StationId.plycwia_gt],
+    },
+    [StationId.rogow]: {
+        left: [StationId.wagry, StationId.koluszki, StationId.koluszki_r59],
+        right: [StationId.plycwia_gt, StationId.przylek_duzy]
+    },
+    [StationId.skierniewice]: {
+        left: [StationId.skierniewice_p_pzs, StationId.skierniewice_s_pzs],
+        right: [StationId.skierniewice_gt_201_208]
+    },
+    [StationId.warszawa_wlochy]: {
+        left: [StationId.jozefinow, StationId.warszawa_ursus_polnocny, StationId.warszawa_ursus],
+        right: [StationId.warszawa_zachodnia],
+        up: [StationId.warszawa_golabki]
+    },
+    [StationId.zakowice_poludniowe]: {
+        left: [StationId.zakowice_pld_roz_5],
+        right: [StationId.galkowek]
+    },
+    [StationId.zyrardow]: {
+        left: [StationId.radziwillow_mazowiecki, StationId.sucha_zyrardowska],
+        right: [StationId.miedzyborow, StationId.grodzisk_mazowiecki, StationId.grodzisk_mazowiecki_r64],
+    }
 }
 
 export const postConfig: Dictionary<StationConfig> = {

@@ -134,6 +134,6 @@ app
     .get("/steam/:steamId", getPlayer);
 app.listen(process.env.LISTEN_PORT);
 
-console.log("🚆 Simrail Community EDR backend v2.6");
+console.log("🚆 Simrail Community EDR backend v2.7");
 console.log("💻 https://github.com/simrail/EDR");
 console.log("🐛 https://github.com/simrail/EDR/issues")

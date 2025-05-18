@@ -57,6 +57,7 @@ import PS from "./images/posts/jpg/Psary.jpg";
 import RC from "./images/posts/jpg/Raciborowice.jpg";
 import RG from "./images/posts/jpg/Rogow.jpg";
 import SE from "./images/posts/jpg/Szeligi.jpg";
+import SK from "./images/posts/jpg/Skierniewice.jpg";
 import SG from "./images/posts/jpg/Sosnowiec_Glowny.jpg";
 import SG_PO from "./images/posts/jpg/Sosnowiec_Poludniowy.jpg";
 import SKZ from "./images/posts/jpg/Sosnowiec_Kazimierz.jpg";
@@ -107,6 +108,7 @@ import PS_WEBP from "./images/posts/webp/Psary.webp";
 import RC_WEBP from "./images/posts/webp/Raciborowice.webp";
 import RG_WEBP from "./images/posts/webp/Rogow.webp";
 import SE_WEBP from "./images/posts/webp/Szeligi.webp";
+import SK_WEBP from "./images/posts/webp/Skierniewice.webp";
 import SG_PO_WEBP from "./images/posts/webp/Sosnowiec_Poludniowy.webp";
 import SG_WEBP from "./images/posts/webp/Sosnowiec_Glowny.webp";
 import SKZ_WEBP from "./images/posts/webp/Sosnowiec_Kazimierz.webp";
@@ -179,6 +181,7 @@ export const optimizedPostsImagesMap: {[k: string]: string} = {
     RG,
     SE,
     SG,
+    SK,
     SKZ,
     SL,
     SM,
@@ -231,6 +234,7 @@ export const optimizedPostsWebpImagesMap: {[k: string]: string} = {
     RG: RG_WEBP,
     SE: SE_WEBP,
     SG: SG_WEBP,
+    SK: SK_WEBP,
     SKZ: SKZ_WEBP,
     SL: SL_WEBP,
     SM: SM_WEBP,

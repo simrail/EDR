@@ -1,5 +1,16 @@
 # Simrail Community EDR Changelog
 
+## *2.7 - 2025-05-18*
+
+### Changes and features
+
+- Added support for Gałkówek, Koluszki, Łódź Widzew, Płyćwia, Rogów, Skierniewice, Warszawa Włochy, Żakowice Południowe, Żyrardów
+- Added image support for new train liveries & dispatch posts
+
+### Other
+
+- Please note that dispatch posts that control multiple points on the map currently only show their own timetable
+
 ## *2.6 - 2025-01-12*
 
 ### Changes and features
