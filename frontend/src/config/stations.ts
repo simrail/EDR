@@ -840,12 +840,6 @@ export const postConfig: Dictionary<StationConfig> = {
         trainPosRange: 0.5,
         platformPosOverride: [19.859630, 50.804040]
     },
-    ZYR: {
-        id: "ZYR",
-        srName: "Żyrardów",
-        trainPosRange: 0.5,
-        platformPosOverride: [20.448360, 52.052271]
-    },
     PRZ: {
         id: "PRZ",
         srName: "Przemiarki",

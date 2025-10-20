@@ -511,8 +511,8 @@ const ZEL_R6 = {
     branchA: "WP"
 }
 
-const ZYR = {
-    ...postConfig.ZYR,
+const ZR = {
+    ...postConfig.ZR,
     branchA: "GRO_MAZ"
 }
 
@@ -646,7 +646,7 @@ export const pathFind_stackMap: {[k: string]: ExtendedStationConfig} = {
     RDZ_P31,
     ZEL_R6,
 
-    ZYR,
+    ZR,
     PRZ,
     DG_T_R5,
     KOZI,
